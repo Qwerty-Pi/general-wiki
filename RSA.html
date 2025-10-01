@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+    <script type="text/javascript"
+        src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <link rel="stylesheet" type="text/css" href="./index.css">
+    <link href='https://fonts.googleapis.com/css?family=Cascadia Code' rel='stylesheet'>
+</head>
+<body>
+    
+    <h1>RSA</h1>
+    
+    <h2>Parameters</h2>
+    <p>Public Key: $N, e$</p>
+    <p>Private Key: $d$</p>
+    <p>Coefficients: $e = N^\alpha, d = N^\beta$</p>
+    <p>Equations: $ed = k \phi(N) + 1$</p>
+    
+    <h2>Methods</h2>
+    
+    <h3>RSA Encryption</h3>
+    <pre>
+Encrypt(m):
+    return m^e mod N
+
+Decrypt(c):
+    return c^d mod N
+    </pre>
+    
+    <h3>RSA Signature</h3>
+    <pre>
+Sign(m):
+    return H(m)^d mod N
+
+Verify(c, sig):
+    m = Decrypt(c)
+    assert H(m) == sig
+    </pre>
+
+    <h3>RSA Padding</h3>
+    <pre>
+PKCS1-v1_5(m): <a target="_blank" href="https://datatracker.ietf.org/doc/html/rfc8017#section-7.2.1"># RFC8017</a>
+    PS = random non-zero bytes (length >= 8)
+    return 0x00 || 0x02 || PS || 0x00 || M
+    </pre>
+    
+    <h2>Well-known Attacks</h2>
+    
+    <h3>Wiener's Attack</h3>
+    <p>Problem: Given $d &lt; \frac{1}{3} N^{1/4}$ and $p, q$ are balanced ($p &lt; q &lt; 2p$). Reverse $d$.</p>
+    <p>Solution: Approximate $\frac{k}{d}$ by the continued fraction of $\frac{e}{N}$.</p>
+
+    <h3>Franklin-Reiter related-message attack</h3>
+    <p>Problem: Given two related messages $M_1$ and $M_2 = f(M_1)$ and their ciphertext $C_1$ and $C_2$. Reverse $M_1$.</p>
+    <p>Solution: Find $\gcd(M_1^e - C_1, f(M_1)^e - C_2)$ in $\mathbb{Z}_N$ with variable $M_1$.
+    <h3>Coppersmith Method</h3>
+    <p>Input: Given $f(x) \in \mathbb{Z}[x]$ where $\deg f = d$, $\beta \in (0, 1]$ and $X = \mathcal{O}(N^{\beta^2/d})$.</p>
+    <p>Output: Small roots $x_0 \in \mathbb{Z}$ where $f(x_0) \equiv 0 \pmod{b}$, $b \geq N^\beta$ and $|x_0| &lt; X$.</p>
+    <p>Solution: Lattice reduction. Howgrave-Graham: Define $b_f = (a_0, a_1 X, \dots, a_d X^d)$. When $||b_f||_2 \lt \frac{N}{\sqrt{d + 1}}$, then $f(x_0) \equiv 0 \pmod{N} \implies f(x_0) = 0$.</p>
+    <p>Implementation: <a target="_blank" href="https://github.com/mimoo/RSA-and-LLL-attacks/blob/master/coppersmith.sage">mimoo</a></p>
+    
+    <h3>Boneh-Durfee Attack</h3>
+    <p>Problem: Given $d &lt; N^{0.292}$ and $p, q$ are balanced ($p &lt; q &lt; 2p$). Reverse $d$.</p>
+    <p>Solution: Solve for small roots $(k, p + q)$ in $k \cdot ((N + 1) - (p + q)) + 1 \equiv 0 \pmod{e}$.</p>
+    <p>Remark. Unbalanced $p, q$ leads to a better bound of $\beta$ <a target="_blank" href="./reference/rsa-small-d-unbalanced.pdf">(Ref)</a>.</p>
+
+    <h3>ROCA Vulnerability (Return of Coppersmith's attack)</h3>
+    <p>Problem: Given $p = kM + (65537^a \mod M)$ where $M = 40!$. Factorise $N$.</p>
+    <p>Solution: Reduce $M$ and so # of possibilities of $a$. Run Coppersmith for known LSBs.</p>
+</body>
+</html>

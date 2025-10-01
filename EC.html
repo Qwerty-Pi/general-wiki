@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+	</script>
+	<script type="text/javascript"
+		src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
+    <link rel="stylesheet" type="text/css" href="./index.css">
+	<link href='https://fonts.googleapis.com/css?family=Cascadia Code' rel='stylesheet'>
+</head>
+<body>
+	<h1>Elliptic Curve</h1>
+	
+	<h2>Definition</h2>
+	<p>Curve $C$ (genus 1): $y^2 + a_1 xy + a_3 y = x^3 + a_2 x^2 + a_4 x + a_6$.</p>
+	<p>Short Weierstrass: $y^2 = x^3 + ax + b$</p>
+	<p>Montegomery Form: $By^2 = x^3 + Ax^2 + x$</p>
+
+	<h2>References</h2>
+	<p>Curve Database: <a href="https://neuromancer.sk/std/search/" target="_blank">Neuromancer</a></p>
+	
+	<h2>Forumula</h2>
+	
+	<h2>Hyperelliptic Curve</h2>
+	<p>Divisor Group $\text{Div}(C)$: Free Group over Points on Curve $C$. Elements in form of $\sum_{P \in C} C_P [P]$ with $C_P \in \mathbb{Z}$ (finite nonzero $C_P$).</p>
+	<p>Degree $d$: $\sum_{P \in C} C_P$. Elements with degree $0$ forms subgroup $\text{Div}^{0}(C)$.</p>
+	<p>Divisor of function $f$: $C_P := $ degree of zeros minus degree of poles. Principal divisor in $\text{Div}^{P}(C)$ means a divisor of a function.
+	<p>Jacobian $J(C)$: Quotient Group $\text{Div}^{0}(C) / \text{Div}^{P}(C)$. Mumfold representation. [<a href="https://en.wikipedia.org/wiki/Imaginary_hyperelliptic_curve#Reduced_divisors_and_their_Mumford_representation" target="_blank">source</a>]</p>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+    <script type="text/javascript"
+        src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <link rel="stylesheet" type="text/css" href="./index.css">
+    <link href='https://fonts.googleapis.com/css?family=Cascadia Code' rel='stylesheet'>
+</head>
+<body>
+    <h1>LFSR (Linear Feedback Shift Register)</h1>
+    
+    <h2>Definition</h2>
+    <p>Given a sequence $\{a_n\}_{n \in \mathbb{N}}$ where $a_n \in F$ for all $n \in \mathbb{N}$. Suppose exists linear recurrence.</p>
+    <p>Minimal Polynomial: $g(x) = x^j + \sum_{i = 0}^{i = j - 1} b_i x^i$, where $a_{j + k} + b_{j - 1} a_{j - 1 + k} + \cdots + b_0 a_k = 0$ for all $k \in \mathbb{N}$.</p>
+
+    <h2>Well-known Problems</h2>
+    
+    <h3>Unknown Linear Recurrence</h3>
+    <p>Problem: Given a sequence with unknown linear recurrence. Find the linear recurrence.</p>
+    <p>Solution: Berlekamp-Massey Algorithm (<a target="_blank" href="https://doc.sagemath.org/html/en/reference/matrices/sage/matrix/berlekamp_massey.html">sage</a>). Run in $O(n^2)$ and require $2 \, \deg \, g$ terms.</p>
+
+    <h3>Compute k-th Term</h3>
+    <p>Problem: Given linear recurrence $(\{a_i\}_{0 \le i \lt j}, g)$. Calculate $a_k$.</p>
+    <p>Solution: Calculate $x^k \mod g$ and dot product with $\{a_i\}_{0 \le i \lt j}$.</p>
+
+    <h3>Location of Term</h3>
+    <p>Problem: Given linear recurrence $(\{a_i\}_{0 \le i \lt j}, g)$ and $\{a_{k + i}\}_{0 \le i \lt j}$ for some $k$. Reverse $k$.</p>
+    <p>Solution: Diagonalisation or Jordan Canonical Form (<a href="https://en.wikipedia.org/wiki/Jordan_normal_form" target="_blank">Wiki</a>). Reduce it to Integral Discrete Logarithm.</p>
+    
+    <h2>Extra</h2>
+    <p>Cayley-Hamilton <a href="https://en.wikipedia.org/wiki/Cayley%E2%80%93Hamilton_theorem" target="_blank">Wiki</a></p>
+</body>
+</html>

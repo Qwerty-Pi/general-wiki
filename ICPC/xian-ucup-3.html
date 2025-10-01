@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+	</script>
+	<script type="text/javascript"
+		src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
+    <link rel="stylesheet" type="text/css" href="../index.css">
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
+</head>
+<body>
+	<h1>Universal Cup 3 Stage 9: Xian</h1>
+	<div>
+		<p>A: Given an array $A$. Operations: (1) Range Add, (2) Find $\max_{r_0} [A_{i+r} - A_{i-r} = kr + b \, \forall r \le r_0]$. Polynomial hash on segment tree.</p>
+		<p>B: Compute number of ways to add to $X$ with a number of power of 2s. Memo DP.</p>
+		<p>C: Calculate #$\{ s[l, r] : 1 \le l \le r \le N, \gcd(l, r) = 1 \}$ for string $s$ of length $N$.</p>
+		<p>D: Given an array $A$ of $\texttt{()}$ and define $f(l, r, k)$ be the number of subseuqence of $\texttt{()}^\texttt{k}$ in $A[l..r]$. Compute $f(L, R, k)$ and $\sum_{L \le l \le r \le R} f(l, r, k)$ for $Q$ queries. Divide-and-Conquer.</p>
+		<p>E: Find $3$ dominating points in directed complete graph of $N$ ($\le 5000$) nodes.</p>
+		<p>F: Count $(a, b)$ where $0 \le b \lt a \lt p^k$ such that $\binom{a}{b} \equiv x \pmod{p}$. Lucas + FFT in $O(p \log p \log k)$.</p>
+		<p>G: Find #$\{ \frac{p}{q} : pq \mid n \}$. $O(\sqrt{n})$.</p>
+		<p>H: Given a tournament of $2^N$ distinct people. Find max wins for each people if can swap $K$ times. 0/1 in $O(N \cdot 2^N)$.</p>
+		<p>I: Compute $\max_{L \le x \lt y \lt z \le R \\ y - x \le z - y} \gcd(A_x, A_y, A_z)$ for $Q$ queries.$O(\sum \sigma_0(A_i) + Q \log N)$.</p>
+		<p>J: Define $\mathcal{T}(G)$ to be have edge iff distance $\ge k$ ($-1$ if disconnected). Find distance between two nodes of $\mathcal{T}^K(G)$ in $O(1)$.</p>
+		<p>K: Given an array $A$ of length $N$ where $1 \le A_i \le W$. Two adjacent elements can be swapped iff their sum not exceeds $W$. Count the number of possible final array and find the lexicographically largest (index) array. Cartesian Tree + Binary Lifting.</p>
+		<p>L: Given a convex polygon $P$. Find probability of $\vec{b}$ where $\exists i$ where $\vec{b} \cdot \overrightarrow{P_{i} P_{i+1}}$ is the only positive.</p>
+		<p>M: Count # of ways to put $N$ distinct balls into $M$ distinct boxes, where each box contains at most $K$ balls. Non-prime modulus.</p>
+		<p>N: Compute result of formatted Python program.</p>
+	</div>
+</body>
+</html>

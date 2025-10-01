@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+	</script>
+	<script type="text/javascript"
+		src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
+    <link rel="stylesheet" type="text/css" href="./index.css">
+	<link href='https://fonts.googleapis.com/css?family=Cascadia Code' rel='stylesheet'>
+</head>
+<body>
+	<h1>Test</h1>
+	
+	<h2>Section 1</h2>
+
+	<p>Problem: Given $n \in \mathbb{Z}^+$. Determine if $n$ prime.</p>
+
+	<h3>Subsection 1</h3>
+
+	<p>
+		Here are some content. Variables: $a = b$.
+	</p>
+	
+	<p>
+		Strong Pseudoprime to base $a$: $a^d \equiv 1 \pmod{n}$ or $a^{d \cdot 2^r} \equiv 1 \pmod{n}$ for some $0 \le r \lt s$.
+	</p>
+	<p>
+		Algorithm: Test for different bases $1 \lt a \lt n$ for several rounds. <a target="_blank" href="./reference/strong-pseudoprime.pdf">Attack</a>
+	</p>
+
+	<h3>Subsection 2</h3>
+
+	<p>
+		Let $P, Q \in \mathbb{Z}^+$ where $D := \sqrt{P^2 - 4Q} \not\in \mathbb{Z}$, $\varepsilon(n) = (D / n)$ and $\delta(n) = n - \varepsilon(n)$.
+	</p>
+	<p>
+		Define $\alpha, \beta$ be the roots to $X^2 - PX + Q$ in $\mathbb{Z}(\sqrt{D})$ and
+		$U_k = \frac{\alpha^k - \beta^k}{\alpha - \beta}, V_k = \alpha^k + \beta^k$.
+	</p>
+	<p>
+		Then if $n$ prime, $\alpha^{\delta(n)} - \beta^{\delta(n)} \equiv 0 \pmod{n}$. Factorise the same way as Miller-Rabin.
+	</p>
+	<p>
+		Proof. If $D$ is square, then both $\alpha$ and $\beta$ are in $\mathbb{Z}_n$. Otherwise, $|| \frac{\alpha}{\beta} || = 1$.
+	</p>
+	<p>
+		Strong Lucas Pseudoprime: $\delta(n) = 2^kq$ then $n \mid U_q$ or $n \mid V_{2^iq}$ for some $0 \le i \lt k$. <a target="_blank" href="./reference/strong-pseudoprime.pdf">Attack</a>
+	</p>
+
+	<h2>Prime Factorisation</h2>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+	</script>
+	<script type="text/javascript"
+		src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
+    <link rel="stylesheet" type="text/css" href="./index.css">
+    <link href='https://fonts.googleapis.com/css?family=Cascadia Code' rel='stylesheet'>
+</head>
+<body>
+	<h1>Tools</h1>
+    <h2>Z3 Solver</h2>
+    <p><a href="https://ericpony.github.io/z3py-tutorial/guide-examples.htm" target="_blank">Tutorial</a></p>
+    <pre>
+from z3 import *
+
+x, y = Ints("x y")
+constraints = [x + y == 10, x <= 5, y <= 5]
+
+solver = Solver()
+
+solver.add(constraints)
+if solver.check() == sat:
+    model = solver.model()
+    print(f"Solution: x = {model[x]}, y = {model[y]}")
+else:
+    print("No solution found.")
+    </pre>
+    
+    <h2>OR-Tools</h2>
+    <p>For linear programming. Works in LP better than Z3 Solver. [<a href="https://developers.google.com/optimization/cp/cp_solver?hl=zh-tw#python" target="_blank">Source</a>]</p>
+    <pre>
+from ortools.sat.python import cp_model
+model = cp_model.CpModel()
+
+x = [model.new_int_var(-1, 1, f"x{i}") for i in range(3)]
+model.add(x[0] * x[1] == x[2])
+
+solver = cp_model.CpSolver()
+status = solver.solve(model)
+if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
+    print([solver.value(_x[i]) for i in range(3)])
+else:
+    print("No solution found.")
+    </pre>
+
+    <h2>Niche</h2>
+    <p>Hashing Collision: <a href="https://github.com/cr-marcstevens/hashclash" target="_blank">hashclash</a></p>
+    <p>Substitution cipher: <a href="https://guballa.gitlab.io/SubstitutionBreaker/cli.html" target="_blank">subbreaker</a></p>
+    <p>Factorisation: <a href="https://factordb.com/" target="_blank">factordb</a></p>
+</body>
+</html>

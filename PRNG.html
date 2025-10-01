@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+	</script>
+	<script type="text/javascript"
+		src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
+    <link rel="stylesheet" type="text/css" href="./index.css">
+    <link href='https://fonts.googleapis.com/css?family=Cascadia Code' rel='stylesheet'>
+</head>
+<body>
+	
+	<h1>PRNG</h1>
+
+	<h2>MT19937 (Mersenne Twister)</h2>
+
+	<p>Source: <a href="./source/mt19937.py" target="_blank">python3</a></p>
+	<p>Can do: Reverse state from output, reverse seed from state.</p>
+
+	<h2>LCG (Linear Congruence Generator)</h2>
+	
+	<h3>Definition</h3>
+	<p>Parameters: $p, a, b$.</p>
+	<p>Generated Numbers: $(x_n)_{n \ge 0}$ where $x_n = (a x_{n - 1} + b) \mod p$.</p>
+
+	<h3>Well-known Attacks</h3>
+	<h4>Stern's Attack</h4>
+	<p>"Linear relation among the vectors involving partially known bits implies a linear relation among the vectors involving all of the bits" [<a href="./reference/stern-algorithm.pdf#page=65" target="_blank">Source</a>].</p>
+	<p>Let lattice $\mathcal{L} = \{\vec{W_i}\}_{1 \le i \le N}$ where $\vec{V_i} \sim \vec{W_i}$. Then construct a short orthogonal vector $\vec{\lambda}$ such that $\sum_{i = 1}^{n} \lambda_i \vec{V_i} = \vec{0}$ with LLL.</p>
+	<p>Claim: $\vec{U} = \sum_{i = 1}^{n} \lambda_i \vec{W_i} = 0$ as well, since $\vec{U} \in \mathcal{L}$ (implies $\vec{U}$ is $\vec{0}$ or sufficiently long) and $\vec{U}$ is short since $\vec{\lambda}$ and $\vec{V_i} - \vec{W_i}$ are short.</p>
+
+	<h2>LFSR (Linear Feedback Shift Register)</h2>
+
+	<h3>Definition</h3>
+	<p>Fibonacci LFSR: Shift left and XOR the "taps" to get the new rightmost element. </p>
+	<p>Galois LFSR: Work in Galois Field $\mathbb{F}_{2^n}$. Multiply by $x$ essentially.</p>
+	<h3>Well-known Attacks</h3>
+	<h4>Fast Correlation Attack</h4>
+	<p>Source: <a href="./reference/fast-correlation-attacks-methods-and-countermeasures.pdf">[1]</a></p>
+</body>
+</html>

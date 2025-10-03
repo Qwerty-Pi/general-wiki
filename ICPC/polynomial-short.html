@@ -1,16 +1,4 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-	<script type="text/x-mathjax-config">
-		MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-	</script>
-	<script type="text/javascript"
-		src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-	</script>
-    <link rel="stylesheet" type="text/css" href="../index.css">
-	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
-</head>
-<body>
+
 	<p>Newton Iteration Method: Given $F \in \mathbb{F}[[x]]$. There is a method that we will use multiple times. Let's say we want to solve the equation $F(P) = 0$ where $F, P \in \mathbb{F}[[x]]$. We can think in a "binary lifting" way: If we have $Q_n \in \mathbb{F}[[x]]$ where $F(Q_n) \equiv 0 \pmod{X}$ where $X$ is power of $x$, can we "lift" it up to $Q_{n+1}$ so that $F(Q_{n+1}) \equiv 0 \pmod{X^2}$? Turns out yes most of the time! First of all, we may assume that $Q_{n+1} \equiv Q_n \pmod{X}$, since then $F(Q_{n+1}) \equiv 0 \pmod{X}$ will be satisfied. Also, we have $$ F(Q_{n+1}) - F(Q_n) \equiv \sum_{k \ge 0} a_k (Q_{n+1}^k - Q_n^k) \equiv \sum_{k \ge 1} a_k \cdot k (Q_{n+1} - Q_n) Q_n^{k-1} \equiv F'(Q_n) (Q_{n+1} - Q_n) \pmod{X^2}$$ We want $F(Q_{n+1}) \equiv 0 \pmod{X^2}$, so we simply have $-F(Q_n) \equiv F'(Q_n) (Q_{n+1} - Q_n) \pmod{X^2}$, or $$ Q_{n+1} \equiv Q_n - \frac{F(Q_n)}{F'(Q_n)} \pmod{X^2} $$ Note that you will still have the answer to modulo $x$ to start the iteration.</p>
 	<h2>Actual Computation</h2>
 
@@ -41,5 +29,4 @@
 	<p>For Type (2), we can use Lagrange Interpolation which without speedup works in $O(N^3)$ (A value only then $O(N^2)$), and $$ P = \sum_{k = 1}^{n} \frac{\prod_{j \ne k} (x - x_j)}{\prod_{j \ne k} (x_k - x_j)} \cdot y_k \implies \frac{P}{\prod_{j} (x - x_j)} = \sum_{k = 1}^{n} \frac{y_k} {\prod_{j \ne k} (x_k - x_j)} \cdot \frac{1}{x - x_k} $$ Since $P'(x_k) = \prod_{j \ne k} (x_k - x_j)$, we can carry out a multi-point evaluation on $P'$. We get the form $$P = \sum_{k = 1}^{n} \frac{a_k}{x - x_k}$$ Which we can again use the same segment tree to do some addition of fractions, still in $O(N \log^2 N)$.</p>
 	
 	<p>Indeed for type (1) there is a special case where $x_k = z^k$. To solve that in $O(N \log N)$, notice that $$ P(z^r) = \sum_{k = 0}^n a_k \cdot z^{kr} = \sum_{k = 0}^n a_k \cdot z^{\binom{k + r}{2} - \binom{k}{2} - \binom{r}{2}} = \frac{1}{z^\binom{r}{2}}\sum_{k = 0}^n a_k \cdot z^{\binom{k + r}{2} - \binom{k}{2}} $$ Therefore, we can simply compute the convolution of $\sum_{k \ge 0} z^{\binom{k}{2}} x^k$ and $\sum_{k = 0}^n a_k z^{-\binom{k}{2}} x^{-k}$, and the coefficient at $x^r$ could be used for computing answer.</p>
-</body>
-</html>
+

@@ -1,0 +1,3 @@
+RewriteEngine on
+RewriteRule ^ICPC/(.*).html$ /ICPC/$1 [R]
+RewriteRule ^ICPC/([a-z0-9A-Z\-]+)$ /ICPC/layout.php?file=$1

@@ -1,130 +1,115 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-	<script type="text/x-mathjax-config">
-		MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-	</script>
-	<script type="text/javascript"
-		src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-	</script>
-    <link rel="stylesheet" type="text/css" href="../index.css">
-	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
-</head>
-<body>
-	<h1>Group</h1>
+<h1>Group</h1>
 
-	<ol>
-		<li>Introduce Algebraic Concepts: Group, Subgroup, Group Homomorphism, Quotient Group and Group Action.</li>
-		<li>Provide abstraction on Range-update Range-query Segment Tree.</li>
-		<li>Count Orbits in Group Action, or number of configurations up to some transformation, with Burnside Lemma.</li>
-	</ol>
+<ol>
+	<li>Introduce Algebraic Concepts: Group, Subgroup, Group Homomorphism, Quotient Group and Group Action.</li>
+	<li>Provide abstraction on Range-update Range-query Segment Tree.</li>
+	<li>Count Orbits in Group Action, or number of configurations up to some transformation, with Burnside Lemma.</li>
+</ol>
 
-	<h2>Introduction</h2>
+<h2>Introduction</h2>
 
-	<p>Imagine you are given two tasks: (1) Range product of matrix modulo $10^9 + 7$, and (2) Range product of integer modulo $10^9 + 7$. </p>
+<p>Imagine you are given two tasks: (1) Range product of matrix modulo $10^9 + 7$, and (2) Range product of integer modulo $10^9 + 7$. </p>
 
-	<p>Obviously, the difference doesn't stop you from using segment tree for both tasks! There must be some similarities between product of matrix and product of integers. So what is the similarities? Well, you may say they are both products - but "product" is a word choice only. Even if I decide to call a new operator another name, that doesn't change the fact that we can use segment tree on it. There must be something by nature that makes us able to use segment tree.</p>
+<p>Obviously, the difference doesn't stop you from using segment tree for both tasks! There must be some similarities between product of matrix and product of integers. So what is the similarities? Well, you may say they are both products - but "product" is a word choice only. Even if I decide to call a new operator another name, that doesn't change the fact that we can use segment tree on it. There must be something by nature that makes us able to use segment tree.</p>
 
-	<p>There actually are two properties that allow us to calculate on the segment tree with operator $\cdot$:</p>
-	<ol>
-		<li>Closure: We can compute $x \cdot y$ for all possible $x, y$, and we can represent $x \cdot y$ in the current structure.</li>
-		<li>Associativity: $(x \cdot y) \cdot z = x \cdot (y \cdot z)$ for all possible $x, y, z$.</li>
-	</ol>
+<p>There actually are two properties that allow us to calculate on the segment tree with operator $\cdot$:</p>
+<ol>
+	<li>Closure: We can compute $x \cdot y$ for all possible $x, y$, and we can represent $x \cdot y$ in the current structure.</li>
+	<li>Associativity: $(x \cdot y) \cdot z = x \cdot (y \cdot z)$ for all possible $x, y, z$.</li>
+</ol>
 
-	<p>What does (1) means? Imagine a segment tree on integer product without modulo - obviously overflow would occur! Therefore, we require $x \cdot y$ to return something that is representable. The $\cdot$ in $x \cdot y$ is called a binary operator - which implicitly require the closure property.</p>
+<p>What does (1) means? Imagine a segment tree on integer product without modulo - obviously overflow would occur! Therefore, we require $x \cdot y$ to return something that is representable. The $\cdot$ in $x \cdot y$ is called a binary operator - which implicitly require the closure property.</p>
 
-	<p>For (2), if (2) is not satified, then we can't actually use segment tree - the order of computation would be wrong! Also, "possible" $x$ means $x$ are in a certain set, say $S$. Therefore, we can simplify the above definition to following:</p>
+<p>For (2), if (2) is not satified, then we can't actually use segment tree - the order of computation would be wrong! Also, "possible" $x$ means $x$ are in a certain set, say $S$. Therefore, we can simplify the above definition to following:</p>
 
-	<p>Segment tree works for $(S, \cdot)$, where $\cdot$ is a associative (binary) operator on $S$.</p>
-
-	
-
-	<h2>Conventional Namings</h2>
-	
-	<p>Consider an algebraic structure $(S, \cdot)$, we can define the following properties:</p>
-	<ol>
-		<li>Closure: $x \cdot y \in S$ for all $x, y \in S$.</li>
-		<li>Associative: $(x \cdot y) \cdot z = x \cdot (y \cdot z)$ for all $x, y \in S$. </li>
-		<li>Commutative: $x \cdot y = y \cdot x$ for all $x, y \in S$.</li>
-		<li>Idempotent: $x \cdot x = x$ for all $x \in S$.</li>
-		<li>Identity: there exists a unique $e$ where for all $x \in S$, $x \cdot e = e \cdot x = x$. </li>
-		<li>Inverse: for each $x \in S$, there exists an unique $y$ where $x \cdot y = e$. </li>
-	</ol>
-	<p>(Note: More formally for identity and inverse, we discuss left/right-hand, existness/uniqueness separately. But here we may as well assume each as an entire thing.)</p>
-	<p>Alright, those are the most common ones that we will consider. Actually, mathematicians give <strike>arbitrary</strike> names to many combinations of properties:</p>
-	<ol>
-		<li>Monoid: Closure + Associative + Identity</li>
-		<li>Group: Closure + Associative + Identity + Inverse</li>
-		<li>Abelian Group: Group + Commutative</li>
-	</ol>
-	<p>(Fun Fact: Abel is the name of a mathematician.) Those wordings are just used to make passages shorter, so that we don't need to mention the exact combination of properties every time. Group is actually most important, and we usually denote it $G$.</p>
+<p>Segment tree works for $(S, \cdot)$, where $\cdot$ is a associative (binary) operator on $S$.</p>
 
 
-	<h2>Group</h2>
 
-	<p>From now on, we use $(G, \cdot)$ to denote the group $G$ with the binary operator $\cdot$.</p>
+<h2>Conventional Namings</h2>
 
-	<p>To be more concise, let's introduce some symbolic notations for groups $G, H$ and $g \in G$:</p>
+<p>Consider an algebraic structure $(S, \cdot)$, we can define the following properties:</p>
+<ol>
+	<li>Closure: $x \cdot y \in S$ for all $x, y \in S$.</li>
+	<li>Associative: $(x \cdot y) \cdot z = x \cdot (y \cdot z)$ for all $x, y \in S$. </li>
+	<li>Commutative: $x \cdot y = y \cdot x$ for all $x, y \in S$.</li>
+	<li>Idempotent: $x \cdot x = x$ for all $x \in S$.</li>
+	<li>Identity: there exists a unique $e$ where for all $x \in S$, $x \cdot e = e \cdot x = x$. </li>
+	<li>Inverse: for each $x \in S$, there exists an unique $y$ where $x \cdot y = e$. </li>
+</ol>
+<p>(Note: More formally for identity and inverse, we discuss left/right-hand, existness/uniqueness separately. But here we may as well assume each as an entire thing.)</p>
+<p>Alright, those are the most common ones that we will consider. Actually, mathematicians give <strike>arbitrary</strike> names to many combinations of properties:</p>
+<ol>
+	<li>Monoid: Closure + Associative + Identity</li>
+	<li>Group: Closure + Associative + Identity + Inverse</li>
+	<li>Abelian Group: Group + Commutative</li>
+</ol>
+<p>(Fun Fact: Abel is the name of a mathematician.) Those wordings are just used to make passages shorter, so that we don't need to mention the exact combination of properties every time. Group is actually most important, and we usually denote it $G$.</p>
 
-	<ol>
-		<li>$|G|$: Order of group $G$, which is the number of elements in $G$.</li>
-		<li>$|g|$: Order of group element $g \in G$, which is the minimum $k \in \mathbb{Z}^+$ where $g^k = e$.</li>
-		<li>$\langle S \rangle$: Group generated by $S \subset G$, that is $\langle S \rangle = \{ g_1^{\alpha_1} g_2^{\alpha_2} \cdots g_n^{\alpha_n} : g_i \in S, \alpha_i \in \mathbb{Z} \text{ for all } 1 \le i \le n \}$.</li>
-		<li>$\langle g \rangle$: Group generated by $g \in G$, that is $\langle g \rangle = \{ g^\alpha : \alpha \in \mathbb{Z} \}$.</li>
-	</ol>
 
-	<p>Common group includes:</p>
+<h2>Group</h2>
 
-	<ol>
-		<li>$(\mathbb{Z}, +)$: The additive group of integers. </li>
-		<li>$(\mathbb{Z}_n^\times, \times)$: The multiplicative group of $\mathbb{Z}_n$, the set of integers modulo $n$. The group $\mathbb{Z}_n^\times$ only consists of elements in $\mathbb{Z}_n$ that has inverse.</li>
-		<li>$(\mathbb{Q}^\times, \times)$: The multiplicative group of rational numbers.</li>
-	</ol>
+<p>From now on, we use $(G, \cdot)$ to denote the group $G$ with the binary operator $\cdot$.</p>
 
-	<p>Normally we ignore the operator if that is the ordinary one. For example, $\mathbb{Z}_n$ is considered to be the additive group and $\mathbb{Z}_n^\times$ is considered to be the multiplicative group.</p>
+<p>To be more concise, let's introduce some symbolic notations for groups $G, H$ and $g \in G$:</p>
 
-	<h2>Group Homomorphism</h2>
+<ol>
+	<li>$|G|$: Order of group $G$, which is the number of elements in $G$.</li>
+	<li>$|g|$: Order of group element $g \in G$, which is the minimum $k \in \mathbb{Z}^+$ where $g^k = e$.</li>
+	<li>$\langle S \rangle$: Group generated by $S \subset G$, that is $\langle S \rangle = \{ g_1^{\alpha_1} g_2^{\alpha_2} \cdots g_n^{\alpha_n} : g_i \in S, \alpha_i \in \mathbb{Z} \text{ for all } 1 \le i \le n \}$.</li>
+	<li>$\langle g \rangle$: Group generated by $g \in G$, that is $\langle g \rangle = \{ g^\alpha : \alpha \in \mathbb{Z} \}$.</li>
+</ol>
 
-	<p>From time to time, we want to map elements of one group to another to do calculation / determine group structure. Let's use an example for this: Given a collection of fibonacci strings where $F_0$ is $\texttt{a}$, $F_1$ is $\texttt{b}$ and $F_k = F_{k - 2} + F_{k - 1}$ where $k \ge 2$. What is the number of $\texttt{a}$ in string $F_n$, modulo $m$?</p>
+<p>Common group includes:</p>
 
-	<p>Obviously we don't need to really compute the string out, and any experienced person would tell you that you can simply "maintain the count of $\texttt{a}$ in $F_k$". But we can understand this in a more group-theoric way. Consider $(\Sigma^*, +)$ be the set of all strings with addition being string concatenation. Then "maintain the count of $\texttt{a}$ in $F_k$" actually means the mapping $\texttt{cnt}_{\texttt{a}} : (\Sigma^*, +) \rightarrow (\mathbb{Z}_m, +)$ which counts the number of $\texttt{a}$ in string satisfies the property: for any strings $s, t \in \Sigma^*$, $\texttt{cnt}_{\texttt{a}}(s + t) = \texttt{cnt}_{\texttt{a}}(s) + \texttt{cnt}_{\texttt{a}}(t)$. That means the final answer does not change, regardless on whether we do the addition first or the mapping $\texttt{cnt}_{\texttt{a}}$ first.</p>
+<ol>
+	<li>$(\mathbb{Z}, +)$: The additive group of integers. </li>
+	<li>$(\mathbb{Z}_n^\times, \times)$: The multiplicative group of $\mathbb{Z}_n$, the set of integers modulo $n$. The group $\mathbb{Z}_n^\times$ only consists of elements in $\mathbb{Z}_n$ that has inverse.</li>
+	<li>$(\mathbb{Q}^\times, \times)$: The multiplicative group of rational numbers.</li>
+</ol>
 
-	<p>Mathematically, this is called a homomorphism, and defined for mapping $\sigma : (G, \cdot) \rightarrow (H, \circ)$ where $\sigma(a \cdot b) = \sigma(a) \circ \sigma(b)$ is satisfied for all $a, b \in G$. For any such mapping that is also bijective, we call that isomorphism. Isomorphism usually gives us more information, since we also know that group structure of them are "equal", and that to calculate $a \cdot b$ for some $a, b \in G$ can be done as $a \cdot b = \sigma^{-1} (\sigma(a) \circ \sigma(b))$. We denote two isomorphic group $G, H$ as $G \cong H$.</p>
-	
-	<h2>Subgroup and Quotient Group</h2>
+<p>Normally we ignore the operator if that is the ordinary one. For example, $\mathbb{Z}_n$ is considered to be the additive group and $\mathbb{Z}_n^\times$ is considered to be the multiplicative group.</p>
 
-	<p>If we say $H$ is a subgroup of $G$, what do we means? First, the binary operator on $G$ and $H$ are the same. Second, we have the set relation $H \subset G$. We denote this subgroup relation as $H \lt G$. Thus, subgroup is similar to subset as for set.</p>
+<h2>Group Homomorphism</h2>
 
-	<p>When $H \lt G$, something interesting actually would happen: Denote $aH$ as $\{ ah : h \in H \}$ (called left coset), then the collection $L_H :=  \{ aH : a \in G \}$ actually forms a partition of $G$! Intuitively, imagine $G$ is the 2D lattice $\mathbb{Z}^2$ while $H$ is the x-axis $\mathbb{Z} \times \{0\}$, obviously we can partition the 2D grid $G$ into different offsets of the x-axis. Basically, we ignore the difference that caused by $H$. Why is it a partition though? Suppose there exists some $g \in aH \cap bH$ where $g = ah_1 = bh_2$ and $h_1, h_2 \in H$. Then for any $ah \in aH$, $ah = (ah_1) (h_1^{-1} h) = (bh_2) (h_1^{-1} h) \in bH$, so $aH \subset bH$ actually. By swapping the arguments we have $bH \subset aH$, so $aH = bH$.</p>
+<p>From time to time, we want to map elements of one group to another to do calculation / determine group structure. Let's use an example for this: Given a collection of fibonacci strings where $F_0$ is $\texttt{a}$, $F_1$ is $\texttt{b}$ and $F_k = F_{k - 2} + F_{k - 1}$ where $k \ge 2$. What is the number of $\texttt{a}$ in string $F_n$, modulo $m$?</p>
 
-	<p>In fact, we also know that $|H| = |aH|$ for all $a \in G$ by consider the bijective function $\sigma : H \rightarrow aH$ with $\sigma(h) = ah$ for all $h \in H$. (As an exercise, you can think why $\sigma$ is bijective.) Therefore $|G| = |L_H| \cdot |H|$! We usually denote $|L_H|$ as $[G : H]$, and the identity becomes $|G| = [G : H] \cdot |H|$.</p>
+<p>Obviously we don't need to really compute the string out, and any experienced person would tell you that you can simply "maintain the count of $\texttt{a}$ in $F_k$". But we can understand this in a more group-theoric way. Consider $(\Sigma^*, +)$ be the set of all strings with addition being string concatenation. Then "maintain the count of $\texttt{a}$ in $F_k$" actually means the mapping $\texttt{cnt}_{\texttt{a}} : (\Sigma^*, +) \rightarrow (\mathbb{Z}_m, +)$ which counts the number of $\texttt{a}$ in string satisfies the property: for any strings $s, t \in \Sigma^*$, $\texttt{cnt}_{\texttt{a}}(s + t) = \texttt{cnt}_{\texttt{a}}(s) + \texttt{cnt}_{\texttt{a}}(t)$. That means the final answer does not change, regardless on whether we do the addition first or the mapping $\texttt{cnt}_{\texttt{a}}$ first.</p>
 
-	<p>There are some interesting consequences of this: for any element $g \in G$, $\langle g \rangle$ is a subgroup of $G$, so $|g| = |\langle g \rangle|$ divides $|G|$! This is the Lagrange's theorem, and implies that $g^{|G|} = e$ for all $g \in G$ where $e$ is the identity of $G$.</p>
+<p>Mathematically, this is called a homomorphism, and defined for mapping $\sigma : (G, \cdot) \rightarrow (H, \circ)$ where $\sigma(a \cdot b) = \sigma(a) \circ \sigma(b)$ is satisfied for all $a, b \in G$. For any such mapping that is also bijective, we call that isomorphism. Isomorphism usually gives us more information, since we also know that group structure of them are "equal", and that to calculate $a \cdot b$ for some $a, b \in G$ can be done as $a \cdot b = \sigma^{-1} (\sigma(a) \circ \sigma(b))$. We denote two isomorphic group $G, H$ as $G \cong H$.</p>
 
-	<p>Alright. Another question - when does $L_H = \{ aH : a \in G \}$ has group structure as well? We naturally want to define operator in $L_H$ as $aH \cdot bH = (ab)H \in L_H$, so $(L_H, \cdot)$ forms a group iff $aH \cdot bH = (ab)H$ for all $a, b \in G$. Note that this is also equivalent to that $\pi_H : G \rightarrow L_H$ with $\pi_H(a) = aH$ is homomorphism. When $\pi_H$ is homomorphism, we denote $L_H$ as $G/H$, the quotient group of $G$ over $H$. With the above observation on the order, we also know that $|G/H| = [G:H] = \frac{|G|}{|H|}$. A simple example of quotient group would be $\mathbb{Z}_n \cong \mathbb{Z} / n \mathbb{Z}$.</p>
+<h2>Subgroup and Quotient Group</h2>
 
-	<h2>Group Action</h2>
+<p>If we say $H$ is a subgroup of $G$, what do we means? First, the binary operator on $G$ and $H$ are the same. Second, we have the set relation $H \subset G$. We denote this subgroup relation as $H \lt G$. Thus, subgroup is similar to subset as for set.</p>
 
-	<p>Imagine a range-update range-query segment tree. What would we do? We would maintain some values and tags on the nodes, and update the values lazily. In fact we can consider this as the set of tags "acts on" the set of values. For what such a set of tags would be valid? First of all, the tags themselves should be associative, or you cannot merge the tags. Second, the result should not change depending on whether we merge the tags first or apply the tag on the value first. Normally we would also want an "identity" tag that does not change the value. We can capture these requirements with the below definition:</p>
+<p>When $H \lt G$, something interesting actually would happen: Denote $aH$ as $\{ ah : h \in H \}$ (called left coset), then the collection $L_H :=  \{ aH : a \in G \}$ actually forms a partition of $G$! Intuitively, imagine $G$ is the 2D lattice $\mathbb{Z}^2$ while $H$ is the x-axis $\mathbb{Z} \times \{0\}$, obviously we can partition the 2D grid $G$ into different offsets of the x-axis. Basically, we ignore the difference that caused by $H$. Why is it a partition though? Suppose there exists some $g \in aH \cap bH$ where $g = ah_1 = bh_2$ and $h_1, h_2 \in H$. Then for any $ah \in aH$, $ah = (ah_1) (h_1^{-1} h) = (bh_2) (h_1^{-1} h) \in bH$, so $aH \subset bH$ actually. By swapping the arguments we have $bH \subset aH$, so $aH = bH$.</p>
 
-	<p>Consider a group $G$ and a set $X$. A group action $G \curvearrowright X$ of $G$ on $X$ is defined with $\cdot$: $G \times X \rightarrow X$, where the following holds:</p>
+<p>In fact, we also know that $|H| = |aH|$ for all $a \in G$ by consider the bijective function $\sigma : H \rightarrow aH$ with $\sigma(h) = ah$ for all $h \in H$. (As an exercise, you can think why $\sigma$ is bijective.) Therefore $|G| = |L_H| \cdot |H|$! We usually denote $|L_H|$ as $[G : H]$, and the identity becomes $|G| = [G : H] \cdot |H|$.</p>
 
-	<ol>
-		<li>For every $g_1, g_2 \in G$ and $x \in X$, $(g_1 \cdot g_2) \cdot x = g_1 \cdot (g_2 \cdot x)$.</li>
-		<li>There exists $e \in G$ where $e \cdot x = x$ for all $x \in X$.</li>
-	</ol>
+<p>There are some interesting consequences of this: for any element $g \in G$, $\langle g \rangle$ is a subgroup of $G$, so $|g| = |\langle g \rangle|$ divides $|G|$! This is the Lagrange's theorem, and implies that $g^{|G|} = e$ for all $g \in G$ where $e$ is the identity of $G$.</p>
 
-	<p>Therefore, a range-update range-query segment tree can be done for any monoids $G, H$ and monoid action $G \curvearrowright H$!</p>
+<p>Alright. Another question - when does $L_H = \{ aH : a \in G \}$ has group structure as well? We naturally want to define operator in $L_H$ as $aH \cdot bH = (ab)H \in L_H$, so $(L_H, \cdot)$ forms a group iff $aH \cdot bH = (ab)H$ for all $a, b \in G$. Note that this is also equivalent to that $\pi_H : G \rightarrow L_H$ with $\pi_H(a) = aH$ is homomorphism. When $\pi_H$ is homomorphism, we denote $L_H$ as $G/H$, the quotient group of $G$ over $H$. With the above observation on the order, we also know that $|G/H| = [G:H] = \frac{|G|}{|H|}$. A simple example of quotient group would be $\mathbb{Z}_n \cong \mathbb{Z} / n \mathbb{Z}$.</p>
 
-	<p>There are some interesting facts about group action as well. For group action $G \curvearrowright X$, define</p>
-	<ol>
-		<li>Orbit $G \cdot x$: The collection of $y \in X$ which is reachable from $x$ by action of $G$, that is, $\{ g \cdot x : g \in G \}$.</li>
-		<li>Stabiliser $G_x$: The collection of $g \in G$ that fixes $x$, that is, $g \cdot x = x$.</li>
-		<li>Fixed point $X_g$: The collection of $x \in X$ that is fixed by $g$, that is, $g \cdot x = x$.</li>
-	</ol>
+<h2>Group Action</h2>
 
-	<p>Note that $g \cdot x = h \cdot x \iff h^{-1} g \cdot x = x \iff h^{-1} g \in G_x \iff g G_x = h G_x$. Since $G_x \lt G$, we have $|G \cdot x| = [G : G_x] = \frac{|G|}{|G_x|}$ or $|G| = |G \cdot x| |G_x|$. This is the orbit-stabiliser theorem.</p>
+<p>Imagine a range-update range-query segment tree. What would we do? We would maintain some values and tags on the nodes, and update the values lazily. In fact we can consider this as the set of tags "acts on" the set of values. For what such a set of tags would be valid? First of all, the tags themselves should be associative, or you cannot merge the tags. Second, the result should not change depending on whether we merge the tags first or apply the tag on the value first. Normally we would also want an "identity" tag that does not change the value. We can capture these requirements with the below definition:</p>
 
-	<p>A more magical fact is that, we can actually count the total number of orbits! Suppose the distinct orbits are $G \cdot x_1, \dots, G \cdot x_r$. Then we have, by the orbit-stabiliser theorem and double-counting the number pairs $(g, x)$ where $g \cdot x = x$: $$ r = \sum_{1 \le i \le r} \sum_{y \in G \cdot x_i} \frac{1}{|G \cdot x_i|} = \sum_{x \in X} \frac{|G_x|}{|G|} = \frac{1}{|G|} \sum_{x \in X} |G_x| = \frac{1}{|G|} \sum_{g \in G} |X_g| $$ Which is the well-known Burnside lemma!</p>
-</body>
-</html>
+<p>Consider a group $G$ and a set $X$. A group action $G \curvearrowright X$ of $G$ on $X$ is defined with $\cdot$: $G \times X \rightarrow X$, where the following holds:</p>
+
+<ol>
+	<li>For every $g_1, g_2 \in G$ and $x \in X$, $(g_1 \cdot g_2) \cdot x = g_1 \cdot (g_2 \cdot x)$.</li>
+	<li>There exists $e \in G$ where $e \cdot x = x$ for all $x \in X$.</li>
+</ol>
+
+<p>Therefore, a range-update range-query segment tree can be done for any monoids $G, H$ and monoid action $G \curvearrowright H$!</p>
+
+<p>There are some interesting facts about group action as well. For group action $G \curvearrowright X$, define</p>
+<ol>
+	<li>Orbit $G \cdot x$: The collection of $y \in X$ which is reachable from $x$ by action of $G$, that is, $\{ g \cdot x : g \in G \}$.</li>
+	<li>Stabiliser $G_x$: The collection of $g \in G$ that fixes $x$, that is, $g \cdot x = x$.</li>
+	<li>Fixed point $X_g$: The collection of $x \in X$ that is fixed by $g$, that is, $g \cdot x = x$.</li>
+</ol>
+
+<p>Note that $g \cdot x = h \cdot x \iff h^{-1} g \cdot x = x \iff h^{-1} g \in G_x \iff g G_x = h G_x$. Since $G_x \lt G$, we have $|G \cdot x| = [G : G_x] = \frac{|G|}{|G_x|}$ or $|G| = |G \cdot x| |G_x|$. This is the orbit-stabiliser theorem.</p>
+
+<p>A more magical fact is that, we can actually count the total number of orbits! Suppose the distinct orbits are $G \cdot x_1, \dots, G \cdot x_r$. Then we have, by the orbit-stabiliser theorem and double-counting the number pairs $(g, x)$ where $g \cdot x = x$: $$ r = \sum_{1 \le i \le r} \sum_{y \in G \cdot x_i} \frac{1}{|G \cdot x_i|} = \sum_{x \in X} \frac{|G_x|}{|G|} = \frac{1}{|G|} \sum_{x \in X} |G_x| = \frac{1}{|G|} \sum_{g \in G} |X_g| $$ Which is the well-known Burnside lemma!</p>

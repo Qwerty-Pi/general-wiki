@@ -1,16 +1,4 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-	<script type="text/x-mathjax-config">
-		MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-	</script>
-	<script type="text/javascript"
-		src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-	</script>
-    <link rel="stylesheet" type="text/css" href="../index.css">
-	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
-</head>
-<body>
+
 	<h1>Universal Cup 3 Stage 1: St. Petersburg</h1>
 	<div>
 		<p>A. Given permutation of length $N$ ($\le 5 \times 10^4$). Find # of pairs $(i, j)$ such that $s_{i+l} \lt s_{j+l}$ simulatenously holds for $0 \le l \lt M$. $O(\frac{N^2}{w})$ bitset.</p>
@@ -29,5 +17,4 @@
 		<p>N: Run-twice task. Convert labelled graph of size of $N$ to unlabelled graph of size $N + \lceil \log_2 N \rceil + 3$ and convert back.</p>
 		<p>O: Given $X_{i+2} = A \cdot X_{i+1} + B \cdot X_i$, $X_1$ and $X_N$. Construct sequence.</p>
 	</div>
-</body>
-</html>
+

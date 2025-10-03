@@ -30,13 +30,13 @@
 <ol>
 	<li>$P \cdot Q$: $O(N^2)$ naively. $O(N \log N)$ with FFT.</li>
 	<li>$P^{-1}$: $O(N^2)$ "naively". $O(N \log^2 N)$ with Newton Iteration: $F(Q) = Q^{-1} - P$ and $F'(Q) = -Q^{-2}$. The recurrence is hence, $$ Q_{n+1} \equiv Q_n - \frac{F(Q_n)}{F'(Q_n)} \equiv Q_n - \frac{Q_n^{-1} - P}{-Q_n^{-2}} \equiv Q_n (2 - P Q_n) \pmod{X^2} $$</li>
-	<li>$P \div Q$: $O(N^2)$ naively. $O(N \log^2 N)$ with prequisite $P \cdot Q$ and $P^{-1}$: Define $P^R = x^n P(x^{-1})$, which is reversing $P$ literally. Then, the quotient of $P \div Q$ would exactly be reversed first $n - m + 1$ terms of $P^R \cdot ({Q^R})^{-1}$! Intuitively, when we reverse the polynomials, the "ordinary" division we perceive matches with the division in $\mathbb{F}[[x]]$, which where the terms are calculated in increasing order.</li>
+	<li>$P \div Q$: $O(N^2)$ naively. $O(N \log N)$ with prequisite $P \cdot Q$ and $P^{-1}$: Define $P^R = x^n P(x^{-1})$, which is reversing $P$ literally. Then, the quotient of $P \div Q$ would exactly be reversed first $n - m + 1$ terms of $P^R \cdot ({Q^R})^{-1}$! Intuitively, when we reverse the polynomials, the "ordinary" division we perceive matches with the division in $\mathbb{F}[[x]]$, which where the terms are calculated in increasing order.</li>
 	<li>$\gcd(P, Q)$: $O(N^2)$ with euclidean algorithm, naively. $O(N \log^2 N)$ with half-gcd algorithm, which seems complicated and involve splitting both polynomials into about equal two halves, then recurse downwards.</li>
 	<li>$P'$: $O(N)$ "naively", following the definitions.</li>
 	<li>$\int P$: $O(N)$ "naively", following the definitions.</li>
-	<li>$\log P$: $O(N \log^2 N)$ with prerequisite $P \div Q$: Simply note that $$ (\log P)' = \frac{P'}{P} $$ </li>
-	<li>$\exp P$: $O(N \log^2 N)$ with Newton Iteration: $F(Q) = \log Q - P$ and $F'(Q) = Q^{-1}$. The recurrence is hence, $$ Q_{n+1} \equiv Q_n - \frac{F(Q_n)}{F'(Q_n)} \equiv Q_n - \frac{\log Q_n - P}{Q_n^{-1}} \equiv Q_n (1 - \log Q_n + P) \pmod{X^2} $$</li>
-	<li>$P^k$: $O(N \log N \log k)$ with binary exponentiation. $O(N \log^2 N)$ alternatively, noting $$ P^k = \exp \{k \log P\} $$</li>
+	<li>$\log P$: $O(N \log N)$ with prerequisite $P \div Q$: Simply note that $$ (\log P)' = \frac{P'}{P} $$ </li>
+	<li>$\exp P$: $O(N \log N)$ with Newton Iteration: $F(Q) = \log Q - P$ and $F'(Q) = Q^{-1}$. The recurrence is hence, $$ Q_{n+1} \equiv Q_n - \frac{F(Q_n)}{F'(Q_n)} \equiv Q_n - \frac{\log Q_n - P}{Q_n^{-1}} \equiv Q_n (1 - \log Q_n + P) \pmod{X^2} $$</li>
+	<li>$P^k$: $O(N \log N \log k)$ with binary exponentiation. $O(N \log Nk)$ alternatively, noting $$ P^k = \exp \{k \log P\} $$</li>
 </ol>
 
 <h3>II. Point-Set Polynomial Conversion</h3>
@@ -45,6 +45,6 @@
 
 <p>In fact, both general case can be solved in $O(N \log^2 N)$ in similar segment tree manner. We can always precompute for each segtree node, the product of $x - x_k$ for $k$ over its range, with FFT. Then for (1), we simply traverse the segment tree once, and whenever we go down we take modulo with the computed product.</p>
 
-<p>For Type (2), we can use Lagrange Interpolation which without speedup works in $O(N^3)$ (A value only then $O(N^2)$), and $$ P = \sum_{k = 1}^{n} \frac{\prod_{j \ne k} (x - x_j)}{\prod_{j \ne k} (x_k - x_j)} \cdot y_k \implies \frac{P}{\prod_{j} (x - x_j)} = \sum_{k = 1}^{n} \frac{y_k} {\prod_{j \ne k} (x_k - x_j)} \cdot \frac{1}{x - x_k} $$ Since $P'(x_k) = \prod_{j \ne k} (x_k - x_j)$, we can carry out a multi-point evaluation on $P'$. We get the form $$P = \sum_{k = 1}^{n} \frac{a_k}{x - x_k}$$ Which we can again use the same segment tree to do some addition of fractions, still in $O(N \log^2 N)$.</p>
+<p>For Type (2), we can use Lagrange Interpolation in knapsack manners in $O(N^2)$. Alternatively, $$ P = \sum_{k = 1}^{n} \frac{\prod_{j \ne k} (x - x_j)}{\prod_{j \ne k} (x_k - x_j)} \cdot y_k \implies \frac{P}{\prod_{j} (x - x_j)} = \sum_{k = 1}^{n} \frac{y_k} {\prod_{j \ne k} (x_k - x_j)} \cdot \frac{1}{x - x_k} $$ Since $P'(x_k) = \prod_{j \ne k} (x_k - x_j)$, we can carry out a multi-point evaluation on $P'$. We get the form $$P = \sum_{k = 1}^{n} \frac{a_k}{x - x_k}$$ Which we can again use the same segment tree to do some addition of fractions, still in $O(N \log^2 N)$.</p>
 
 <p>Indeed for type (1) there is a special case where $x_k = z^k$. To solve that in $O(N \log N)$, notice that $$ P(z^r) = \sum_{k = 0}^n a_k \cdot z^{kr} = \sum_{k = 0}^n a_k \cdot z^{\binom{k + r}{2} - \binom{k}{2} - \binom{r}{2}} = \frac{1}{z^\binom{r}{2}}\sum_{k = 0}^n a_k \cdot z^{\binom{k + r}{2} - \binom{k}{2}} $$ Therefore, we can simply compute the convolution of $\sum_{k \ge 0} z^{\binom{k}{2}} x^k$ and $\sum_{k = 0}^n a_k z^{-\binom{k}{2}} x^{-k}$, and the coefficient at $x^r$ could be used for computing answer.</p>

@@ -10,7 +10,7 @@
 
 <p>Given two equations $X \equiv a \pmod{m}$ and $X \equiv b \pmod{n}$, how to merge them together? Clearly when $\gcd(m, n) \nmid a - b$, then no solution exists. Otherwise, we can always solve for unique $X \equiv c \pmod{\text{lcm}(m, n)}$. Indeed with extended euclidean algorithm then we have $mx + ny = \gcd(m, n)$ for some $x, y \in \mathbb{Z}$. Which then $mx \equiv \gcd(m, n) \pmod{n}$ and so $c = a + \frac{b - a}{\gcd(m, n)} \cdot mx$ satisfy the condition. Uniqueness is left as exercise.</p>
 
-<h2>Operations Done Quickly</h2>
+<h2>Operations Done Quick</h2>
 
 <p>There are nothing to talk about $+$, $-$ and $\times$ (of course), while exponential $a^b$ is simply binary exponentiation in $O(\log b)$.</p>
 
@@ -34,7 +34,7 @@
 
 <h2>Group Structure of $\mathbb{Z}_n^\times$</h2>
 
-<p>We want to have some investigation on $\mathbb{Z}_n^\times$. For example, $\mathbb{Z}_8^\times = \{ 1, 3, 5, 7 \} \cong \mathbb{Z}_2 \times \mathbb{Z}_2$ - there exists a isomorphism $\sigma$ from $\mathbb{Z}_2 \times \mathbb{Z}_2$ to $\mathbb{Z}_8^{\times}$ by $\sigma((a, b)) = 3^a \cdot 5^b$. How to classify all $\mathbb{Z}_n^\times$? Before we start, define $|\mathbb{Z}_n^\times| = \varphi(n)$, where $\varphi(n)$ is the Euler totient function.</p>
+<p>We want to have some investigation on $\mathbb{Z}_n^\times$, the multiplicative group of $\mathbb{Z}_n$. For example, $\mathbb{Z}_8^\times = \{ 1, 3, 5, 7 \} \cong \mathbb{Z}_2 \times \mathbb{Z}_2$ - there exists a isomorphism $\sigma$ from $\mathbb{Z}_2 \times \mathbb{Z}_2$ to $\mathbb{Z}_8^{\times}$ by $\sigma((a, b)) = 3^a \cdot 5^b$. How to classify all $\mathbb{Z}_n^\times$? Before we start, define $|\mathbb{Z}_n^\times| = \varphi(n)$, where $\varphi(n)$ is the Euler totient function.</p>
 
 <p>First the most simple: prime $p$. We claim that $\mathbb{Z}_p^\times \cong \mathbb{Z}_{p-1} = \langle g \rangle$ for some $g \in \mathbb{Z}_p^\times$. There are many proofs out there, so I would explain in one of the ways - Consider subgroup $H \lt \mathbb{Z}_p^\times$ of order $d \mid p - 1$. Then for all $a \in H$, it satisfies $a^d - 1 = 0$ over field $\mathbb{Z}_p$, which has at most $d$ roots. Therefore, there must be at most one subgroup $H$ for each $d \mid p - 1$, and the number of elements with order $d$ is at most $\varphi(d)$. Since $n = \sum_{d \mid n} \varphi(d)$, the equality case is forced and so the number of elements with order $d$ is exactly $\varphi(d)$, implying generator for $\mathbb{Z}_p^\times$ exists.</p>
 

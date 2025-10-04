@@ -1,0 +1,28 @@
+<h1>Modular Arithmetic</h1>
+
+<h2>Introduction</h2>
+
+<p>What is modular arithmetic? It is arithmetic done in $\mathbb{Z}_n = \mathbb{Z} / n\mathbb{Z} = \{ 0, 1, \cdots, n - 1 \}$ where $n$ is positive integer. Essentially, we try to recreate the mathematical operations done in $\mathbb{R}$ to $\mathbb{Z}_n$: $a + b$, $a - b$, $a \times b$, $a^b$, $a \div b$, $\log_a{b}$, $\sqrt{a}$, $\sqrt[b]{a}$, etc. You might know that $\mathbb{Z}_n$ is a ring, and $\mathbb{Z}_p$ is field iff $p$ is prime.</p>
+
+<p>We denote $a \mid b$ as $a$ divides $b$ (or $b$ is multiple of $a$), and that $a \equiv b \pmod{m} \iff m \mid a - b$. </p>
+
+<h2>Merging Equations</h2>
+
+<p>Given two equations $X \equiv a \pmod{m}$ and $X \equiv b \pmod{n}$, how to merge them together? Clearly when $\gcd(m, n) \nmid a - b$, then no solution exists. Otherwise, we can always solve for unique $X \equiv c \pmod{\text{lcm}(m, n)}$. Indeed with extended euclidean algorithm then we have $mx + ny = \gcd(m, n)$ for some $x, y \in \mathbb{Z}$. Which then $mx \equiv \gcd(m, n) \pmod{n}$ and so $c = a + \frac{b - a}{\gcd(m, n)} \cdot mx$ satisfy the condition. Uniqueness is left as exercise.</p>
+
+<h2>Operations Done Quickly</h2>
+
+<p>There are nothing to talk about $+$, $-$ and $\times$ (of course), while exponential $a^b$ is simply binary exponentiation in $O(\log b)$.</p>
+
+<p>How about division? The result of $a \div b$ is well-defined iff $\gcd(b, m) = 1$, which then $1 \in \langle b \rangle$ or the order $|b|$ is finite. Since $\langle b \rangle$ is a subgroup of $\mathbb{Z}_m^\times$, $|b|$ divides $|\mathbb{Z}_m^\times| = \varphi(m)$ and $a^{\varphi(m)} \equiv 1 \pmod{m}$, which is the Euler's Theorem. A special case is when $m$ is prime, which then $\mathbb{Z}_m$ is a field and so $\varphi(m) = m - 1$. Thus $a^{-1} \equiv a^{\varphi(m) - 1} \pmod{m}$ can be computed in $O(\log m)$ time with binary exponentiation.</p>
+
+<p>Alternatively, you can take a more Diophantine perspective - write it in multiplication as find $\lambda$ in $a \equiv \lambda b \pmod{m}$, and solve for $a = \lambda b + \mu m$ where $\lambda, \mu \in \mathbb{Z}$. This can be done by extended euclidean algorithm, also in $O(\log m)$.</p>
+
+<p>Discrete logarithm (DLP) $\log_a{b} = \min \{k \in \mathbb{Z}_{\ge 0}: a^k \equiv b \pmod{m} \}$ is more complicated, and involve the baby-step giant-step algorithm - essentially define a block size $B$ and precompute all values $a^k$ where $0 \le k \lt B$ in a map, then check if $b \cdot a^{-lB} \pmod{m}$ is stored in the map. When $\gcd(a, m) \ne 1$ though, you need to manually cancel few first terms $k$. Taking $B \sim \sqrt{m}$, we obtain a $O(\sqrt{m})$ algorithm.</p>
+
+<p>Discrete square root for $m$ prime $\sqrt{a} = \{ x^2 \equiv a \pmod{m} : x \in \mathbb{Z}\}$ can be computed in $O(\log^2{m})$ by Tonelli-Shanks. We can Hensel Lift our way to prime power, and then with Chinese Remainder Theorem (CRT) to generalise to all positive integer $n$, as seen below.</p>
+
+<p>Finally, discrete root $\sqrt[b]{a}$. For prime $p$, we can find primitive root $g \in \mathbb{Z}_p^\times$ where $\mathbb{Z}_p^\times = \langle g \rangle$. By talking $\log_g$ on $\sqrt[b]{a}$, we have $\sqrt[b]{a} = g^{(\log_g{a}) / b}$ which reduces the problem to DLP, which can be solved in $O(\sqrt{n})$. How about prime power? The best bet we have seems to be Hensel lifting. Suppose we have $X_k \in [0, p^k)$ and $X_k^b \equiv a \pmod{p^{k + \nu_p(b)}}$ with $\gcd(a, p) = 1$, where $\nu_p(b)$ is the largest $k$ that $p^k \mid b$. Case where $p \mid a$ can be handled trivially. Then suppose $X_{k+1} \in [0, p^{k+1})$ and $X_{k+1} \equiv X_k \pmod{p^{k + \nu_p(b)}}$, then $$ (X_k + \lambda p^k)^b \equiv X_k^b + b \lambda p^k X_k^{b - 1} \equiv a \pmod{p^{k+\nu_p(b)+1}} $$ We must have $$\lambda \equiv \frac{a - X_k^b}{b X_k^{b - 1}} \pmod{p} $$ Which again $$ X_{k+1} \equiv X_k - \frac{X_k^b - a}{b X_k^{b - 1}} \pmod{p^{k + 1}}$$ Consistent with the discrete sqrt result. Once again, we can CRT our way to find discret root for any $n \in \mathbb{Z}^+$.</p>
+
+<h2>p-adic valuations</h2>
+

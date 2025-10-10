@@ -1,0 +1,35 @@
+<h1>Dynamic Programming</h1>
+
+<ol>
+</ol>
+
+
+<h2>Introduction</h2>
+
+<p> There are many tutorials on optimising array partition and array merging tasks. Unfortunately I cannot really understand those tutorials so here we are.</p>
+
+<p>In such tasks, normally you are given an array A of length N, and for each subarray A[L : R] (L inclusive, R exclusive), we assign a cost to each of the subarray.</p>
+
+<p>In this article, let's use L -> R to represent the subarray A[L:R], and X[0] -> X[1] -> ... -> X[K] to represent the partition A[X[0]:X[1]], A[X[1]:X[2]], ..., A[X[K-1]:X[K]] for the sake of simplicity. Naturally, for every function f, we can define f(X[0] -> X[1] -> ... X[K]) to be sum of f(X[i] -> X[i+1]) over all i between 0 and K - 1.</p>
+
+<p>The forms of array partition and array merging tasks diverges from here:</p>
+
+<ul>
+	<li>Array Partition: If we partition the array A into K subarrays A[X[0]:X[1]], A[X[1]:X[2]], ..., A[X[K-1]:X[K]] where 0 = X[0] < X[1] < ... < X[K] = N, what is the minimum cost C(X[0] -> X[1] -> ... -> X[K])?</li>
+	<li>Array Merging: If we can merge two subarrays A[L:M] and A[M:R] together with cost C(L -> R), what is the minimum cost to merge A from A[0], A[1], ..., A[N-1]? </li>
+</ul>
+
+<p>For the most "raw" version, both can be computed in $O(N^3)$. Of course, with extra properties, we can do better than this.</p>
+
+
+<h2>The Basics</h2>
+
+<h3>Array Partition</h3>
+<p>Define dp[K][N] be the minimum cost to partition A[:N] into K subarrays. Then dp[K][N] = min{dp[K - 1][M] + C(M -> N)}. Works in $O(N^3)$. </p>
+
+<h3>Array Merging</h3>
+<p>Define dp[L][R] be the minimum cost to merge A[L:R]. Then dp[L][R] = min{dp[L][M] + dp[M][R] + C(L -> R)}. Also works in $O(N^3)$.</p>
+
+<h2>Optimal Position</h2>
+
+<h2>Quadrangle Inequality</h2>

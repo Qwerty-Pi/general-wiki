@@ -129,3 +129,6 @@
 <p>Note that $g \cdot x = h \cdot x \iff h^{-1} g \cdot x = x \iff h^{-1} g \in G_x \iff g G_x = h G_x$. Since $G_x \lt G$, we have $|G \cdot x| = [G : G_x] = \frac{|G|}{|G_x|}$ or $|G| = |G \cdot x| |G_x|$. This is the orbit-stabiliser theorem.</p>
 
 <p>A more magical fact is that, we can actually count the total number of orbits! Suppose the distinct orbits are $G \cdot x_1, \dots, G \cdot x_r$. Then we have, by the orbit-stabiliser theorem and double-counting the number pairs $(g, x)$ where $g \cdot x = x$: $$ r = \sum_{1 \le i \le r} \sum_{y \in G \cdot x_i} \frac{1}{|G \cdot x_i|} = \sum_{x \in X} \frac{|G_x|}{|G|} = \frac{1}{|G|} \sum_{x \in X} |G_x| = \frac{1}{|G|} \sum_{g \in G} |X_g| $$ Which is the well-known Burnside lemma!</p>
+
+</body>
+</html>

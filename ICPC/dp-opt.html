@@ -31,5 +31,16 @@
 <p>Define dp[L][R] be the minimum cost to merge A[L:R]. Then dp[L][R] = min{dp[L][M] + dp[M][R] + C(L -> R)}. Also works in $O(N^3)$.</p>
 
 <h2>Optimal Position</h2>
+<p>The above algorithms are slow because we have to loop through all the possible choices to find for the min cost - can we do better if some "magical" condition holds for the optimal position?</p>
+
+<p>For both Array Partition and Array Merging, we can define opt[X][Y] to be the rightmost (or leftmost) optimal M in the transition of dp[X][Y]. When is this "nice"? Well, when opt[X][Y] <= opt[X][Y + 1] or opt[X - 1][Y] <= opt[X][Y], since we expect if our ranges shifts to the right or we have larger number of sets in partition, the optimal position should shifts to the right as well. When these "nice" properties appear, then you can do some standard optimisations.</p>
+
+<p>Note that there are $N^2$ states, so if you decide to compute all states, you cannot do better than $O(N^2)$. </p>
+
+<ul>
+	<li>opt[X][Y] <= opt[X][Y + 1]: </li>
+</ul>
+<h3>opt[X][Y] <= opt[X][Y + 1]</h3>
+<h3>Array Partition</h3>
 
 <h2>Quadrangle Inequality</h2>

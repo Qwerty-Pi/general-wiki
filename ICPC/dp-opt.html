@@ -49,6 +49,7 @@
 <p>Define dp[L][R] be the minimum cost to merge A[L:R]. Then dp[L][R] = min{dp[L][M] + dp[M][R] + C(L -> R)}. Also works in $O(N^3)$.</p>
 
 <h2>Optimal Position</h2>
+
 <p>The above algorithms are slow because we have to loop through all the possible choices to find for the min cost - can we do better if some "magical" condition holds for the optimal position?</p>
 
 <p>For both Array Partition and Array Merging, we can define opt[X][Y] to be the rightmost (or leftmost) optimal M in the transition of dp[X][Y]. When is this "nice"? Well, when opt[X][Y] <= opt[X][Y + 1] or opt[X - 1][Y] <= opt[X][Y], since we expect if our ranges shifts to the right or we have larger number of sets in partition, the optimal position should shifts to the right as well. When these "nice" properties appear, then you can do some standard optimisations.</p>
@@ -56,9 +57,15 @@
 <p>Note that there are $N^2$ states, so if you decide to compute all states, you cannot do better than $O(N^2)$. </p>
 
 <ul>
-	<li>opt[X][Y] <= opt[X][Y + 1]: </li>
+	<li>opt[X][Y] <= opt[X][Y + 1]: $O(N^2 \log N)$ by processing row-by-row, and compute each row in $O(N \log N)$. This can be done by Divide-and-Conquer on opt[X]: We first compute middle of opt[X], then recursive downwards.</li>
+	<li>opt[X][Y] <= opt[X + 1][Y]: For Array Merging obviously this is symmetric to opt[X][Y] <= opt[X][Y + 1], and we can do that similarly. I am not sure how to solve this on Array Partition.</li>
+	<li>opt[X][Y - 1] <= opt[X][Y] <= opt[X + 1][Y]: Notice that if we process dp[X][Y] in increasing order of D = Y - X, we would process opt[X][Y - 1] and opt[X + 1][Y] in the same layer. Therefore, in each of the $O(N)$ layer of D = Y - X to find opt[X][Y], we would loop through $O(N)$ indices, and this results in $O(N^2)$ time complexity - as optimal as we can do without the compression of any states. This is the Knuth optimisation. </li>
 </ul>
-<h3>opt[X][Y] <= opt[X][Y + 1]</h3>
-<h3>Array Partition</h3>
 
 <h2>Quadrangle Inequality</h2>
+
+<p>The key idea is basically "when good things happen, then the optimal position satisfies the above conditions". When does good thing happens? Of course be a good person so you can be luckily, but also when quadrangle inequality holds. Essentially the definition is "wider is worse":</p>
+
+<p>A function f is quadrangle iff for all A <= B <= C <= D, f(A -> D) + f(B -> C) >= f(A -> C) + f(B -> D). For the sake of simplicity, we abbreviate a quadrangle function as QF.</p>
+
+<p>Obviously, given QF f and g and <b>nonnegative</b> c, we know that f + g and cf are QF as well, in accordance to the inequality. Also, for any function f where f(L -> R) only depends on L, f is QF as well. </p>

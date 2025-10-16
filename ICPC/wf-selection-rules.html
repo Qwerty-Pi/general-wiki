@@ -1,0 +1,164 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script>
+		MathJax.Hub.Config({
+			tex2jax: {
+				inlineMath: [['$','$'], ['\\(','\\)']],
+				processEscapes: true
+			}
+		});
+	</script>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
+	<link rel="stylesheet" type="text/css" href="../index.css">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
+	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+	<script src="../function.js"></script>
+</head>
+<body>
+    <h1>WF Selection Rules Analysis</h1>
+
+    <p>Reference: <a href="https://icpc.pku.edu.cn/docs/2025-10/9f8bcd7f12c54e739818d043c374aed7.pdf#page=8" target="_blank">Simplified Chinese (2025)</a></p>
+
+    <h2>(Non-direct) Translation</h2>
+
+    <h3>Section 7. Appendix</h3>
+    
+    <h4>27. Rules on Advancing to World Final:</h4>
+
+    <b>(I) World Final Quota (N)</b>
+    <p>World Final Quota (N) consists of four categories:</p>
+    <ol type="A">
+	    <li>Regional Quota</li>
+	    <li>EC Final Quota</li>
+	    <li>Hosting Team Quota</li>
+	    <li>Hong Kong-Macau Quota</li>
+    </ol>
+    <p>N = A + B + C + D.</p>
+
+    <b>(II) Regional Quota (A)</b>
+    <p>Regional Quota (A) equals to the number of regionals (excluding EC Final).</p>
+    <p>Arrange the regionals in descending order on the number of official teams (tie-break by earlier date).</p>
+    <p>Then the universities with <b>school rank</b> 1 from each regional, in the regional order specified, advanced to World Final. Each university is considered once only.</p>
+    <p>While there is not yet A universities advanced to World Final, continue to procedure with <b>school rank</b> 2 and so on, until all Regional Quota are allocated.</p>
+
+    <b>(III) EC Final Quota (B)</b>
+    <p>EC Final Quota (B) equals to N - A - C - D.</p>
+    <p>Consider the <b>school rank</b>. The top B universities (that has not been advanced from A, C, D) advances to World Final.</p>
+
+    <b>(IV) Hosting Team Quota (C)</b>
+    <p>Hosting Team which advances to World Final via Regional Quota (A) or EC Final Quota (B) does not consumes the Hosting Team Quota (C).</p>
+    <p>Hosting University getting <b>school rank</b> (1) &lt;= 10 (15 for "far places") in other regionals, or (2) &lt;= 15 (23 for "far places") in EC Final can apply for Hosting Team Quota.</p>
+    <p>Hosting Team Quota (C) cannot be applied by Hosting Team of EC Final (Note: Not exactly sure why this rule exists?), and only one university can use the Hosting Team Quota if multiple universities host the regional collaboratively.</p>
+    <p>Hosting Team Quota (C) &lt;= 2. When more than two universities apply for Hosting Team Quota, the universities with higher school rank in EC Final gets Hosting Team Quota.</p>
+
+    <p>Hosting Team Quota (C) can only be used that year and cannot be used for two consecutive years.</p>
+
+    <b>(V) Hong Kong-Macau Quota (D)</b>
+    <p>It is guaranteed that there is at least one team from Hong Kong/Macau advances to World Final.</p>
+    <p>If any Hong Kong/Macau team advances to World Final via Regional (A), EC Final (B) or Hosting Team (C) quota, then no special consideration for Hong Kong/Macau team.</p>
+    <p>Otherwise, the top Hong Kong/Macau team <b>in EC Final</b> advances to World Final. If no Hong Kong/Macau team participate in EC Final, then the top Hong Kong/Macau team <b>in Hong Kong/Macau Regional</b> advances to World Final.</p>
+
+    <b>(VI) World Final Team</b>
+    <p>All the teams involved in the quota allocation process are possible World Final Team.</p>
+    <p>When such team is unique, that team advances to World Final. Otherwise, the university decides one of the possible teams to advance to World Final.</p>
+
+    <h4>28. Official Team Qualification Rules:</h4>
+
+    <p>A team must consists of members of the same university.</p>
+    <p>Each person can represent at most one university within a season.</p>
+    <p>A person who went to two World Finals cannot participate in Regional (officially).</p>
+    <p>Each person can only participate in Regional within five years of entering university.</p>
+    <p>Each person can only participate in two Regionals within the same season (officially), excluding EC Final.</p>
+
+    <h2>Analysis</h2>
+
+    <b>(I) World Final Quota (N = 16)</b>
+    <p>According to past experience, the World Final Quota for East-Asia Contient is mostly fixed, which is N = 16, and likely remains the case in the forseeable future. The total number of slots for World Final (142 for the whole world) is in fact stated in the <a href="https://icpc.global/worldfinals/rules" target="_blank">World Final Rules</a>.</p>
+
+    <b>(II) Regional Quota (A = 7)</b>
+    <p>During the seasons 2022/23 ~ 2025/26 there are in total A = 7 regionals (<b>excluding EC Final</b>, highlighted), which again likely to be fixed in forseeable future. Therefore what interests us is how "heavy" is the overlapping in the top teams in Regionals, since that affects how high school rank is required to advance to World Final. The historic data are collected in the follows, where highlighted are the teams who will advance to World Final via Regional Quota in accordance to the new rules:</p>
+
+    <style>
+	th, td {
+		text-align: center;
+        min-width: 70px;
+	}
+    .highlighted {
+        background-color: var(--text-color);
+        color: var(--background-color);
+    }
+    </style>
+
+    <u>Season 2022/23</u>
+    <table border="1">
+	<tbody>
+		<tr><th>Regional</th> <th class="highlighted">上海</th> <th>瀋陽</th> <th>杭州</th> <th>濟南</th> <th>西安</th> <th>合肥</th> <th>南京</th> <th>香港</th> </tr>
+		<tr><th>Team #</th> <th>279</th> <th>701</th> <th>543</th> <th>504</th> <th>470</th> <th>451</th> <th>416</th> <th>114</th> </tr>
+
+		<tr><td>#1</td><td>北大</td><td class="highlighted">浙江</td><td class="highlighted">北大</td><td>北大</td><td>北大</td><td class="highlighted">清華</td><td>北大</td><td class="highlighted">上海交通</td></tr>
+		<tr><td>#2</td><td>清華</td><td>北大</td><td>清華</td><td>清華</td><td>浙江</td><td>北大</td><td class="highlighted">南京</td><td class="highlighted">西安交通</td></tr>
+		<tr><td>#3</td><td>浙江</td><td class="highlighted">山東</td><td>北航</td><td>浙江</td><td>上海交通</td><td>上海交通</td><td>清華</td><td>清華</td></tr>
+		<tr><td>#4</td><td>南京</td><td>南京郵電</td><td>上海交通</td><td>湖南</td><td>清華</td><td>浙江</td><td>上海交通</td><td>北大</td></tr>
+		<tr><td>#5</td><td>南京郵電</td><td>中南</td><td>華中科技</td><td>港大</td><td>南方科技</td><td>杭電</td><td>南京</td><td>北航</td></tr>
+	</tbody>
+    </table>
+
+    <u>Season 2023/24</u>
+    <table border="1">
+	<tbody>
+		<tr><th>Regional</th> <th class="highlighted">上海</th> <th>杭州</th> <th>西安</th> <th>合肥</th> <th>濟南</th> <th>南京</th> <th>瀋陽</th> <th>澳門</th> </tr>
+		<tr><th>Team #</th> <th>280</th> <th>442</th> <th>406</th> <th>344</th> <th>334</th> <th>331</th> <th>291</th> <th>82</th> </tr>
+
+		<tr><td>#1</td><td>清華</td><td class="highlighted">北大</td><td>北大</td><td class="highlighted">清華</td><td>北大</td><td>北大</td><td>北大</td><td>北大</td></tr>
+		<tr><td>#2</td><td>北大</td><td>清華</td><td>清華</td><td class="highlighted">浙江</td><td>清華</td><td>清華</td><td class="highlighted">北京交通</td><td>浙江</td></tr>
+		<tr><td>#3</td><td>電子科技</td><td>北京交通</td><td class="highlighted">南京郵電</td><td>北大</td><td class="highlighted">湖南</td><td>浙江</td><td class="highlighted">上海交通</td><td>中大深圳</td></tr>
+		<tr><td>#4</td><td>哈工大</td><td>東北</td><td>上海交通</td><td>電子科技</td><td>浙江</td><td>南京郵電</td><td>國防科技</td><td>哈工大</td></tr>
+		<tr><td>#5</td><td>上海交通</td><td>武漢理工</td><td>南京</td><td>中山</td><td>北京理工</td><td>北航</td><td>杭電</td><td>中大</td></tr>
+	</tbody>
+    </table>
+
+    <u>Season 2024/25</u>
+    <table border="1">
+	<tbody>
+        <tr> <th> Regional </th> <th class="highlighted">西安</th> <th>昆明</th> <th>杭州</th> <th>上海</th> <th>南京</th> <th>成都</th> <th>瀋陽</th> <th>香港</th> </tr>
+        <tr> <th> Team # </th> <th>280</th> <th>449</th> <th>366</th> <th>336</th> <th>336</th> <th>307</th> <th>300</th> <th>149</th> </tr>
+        <tr> <td> #1 </td> <td>北大</td> <td class="highlighted">清華</td> <td class="highlighted">北大</td> <td>北大</td> <td class="highlighted">浙江</td> <td>北大</td> <td>北大</td> <td>北大</td> </tr>
+        <tr> <td> #2 </td> <td>清華</td> <td>北大</td> <td>清華</td> <td>清華</td> <td class="highlighted">中國科技</td> <td>清華</td> <td class="highlighted">中山</td> <td class="highlighted">北航</td> </tr>
+        <tr> <td> #3 </td> <td>浙江</td> <td class="highlighted">哈工大</td> <td>上海交通</td> <td>中山</td> <td>北大</td> <td>浙江</td> <td>中南</td> <td>哈工大</td> </tr>
+        <tr> <td> #4 </td> <td>北京交通</td> <td>南京理工</td> <td>北京交通</td> <td>南方科技</td> <td>北京郵電</td> <td>中山</td> <td>中國科技</td> <td>杭電</td> </tr>
+        <tr> <td> #5 </td> <td>中國科技</td> <td>杭電</td> <td>華中科技</td> <td>浙江</td> <td>港大</td> <td>南方科技</td> <td>北京交通</td> <td>上海</td> </tr>
+    </tbody>
+    </table>
+    
+    <u>Season 2025/26</u>
+    <table border="1">
+	<tbody>
+        <tr> <th> Regional </th> <th class="highlighted">杭州</th> <th>武漢</th> <th>瀋陽</th> <th>西安</th> <th>成都</th> <th> 南京</th> <th>上海</th> <th>香港</th> </tr>
+        <tr> <th> Team # </th> <th>*290</th> <th>*430</th> <th>*400</th> <th>*380</th> <th>*320</th> <th>*320</th> <th>*320</th> <th>*120</th> </tr>
+        <tr> <td> #1 </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> </tr>
+        <tr> <td> #2 </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> </tr>
+        <tr> <td> #3 </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> </tr>
+        <tr> <td> #4 </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> </tr>
+        <tr> <td> #5 </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> </tr>
+    </tbody>
+    </table>
+
+    <!-- template
+    <table border="1">
+	<tbody>
+        <tr> <th> Regional </th> <th> </th> <th> </th> <th> </th> <th> </th> <th> </th> <th> </th> <th> </th> <th> </th> </tr>
+        <tr> <th> Team # </th> <th> </th> <th> </th> <th> </th> <th> </th> <th> </th> <th> </th> <th> </th> <th> </th> </tr>
+        <tr> <td> #1 </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> </tr>
+        <tr> <td> #2 </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> </tr>
+        <tr> <td> #3 </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> </tr>
+        <tr> <td> #4 </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> </tr>
+        <tr> <td> #5 </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> <td> </td> </tr>
+    </tbody>
+    </table>
+    -->
+</body>
+</html>

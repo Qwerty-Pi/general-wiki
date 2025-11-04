@@ -19,30 +19,171 @@
 
 <h1>Floor Sum Function</h1>
 
-<p>We are interested about how to compute functions in the form of $$F(n, a, b, c) = \sum_{i = 1}^{n} P\Big( i, \Big\lfloor\frac{ai + b}{c}\Big\rfloor \Big)$$ where $P \in \mathbb{F}[x, y]$ is polynomial in two variables. Why, you ask? Because it appears in contests.</p>
+<p>We are interested about how to compute functions in the form of $$F_P(n, a, b, c) = \sum_{i = 1}^{n} P\Big( i, \Big\lfloor\frac{ai + b}{c}\Big\rfloor \Big)$$ where $P \in \mathbb{F}[x, y]$ is polynomial in two variables. Why, you ask? Because it appears in contests.</p>
 
 <p>There are two different interpretation for this floor sum function: A 2D grid geometry one, which we can rewrite $P\Big( i, \Big\lfloor\frac{ai + b}{c}\Big\rfloor \Big)$ into summation in the y-axis such that the summation is symmetric in $x$ and $y$. Alternatively, there is also a group-theoric one, which is more generic and (possibly more) useful in scenarios.</p>
 
+<p>For the sake of simplicity, we use $F_{h, k} := F_{x^h y^k}$ and $F$ as the function with domain being the collection of matrices $(F_{h, k})$. We also write $P_{h, k} := x^h y^k$.</p>
+
 <h2>Normalisation</h2>
 
-<p>We definitely don't want to handle the cases where some $a, b$ is negative or greater or equal to $c$, since those cases are ugly. How can we normalise them? We write $a = uc + a'$ and $b = vc + b'$ where $u, v \in \mathbb{Z}$ and $0 \le a', b' \lt c$. Then $$P\Big( i, \Big\lfloor\frac{ai + b}{c}\Big\rfloor \Big) = P\Big( i, \Big\lfloor\frac{a'i + b'}{c}\Big\rfloor + ui + v \Big)$$</p>
+<p>We definitely don't want to handle the cases where some $a, b$ is negative or greater or equal to $c$, since those cases are ugly. How can we normalise them?</p>
 
-<p>When $P$ is of low degree, we can definitely simply do the recursion, perhaps with memorisation.  Alternatively, we can breakdown $P$ into monomials, and compute all the sum over $x^ky^l$ where $0 \le k + l \lt M$ for some bounds $M$. For the sake of simplicity, denote $P_{k, l} = x^ky^l$ and  the collection of all such 2D arrays of sums as $\mathbb{A}$. Suppose $F : \{(n, a, b, c)\} \rightarrow \mathbb{A} $ instead. Then (obviously) we can write $A = F(n, a, b, c)$ in form of $B = F(n, a', b', c)$, noting $$P_{k, l}\Big( x, \Big\lfloor\frac{a'x + b'}{c}\Big\rfloor + ux + v \Big) = \sum_{i = 0}^{l} \sum_{j = i}^{l} \binom{l}{j} \binom{j}{i} u^i v^{j - i} P_{k + i, l - j}\Big( x, \Big\lfloor\frac{a'x + b'}{c}\Big\rfloor\Big) $$ And so $$ A_{k, l} = \sum_{i = 0}^{l} \sum_{j = i}^{l} \binom{l}{j} \binom{j}{i} u^i v^{j-i} B_{k + i, l - j} $$ The transition clearly works in $O(M^2)$.</p>
+<h3>Normalising $a$</h3>
+<p>
+	Let's say $a$ is not normalised. Write $a = \lambda c + a_0$, then $$
+		P_{h, k}\Big( x, \Big\lfloor\frac{ax + b}{c}\Big\rfloor \Big)
+	=	P_{h, k}\Big( x, \Big\lfloor\frac{a_0x + b}{c}\Big\rfloor + \lambda x \Big)
+	=	\sum_{j = 0}^{k} \binom{k}{j} \lambda^{j} P_{h + j, k - j} \Big( x, \Big\lfloor\frac{a_0x + b}{c}\Big\rfloor\Big)
+	$$
+</p>
+<p>
+	The above directly translates to
+	$$
+			F_{h, k}(n, a, b, c)
+		= 	\sum_{j = 0}^k \binom{k}{j} \lambda^{j} F_{h + j, k - j}(n, a_0, b, c)
+	$$
+</p>
+<p>
+	This can be naively computed in $O(M^3)$, or with fast convolution in $O(M^2 \log M)$.
+</p>
 
-<p>When $a = 0$, $P$ is just polynomial in $x$ and so such summation is easy to compute. So we may normalise such that $a \gt 0$ as well.</p>
+<h3>Normalising $b$</h3>
+<p>
+	Similarly, if $b$ is not normalised, then we can write $b = \lambda c + b_0$, and $$
+		P_{h, k}\Big( x, \Big\lfloor\frac{ax + b}{c}\Big\rfloor \Big)
+	=	P_{h, k}\Big( x, \Big\lfloor\frac{ax + b_0}{c}\Big\rfloor + \lambda \Big)
+	=	\sum_{j = 0}^{k} \binom{k}{j} \lambda^{j} P_{h, k - j} \Big( x, \Big\lfloor\frac{ax + b_0}{c}\Big\rfloor\Big)
+	$$
+</p>
+<p>
+	Then,
+	$$
+			F_{h, k}(n, a, b, c)
+		= 	\sum_{j = 0}^k \binom{k}{j} \lambda^{j} F_{h, k - j}(n, a, b_0, c)
+	$$
+</p>
+<p>Once again work in $O(M^3)$ naively and $O(M^2 \log M)$ with optimisation.</p>
 
-<h2>Geometric Interpretation</h2>
+<h2>Euclidean Algorithm</h2>
 
-<p>To write $P$ as summation, we can simply take the partial difference of $P$: $\Delta_y P (x, y) = P(x, y) - P(x, y - 1)$. Note that $\Delta_y P$ is also polynomial, by $$(\Delta_yP)_{k, l} = P_{k, l} - \sum_{j = 0}^{l} \binom{l}{j} (-1)^j P_{k, l - j}.$$ Hence we have $$ F(n, a, b, c) = \sum_{i = 1}^{n} \sum_{j = 1}^{\lfloor \frac{an+b}{c} \rfloor} \Delta_y P( i, j ) \Big[j \le \frac{ai + b}{c}\Big]$$ Indeed, we can rewrite the condition $j \le \frac{ai + b}{c}$ to $i \ge \frac{cj - b}{a}$. Take $m = \lfloor \frac{an + b}{c} \rfloor$, we have $$F(n, a, b, c) = \sum_{i = 1}^n \sum_{j = 1}^m \Delta_y P (i, j) \Big[ i \ge \frac{cj - b}{a} \Big] = \sum_{i = 1}^n \sum_{j = 1}^m \Delta_y P (i, j) - \sum_{i = 1}^{n} \sum_{j = 1}^{m} \Delta_y P (i, j) \Big[ i \le \frac{cj - b - 1}{a} \Big]$$</p>
 
-<p>By the condition of $m = \lfloor \frac{an + b}{c} \rfloor$, $\frac{cm - b - 1}{a} \leq \frac{an - 1}{a} \lt n$. Therefore, $$ \sum_{i = 1}^{n} \sum_{j = 1}^{m} \Delta_y P (i, j) \Big[ i \le \frac{cj - b - 1}{a} \Big] = \sum_{j = 1}^{m} \sum_{i = 1}^{n} \Delta_x \widetilde{P} (j, i) \Big[ i \le \frac{cj - b - 1}{a} \Big] = \sum_{j = 1}^{m} \text{S}_y \Delta_x \widetilde{P} \Big(j, \Big\lfloor \frac{cj - b - 1}{a}\Big\rfloor\Big) = \widetilde{F}(m, c, -b - 1, a)$$ Where $\widetilde{P}$ is transpose of $P$, namely swapping $x$ and $y$.</p>
+<p>First note that for $k = 0$, $F_{h, 0}(n, a, b, c) = \sum_{i = 1}^{n} P_{h, 0}(i, \lfloor \frac{ai + b}{c} \rfloor) = \sum_{i = 1}^{n} i^h = S_h(n)$ is simply the sum of powers. Therefore we only need to think about the case where $k \ge 1$.</p>
 
-<p>Also note that $$ \sum_{i = 1}^n \sum_{j = 1}^m \Delta_y P (i, j) = \sum_{i = 1}^n P (i, m) $$ is "just" sum of powers. Therefore, $$ F(n, a, b, c) = \text{S}_x I(n, \Big\lfloor\frac{an + b}{c}\Big\rfloor) - \text{S}_y \Delta_x \widetilde{F}\Big(\Big\lfloor\frac{an + b}{c}\Big\rfloor, c, -b - 1, a\Big)$$</p>
 
-<p>With normalisation, we can do some "euclidean-like" algorithm to solve the task.</p>
+<p>We assume that $a, b, c$ are normalised. When $a = 0$, $y$ is irrelevant as $$
+		F_{h, k}(n, a, b, c)
+	= 	\sum_{i = 1}^{n} P_{h, k}\Big( i, \Big\lfloor\frac{ai + b}{c}\Big\rfloor \Big)
+	=	\sum_{i = 1}^{n} P_{h, k}\Big( i, \Big\lfloor\frac{b}{c}\Big\rfloor \Big)
+	=	S_h(n) \cdot P_k\Big( \Big\lfloor\frac{b}{c}\Big\rfloor \Big)
+	$$ But since $\lfloor\frac{b}{c}\rfloor = 0$ and $k \ge 1$, $F_{h, k}(n, a, b, c) = 0$. We may assume $a \gt 0$ in the following.</p>
+
+<p>To write $P$ as summation, we can simply take the partial difference of $P$: $\{\Delta_y P\} (x, y) = P(x, y) - P(x, y - 1)$. Note that $\Delta_y P$ is also polynomial.
+	
+	Hence we have
+	
+	$$
+		F(n, a, b, c) 
+	= 	\sum_{i = 1}^{n} \sum_{j = 1}^{\lfloor \frac{an+b}{c} \rfloor} \{ \Delta_y P \}( i, j ) \Big[j \le \frac{ai + b}{c}\Big]
+	$$
+	
+	Indeed, we can rewrite the condition $j \le \frac{ai + b}{c}$ to $i \ge \frac{cj - b}{a}$. Take $m = \lfloor \frac{an + b}{c} \rfloor$, we have
+	$$
+		F_{h, k}(n, a, b, c) 
+	= 	\sum_{i = 1}^n \sum_{j = 1}^m \{ \Delta_y P_{h, k} \} (i, j) \Big[ i \ge \frac{cj - b}{a} \Big]
+	= 	S_h(n) \cdot P_k(m) - \sum_{i = 1}^{n} \sum_{j = 1}^{m} \{ \Delta_y P_{h, k} \} (i, j) \Big[ i \le \frac{cj - b - 1}{a} \Big]$$</p>
+
+<p>By the condition of $m = \lfloor \frac{an + b}{c} \rfloor$, $\frac{cm - b - 1}{a} \leq \frac{an - 1}{a} \lt n$. Therefore,
+	$$
+		\sum_{i = 1}^{n} \sum_{j = 1}^{m} \{ \Delta_y P_{h, k} \} (i, j) \Big[ i \le \frac{cj - b - 1}{a} \Big]
+	= 	\sum_{j = 1}^{m} \sum_{i = 1}^{n} \{ \Delta_x P_{k, h} \} (j, i) \Big[ i \le \frac{cj - b - 1}{a} \Big]
+	= 	F_{\text{S}_y \Delta_x P_{k, h}}(m, c, -b - 1, a)
+	$$</p>
+
+<p>
+	Combining, we have $$ F_{h, k}(n, a, b, c) = S_h(n) \cdot P_k(m) - F_{\text{S}_y \Delta_x P_{k, h}}(m, c, -b - 1, a) $$
+</p>
+<p>With normalisation, we can do some "euclidean-like" algorithm to solve the task. Directly doing the above gives a $O(M^4)$ algorithm - there exists optimisations to make it runs faster, but I haven't figure it out yet.</p>
+
+<h3>Key Equations</h3>
+<p>Here are the key equations for $F_{h, k}$ where $k \ge 1$:</p>
+
+<p><b>(Normalisation of $a$)</b> Suppose $a = \lambda c + a_0$. Then $$
+		F_{h, k}(n, a, b, c)
+	= 	\sum_{j = 0}^k \binom{k}{j} \lambda^{j} F_{h + j, k - j}(n, a_0, b, c)
+	$$
+</p>
+
+<p><b>(Normalisation of $b$)</b> Suppose $b = \lambda c + b_0$. Then $$
+			F_{h, k}(n, a, b, c)
+		= 	\sum_{j = 0}^k \binom{k}{j} \lambda^{j} F_{h, k - j}(n, a, b_0, c)
+	$$
+</p>
+
+<p><b>(Euclidean Step)</b> For $a \ne 0$, $m = \lfloor \frac{an + b}{c} \rfloor$, $$ F_{h, k}(n, a, b, c) = S_h(n) \cdot P_k(m) - F_{\text{S}_y \Delta_x P_{k, h}}(m, c, -b - 1, a) $$
+</p>
 
 <h2>Simple Cases</h2>
 
-<p>The simplest cases to be considered are $P_{0, 1}, P_{1, 1}$ and $P_{0, 2}$, since $P_{i, 0}$ are just sum of powers. This is the most useful cases and in some templates, and these cases are addressed so as to verify the formula is correct.</p>
+<p>The simplest cases to be considered are $F_{0, 1}, F_{1, 1}$ and $F_{0, 2}$, since $F_{i, 0}$ are just sum of powers. This is the most useful cases and in some templates, and these cases are addressed so as to verify the formula is correct.</p>
 
-<h3>Summation over $\big\lfloor\frac{ai + b}{c}\big\rfloor$ ($P_{1, 1}$)</h3>
+<h3>Summation over $\big\lfloor\frac{ai + b}{c}\big\rfloor$ ($F_y = F_{0, 1}$)</h3>
+
+<p><b>(Normalisation of $a$)</b> Suppose $a = \lambda c + a_0$. Then $$
+		F_y(n, a, b, c)
+	=	\lambda S_1(n) + F_y(n, a_0, b, c)
+	$$
+</p>
+
+<p><b>(Normalisation of $b$)</b> Suppose $b = \lambda c + b_0$. Then $$
+		F_y(n, a, b, c)
+	=	\lambda n + F_y(n, a, b_0, c)
+	$$
+</p>
+
+<p><b>(Euclidean Step)</b> For $a \ne 0$, $m = \lfloor \frac{an + b}{c} \rfloor$, $$
+		F_y(n, a, b, c)
+	=	nm - F_y(m, c, -b - 1, a)
+	$$
+</p>
+
+<h3>Summation over $\big\lfloor\frac{ai + b}{c}\big\rfloor^2$ ($F_{y^2} = F_{0, 2}$)</h3>
+
+<p><b>(Normalisation of $a$)</b> Suppose $a = \lambda c + a_0$. Then $$
+		F_{y^2}(n, a, b, c)
+	=	\lambda^2 S_2(n) + \{ 2 \lambda F_{xy} + F_{y^2} \}(n, a_0, b, c)
+	$$
+</p>
+
+<p><b>(Normalisation of $b$)</b> Suppose $b = \lambda c + b_0$. Then  $$
+		F_{y^2}(n, a, b, c)
+	=	\lambda^2 n + \{ 2 \lambda F_y + F_{y^2} \}(n, a, b_0, c)
+	$$
+</p>
+
+<p><b>(Euclidean Step)</b> For $a \ne 0$, $m = \lfloor \frac{an + b}{c} \rfloor$, $$
+		F_{y^2}(n, a, b, c)
+	=	nm^2 - \{ 2F_{xy} - F_y \}(m, c, -b - 1, a)
+	$$
+</p>
+
+
+<h3>Summation over $i \cdot \big\lfloor\frac{ai + b}{c}\big\rfloor$ ($F_{xy} = F_{1, 1}$)</h3>
+
+<p><b>(Normalisation of $a$)</b> Suppose $a = \lambda c + a_0$. Then $$
+		F_{xy}(n, a, b, c)
+	=	\lambda S_2(n) + F_{xy}(n, a_0, b, c)
+	$$
+</p>
+
+<p><b>(Normalisation of $b$)</b> Suppose $b = \lambda c + b_0$. Then  $$
+		F_{xy}(n, a, b, c)
+	=	\lambda S_1(n) + F_{xy}(n, a, b_0, c)
+	$$
+</p>
+
+<p><b>(Euclidean Step)</b> For $a \ne 0$, $m = \lfloor \frac{an + b}{c} \rfloor$, $$
+		F_{xy}(n, a, b, c)
+	=	S_1(n) \cdot m - \frac{1}{2}\{ F_{y^2} + F_y \}(m, c, -b - 1, a)
+	$$
+</p>

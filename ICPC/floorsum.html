@@ -19,6 +19,7 @@
 
 <h1>Floor Sum Function</h1>
 
+
 <p>We are interested about how to compute functions in the form of $$F_P(n, a, b, c) = \sum_{i = 1}^{n} P\Big( i, \Big\lfloor\frac{ai + b}{c}\Big\rfloor \Big)$$ where $P \in \mathbb{F}[x, y]$ is polynomial in two variables. Why, you ask? Because it appears in contests.</p>
 
 <p>There are two different interpretation for this floor sum function: A 2D grid geometry one, which we can rewrite $P\Big( i, \Big\lfloor\frac{ai + b}{c}\Big\rfloor \Big)$ into summation in the y-axis such that the summation is symmetric in $x$ and $y$. Alternatively, there is also a group-theoric one, which is more generic and (possibly more) useful in scenarios.</p>
@@ -186,4 +187,37 @@
 		F_{xy}(n, a, b, c)
 	=	S_1(n) \cdot m - \frac{1}{2}\{ F_{y^2} + F_y \}(m, c, -b - 1, a)
 	$$
+</p>
+
+<h2>Power Lattice</h2>
+
+<p>Disclaimer: Every notation below is made-up and just for self-highing.</p>
+
+<p>This section mainly deals with $S$ and $\Delta$, the partial sum and difference operator on the power lattice. What does the power lattice and these two operators means?</p>
+
+<p>Consider the free abelian group $\mathcal{F}$ over the lattice $\mathbb{Z}^n$. We introduce an group homomorphism $\sigma$ from $\mathcal{F}$ to the power lattice $\mathcal{P} := \mathbb{Z}^n \rightarrow \mathbb{Z}$ where $$ \sigma(\vec{x}) = \{ \vec{\alpha} \mapsto \vec{x}^\vec{\alpha} \} $$</p>
+
+<p>We want to focus on 1D case. Denote the egf of $\mathcal{P}$ as $\widetilde{\mathcal{P}} = \sum_{n \ge 0} \mathcal{P}(n) \frac{X^n}{n!}$.</p>
+
+<p>
+	The simpler case is $\Delta$. We have $$ X^n - (X - 1)^n = \sum_{k = 1}^{n} \binom{n}{k} (-1)^{k+1} X^{n - k} $$
+
+	Which implies $$ \Delta \mathcal{P} (n) = \sum_{k = 1}^{n} \binom{n}{k} (-1)^{k+1} \mathcal{P} (n - k) $$
+</p>
+
+<p>Therefore, $$
+		\widetilde{\Delta \mathcal{P}}
+	= 	\sum_{n \ge 0} \frac{X^n}{n!} \sum_{k = 1}^{n} \binom{n}{k} (-1)^{k + 1} \mathcal{P}(n - k)
+	=	- \sum_{k = 1}^{n} \frac{(-X)^{k}}{k!} \cdot \sum_{l \ge 0} \frac{\mathcal{P}(l)}{l!} X^l
+	=	\widetilde{\mathcal{P}} \ast (1 - e^{-X})
+	$$
+</p>
+
+<p>Since $\Delta$ and $S$ are inverses, we also have
+	$$
+		\widetilde{S \mathcal{P}}
+	= 	\frac{\widetilde{\mathcal{P}}}{1 - e^{-X}}
+	=	\frac{1}{X} B^+ \ast \widetilde{\mathcal{P}}
+	$$
+	Where $B^+$ is the (positive) Bernoulli number.
 </p>

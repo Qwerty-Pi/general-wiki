@@ -117,7 +117,7 @@
 
 	<h3>II. Entity</h3>
 	<p><span class="rect">Entity</span> consists of several attributes. If the attributes are with domain $D_1, \dots, D_K$, the domain of the entity is $D := D_1 \times \cdots \times D_K$.</p>
-	<p>Every entity must have a (set of) <span class="oval"><u>primary key</u></span>, a chosen <b>candidate key</b> or <b>minimal super key</b>. A set of attributes $S$ is super key iff for every valid $E \subset D$ we have $\big|E\big| = \big|E|_{S}\big|$. Clearly $[K]$ is a super key and so candidate key exists.</p>
+	<p>Every entity must have a (set of) <span class="oval"><u>primary key</u></span>, a chosen <b>candidate key</b> or <b>minimal super key</b>. A set of attributes $S$ is super key iff for every valid $E \subset D$ we have the cardinary of $E$ and $E|_{S}$ equal. Clearly $[K]$ is a super key and so candidate key exists.</p>
 	<p>Say the current entity is $\texttt{W}$. If some attributes is "borrowed" from another strong entity $\texttt{S}$, then <span class="rect double">Entity $\texttt{W}$</span> is <b>weak</b>, and its <span class="oval"><u class="dashed">partial key</u></span> is the set of non-borrowed attributes in primary key. <span class="rect double">Entity $\texttt{W}$</span> is linked to <span class="rect">Entity $\texttt{S}$</span> via an <span class="diamond double">Identifying Relationship</span>.</p>
 
 	<h3>III. Relationship</h3>

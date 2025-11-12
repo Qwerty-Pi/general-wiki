@@ -136,8 +136,6 @@
 	
 	<h2>Relational Model</h2>
 
-	<h3>Definition</h3>
-
 	<p>(Side Note: Notation are non-standard. But why there isn't notation for schema and instances?)</p>
 	<p>Relation $\mathcal{R} = (\Sigma, S)$ consists of <b>relational schema $\Sigma$</b> and <b>relational instances $S$</b>.</p>
 	<p>Relational Schema $\Sigma$ is an ordered tuple of pairs: $\{ (A_1, D_1), \dots, (A_K, D_K) \}$, where $A_i$ and $D_i$ are the name and domain of the $i$-th attribute, respectively. </p>
@@ -152,8 +150,18 @@
 		<li><b>Entity Integrity</b> - PK cannot contains $\texttt{null}$, and</li>
 		<li><b>Referential Integrity</b> - FK either $\texttt{null}$ or exists</li>
 	</ol></p>
-	<p>Conversion from ER Model to Relational Model is trivial - simply use common sense to decide what primary key to choose in relation.</p>
+	<p>To convert from ER Model to Relational Model, simply use common sense to decide what primary key to choose in relation.</p>
 	
 	<h2>Relational Algebra</h2>
+
+	<p>Relational Algebra can be considered as a language on relations, and based on set theory. The notations are as follows:
+	<ol>
+		<li>(Select) $\sigma_{P}(\mathcal{R})$ returns a relation with the same schema as $\mathcal{R}$ and rows that satisfy the selection predicate $P$.</li>
+		<li>(Project) $\Pi_{S}(\mathcal{R})$ returns a relation with schema $S$ and the projection of $\mathcal{R}$ onto $S$.</li>
+		<li>(Rename) $\rho_{\mathcal{S}(A_1, \dots, A_K)}(\mathcal{R})$ returns the original $\mathcal{R}$ but renamed (with or without columns).</li>
+		<li>(Join) $\mathcal{R} \bowtie_{P} \mathcal{S}$ returns $\sigma_P(\mathcal{R} \times \mathcal{S})$. If $P$ is omitted, it is natural join and all attributes appear in both $\mathcal{R}$ and $\mathcal{S}$ are equi-joined.</li>
+		<li>(Division) $\mathcal{R} / \mathcal{S}$ returns a relation with schema $S_\mathcal{R} \setminus S_\mathcal{S}$ and instances $\{ x \in D_\mathcal{S} / D_\mathcal{R} \, | \, \{x\} \times \mathcal{S} \subset \mathcal{R} \}$.</li>
+	</ol></p>
+
 </body>
 </html>

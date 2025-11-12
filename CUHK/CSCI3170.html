@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script>
+		MathJax.Hub.Config({
+			tex2jax: {
+				inlineMath: [['$','$'], ['\\(','\\)']],
+				processEscapes: true
+			}
+		});
+	</script>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
+	<link rel="stylesheet" type="text/css" href="../index.css">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+</head>
+
+<style>
+	.oval {
+		border-width: 3px;
+		border-radius: 50%;
+		border-color: var(--text-colour);
+		border-style: solid;
+		padding: 2px 8px;
+		&.double {
+			border-style: double;
+		}
+		&.dashed {
+			border-style: dashed;
+		}
+		box-shadow: 0px 0px 12px gray;
+	}
+
+	.rect {
+                border-width: 3px;
+                border-color: var(--text-colour);
+                border-style: solid;
+                padding: 2px 8px;
+                &.double {
+                        border-style: double;
+                }
+		&.dashed {
+			border-style: dashed;
+		}
+		box-shadow: 0px 0px 12px gray;
+	}
+
+
+	.diamond:before {
+  		position: absolute;
+		content: "";
+		left: 5px;
+		top: -44px;
+		height: 100px;
+  		width: 100px;
+  		transform: scale(100%, 100%) rotateZ(45deg);
+		border: solid 3px;
+  		box-shadow: 0px 0px 12px gray;
+	}
+
+        .diamond.double:before {
+                position: absolute;
+                content: "";
+                left: 5px;
+                top: -44px;
+                height: 100px;
+                width: 100px;
+                transform: scale(100%, 100%) rotateZ(45deg);
+                border: double 3px;
+                box-shadow: 0px 0px 12px gray;
+        }
+
+	.diamond {
+		position: relative;
+		padding: 2px 12px;
+	}
+
+	u.dashed {
+    		border-bottom: 1px dashed;
+    		text-decoration: none;
+	}
+
+	u.double {
+                border-bottom: 3px double;
+                text-decoration: none;
+        }
+
+	table td {
+		padding: 5px;
+	}
+	table td:first-child {
+		text-align: center;
+	}
+</style>
+<body>
+
+	<h1>CSCI3170 Introduction to Database Systems</h1>
+	
+	<h2>Introduction</h2>
+	<p>Target: Translate Application (text) to Database Schema for supporting fast queries.</p>
+	<p>Middleground: <b>Conceptual Modelling</b>.</p>
+
+	<h2>Entity-Relationship (ER) Model</h2>
+
+	<p>We will take the axiomatic approach: Every operation not explicitly said cannot be performed.</p>
+	
+	<h3>I. Attribute</h3>
+	<p>Let's say the domain of the data is $D$ where $\texttt{null} \in D$. There are a few kinds of attributes:</p>
+	<table>
+		<tr><td><span class="oval">Simple/Atomic</span></td><td>$e \in D$.</td></tr>
+		<tr><td><span class="oval double">Multi-valued</span></td><td>$e \in 2^{D}$.</td></tr>
+		<tr><td><span class="oval">Composite</span></td><td>Suppose children with domain $D_1, \dots, D_K$. Then $e \in D_1 \times \cdots \times D_K$.</td></tr>
+		<tr><td><span class="oval dashed">Derived</span></td><td>Can be computed from the rest attributes.</td></tr>
+	</table>
+
+	<h3>II. Entity</h3>
+	<p><span class="rect">Entity</span> consists of several attributes. If the attributes are with domain $D_1, \dots, D_K$, the domain of the entity is $D := D_1 \times \cdots \times D_K$.</p>
+	<p>Every entity must have a (set of) <span class="oval"><u>primary key</u></span>, a chosen <b>candidate key</b> or <b>minimal super key</b>. A set of attributes $S$ is super key iff for every valid $E \subset D$ we have $\big|E\big| = \big|E|_{S}\big|$. Clearly $[K]$ is a super key and so candidate key exists.</p>
+	<p>Say the current entity is $\texttt{W}$. If some attributes is "borrowed" from another strong entity $\texttt{S}$, then <span class="rect double">Entity $\texttt{W}$</span> is <b>weak</b>, and its <span class="oval"><u class="dashed">partial key</u></span> is the set of non-borrowed attributes in primary key. <span class="rect double">Entity $\texttt{W}$</span> is linked to <span class="rect">Entity $\texttt{S}$</span> via an <span class="diamond double">Identifying Relationship</span>.</p>
+
+	<h3>III. Relationship</h3>
+	<p><span class="diamond">Relationship</span> consists of several (at least 2) entity and several attributes. Its domain is (obviously) also the cartesian product.</p>
+	<p>We can impose constraints on relationship: Either <b>cardinality</b> or <b>participation</b>.</p>
+	
+	<h4>A. Cardinality Constraints</h4>
+	<p>Three kinds of cardinality constraints: many-to-many, many-to-one and one-to-one. For relationship $R = E_1 \times E_2$, if for every valid $S \subset R$ we have cardinality of $R|_{E_k}$ = cardinality of $R$, then we can deduce $R$ uniquely from $E_k$ alone.</p>
+
+	<h4>B. Participation Constraints</h4>
+	<p>Two kinds of participation constraints: <u class="double">total</u> and <u>partial</u>. For relationship $R = E_1 \times E_2$, the participation of $E_k$ is <b>total</b> iff for every valid $S \subset R$ we have $S|_{E_k} = E_k$.</p>
+
+	<h3>IV. Other Notations</h3>
+	<p><span class="rect dashed">Aggregation</span>: For relationship between relationship and/or entity.</p>
+	<p>ISA: For class hierachy.</p>
+	
+	<h2>Relational Model</h2>
+
+	<h3>Definition</h3>
+
+	<p>(Side Note: Notation are non-standard. But why there isn't notation for schema and instances?)</p>
+	<p>Relation $\mathcal{R} = (\Sigma, S)$ consists of <b>relational schema $\Sigma$</b> and <b>relational instances $S$</b>.</p>
+	<p>Relational Schema $\Sigma$ is an ordered tuple of pairs: $\{ (A_1, D_1), \dots, (A_K, D_K) \}$, where $A_i$ and $D_i$ are the name and domain of the $i$-th attribute, respectively. </p>
+
+	<p>Relational Instances $S$ is a subset of $D_1 \times \cdots \times D_K$, representing all the possible relations.</p>
+
+	<p>We can define <b><u>Primary Key (PK)</u></b> in relation as well - similar to that in ER Model. A <b>Foreign Key (FK)</b> is a "pointer" to another relation with its <b><u>Primary Key (PK)</u></b>.</p>
+
+	<p>Integrity Constraints is what we want the data to satisfy. Three major kinds of integrity constraints are
+	<ol>
+		<li><b>Key Constraint</b> - PK must be unique</li>
+		<li><b>Entity Integrity</b> - PK cannot contains $\texttt{null}$, and</li>
+		<li><b>Referential Integrity</b> - FK either $\texttt{null}$ or exists</li>
+	</ol></p>
+	<p>Conversion from ER Model to Relational Model is trivial - simply use common sense to decide what primary key to choose in relation.</p>
+	
+	<h2>Relational Algebra</h2>
+</body>
+</html>

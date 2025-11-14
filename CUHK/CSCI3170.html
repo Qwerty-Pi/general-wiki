@@ -162,6 +162,24 @@
 		<li>(Join) $\mathcal{R} \bowtie_{P} \mathcal{S}$ returns $\sigma_P(\mathcal{R} \times \mathcal{S})$. If $P$ is omitted, it is natural join and all attributes appear in both $\mathcal{R}$ and $\mathcal{S}$ are equi-joined.</li>
 		<li>(Division) $\mathcal{R} / \mathcal{S}$ returns a relation with schema $S_\mathcal{R} \setminus S_\mathcal{S}$ and instances $\{ x \in D_\mathcal{S} / D_\mathcal{R} \, | \, \{x\} \times \mathcal{S} \subset \mathcal{R} \}$.</li>
 	</ol></p>
+	
+	<h2>Structual Query Language (SQL)</h2>
+	
+	<h2></h2>
+	<h3>Functional Dependencies (FD)</h3>
+	<p><b>Functional Dependency</b>: $\alpha \rightarrow \beta$ is defined to be $r_1[\alpha] = r_2[\alpha] \implies r_1[\alpha] = r_2[\beta]$ for all $r_1, r_2 \in S$ over all legal extensions $S$.</p>
+	<p><b>Armstrong's Axiom</b> For $\alpha, \beta \subset \Sigma$, we have</p>
+	<ol>
+		<li>(Reflexivity) $\beta \subset \alpha \mid= \alpha \rightarrow \beta$.</li>
+		<li>(Augmentation) $\alpha \rightarrow \beta \mid= \alpha \gamma \rightarrow \beta \gamma$.</li>
+		<li>(Transitivity) $\{ \alpha \rightarrow \beta, \beta \rightarrow \gamma \} \mid= \alpha \rightarrow \gamma$.</li>
+	</ol>
+	<p><b>Closure</b> $F^+$ of functional dependencies $F$ is defined to be the set of all functional dependencies that can be inferred from $F$.</p>
+	<p>Closure $\alpha^+$ for $\alpha \subset \Sigma$ is defined similarly. $\alpha$ is super key of $\mathcal{R}$ iff $\alpha^+ = \Sigma$.</p>
 
+	<h3>Relation Decomposition</h3>
+	<p>A relation $\mathcal{R} = (\Sigma, S)$ can be decomposed to $\mathcal{R_k} = (\Sigma_k, S_k)$ where $\Sigma = \cup_k \Sigma_k$ and $S_k = \Pi_{\Sigma_k}(S)$.</p>
+	<p>A decomposition is <b>lossless-join</b> if $S = S_1 \bowtie \cdots \bowtie S_K$ for all $S$. For $K = 2$, equivalently, $\Sigma_1 \cap \Sigma_2 \rightarrow \Sigma_k \in F^+$ for at least one $k$.</p>
+	<p>Dependency is preserved iff $(F_1 \cup F_2)^+ = F^+$ where $F_k = F^+|_{\Sigma_k}$.</p>
 </body>
 </html>

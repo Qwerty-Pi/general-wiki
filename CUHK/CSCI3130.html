@@ -93,5 +93,10 @@
 	<h2>Decidibility / Computability</h2>
 	<p>There are a bunch of problems about TM are undecidible, i.e., there does not exists a generic algorithm to solve them. For example, the membership problem: Given a TM $M$ and a string $w$, decide whether $w \in L(M)$; or the halting problem: decide whether $M$ will ever halts; state-entry problem: whether TM will ever enter a state given a string $w$; blank-tape problem: whether TM will halt given a blank tape.</p>
 	<p>Uncomputable functions: Maximum number of moves for a TM that halts given a blank tape. We can reduce this to the halting problem.</p>
+	
+	<h2>Complexity Classes</h2>
+	<p>We may define complexity classes for languages, determinstic or non-determinstic, respectively: DTIME($T(n)$) if there exists a deterministic multi-tape Turing Machine that accepts $L$ in $O(T(n))$, and NTIME($T(n)$) for non-deterministic multi-tape Turing Machine. We thus have $L_{REG} \subset $ DTIME($n$), $L_{CF} \subset$ DTIME($n^3$), where $L_{REG}$, $L_{CF}$, $L_{CS} \subset$ NTIME($n$).</p>
+	<p>We define $$\textbf{P} := \cup_{k \ge 1} {\text{DTIME(}n^k\text{)}}$$ and $$\textbf{NP} := \cup_{k \ge 1} {\text{NTIME(}n^k\text{)}}$$ As the two well-known complexity classes. Clearly $\textbf{P} \subset \textbf{NP}$, but it is unknown whether the subset relation is proper or not. Problems in $\textbf{P}$ are called tractable, i.e., sensible to be computed out, and intractable otherwise.</p>
+	<p>Polynomial-time Reducible: Two languages $L_1$, $L_2$ are polynomial-time reducible iff there exists a deterministic Turing Machine to transform $w_1$ to $w_2$ in polynomial time where $w_1 \in L_1 \iff w_2 \in L_2$. A language $L$ is $\textbf{NP}$-hard iff every other $\textbf{NP}$ language can be reduced to $L$, whereas a language that is both $\textbf{NP}$ and $\textbf{NP}$-hard is called $\textbf{NP}$-complete.</p>
 </body>
 </html>

@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script>
+		MathJax.Hub.Config({
+			tex2jax: {
+				inlineMath: [['$','$'], ['\\(','\\)']],
+				processEscapes: true
+			}
+		});
+	</script>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
+	<link rel="stylesheet" type="text/css" href="../index.css">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+</head>
+
+<style>
+@media print {
+	p {
+		font-size: 11px;
+	}
+	h1 {
+		font-size: 20px;
+	}
+	h2 {
+		font-size: 15px;
+	}
+	h3 {
+		font-size: 13px;
+	}
+}
+</style>
+<body>
+
+	<h1>UGED1112 Logic and Argumentation</h1>
+
+	<h2>Natural Deduction</h2>
+
+	<h3>Rules of Inference</h3>
+
+	<ul>
+		<li> [MP] Modus Ponens: $p \supset q$ + $p$ -> $q$</li>
+		<li> [MT] Modus Tollens: $p \supset q$ + $\sim q$ -> $\sim p$</li>
+		<li> [HS] Hypothetical Syllogism: $p \supset q$ + $q \supset r$ -> $p \supset r$</li>
+		<li> [DS] Disjunctive Syllogism: $p \lor q$ + $\sim q$ -> $q$</li>
+		<li> [CD] Contructive Dillema: $(p \supset q) \cdot (r \supset s)$ + $p \lor r$ -> $q \lor s$</li>
+		<li> [Abs] Absorption: $p \supset q$ -> $p \supset (p \cdot q)$</li>
+		<li> [Simp] Simplification: $p \cdot q$ -> $p$</li>
+		<li> [Conj] Conjuntion: $p$ + $q$ -> $p \cdot q$</li>
+		<li> [Add] Addition: $p$ -> $p \lor q$ </li>
+	</ul>
+
+	<h3>Rules of Replacement</h3>
+	<ul>
+		<li> [DM] De Morgan's Theorems: $\sim (p \cdot q) :: (\sim p \ \lor \sim q)$, $\sim (p \lor q) :: (\sim p \ \cdot \sim q)$</li>
+		<li> [Com] Commutation: $(p \lor q) :: (q \lor p)$, $(p \cdot q) :: (q \cdot p)$</li>
+		<li> [Assoc] Association: $[p \lor (q \lor r)] :: [(p \lor q) \lor r]$, $[p \cdot (q \cdot r)] :: [(p \cdot q) \cdot r]$</li>
+		<li> [Dist] Distribution: $[p \cdot (q \lor r)] :: [(p \cdot q) \lor (p \cdot r)]$, $[p \lor (q \cdot r)] :: [(p \lor q) \cdot (p \lor r)]$</li>
+		<li> [DN] Double Negation: $p :: \sim\sim p$</li>
+		<li> [Trans] Transposition: $(p \supset q) :: (\sim p \supset \sim q)$</li>
+		<li> [Impl] Material Implication: $(p \supset q) :: (\sim p \lor q)$</li>
+		<li> [Equiv] Material Equivalent: $(p \equiv q) :: [(p \supset q) \cdot (q \supset p)]$, $(p \equiv q) :: [(p \cdot q) \lor (\sim p \cdot \ \sim q)]$</li>
+		<li> [Exp] Exportation: $[(p \cdot q) \supset r] :: [p \supset (q \supset r)]$</li>
+		<li> </li>
+	</ul>
+</body>
+</html>

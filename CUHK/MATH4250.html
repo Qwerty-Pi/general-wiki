@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script>
+		MathJax.Hub.Config({
+			tex2jax: {
+				inlineMath: [['$','$'], ['\\(','\\)']],
+				processEscapes: true
+			}
+		});
+	</script>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="../index.css">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+</head>
+
+<style>
+@media print {
+	p {
+		font-size: 11px;
+	}
+	h1 {
+		font-size: 20px;
+	}
+	h2 {
+		font-size: 15px;
+	}
+	h3 {
+		font-size: 13px;
+	}
+}
+</style>
+<body>
+
+	<h1>MATH4250 Game Theory</h1>
+	
+	<h2>Combinatorial Games</h2>
+
+	<h3>Introduction</h3>
+
+	<p><b>Combinatorial Games</b> refers to any two-player alternate perfect-information finite games, which <b>ends at a terminal position after finite moves</b> no matter what strategy is involved.</p>
+
+	<p>A combinatorial game is called <b>impartial</b> if the set of choices is the same for both players, and <b>partizan</b> otherwise. Meanwhile, a game is called to be with a <b>normal</b> play rule if the <b>last player moves wins</b>, and <b>misère</b> play rule otherwise.</p>
+
+	<p><b>Zermelo's theorem</b>: Exactly one player has winning strategy for any combinatorial game. Very intuitive and can be proven with induction.</p>
+
+	<p><b>P-positions / N-positions</b>: assume impartial and normal rule, <b>P-position</b> means the previous player at this position wins, and <b>N-position</b> means the next player at this position wins. With Zermelo's theorem, we obviously have $P \sqcup N = V$ with $V$ the whole state space.</p>
+
+	<p>We have the following characterisation: (1) All terminal positions are P-positions, (2) P-positions can go to N-positions, (3) N-positions can <b>only</b> go to P-positions. Since by definition the number of positions is finite, as long as these characterisation is satisfied it is the unique set of P/N-positions.</p>
+
+	<h3>Examples</h3>
+	
+	<p><b>Subtraction Game</b>: Given a finite set $S \subset \mathbb{Z}^+$ and a positive integer $N$. Each move: select $s \in S$ and subtract $s$ from $N$. Just DP. <b>Take-away Game</b> is a special case with $S = [K]$, then $P = (K + 1) \mathbb{Z}_{\ge 0}$.</p>
+
+	<p><b>Wythoff's Game</b>: Given two positive integers $A$ and $B$ where $A \le B$. Each move: subtract any positive integer or both by the same amount. $P = (\phi N, (\phi + 1) N)$. Interestingly this is linked to the <b>Beatty's Theorem</b>, which states that given $\alpha, \beta \gt 1$ and $\alpha^{-1} + \beta^{-1} = 1$ we have $\mathbb{Z} = \{\lfloor \alpha n \rfloor \} \sqcup \{ \lfloor \beta n \rfloor \}$.</p>
+
+	<p><b>Nim Game</b>: Given $N$ integers $A_1, \cdots, A_N$. Each move: subtract any positive integer from any element. $P = \{ (A_1, \cdots, A_N) : \oplus \{ A_i \} = 0 \}$ where $\oplus$ denotes the XOR sum.</p>
+
+	<h3>Sprague-Grundy (SG) Function</h3>
+
+	<p>By modelling the game into a DAG $G(V, E)$, we can indeed introduce the SG Function with $g(v) = \text{mex}_{u \in N(v)} \{ g(u) \}$, where mex is the maximum-excluded nonnegative integer. From definition clearly $P = \{ v : g(v) = 0 \}$.</p>
+
+	<p>If we define the sum of CG where the player pick one game to play on, surprisingly, the SG Function on the sum is just the XOR of the respective SG Fucntions, which can be proven (trivially) by the reachable set. Therefore, we can isolate the computation into smaller cases.</p>
+</body>
+</html>

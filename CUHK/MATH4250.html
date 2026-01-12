@@ -68,10 +68,27 @@
 
 	<h2>Two-player Zero-sum (One-step) Game</h2>
 
+	<h3>Introduction</h3>
+
 	<p>Suppose the game is <b>zero-sum</b> and each player has a <b>finite</b> set of strategy, meanwhile each pair of strategy gives <b>a pair of payoffs</b> that sums to zero. What is the best strategy to take for each player?</p>
 
 	<p>To formulate the game, we label the players as <b>player I (row player)</b> and <b>player II (column player)</b>, and denotes the payoff matrix $\{a_{i, j}\}$ where $a_{i, j}$ is the <b>payoff to player I</b> if player I chooses strategy $i$ and player II chooses strategy $j$.</p>
 
+	<h3>Pure Strategy, Saddle Point</h3>
+
 	<p>What if each player assume the worse case from the other player? Clearly if the row player chooses strategy $k$, the payoff $\min_j\{ a_{k, j} \}$ can be guaranteed. Intuitively, we can define the <b>value</b> $u_r(a)$ of the matrix to the row player to be the <b>maximin</b> $\max_k \min_j \{ a_{k, j} \}$, the maximum payoff that can be guaranteed. Similarly, we can define the <b>value</b> $u_c(a)$ to the column player to be the <b>minimax</b> $\min_i \max_k \{ a_{i, k} \}$.</p>
+
+	<p>Obviously, with such definitions involving inequalities, we can derive some interesting results. Is there any relation between $u_r(a)$ and $u_c(a)$? What if they are equal?</p>
+
+	<p>Actually this is related to the concept of <b>saddle point</b> $a_{k, l}$, where $a_{i, l} \le a_{k, l} \le a_{k, j}$ for all $i, j$. Note that this point is such where if only one player changes their strategy, they cannot be benefit from it. How is this useful?</p>
+
+	<p>First of all, $u_r(a) \le u_c(a)$, since it is impossible for the two players to guaranteed a total payoff of $\gt 0$. Second, for <b>saddle point</b> $a_{k, l}$, $u_r(a) \le a_{k, l} \le u_c(a)$ since $a_{k, l}$ is both a row min and column max.</p>
+
+	<p>Actually we can show saddle point exists iff $u_r(a) = u_c(a)$ whereas all saddle points has the same payoff as $u_r(a) \le a_{k, l} \le u_c(a)$. If saddle point exists, then trivially $u_r(a) = u_c(a)$, while on the other hand we can find a saddle point by moving within the matrix $a$.</p>
+
+	<p>What we have discussed are <b>pure strategy</b>, i.e., each player plays deterministically. What if we play <b>mixed strategy</b>, i.e., play each strategy with some probability?</p>
+
+	<h3>Mixed Strategy</h3>
+	<p>Consider the <b>probability vector</b> $\vec{x} \in \mathcal{P}^n$ where $\sum {x_i} = 1$ and $x_i \ge 0$ for all $i$. By definition, the <b>expected payoff</b> $\pi(\mathbf{x}, \mathbf{y})$ is $\mathbf{x}^T A \mathbf{y}$. Interestingly, there always exists optimal mixed strategy by <b>minimax theorem</b>. That is, there exists strategies $\mathbf{p} \in \mathcal{P}^n$ and $\mathbf{q} \in \mathcal{P}^m$ where for all $\mathbf{x} \in \mathcal{P}^n$ and $\mathbf{y} \in \mathcal{P}^m$, we have $\pi(\mathbf{x}, \mathbf{q}) \le \pi(\mathbf{p}, \mathbf{q}) = \nu \le \pi(\mathbf{p}, \mathbf{y})$.</p>
 </body>
 </html>

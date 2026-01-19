@@ -40,13 +40,11 @@
 <p>For the most "raw" version, both can be computed in $O(N^3)$. Of course, with extra properties, we can do better than this.</p>
 
 
-<h2>The Basics</h2>
+<h2>Formulations</h2>
 
-<h3>Array Partition</h3>
-<p>Define dp[K][N] be the minimum cost to partition A[:N] into K subarrays. Then dp[K][N] = min{dp[K - 1][M] + C(M -> N)}. Works in $O(N^3)$. </p>
-
-<h3>Array Merging</h3>
-<p>Define dp[L][R] be the minimum cost to merge A[L:R]. Then dp[L][R] = min{dp[L][M] + dp[M][R] + C(L -> R)}. Also works in $O(N^3)$.</p>
+<p>(Array Partition I) dp[N] := minimum cost to partition A[:N] into subarrays. dp[N] = min{dp[M] + C(M -> N)}
+<p>(Array Partition II) dp[K][N] := minimum cost to partition A[:N] into K subarrays. dp[K][N] = min{dp[K - 1][M] + C(M -> N)}.</p>
+<p>(Array Merging) dp[L][R] := minimum cost to merge A[L:R]. dp[L][R] = min{dp[L][M] + dp[M][R] + C(L -> R)}.</p>
 
 <h2>Optimal Position</h2>
 
@@ -66,6 +64,6 @@
 
 <p>The key idea is basically "when good things happen, then the optimal position satisfies the above conditions". When does good thing happens? Of course be a good person so you can be luckily, but also when quadrangle inequality holds. Essentially the definition is "wider is worse":</p>
 
-<p>A function f is quadrangle iff for all A <= B <= C <= D, f(A -> D) + f(B -> C) >= f(A -> C) + f(B -> D). For the sake of simplicity, we abbreviate a quadrangle function as QF.</p>
+<p>A function f is quadrangle iff for all A <= B <= C <= D, f(A -> D) + f(B -> C) >= f(A -> C) + f(B -> D). For the sake of simplicity, we abbreviate a quadrangle function as QF. It is tempting to ask - what does this means? Essentially, by reordering the inequality, we have f(A -> D) - f(A -> C) >= f(B -> D) - f(B -> C): that means if D is better than C at A, it is also better than C at B, a later position. That looks kind of implying the optimal positions are monotonic!</p>
 
-<p>Obviously, given QF f and g and <b>nonnegative</b> c, we know that f + g and cf are QF as well, in accordance to the inequality. Also, for any function f where f(L -> R) only depends on L, f is QF as well. </p>
+<p>Obviously, given QF f and g and <b>nonnegative</b> c, we know that f + g and cf are QF as well, in accordance to the inequality. Also, for any function f where f(L -> R) only depends on L, f is QF as well (with inequality holds exactly). Therefore, for dp[i] = min{dp[j] + C(j -> i)}, if C is QF, dp is QF as well, and opt is monotonic increasing. How can we optimise given monotonicity of the optimal position? Since every two indices can be compared with binary search in O(log N) time, we can maintain it in a CHT manner.</p>

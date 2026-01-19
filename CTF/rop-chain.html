@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script>
+		MathJax.Hub.Config({
+			tex2jax: {
+				inlineMath: [['$','$'], ['\\(','\\)']],
+				processEscapes: true
+			}
+		});
+	</script>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
+	<link rel="stylesheet" type="text/css" href="../index.css">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+</head>
+<body>
+	<h2>Utility</h2>
+	<a href="https://x64.syscall.sh/" target="_blank">Syscall Table</a>
+	
+	<h2>Return-Oriented Programming (ROP)</h2>
+	<p>Why <b>ROP</b>? Since <b>Stack NX</b> (<u>N</u>on-E<u>X</u>ecutable) is invented, we cannot simply write shellcode in the stack and run it directly. One way to bypass is to reuse known assembly code. Since we want to gain control on the <b>control flow</b>, we want some assembly code ends with ret (equivalent to pop rip). Since stuff ends with ret and we chain ret together, we call this <b>return-oriented programming</b> and ROP chain.</p>
+	<p><b>ASLR</b> (<u>A</u>ddress-<u>S</u>pace <u>L</u>ayout <u>R</u>andomization): The virtual memory supports to be shuffled, but if only ASLR enabled the location of code segment would not be randomised. <b>PIE</b> (<u>P</u>osition-<u>I</u>ndependent <u>E</u>xecution) randomised the location of the code segment as well.</p>
+
+	<h2>ROP Gadget</h2>
+	<p>Gadgets are assembly codes like "pop rdi; ret;". Basically just write like shellcode. For example, *A = pop rdi; ret; then in the stack, we can put [___A___][__rdi__], then we can change the rdi value.</p>
+
+	<p>Obviously we need to know the ROP gadget address - </p>
+	
+	<h2>Facts</h2>
+	<p>Page size is 0x1000 aka 3 nibbles so sometimes modify low bytes work.</p>
+	<p>jmp to win / modify register by short asm segment before ret. ROPgadget / pwntools search asm.</p>
+
+	<h3>Dynamic Memory Allocation</h3>
+	<p>mmap: allocate 0x1000 (page size) memory, involve kernal syscall. Can control rwx.</p>
+	<p>ptmalloc (POSIX-Thread): malloc (allocate chunk), free (free chunk), realloc (change size of chunk), calloc (allocate and zero-out memory), sbrk (allocate more bytes), brk (extend to certain address)</p>
+	<p>tcache: 0x40 bins (tcache_perthread_struct) for storing free-ed single linked-list of pointers (tcache_entry). Each list accounts for 0x10 bytes. Multiple layers of cache, very complicated.</p>
+	<p>metadata for malloc: [prev_free_size][cur_size | flags]@[usable (multiple of 0x10)]</p>
+</body>
+</html>

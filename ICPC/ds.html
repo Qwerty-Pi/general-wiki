@@ -82,6 +82,23 @@
 
 <p>Given an array $A$. Support $Q$ queries: (1) Range query certain rank, (2) Range Add. Sqrt Decomposition + BS on answer.</p>
 
-<p>Given array. (1) Range divide divisible. (2) Range Sum (ok it is getting simpler).</p>
+<p>Given array. (1) Range divide divisible, (2) Range Sum (ok it is getting simpler). Note that operation 1 is done $O(N \log V)$ times. Maintain with BIT and use DSU to find and delete elements from a sequence.</p>
+
+<p>Given Tree. (1) Range Dist-1 Add, (2) Point Subtract, (3) Range Dist-1 XOR. Build 01-BST in reverse which supports all add 1(!)</p>
+
+<p>Given Set. (1) Toggle element inclusion, (2) Find $\max\{(A_i + A_j) \mod C\}$. Maintain the set of optimal pairs for $0 \le A_i + A_j \lt C$, and just greedy if $A_i + A_j \ge C$.</p>
+
+<p>Given Array. (1) Range Update XOR, (2) Range Max Subsequence XOR with v. Use a segtree to maintain (X, XOR-Basis). Works in $O(\log N \log^2 V)$.</p>
+
+<p>Given Array. (1) Range Add, (2) Range Tower Exponent. (2) bounded so just do.</p>
+
+<p>Given Tree with weighted nodes. (1) Re-root, (2) Count $\{(x, y) : x \in T_u, y \in T_v, W_x = W_y\}$. Transform to fixed root, then to ranges, then to prefixes and Mo's it.</p>
+
+<p>Given Array. (1) Range Update, (2) Range Distinct Number Count. Divide-and-Conquer by maintain prv of each colour, and count the first only.</p>
+
+<p>Given Array. Online Range Inversion Count. Sqrt Decomposition.</p>
+
+<p>Given Array. Online Range Mode Cardinality. Sqrt Decomposition by precomputing small ans ranges and directly check for large ans (seems doesn't work). Precompute complete blocks and query for count of incomplete blocks.</p>
+
 </body>
 </html>

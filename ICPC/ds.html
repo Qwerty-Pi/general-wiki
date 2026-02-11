@@ -54,7 +54,7 @@
 
 <h2>Task List</h2>
 
-<p>General Rule of Thumb: If there is a way to eat some pen without dying (say log / sqrt), try to eat it first to see what will happen, and obtain a seemingly working solution first, then try to optimise it.</p>
+<p>General Rule of Thumb: If there is a way to eat some pen without dying (say log / sqrt), try to eat it first to see what will happen, and obtain a seemingly working solution first, then try to optimise it. Also, can try to think about "what can be supported with known information".</p>
 
 <p>Given $A[N]$ ($\le 10^5$) and $V$ ($\le 1000$) where $0 \le A_i \lt V$. Support $Q$ ($ \le 10^5$) queries: (1) Determine whether exists $X \cup Y \subset [L, R]$ where $X, Y$ disjoint, $\sum A_X = \sum A_Y$, (2) $A_i := A_i^3 \mod V$ for $L \le i \le R$. Note that when $R - L + 1 \gt \log_2 V$, then always yes for (1). Hence just brute. $O((N + Q) \log N)$ for segtree, $O(QV)$ for checking.</p>
 

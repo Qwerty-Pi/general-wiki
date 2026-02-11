@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script>
+		MathJax.Hub.Config({
+			tex2jax: {
+				inlineMath: [['$','$'], ['\\(','\\)']],
+				processEscapes: true
+			}
+		});
+	</script>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="../index.css">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+</head>
+
+<style>
+@media print {
+	p {
+		font-size: 11px;
+	}
+	h1 {
+		font-size: 20px;
+	}
+	h2 {
+		font-size: 15px;
+	}
+	h3 {
+		font-size: 13px;
+	}
+}
+</style>
+<body>
+
+	<h1>MATH4250 Game Theory</h1>
+	
+	<h2>Combinatorial Games</h2>
+
+	<h3>Introduction</h3>
+
+	<p><b>Combinatorial Games</b> refers to any two-player alternate perfect-information finite games, which <b>ends at a terminal position after finite moves</b> no matter what strategy is involved.</p>
+
+	<p>A combinatorial game is called <b>impartial</b> if the set of choices is the same for both players, and <b>partizan</b> otherwise. Meanwhile, a game is called to be with a <b>normal</b> play rule if the <b>last player moves wins</b>, and <b>misère</b> play rule otherwise.</p>
+
+	<p><b>Zermelo's theorem</b>: Exactly one player has winning strategy for any combinatorial game. Very intuitive and can be proven with induction.</p>
+
+	<p><b>P-positions / N-positions</b>: assume impartial and normal rule, <b>P-position</b> means the previous player at this position wins, and <b>N-position</b> means the next player at this position wins. With Zermelo's theorem, we obviously have $P \sqcup N = V$ with $V$ the whole state space.</p>
+
+	<p>We have the following characterisation: (1) All terminal positions are P-positions, (2) P-positions can go to N-positions, (3) N-positions can <b>only</b> go to P-positions. Since by definition the number of positions is finite, as long as these characterisation is satisfied it is the unique set of P/N-positions.</p>
+
+	<h3>Examples</h3>
+	
+	<p><b>Subtraction Game</b>: Given a finite set $S \subset \mathbb{Z}^+$ and a positive integer $N$. Each move: select $s \in S$ and subtract $s$ from $N$. Just DP. <b>Take-away Game</b> is a special case with $S = [K]$, then $P = (K + 1) \mathbb{Z}_{\ge 0}$.</p>
+
+	<p><b>Wythoff's Game</b>: Given two positive integers $A$ and $B$ where $A \le B$. Each move: subtract any positive integer or both by the same amount. $P = (\varphi N, (\varphi + 1) N)$. Interestingly this is linked to the <b>Beatty's Theorem</b>, which states that given $\alpha, \beta \gt 1$ and $\alpha^{-1} + \beta^{-1} = 1$ we have $\mathbb{Z} = \{\lfloor \alpha n \rfloor \} \sqcup \{ \lfloor \beta n \rfloor \}$.</p>
+
+	<p><b>Nim Game</b>: Given $N$ integers $A_1, \cdots, A_N$. Each move: subtract any positive integer from any element. $P = \{ (A_1, \cdots, A_N) : \oplus \{ A_i \} = 0 \}$ where $\oplus$ denotes the XOR sum.</p>
+
+	<h3>Sprague-Grundy (SG) Function</h3>
+
+	<p>By modelling the game into a DAG $G(V, E)$, we can indeed introduce the SG Function with $g(v) = \text{mex}_{u \in N(v)} \{ g(u) \}$, where mex is the maximum-excluded nonnegative integer. From definition clearly $P = \{ v : g(v) = 0 \}$.</p>
+
+	<p>If we define the sum of CG where the player pick one game to play on, surprisingly, the SG Function on the sum is just the XOR of the respective SG Fucntions, which can be proven (trivially) by the reachable set. Therefore, we can isolate the computation into smaller cases.</p>
+
+	<h2>Two-player Zero-sum (One-step) Game</h2>
+
+	<h3>Introduction</h3>
+
+	<p>Suppose the game is <b>zero-sum</b> and each player has a <b>finite</b> set of strategy, meanwhile each pair of strategy gives <b>a pair of payoffs</b> that sums to zero. What is the best strategy to take for each player?</p>
+
+	<p>To formulate the game, we label the players as <b>player I (row player)</b> and <b>player II (column player)</b>, and denotes the payoff matrix $\{a_{i, j}\}$ where $a_{i, j}$ is the <b>payoff to player I</b> if player I chooses strategy $i$ and player II chooses strategy $j$.</p>
+
+	<h3>Pure Strategy, Saddle Point</h3>
+
+	<p>What if each player assume the worse case from the other player? Clearly if the row player chooses strategy $k$, the payoff $\min_j\{ a_{k, j} \}$ can be guaranteed. Intuitively, we can define the <b>value</b> $u_r(a)$ of the matrix to the row player to be the <b>maximin</b> $\max_k \min_j \{ a_{k, j} \}$, the maximum payoff that can be guaranteed. Similarly, we can define the <b>value</b> $u_c(a)$ to the column player to be the <b>minimax</b> $\min_i \max_k \{ a_{i, k} \}$.</p>
+
+	<p>Obviously, with such definitions involving inequalities, we can derive some interesting results. Is there any relation between $u_r(a)$ and $u_c(a)$? What if they are equal?</p>
+
+	<p>Actually this is related to the concept of <b>saddle point</b> $a_{k, l}$, where $a_{i, l} \le a_{k, l} \le a_{k, j}$ for all $i, j$. Note that this point is such where if only one player changes their strategy, they cannot be benefit from it. How is this useful?</p>
+
+	<p>First of all, $u_r(a) \le u_c(a)$, since it is impossible for the two players to guaranteed a total payoff of $\gt 0$. Second, for <b>saddle point</b> $a_{k, l}$, $u_r(a) \le a_{k, l} \le u_c(a)$ since $a_{k, l}$ is both a row min and column max.</p>
+
+	<p>Actually we can show saddle point exists iff $u_r(a) = u_c(a)$ whereas all saddle points has the same payoff as $u_r(a) \le a_{k, l} \le u_c(a)$. If saddle point exists, then trivially $u_r(a) = u_c(a)$, while on the other hand we can find a saddle point by moving within the matrix $a$.</p>
+
+	<p>What we have discussed are <b>pure strategy</b>, i.e., each player plays deterministically. What if we play <b>mixed strategy</b>, i.e., play each strategy with some probability?</p>
+
+	<h3>Mixed Strategy</h3>
+	<p>Consider the <b>probability vector</b> $\vec{x} \in \mathcal{P}^n$ where $\sum {x_i} = 1$ and $x_i \ge 0$ for all $i$. By definition, the <b>expected payoff</b> $\pi(\mathbf{x}, \mathbf{y})$ is $\mathbf{x}^T A \mathbf{y}$. Interestingly, there always exists optimal mixed strategy by <b>minimax theorem</b>. That is, there exists strategies $\mathbf{p} \in \mathcal{P}^n$ and $\mathbf{q} \in \mathcal{P}^m$ where for all $\mathbf{x} \in \mathcal{P}^n$ and $\mathbf{y} \in \mathcal{P}^m$, we have $\pi(\mathbf{x}, \mathbf{q}) \le \pi(\mathbf{p}, \mathbf{q}) = \nu \le \pi(\mathbf{p}, \mathbf{y})$.</p>
+</body>
+</html>

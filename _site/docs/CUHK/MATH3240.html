@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script>
+		MathJax.Hub.Config({
+			tex2jax: {
+				inlineMath: [['$','$'], ['\\(','\\)']],
+				processEscapes: true
+			}
+		});
+	</script>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="../index.css">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+</head>
+
+<style>
+@media print {
+	p {
+		font-size: 11px;
+	}
+	h1 {
+		font-size: 20px;
+	}
+	h2 {
+		font-size: 15px;
+	}
+	h3 {
+		font-size: 13px;
+	}
+}
+</style>
+<body>
+
+	<h1>MATH3240 Numerical Methods for Differential Equations</h1>
+
+	<h2>Introduction</h2>
+
+	<p><b>Differential Equations</b> are equations involving differentials. <b>Ordinary Differential Equations (ODEs)</b> are differential equations with one variable, whereas <b>Partial Differential Equations (PDEs)</b> are differential equations with more than one variable.</p>
+
+	<h3>Ordinary Differential Equations (ODE)</h3>
+	
+	<p>Assume $y(t)$ is a function. An ODE is of the form $$ F(y, y^{(1)}, y^{(2)}, \dots, y^{(n)}) = 0$$ where the <b>order</b> of $F$ is $n$. An ODE is <b>linear</b> iff it is linear in $y^{(k)}$ for all $k$.</p>
+
+	<p><b>Numerical Scheme</b>: systematic way to numerically solve equations.</p>
+	<p><b>Initial Value Problem (IVP)</b>: Given $x'(t) = f(x, t)$ and initial value $x(t_i) = x_i$ where $0 \le i \lt k$, solve numerically. A method is $k$-step if it involes previous $k$ values. Usually assume $t_i = t_0 + hi$.</p>
+	<p><b>Implicit</b>: Computable. <b>Explicit</b>: Solving Equations. </p>
+
+	<p><b>Generalised k-step method</b>: We can generalise all the k-step (linear) methods for some constants $\{a_i\}, \{b_i\}$ as in $$ \sum_{i = 0}^{k} a_i x_{n - k + i} = h \sum_{i = 0}^{k} b_i f_{n - k + i} $$ </p>
+	<p><b>Predictor-Corrector</b>: Use some <b>explicit</b> method to predict the answer, then use <b>(iterative) implicit</b> method to correct the answer.</p>
+
+	<h3>Method</h3>
+	<p><b></b>  </p>
+	<p><b>Grank-Nicolson Method</b>: $x_{n+1} = x_n + \frac{h}{2} [f(t_{n+1}, x_{n+1}) + f(t_n, x_n)]$</p>
+</body>
+</html>

@@ -1,0 +1,25 @@
+:root {
+    --text-color: #cccccc;
+    --background-color: #151515;
+}
+
+@media print {
+    :root {
+        --text-color: #151515;
+        --background-color: #FFFFFF;
+    }
+}
+
+* {
+    font-family: 'Cascadia Code';
+    color: var(--text-color);
+}
+
+body {
+    font-size: 15px;
+    background-color: var(--background-color);
+}
+.hljs {
+    padding: 0 !important;
+    background: var(--background-color) !important;
+}

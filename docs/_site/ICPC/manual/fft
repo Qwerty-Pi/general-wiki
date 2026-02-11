@@ -1,0 +1,31 @@
+NAME
+    
+	fft - Fast Fourier Transform
+    
+SYNOPSIS
+    
+	vector<F> fft(vector<F> P);
+
+PARAMETERS
+
+	P    -    input polynomial of size N, a power of 2
+
+RETURN VALUE
+
+	returns a list of P(w^k) where 0 <= k < N, where w is any N-th root of unity.
+
+REQUIREMENT
+
+	F should be a field where N-th root of unity exists. For finite field F, that means |F| - 1 is divisible by N.
+
+NOTES
+
+	The choice of the root of unity w is deterministic, which only depends on the field F and size N.
+
+COMPLEXITY
+
+	O(N log N).
+
+IMPLEMENTATION
+
+	KACTL

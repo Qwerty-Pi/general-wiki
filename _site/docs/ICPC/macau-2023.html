@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
+	<script>
+		MathJax.Hub.Config({
+			tex2jax: {
+				inlineMath: [['$','$'], ['\\(','\\)']],
+				processEscapes: true
+			}
+		});
+	</script>
+	<link rel="stylesheet" type="text/css" href="../index.css">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
+	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+	<script src="../function.js"></script>
+</head>
+<body>
+
+<h1>Macau Regional 2023</h1>
+<div>
+	<p>A: Given $N \times N$ ($N \le 4000$) grid of $\pm 1$. Given row and column sum, construct subset of cells to achieve that.</p>
+	<p>B: Given $N$ ($\le 10$) constraints (total length $\le 50$) of form X ? Y where X Y consists of digits and variables. Find the number of assignments. Bitmask DP.</p>
+	<p>C: Given array $A$ of length $N$. Operation: (1) reduce all values by $\min\{A_i\}$ and (2) reduce all values by $K$. Minimise # of operations to clear all, for each prefix of $A$. $O(N \sqrt{N})$.</p>
+	<p>D: Given an undirected coloured graph of maximum degree $\le 3$. Find number of induced subgraph such that red edges and blue edges form connected components separately.</p>
+	<p>E: Given a DAG and the lexicographically largest and smallest topological sorts. Find any graph satisfies.</p>
+	<p>F: Given $N$ ($\le 300$) half-planes and logical operators (AND, OR, NOT, XOR). Find area of formula in $O(N^3)$.</p>
+	<p>G: Given binary array $A$ of length $N$ ($N \le 500$). Operation: adjacent AND / OR. Alice wins if final value = 0 / 1. Output strategy. $O(N^3)$.</p>
+	<p>H: Given a randomly-generated rooted tree. Count the number of parking functions where a car park at first empty node from node to root. $O(N \cdot H^2)$.</p>
+	<p>I: Knapsack with (cost, reward) = $(b, \lfloor \frac{b}{a} \rfloor + 1)$ and $(a \cdot \lceil \frac{b}{a} \rceil, \lceil \frac{b}{a} \rceil + 1)$.</p>
+	<p>J: Given a cyclic array $A$ of length $N$. Two operation: (1) Go from $x$ to $x + A_x$ or (2) Add $A_i$ by 1. Find shortest path.</p>
+	<p>K: Given a $2^K \times 2^K$ grid. Construct $2K$ simple paths such that all cells are distinguishable.</p>
+</div>

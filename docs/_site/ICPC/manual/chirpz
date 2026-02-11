@@ -1,0 +1,25 @@
+NAME
+    
+	chirpz - Chirp-z Transform
+    
+SYNOPSIS
+    
+	vector<F> chirpz(vector<F> P, F z, int M);
+
+PARAMETERS
+
+	P	-	input polynomial of size N
+	z	-	element in field F
+	M	-	number of elements returned
+
+RETURN VALUE
+
+	returns a list of P(z^k) for 0 <= k < M.
+
+COMPLEXITY
+
+	O((N + M) log (N + M)).
+
+IMPLEMENTATION
+
+	fft

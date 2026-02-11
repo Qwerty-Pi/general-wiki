@@ -1,17 +1,33 @@
----
-layout: default
----
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script>
+		MathJax.Hub.Config({
+			tex2jax: {
+				inlineMath: [['$','$'], ['\\(','\\)']],
+				processEscapes: true
+			}
+		});
+	</script>
+	<meta charset="utf-8">
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
+	<link rel="stylesheet" type="text/css" href="/index.css">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+</head>
+<body>
+	<h1>Prime</h1>
 
-<h1>Test</h1>
-
-<h2>Section 1</h2>
+<h2>Primality Test</h2>
 
 <p>Problem: Given $n \in \mathbb{Z}^+$. Determine if $n$ prime.</p>
 
-<h3>Subsection 1</h3>
+<h3>Miller-Rabin Test</h3>
 
 <p>
-	Here are some content. Variables: $a = b$.
+	Given $n - 1 = 2^s d$, then if $n$ prime, $a^{n - 1} - 1 = (a^d - 1)(a^d + 1) \cdots (a^{2^{s - 1} d} + 1) \equiv 0 \pmod{n}$.
 </p>
 
 <p>
@@ -21,7 +37,7 @@ layout: default
 	Algorithm: Test for different bases $1 \lt a \lt n$ for several rounds. <a target="_blank" href="./reference/strong-pseudoprime.pdf">Attack</a>
 </p>
 
-<h3>Subsection 2</h3>
+<h3>Lucas Test</h3>
 
 <p>
 	Let $P, Q \in \mathbb{Z}^+$ where $D := \sqrt{P^2 - 4Q} \not\in \mathbb{Z}$, $\varepsilon(n) = (D / n)$ and $\delta(n) = n - \varepsilon(n)$.
@@ -41,3 +57,4 @@ layout: default
 </p>
 
 <h2>Prime Factorisation</h2>
+

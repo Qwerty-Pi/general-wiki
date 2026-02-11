@@ -1,21 +1,6 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-	<script>
-		MathJax.Hub.Config({
-			tex2jax: {
-				inlineMath: [['$','$'], ['\\(','\\)']],
-				processEscapes: true
-			}
-		});
-	</script>
-	<script type="text/x-mathjax-config">
-		MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-	</script>
-	<script src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
-	<link rel="stylesheet" type="text/css" href="../index.css">
-	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
-</head>
+---
+layout: default
+---
 
 <style>
 	.oval {
@@ -116,131 +101,130 @@
 	}
 }
 </style>
-<body>
 
-	<h1>CSCI3170 Introduction to Database Systems</h1>
-	
-	<p>Target: Translate Application (text) to Database Schema via <b>Conceptual Modelling</b>.</p>
+<h1>CSCI3170 Introduction to Database Systems</h1>
 
-	<h2>Entity-Relationship (ER) Model</h2>
+<p>Target: Translate Application (text) to Database Schema via <b>Conceptual Modelling</b>.</p>
 
-	<h3>I. Attribute</h3>
-	<p>Let's say the domain of the data is $D$ where $\texttt{null} \in D$. There are a few kinds of attributes:</p>
-	<table>
-		<tr><td><span class="oval">Simple/Atomic</span></td><td>$e \in D$.</td></tr>
-		<tr><td><span class="oval double">Multi-valued</span></td><td>$e \in 2^{D}$.</td></tr>
-		<tr><td><span class="oval">Composite</span></td><td>Suppose children with domain $D_1, \dots, D_K$. Then $e \in D_1 \times \cdots \times D_K$.</td></tr>
-		<tr><td><span class="oval dashed">Derived</span></td><td>Can be computed from the rest attributes.</td></tr>
-	</table>
+<h2>Entity-Relationship (ER) Model</h2>
 
-	<h3>II. Entity</h3>
-	<p><span class="rect">Entity</span> consists of several attributes. If the attributes are with domain $D_1, \dots, D_K$, the domain of the entity is $D := D_1 \times \cdots \times D_K$.</p>
-	<p>Every entity must have a (set of) <span class="oval"><u>primary key</u></span>, a chosen <b>candidate key</b> or <b>minimal super key</b>. A set of attributes $S$ is super key iff for every valid $E \subset D$ we have the cardinary of $E$ and $E|_{S}$ equal. Clearly $[K]$ is a super key and so candidate key exists.</p>
-	<p>Say the current entity is $\texttt{W}$. If some attributes is "borrowed" from another strong entity $\texttt{S}$, then <span class="rect double">Entity $\texttt{W}$</span> is <b>weak</b>, and its <span class="oval"><u class="dashed">partial key</u></span> is the set of non-borrowed attributes in primary key. <span class="rect double">Entity $\texttt{W}$</span> is linked to <span class="rect">Entity $\texttt{S}$</span> via an Identifying <span class="diamond double">Relationship</span>.</p>
+<h3>I. Attribute</h3>
+<p>Let's say the domain of the data is $D$ where $\texttt{null} \in D$. There are a few kinds of attributes:</p>
+<table>
+	<tr><td><span class="oval">Simple/Atomic</span></td><td>$e \in D$.</td></tr>
+	<tr><td><span class="oval double">Multi-valued</span></td><td>$e \in 2^{D}$.</td></tr>
+	<tr><td><span class="oval">Composite</span></td><td>Suppose children with domain $D_1, \dots, D_K$. Then $e \in D_1 \times \cdots \times D_K$.</td></tr>
+	<tr><td><span class="oval dashed">Derived</span></td><td>Can be computed from the rest attributes.</td></tr>
+</table>
 
-	<h3>III. Relationship</h3>
-	<p><span class="diamond">Relationship</span> consists of several (at least 2) entity and several attributes. Its domain is (obviously) also the cartesian product.</p>
-	<p>We can impose constraints on relationship: Either <b>cardinality</b> or <b>participation</b>.</p>
-	
-	<h4>A. Cardinality Constraints</h4>
-	<p>Three kinds of cardinality constraints: many-to-many, many-to-one and one-to-one. For relationship $R = E_1 \times E_2$, if for every valid $S \subset R$ we have cardinality of $R|_{E_k}$ = cardinality of $R$, then we can deduce $R$ uniquely from $E_k$ alone.</p>
+<h3>II. Entity</h3>
+<p><span class="rect">Entity</span> consists of several attributes. If the attributes are with domain $D_1, \dots, D_K$, the domain of the entity is $D := D_1 \times \cdots \times D_K$.</p>
+<p>Every entity must have a (set of) <span class="oval"><u>primary key</u></span>, a chosen <b>candidate key</b> or <b>minimal super key</b>. A set of attributes $S$ is super key iff for every valid $E \subset D$ we have the cardinary of $E$ and $E|_{S}$ equal. Clearly $[K]$ is a super key and so candidate key exists.</p>
+<p>Say the current entity is $\texttt{W}$. If some attributes is "borrowed" from another strong entity $\texttt{S}$, then <span class="rect double">Entity $\texttt{W}$</span> is <b>weak</b>, and its <span class="oval"><u class="dashed">partial key</u></span> is the set of non-borrowed attributes in primary key. <span class="rect double">Entity $\texttt{W}$</span> is linked to <span class="rect">Entity $\texttt{S}$</span> via an Identifying <span class="diamond double">Relationship</span>.</p>
 
-	<h4>B. Participation Constraints</h4>
-	<p>Two kinds of participation constraints: <u class="double">total</u> and <u>partial</u>. For relationship $R = E_1 \times E_2$, the participation of $E_k$ is <b>total</b> iff for every valid $S \subset R$ we have $S|_{E_k} = E_k$.</p>
+<h3>III. Relationship</h3>
+<p><span class="diamond">Relationship</span> consists of several (at least 2) entity and several attributes. Its domain is (obviously) also the cartesian product.</p>
+<p>We can impose constraints on relationship: Either <b>cardinality</b> or <b>participation</b>.</p>
 
-	<h3>IV. Other Notations</h3>
-	<p><span class="rect dashed">Aggregation</span>: For relationship between relationship and/or entity.</p>
-	<p>ISA: For class hierachy.</p>
-	
-	<h2>Relational Model</h2>
+<h4>A. Cardinality Constraints</h4>
+<p>Three kinds of cardinality constraints: many-to-many, many-to-one and one-to-one. For relationship $R = E_1 \times E_2$, if for every valid $S \subset R$ we have cardinality of $R|_{E_k}$ = cardinality of $R$, then we can deduce $R$ uniquely from $E_k$ alone.</p>
 
-	<p>Relation $\mathcal{R} = (\Sigma, S)$ consists of <b>relational schema $\Sigma$</b> and <b>relational instances $S$</b>.</p>
-	
-	<p>Relational Schema $\Sigma$ is an ordered tuple of pairs: $\{ (A_1, D_1), \dots, (A_K, D_K) \}$, where $A_i$ and $D_i$ are the name and domain of the $i$-th attribute, respectively. </p>
+<h4>B. Participation Constraints</h4>
+<p>Two kinds of participation constraints: <u class="double">total</u> and <u>partial</u>. For relationship $R = E_1 \times E_2$, the participation of $E_k$ is <b>total</b> iff for every valid $S \subset R$ we have $S|_{E_k} = E_k$.</p>
 
-	<p>Relational Instances $S$ is a subset of $D_1 \times \cdots \times D_K$, representing all the possible relations.</p>
+<h3>IV. Other Notations</h3>
+<p><span class="rect dashed">Aggregation</span>: For relationship between relationship and/or entity.</p>
+<p>ISA: For class hierachy.</p>
 
-	<p>We can define <b><u>Primary Key (PK)</u></b> in relation as well - similar to that in ER Model. A <b>Foreign Key (FK)</b> is a "pointer" to another relation with its <b><u>Primary Key (PK)</u></b>.</p>
+<h2>Relational Model</h2>
 
-	<p>Integrity Constraints is what we want the data to satisfy. Three major kinds of integrity constraints are
-	<ol>
-		<li><b>Key Constraint</b> - PK must be unique</li>
-		<li><b>Entity Integrity</b> - PK cannot contains $\texttt{null}$, and</li>
-		<li><b>Referential Integrity</b> - FK either $\texttt{null}$ or exists</li>
-	</ol></p>
-	<p>To convert from ER Model to Relational Model, simply use common sense to decide what primary key to choose in relation.</p>
-	
-	<h2>Relational Algebra</h2>
+<p>Relation $\mathcal{R} = (\Sigma, S)$ consists of <b>relational schema $\Sigma$</b> and <b>relational instances $S$</b>.</p>
 
-	<h3>Operations</h3>
-	<p>Relational Algebra can be considered as a language on relations, and based on set theory. The notations are as follows:
-	<ol>
-		<li>(Select) $\sigma_{P}(\mathcal{R})$ returns a relation with the same schema as $\mathcal{R}$ and rows that satisfy the selection predicate $P$.</li>
-		<li>(Project) $\Pi_{S}(\mathcal{R})$ returns a relation with schema $S$ and the projection of $\mathcal{R}$ onto $S$.</li>
-		<li>(Rename) $\rho_{\mathcal{S}(A_1, \dots, A_K)}(\mathcal{R})$ returns the original $\mathcal{R}$ but renamed (with or without columns).</li>
-		<li>(Join) $\mathcal{R} \bowtie_{P} \mathcal{S}$ returns $\sigma_P(\mathcal{R} \times \mathcal{S})$. If $P$ is omitted, it is natural join and all attributes appear in both $\mathcal{R}$ and $\mathcal{S}$ are equi-joined.</li>
-		<li>(Division) $\mathcal{R} / \mathcal{S}$ returns a relation with schema $S_\mathcal{R} \setminus S_\mathcal{S}$ and instances $\{ x \in D_\mathcal{S} / D_\mathcal{R} \, | \, \{x\} \times \mathcal{S} \subset \mathcal{R} \}$.</li>
-	</ol></p>
+<p>Relational Schema $\Sigma$ is an ordered tuple of pairs: $\{ (A_1, D_1), \dots, (A_K, D_K) \}$, where $A_i$ and $D_i$ are the name and domain of the $i$-th attribute, respectively. </p>
 
-	<h3>Anomalies</h3>
-	<p>An <b>anomaly</b> on a relation is something "weird" happening to the relation. There are mainly three kinds of relation anomalies:</p>
-	<ol>
-		<li><b>Insertion Anomaly</b> occurs when we cannot store some information without knowing some unrelated stuff.</li>
-		<li><b>Deletion Anomaly</b> occurs when we cannot delete some information without destroying some unreleated stuff.</li>
-		<li><b>Update Anomaly</b> occurs when we need to modify multiple rows on a single information update.</li>
-	</ol>
+<p>Relational Instances $S$ is a subset of $D_1 \times \cdots \times D_K$, representing all the possible relations.</p>
 
-	<p>Some common scenarios that will trigger these anomaly:</p>
-	<ol>
-		<li>Repeating data groups: Insertion + Update Anomaly</li>
-		<li>Association not stored explicitly: Deletion Anomaly</li>
-	</ol>
-	<p>The concepts Functional Dependencies and Normal Forms are introduced to tackle these anomalies.</p>
+<p>We can define <b><u>Primary Key (PK)</u></b> in relation as well - similar to that in ER Model. A <b>Foreign Key (FK)</b> is a "pointer" to another relation with its <b><u>Primary Key (PK)</u></b>.</p>
 
-	<h3>Functional Dependencies (FD)</h3>
-	<p><b>Functional Dependency</b> $\alpha \rightarrow \beta$ is defined to be $r_1[\alpha] = r_2[\alpha] \implies r_1[\alpha] = r_2[\beta]$ for all $r_1, r_2 \in S$ over all legal $S$.</p>
-	<p><b>Armstrong's Axiom</b> states that for $\alpha, \beta \subset \Sigma$, we have</p>
-	<ol>
-		<li>(Reflexivity) $\beta \subset \alpha \mid= \alpha \rightarrow \beta$.</li>
-		<li>(Augmentation) $\alpha \rightarrow \beta \mid= \alpha \gamma \rightarrow \beta \gamma$.</li>
-		<li>(Transitivity) $\{ \alpha \rightarrow \beta, \beta \rightarrow \gamma \} \mid= \alpha \rightarrow \gamma$.</li>
-	</ol>
-	<p><b>Closure</b> $F^+$ of functional dependencies $F$ is defined to be the set of all functional dependencies that can be inferred from $F$.</p>
-	<p>Closure $\alpha^+$ for $\alpha \subset \Sigma$ is defined similarly. $\alpha$ is super key of $\mathcal{R}$ iff $\alpha^+ = \Sigma$.</p>
-	<p>Equivalence Rules: (1) conjunctive select can be splited (2) select is commutative (3) only last project matters (4) select can be merged into cartesian or theta join (5) theta-join are commutative and associative</p>
+<p>Integrity Constraints is what we want the data to satisfy. Three major kinds of integrity constraints are
+<ol>
+	<li><b>Key Constraint</b> - PK must be unique</li>
+	<li><b>Entity Integrity</b> - PK cannot contains $\texttt{null}$, and</li>
+	<li><b>Referential Integrity</b> - FK either $\texttt{null}$ or exists</li>
+</ol></p>
+<p>To convert from ER Model to Relational Model, simply use common sense to decide what primary key to choose in relation.</p>
 
-	<h3>Properties</h3>
-	<p>An attribute $r$ is <b>prime</b> iff $r \in \alpha \subset \Sigma$ for some <b>key</b> $\alpha$, and <b>non-prime</b> otherwise.</p>
-	<p>An FD $\alpha \rightarrow \beta$ is <b>full</b> iff there does not exist $\gamma \subsetneq \alpha$ such that $\gamma \rightarrow \beta$, and <b>partial</b> otherwise.</p>
-	<p>An FD $\alpha \rightarrow \beta$ is <b>transitive</b> iff there exists $\gamma \subset \Sigma$ such that $\alpha \rightarrow \gamma \rightarrow \beta$, $\gamma \not\rightarrow \alpha$. (The definition is very fussy among different sources, and I couldn't prove the relation between this and 3NF.)</p>
-	
-	<h3>Normal Form (NF)</h3>
-	<ul>
-		<li><b>1NF</b>: The relational instances $S$ form a set, and every attribute is <b>atomic</b>.</li>
-		<li><b>2NF</b>: Every <b>non-prime</b> attribute is not <b>partially dependent</b> on any key.</li>
-		<li><b>3NF</b>: Every <b>non-trivial</b> FD of the form $X \rightarrow A$ satisfy either $X$ is <b>superkey</b> or $A$ is <b>prime</b>.</li>
-		<li><b>BCNF</b>: Every <b>non-trivial</b> FD of the form $X \rightarrow A$ satisfy that $X$ is <b>superkey</b>.</li>
-	</ul>
+<h2>Relational Algebra</h2>
 
-	<h3>Decomposition</h3>
-	<p>A relation $\mathcal{R} = (\Sigma, S)$ can be decomposed to $\mathcal{R_k} = (\Sigma_k, S_k)$ where $\Sigma = \cup_k \Sigma_k$ and $S_k = \Pi_{\Sigma_k}(S)$.</p>
-	<p><b>Lossless-join</b>: $S = S_1 \bowtie \cdots \bowtie S_K$ for all legal extension $S$. We can model this into a communication task: Given a tuple of attributes, and only give a projection to each. Can they combinely recover the correct tuple? Since we only have FDs, we simply apply the FDs to the commonly known attributes.</p>
-	<p><b>Dependency-preserving</b>: $(\cup F_k)^+ = F^+$ where $F_k = F^+|_{\Sigma_k}$.</p>
-	<p><b>Minimal Cover</b> $F$: (1) every FD in $F$ is of the form $X \rightarrow A$ where $A$ is singleton; (2) $X$ is minimal; (3) $F$ is minimal.</p>
-	<p><b>3NF Decomposition</b>: Find Minimal Cover of the FDs, then create unique relations for each of the FDs grouped by the left-hand side. Add one for any candidate key if not yet have.</p>
-	<p><b>BCNF Decomposition</b>: Simply repeatedly find BCNF violation $\alpha \rightarrow \beta$ (where $\alpha$ and $\beta$ are disjoint, otherwise it would be lossy), then split then up to $\Sigma \setminus \beta$ and $\alpha \cup \beta$.</p>
-	<p><b>BCNF Checking</b>: check $X_k \rightarrow X_k^+|_{\Sigma_k}$ for all $X_k \subset \Sigma_k$ where $X_k$ is not superkey of $\Sigma_k$ and the FD is non-trivial (since BCNF is not dependency-preserving).</p>
+<h3>Operations</h3>
+<p>Relational Algebra can be considered as a language on relations, and based on set theory. The notations are as follows:
+<ol>
+	<li>(Select) $\sigma_{P}(\mathcal{R})$ returns a relation with the same schema as $\mathcal{R}$ and rows that satisfy the selection predicate $P$.</li>
+	<li>(Project) $\Pi_{S}(\mathcal{R})$ returns a relation with schema $S$ and the projection of $\mathcal{R}$ onto $S$.</li>
+	<li>(Rename) $\rho_{\mathcal{S}(A_1, \dots, A_K)}(\mathcal{R})$ returns the original $\mathcal{R}$ but renamed (with or without columns).</li>
+	<li>(Join) $\mathcal{R} \bowtie_{P} \mathcal{S}$ returns $\sigma_P(\mathcal{R} \times \mathcal{S})$. If $P$ is omitted, it is natural join and all attributes appear in both $\mathcal{R}$ and $\mathcal{S}$ are equi-joined.</li>
+	<li>(Division) $\mathcal{R} / \mathcal{S}$ returns a relation with schema $S_\mathcal{R} \setminus S_\mathcal{S}$ and instances $\{ x \in D_\mathcal{S} / D_\mathcal{R} \, | \, \{x\} \times \mathcal{S} \subset \mathcal{R} \}$.</li>
+</ol></p>
 
-	<h2>Practical Database Management System</h2>
+<h3>Anomalies</h3>
+<p>An <b>anomaly</b> on a relation is something "weird" happening to the relation. There are mainly three kinds of relation anomalies:</p>
+<ol>
+	<li><b>Insertion Anomaly</b> occurs when we cannot store some information without knowing some unrelated stuff.</li>
+	<li><b>Deletion Anomaly</b> occurs when we cannot delete some information without destroying some unreleated stuff.</li>
+	<li><b>Update Anomaly</b> occurs when we need to modify multiple rows on a single information update.</li>
+</ol>
 
-	<h3>Transaction</h3>
-	<p>A <b>transaction</b> is a unit of program of instructions operating on the database. The transaction should be (1) <b>atomic</b> (all-or-nothing), (2) <b>durable</b> (can recover from failure), (3) <b>consistent</b> (must satisfy integrity constraints) and (4) <b>isolated</b> (state not to be modified by other transaction).</p>
-	<p>A <b>schedule</b> of a set of transaction is then some mix-up of the instructions, while maintaining the order within each transaction. Each transaction ends with either (1) commit (on success) or (2) abort (on fail).</b>
-	<p>To ensure that the result is consistent, the transaction should be <b>conflict-serialisable</b>. Two read/write operations are in conflict if either is write, and for a schedule we can draw a conflict precedence graph. The transaction is conflict-serialisable iff the resulted graph is DAG.</p>
-	<p><b>Lock-Based Protocol</b>: Write Lock (Exclusive) / Read Lock (Shared). <b>Simple Locking Protocol</b>: Request lock before first operation on X, unlock after the last operation on X. <b>Two-Phase Locking (2PL) Protocol</b>: Only unlock after all locks has been requested.</p>
-	<p><b>Deadlock</b>: Two transaction waiting for each other to release the lock. <b>Timestamp Ordering</b>: Wait-Die (kill self) / Wound-Wait (kill other). Older always respected.</p>
+<p>Some common scenarios that will trigger these anomaly:</p>
+<ol>
+	<li>Repeating data groups: Insertion + Update Anomaly</li>
+	<li>Association not stored explicitly: Deletion Anomaly</li>
+</ol>
+<p>The concepts Functional Dependencies and Normal Forms are introduced to tackle these anomalies.</p>
 
-	<h3>Log-Based Recovery</h3>
-	<p>Log records: [start T], [read, T, X], [write, T, X, [V1], V2], [commit, T], [abort, T]. Log <b>must</b> written to a stable storage before outputting to the database (<b>Write-Ahead Logging</b>).</p>
-	<p><b>Immediate Database Modification</b>: redo (if sees commit) / undo (if doesn't see commit)</p>
-	<p><b>Deferred Database Modification</b>: always redo</p>
+<h3>Functional Dependencies (FD)</h3>
+<p><b>Functional Dependency</b> $\alpha \rightarrow \beta$ is defined to be $r_1[\alpha] = r_2[\alpha] \implies r_1[\alpha] = r_2[\beta]$ for all $r_1, r_2 \in S$ over all legal $S$.</p>
+<p><b>Armstrong's Axiom</b> states that for $\alpha, \beta \subset \Sigma$, we have</p>
+<ol>
+	<li>(Reflexivity) $\beta \subset \alpha \mid= \alpha \rightarrow \beta$.</li>
+	<li>(Augmentation) $\alpha \rightarrow \beta \mid= \alpha \gamma \rightarrow \beta \gamma$.</li>
+	<li>(Transitivity) $\{ \alpha \rightarrow \beta, \beta \rightarrow \gamma \} \mid= \alpha \rightarrow \gamma$.</li>
+</ol>
+<p><b>Closure</b> $F^+$ of functional dependencies $F$ is defined to be the set of all functional dependencies that can be inferred from $F$.</p>
+<p>Closure $\alpha^+$ for $\alpha \subset \Sigma$ is defined similarly. $\alpha$ is super key of $\mathcal{R}$ iff $\alpha^+ = \Sigma$.</p>
+<p>Equivalence Rules: (1) conjunctive select can be splited (2) select is commutative (3) only last project matters (4) select can be merged into cartesian or theta join (5) theta-join are commutative and associative</p>
+
+<h3>Properties</h3>
+<p>An attribute $r$ is <b>prime</b> iff $r \in \alpha \subset \Sigma$ for some <b>key</b> $\alpha$, and <b>non-prime</b> otherwise.</p>
+<p>An FD $\alpha \rightarrow \beta$ is <b>full</b> iff there does not exist $\gamma \subsetneq \alpha$ such that $\gamma \rightarrow \beta$, and <b>partial</b> otherwise.</p>
+<p>An FD $\alpha \rightarrow \beta$ is <b>transitive</b> iff there exists $\gamma \subset \Sigma$ such that $\alpha \rightarrow \gamma \rightarrow \beta$, $\gamma \not\rightarrow \alpha$. (The definition is very fussy among different sources, and I couldn't prove the relation between this and 3NF.)</p>
+
+<h3>Normal Form (NF)</h3>
+<ul>
+	<li><b>1NF</b>: The relational instances $S$ form a set, and every attribute is <b>atomic</b>.</li>
+	<li><b>2NF</b>: Every <b>non-prime</b> attribute is not <b>partially dependent</b> on any key.</li>
+	<li><b>3NF</b>: Every <b>non-trivial</b> FD of the form $X \rightarrow A$ satisfy either $X$ is <b>superkey</b> or $A$ is <b>prime</b>.</li>
+	<li><b>BCNF</b>: Every <b>non-trivial</b> FD of the form $X \rightarrow A$ satisfy that $X$ is <b>superkey</b>.</li>
+</ul>
+
+<h3>Decomposition</h3>
+<p>A relation $\mathcal{R} = (\Sigma, S)$ can be decomposed to $\mathcal{R_k} = (\Sigma_k, S_k)$ where $\Sigma = \cup_k \Sigma_k$ and $S_k = \Pi_{\Sigma_k}(S)$.</p>
+<p><b>Lossless-join</b>: $S = S_1 \bowtie \cdots \bowtie S_K$ for all legal extension $S$. We can model this into a communication task: Given a tuple of attributes, and only give a projection to each. Can they combinely recover the correct tuple? Since we only have FDs, we simply apply the FDs to the commonly known attributes.</p>
+<p><b>Dependency-preserving</b>: $(\cup F_k)^+ = F^+$ where $F_k = F^+|_{\Sigma_k}$.</p>
+<p><b>Minimal Cover</b> $F$: (1) every FD in $F$ is of the form $X \rightarrow A$ where $A$ is singleton; (2) $X$ is minimal; (3) $F$ is minimal.</p>
+<p><b>3NF Decomposition</b>: Find Minimal Cover of the FDs, then create unique relations for each of the FDs grouped by the left-hand side. Add one for any candidate key if not yet have.</p>
+<p><b>BCNF Decomposition</b>: Simply repeatedly find BCNF violation $\alpha \rightarrow \beta$ (where $\alpha$ and $\beta$ are disjoint, otherwise it would be lossy), then split then up to $\Sigma \setminus \beta$ and $\alpha \cup \beta$.</p>
+<p><b>BCNF Checking</b>: check $X_k \rightarrow X_k^+|_{\Sigma_k}$ for all $X_k \subset \Sigma_k$ where $X_k$ is not superkey of $\Sigma_k$ and the FD is non-trivial (since BCNF is not dependency-preserving).</p>
+
+<h2>Practical Database Management System</h2>
+
+<h3>Transaction</h3>
+<p>A <b>transaction</b> is a unit of program of instructions operating on the database. The transaction should be (1) <b>atomic</b> (all-or-nothing), (2) <b>durable</b> (can recover from failure), (3) <b>consistent</b> (must satisfy integrity constraints) and (4) <b>isolated</b> (state not to be modified by other transaction).</p>
+<p>A <b>schedule</b> of a set of transaction is then some mix-up of the instructions, while maintaining the order within each transaction. Each transaction ends with either (1) commit (on success) or (2) abort (on fail).</b>
+<p>To ensure that the result is consistent, the transaction should be <b>conflict-serialisable</b>. Two read/write operations are in conflict if either is write, and for a schedule we can draw a conflict precedence graph. The transaction is conflict-serialisable iff the resulted graph is DAG.</p>
+<p><b>Lock-Based Protocol</b>: Write Lock (Exclusive) / Read Lock (Shared). <b>Simple Locking Protocol</b>: Request lock before first operation on X, unlock after the last operation on X. <b>Two-Phase Locking (2PL) Protocol</b>: Only unlock after all locks has been requested.</p>
+<p><b>Deadlock</b>: Two transaction waiting for each other to release the lock. <b>Timestamp Ordering</b>: Wait-Die (kill self) / Wound-Wait (kill other). Older always respected.</p>
+
+<h3>Log-Based Recovery</h3>
+<p>Log records: [start T], [read, T, X], [write, T, X, [V1], V2], [commit, T], [abort, T]. Log <b>must</b> written to a stable storage before outputting to the database (<b>Write-Ahead Logging</b>).</p>
+<p><b>Immediate Database Modification</b>: redo (if sees commit) / undo (if doesn't see commit)</p>
+<p><b>Deferred Database Modification</b>: always redo</p>

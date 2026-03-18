@@ -37,22 +37,70 @@
 
 <h1>MATH3240 Numerical Methods for Differential Equations</h1>
 
-<h2>Introduction</h2>
+<h2>Ordinary Differential Equations (ODE)</h2>
 
-<p><b>Differential Equations</b> are equations involving differentials. <b>Ordinary Differential Equations (ODEs)</b> are differential equations with one variable, whereas <b>Partial Differential Equations (PDEs)</b> are differential equations with more than one variable.</p>
+<h3>Initial Value Problem (IVP)</h3>
 
-<h3>Ordinary Differential Equations (ODE)</h3>
+<p>The simplest ODE is of the form $$ \biggl\{\begin{align*} x'(t) &= f(t, x) \\ x(t_0) &= x_0 \end{align*} $$ Which we can trivially extend it to vector-form.</p>
 
-<p>Assume $y(t)$ is a function. An ODE is of the form $$ F(y, y^{(1)}, y^{(2)}, \dots, y^{(n)}) = 0$$ where the <b>order</b> of $F$ is $n$. An ODE is <b>linear</b> iff it is linear in $y^{(k)}$ for all $k$.</p>
+<p>A variation is the Delay Differential Equation: $x'(t) = f(x(t), x(t - a))$ with initial values $x(t)$ for $t \in [-a, 0]$.</p>
+<h3>Existence and Uniqueness of Solution</h3>
 
-<p><b>Numerical Scheme</b>: systematic way to numerically solve equations.</p>
-<p><b>Initial Value Problem (IVP)</b>: Given $x'(t) = f(x, t)$ and initial value $x(t_i) = x_i$ where $0 \le i \lt k$, solve numerically. A method is $k$-step if it involes previous $k$ values. Usually assume $t_i = t_0 + hi$.</p>
-<p><b>Implicit</b>: Computable. <b>Explicit</b>: Solving Equations. </p>
+<p>When does solution exists and unique? If such solution is not unique, then the numerical scheme would not work to converge to a single solution.</p>
 
-<p><b>Generalised k-step method</b>: We can generalise all the k-step (linear) methods for some constants $\{a_i\}, \{b_i\}$ as in $$ \sum_{i = 0}^{k} a_i x_{n - k + i} = h \sum_{i = 0}^{k} b_i f_{n - k + i} $$ </p>
-<p><b>Predictor-Corrector</b>: Use some <b>explicit</b> method to predict the answer, then use <b>(iterative) implicit</b> method to correct the answer.</p>
+<p>If $f$ is linear in $x$ and continuous, we can write $x' = -p \cdot x + g$. Let integrating factor $\mu = \exp {\int p}$, then $\mu' = p \cdot \mu$, and $$ x = \frac{1}{\mu} \Big[ \int g \cdot \mu + x_0 \Big] $$ This is a solution to the ODE. What if $f$ is non-linear?</p>
 
-<h3>Method</h3>
-<p><b></b>  </p>
-<p><b>Grank-Nicolson Method</b>: $x_{n+1} = x_n + \frac{h}{2} [f(t_{n+1}, x_{n+1}) + f(t_n, x_n)]$</p>
+<p>If $f$ is continuous in rectangle $R = [t_0 - \alpha, t_0 + \alpha] \times [x_0 - \beta, x_0 + \beta]$, then IVP has solution for $|t - t_0| \le \min\{\alpha, \frac{\beta}{M}\}$ where $M = \max_R f$. Furthermore, if $f$ is Lipschitz continuous in $x$, potentially with $\beta \rightarrow \infty$, then such solution is unique.</p>
+
+<p>To prove for existence, we simply use iteration. Take $x_{(0)} \equiv x_0$ and $x_{(k+1)}(t) = x_0 + \int_{t_0}^{t} f(s, x_{(k)}(s))\,ds$. Since $f$ is uniformly continuous over compact rectangle, there exists $L \gt 0$ where $|f(t, x) - f(t, y)| \le L |x - y|$. We have $$ |x_{(k + 1)}(t) - x_{(k)}(t)| = \Bigg|\int^{t}_{t_0} \Big[f(s, x_{(k+1)}(s)) - f(s, x_{(k)}(s)\Big]\,ds\Bigg| \le L \int^{t}_{t_0} |x_{(k+1)}(s) - x_{(k)}(s)|\,ds $$ Therefore, for $|t - t_0| \lt \frac{1}{L}$ the above converges. We can simply repeat the process for different offsets.</p>
+
+<p>For uniqueness, we essentially use the same idea. We wish to show the above is a contraction over the metric space of continuous functions with sup-norm. We have $$|Tx(t) - Ty(t)| = \Bigg| \int_{t_0}^t f(s, x(s)) - f(s, y(s)) \, ds \Bigg| \le L |t - t_0| \cdot ||x - y||_{\infty}$$ Which is contraction for sufficiently small $|t - t_0|$.</p>
+
+<h3>Taylor-Series (T-S) Method</h3>
+
+<p>For the sake of convenience, we pick points with $t_j = t_0 + jh$ for $j \in \mathbb{N}$, and we want to approximate $x(t_j)$ as $x_j$. How can we do that? By T-S, we have $$ x(t_{j + 1}) = x(t_j + h) = x(t_j) + hx'(t_j) + \frac{h^2}{2} x''(t_j) + \frac{h^3}{6} x^{(3)}(t_j) + O(h^4)$$ Therefore, we can apply this for our estimation. For the sake of craziness, note that $ x' = f $, $ x'' = f' = f_t + f_x \cdot x' $ and $ x^{(3)} = (f_t + f_x \cdot x')' = f_{tt} + 2 \cdot f_{tx} \cdot x' + f_{xx} \cdot (x')^2 + f_x \cdot x''$. Note that the need of differentiation, which we don't want.</p>
+
+<p><b>Euler's Method</b> (E-M, T-S of order 1): $ x_{j + 1} = x_j + h \cdot f(t_j, x_j) $.</p>
+
+<h3>Runge-Kutta (R-K) Method</h3>
+
+<p>TLDR: We use the same idea as T-S Method, but replace all the derivatives by $f$.</p>
+
+<p>For the second-order R-K Method, we can view as $$ x(t + h) = x + \alpha hf + \beta hf(t + \gamma h, x + \mu h f) + O(h^3) $$ Which we can expand stuff and get $$ x(t + h) = x + \alpha hf + \beta \gamma h^2 f_t + \beta \mu h^2 f_x + O(h^3)$$ Which works iff $\alpha = 1$ and $\beta \gamma = \beta \mu = \frac{1}{2}$.</p>
+
+<p><b>Second-order Runge-Kutta Method</b> (R-K of order 2): $ x_{j + 1} = x_j + \frac{1}{2} hf_j + \frac{1}{2} hf(t_j + h, x_j + hf_j)$</p>
+<p><b>Modified Euler's Method</b> (M-E-M, R-K of order 2): $ x_{j + 1} = x_j + hf(t_j + \frac{1}{2} h, x_j + \frac{1}{2} hf_j) $ </p>
+<p><b>Fourth-order Runge-Kutta Method</b> (R-K of order 4): $ x_{j + 1} = \frac{1}{6}(F_1 + 2F_2 + 2F_3 + F_4)$ with $$ \begin{align*} F_1 &= hf(t, x) \\ F_2 &= hf(t + \frac{1}{2} h, x + \frac{1}{2} F_1) \\ F_3 &= hf(t + \frac{1}{2} h, x + \frac{1}{2} F_2) \\ F_4 &= hf(t + h, x + F_3) \end{align*}$$</p>
+
+<p>These are implied by various numerical integration methods.</p>
+
+<h3>Multi-Step Method</h3>
+
+<p>Multi-Step Methods are those numerical schemes that involve multiple previous terms. The general idea is to use the identity $$x(t_{n + 1}) = x(t_n) + \int_{t_n}^{t_{n + 1}} f(t, x(t)) \, dt$$ Along with approximation of $f$ and quadrangle rules for integration.</p>
+
+<h4>Simple Quadrangle Rules</h4>
+<ul>
+<li>Left Rectangular Rule: $x_{n + 1} = x_n + hf_n$</li>
+<li>Right Rectangular Rule: $x_{n + 1} = x_n + hf_{n + 1}$</li>
+<li>Trapezoidal Rule: $x_{n + 1} = x_n + \frac{h}{2} \{ f_n + f_{n + 1} \}$</li>
+<li>Mid-point Rule: $x_{n + 1} = x_n + hf(t_{n + \frac{1}{2}}, \frac{x_n + x_{n + 1}}{2})$</li>
+</ul>
+
+<b>Explicit Methods</b> are those can be directly computed, whereas <b>Implcit Methods</b> are those that requires solving equations.
+
+<p>How to derive multistep methods? There are mainly three ways: (1) Test with Polynomial, (2) Adams Methods (Interpolation over $[t_n, t_{n + 1}]$, Explicit: Adams-Bashforth; Implcit: Adams-Moulton), and (3) Milne-Simpson Methods (Interpolation over $[t_{n - 1}, t_{n + 1}]$).</p>
+
+<h4>I. Test with Polynomial</h4>
+
+<p>Target: We want to approximate $$ \int^{t_{n + 1}}_{t_n} f(t, x(t)) \, dt \approx h \sum_{j = 0}^{k} c_j \cdot f(t_{n - k + j}, x(t_{n - k + j})) $$ This should holds for low-order polynomial, so we can write $$ \int^{1}_{0} g(s) \, ds = \sum_{j = 0}^{k} c_j \cdot g(-k + j) $$ And solve for $g(s) = s^j$ where $0 \le j \le k$.</p>
+
+<h4>II. Adams Methods</h4>
+
+<p><b>Adams-Bashforth Method</b> (A-B): Interpolate at $t_{n}, \cdots, t_{n - k}$. We can write $$ L_k = \sum_{j = 0}^{k} \prod_{i \ne j} \frac{t - t_j}{t_i - t_j} $$ and approximate $f$ with $L_k$.</p>
+<p><b>Adams-Moulton Method</b> (A-M): Interpolate at $t_{n + 1}, \cdots, t_{n - k}$. Note that $$ L_k = \sum_{i = 0}^{k} \frac{\nabla^i f_{n + 1}}{i!h^i} \prod_{j = 0}^{i - 1} (t - t_{n + 1 - j}) $$ Therefore, we have $x_{n + 1} \approx x_n + \int_{t_n}^{t_{n + 1}} L_k(t)\, dt $, and $$x_{n + 1} = x_n + h \sum_{i = 0}^{k} (-1)^i \nabla^i f_{n + 1} \int^1_0 \binom{-s + 1}{i} ds$$</p>
+
+<p><b>Crank-Nicoson Method</b> (C-N, A-M of order 1): $x_{n + 1} = x_n + \frac{h}{2} \{ f_{n + 1} + f_n \}$</p>
+<h4>III. Milne-Simpson Methods (M-S)</h4>
+
+<p>We have simply $$x_{n + 1} = x_{n - 1} + h \sum_{i = 0}^k (-1)^i \nabla^i f_{n + 1} \int^1_{-1} \binom{-s + 1}{i} ds$$</p>
 

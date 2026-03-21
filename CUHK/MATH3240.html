@@ -21,6 +21,20 @@ layout: default
 
 <h1>MATH3240 Numerical Methods for Differential Equations</h1>
 
+<h2>Order Notations</h2>
+
+<h3>Continuity and Differentiation</h3>
+
+<p>The key idea is bascially continuity in compact set is strong, since it implies Lipschitz immediately. We can state such continuity as $$ f(x + h) = f(x) + O(h) $$</p>
+
+<p>In general, given a $n$-time differentiable function $f$, we can have for some $\xi \in (x, x + h)$, $$ f(x + h) = \sum_{k = 0}^{n} \frac{f^{(k)}(x)}{k!} h^k + o(h^n) = \sum_{k = 0}^{n - 1} \frac{f^{(k)}(x)}{k!} h^k + \frac{f^{(n)}(\xi)}{n!} h^n $$ From definition and by repeated application of Mean-Value Theorem. Henceforth if coninuity is granted, the error term becomes $O(h^{n + 1})$.</p>
+
+<h3>Integration</h3>
+
+<p>We wish to approximate for (Lipschitz) continuous $f$, the value of $$ \int_{a}^{a + h} f(s) \, ds $$ There are mainly four ways: Rectangular ([0, 0, 1] or [1, 0, 0], 1st order), Mid-Point ([0, 1, 0], 2nd order), Trapezoid ([1, 0, 1], 2nd order) and Simpson ([1, 4, 1], 3rd order). </p>
+
+<p>To note the bounds, simply observe that it suffices for us to estimate $f$ by degree-$d$ polynomial $p$ where $||f - p||_{\infty} = O(h^d)$. If the numerical integration works for the polynomial, then the error is $O(h^{d + 1})$.</p>
+
 <h2>Ordinary Differential Equations (ODE)</h2>
 
 <h3>Initial Value Problem (IVP)</h3>
@@ -53,10 +67,12 @@ layout: default
 <p>For the second-order R-K Method, we can view as $$ x(t + h) = x + \alpha hf + \beta hf(t + \gamma h, x + \mu h f) + O(h^3) $$ Which we can expand stuff and get $$ x(t + h) = x + \alpha hf + \beta \gamma h^2 f_t + \beta \mu h^2 f_x + O(h^3)$$ Which works iff $\alpha = 1$ and $\beta \gamma = \beta \mu = \frac{1}{2}$.</p>
 
 <p><b>Second-order Runge-Kutta Method</b> (R-K of order 2): $ x_{j + 1} = x_j + \frac{1}{2} hf_j + \frac{1}{2} hf(t_j + h, x_j + hf_j)$</p>
-<p><b>Modified Euler's Method</b> (M-E-M, R-K of order 2): $ x_{j + 1} = x_j + hf(t_j + \frac{1}{2} h, x_j + \frac{1}{2} hf_j) $ </p>
-<p><b>Fourth-order Runge-Kutta Method</b> (R-K of order 4): $ x_{j + 1} = \frac{1}{6}(F_1 + 2F_2 + 2F_3 + F_4)$ with $$ \begin{align*} F_1 &= hf(t, x) \\ F_2 &= hf(t + \frac{1}{2} h, x + \frac{1}{2} F_1) \\ F_3 &= hf(t + \frac{1}{2} h, x + \frac{1}{2} F_2) \\ F_4 &= hf(t + h, x + F_3) \end{align*}$$</p>
 
-<p>These are implied by various numerical integration methods.</p>
+<p><b>Modified Euler's Method</b> (M-E-M, R-K of order 2): $ x_{j + 1} = x_j + hf(t_j + \frac{1}{2} h, x_j + \frac{1}{2} hf_j) $ </p>
+
+<p><b>Fourth-order Runge-Kutta Method</b> (R-K of order 4): $ x_{j + 1} = x_j + \frac{1}{6}(F_1 + 2F_2 + 2F_3 + F_4)$ with $$ \begin{align*} F_1 &= hf(t, x) \\ F_2 &= hf(t + \frac{1}{2} h, x + \frac{1}{2} F_1) \\ F_3 &= hf(t + \frac{1}{2} h, x + \frac{1}{2} F_2) \\ F_4 &= hf(t + h, x + F_3) \end{align*}$$</p>
+
+<p>These are implied by bashing Taylor-Series and compare coefficients.</p>
 
 <h3>Multi-Step Method</h3>
 

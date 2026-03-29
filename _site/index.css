@@ -1,17 +1,23 @@
 :root {
     --text-color: #cccccc;
     --background-color: #151515;
+    --selection-color: #f5c36060;
 }
 
 @media print {
     :root {
         --text-color: #151515;
         --background-color: #FFFFFF;
+        --selection-color: var(--background-color);
     }
 }
 
-* {
+* :not(mjx-container *) {
     font-family: 'Cascadia Code';
+    ::selection {
+        color: var(--text-color);
+	background-color: var(--selection-color);
+    }
     color: var(--text-color);
 }
 
@@ -19,6 +25,7 @@ body {
     font-size: 15px;
     background-color: var(--background-color);
 }
+
 .hljs {
     padding: 0 !important;
     background: var(--background-color) !important;

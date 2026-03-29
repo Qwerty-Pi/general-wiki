@@ -2,18 +2,18 @@
 <html>
 <head>
 	<script>
-		MathJax.Hub.Config({
-			tex2jax: {
-				inlineMath: [['$','$'], ['\\(','\\)']],
+		window.MathJax = {
+			tex: {
+				inlineMath: {'[+]': [['$', '$']]},
 				processEscapes: true
+			},
+			output: {
+				scale: 1.00
 			}
-		});
+		}
 	</script>
 	<meta charset="utf-8">
-	<script type="text/x-mathjax-config">
-		MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-	</script>
-	<script src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
 	<link rel="stylesheet" type="text/css" href="/index.css">
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
 </head>
@@ -81,9 +81,9 @@
 
 <h3>Runge-Kutta (R-K) Method</h3>
 
-<p>TLDR: We use the same idea as T-S Method, but replace all the derivatives by $f$.</p>
+<p>TLDR: We use the same idea as T-S Method, but replace all the derivatives by $f$, so that the numerical scheme does not involve taking derivative, which requires heavy computation.</p>
 
-<p>For the second-order R-K Method, we can view as $$ x(t + h) = x + \alpha hf + \beta hf(t + \gamma h, x + \mu h f) + O(h^3) $$ Which we can expand stuff and get $$ x(t + h) = x + \alpha hf + \beta \gamma h^2 f_t + \beta \mu h^2 f_x + O(h^3)$$ Which works iff $\alpha = 1$ and $\beta \gamma = \beta \mu = \frac{1}{2}$.</p>
+<p>For the second-order R-K Method, we can view as $$ x(t + h) = x + \alpha hf + \beta hf(t + \gamma h, x + \mu h f) + O(h^3) $$ And get $$ x(t + h) = x + \alpha hf + \beta \gamma h^2 f_t + \beta \mu h^2 f_x + O(h^3)$$ Which matches the 2nd-order T-S expansion iff $\alpha = 1$ and $\beta \gamma = \beta \mu = \frac{1}{2}$.</p>
 
 <p><b>Second-order Runge-Kutta Method</b> (R-K of order 2): $ x_{j + 1} = x_j + \frac{1}{2} hf_j + \frac{1}{2} hf(t_j + h, x_j + hf_j)$</p>
 

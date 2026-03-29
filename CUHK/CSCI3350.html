@@ -81,28 +81,123 @@ layout: default
 
 <h3>Quantum Teleportation</h3>
 
-<p>How can we transfer a qubit? We first introduce the <b>CNOT (Controlled-Not) Gate</b> and the <b>EPR Pair</b>. The CNOT gate acts on two qubits as $ \text{CNOT} \ket{a, b} = \ket{a, a \oplus b}$, where the EPR Pair is the entangled state $\ket{\Phi^{+}} := \frac{1}{\sqrt{2}} (\ket{00} + \ket{11}) = \text{CNOT}(H \oplus I) \ket{00}$.</p>
+<p>How can we transfer a qubit? We first introduce the <b>CNOT (Controlled-Not) Gate</b> and the <b>EPR Pair</b>. The CNOT gate acts on two qubits as $ \text{CNOT} \ket{a, b} = \ket{a, a \oplus b}$, where the EPR Pair is the entangled state $\ket{\Phi^{+}} := \frac{1}{\sqrt{2}} (\ket{00} + \ket{11}) = \text{CNOT}(H \oplus I) \ket{00}$. The quantum circuit for preparing EPR Pair is drawn as follows:</p>
 
-<div id="circuit-epr-pair" class="circuit-container"></div>
+<div id="circuit-epr-pair" class="circuit-container"> </div>
 
+<p>Say Alice wants to send a qubit to Bob. The configuration is wire 0: Alice's $\ket{\psi}$, wire 1: Alice's EPR share, wire 2: Bob's EPR share. The quantum circuit for quantum teleportation is as follows:</p>
+
+<div id="circuit-quantum-teleport" class="circuit-container"> </div>
+
+<p>This can be shown to work with somewhat lengthy computation. An immediate conclusion is that we can send 1 q-bit with 1 e-bit and 2 c-bits.</p>
+
+<h3>Superdense Coding</h3>
+
+<p>In fact, we can send 2 c-bits with 1 q-bit and 1 e-bit, hence the name <b>superdense coding</b>. In the following quantum circuit, wire 0 and 1 are the classical bits, wire 2 is Alice' EPR share and wire 3 is Bob's EPR share: </p>
+
+<div id="circuit-superdense-coding" class="circuit-container"> </div>
+
+<h3>CHSH Game</h3>
+
+<p>The CHSH Game is used to disprove the <b>Local Hidden Variable</b> theory, which wishes to explain quantum mechanics with that there might be some hidden variables that causes all the uncertainy in the quantum world. Essentially, the best solution to the CHSH Game relies on the non-determinism of quantum mechanics, hence against the LHV theory.</p>
+
+<p>In CHSH Game, the referee flips two fair coins and get two bits $x$ and $y$. The referee sends $x$ to Alice and sends $y$ to Bob. Then, Alice and Bob give response $a$ and $b$ respectively, and they win iff $a \oplus b = x \land y$.</p>
+
+<p>Classically, the winning probability of the CHSH Game is bounded by $75\%$. However, if we allow quantum solution, the CHSH Game can be won with probability $ \cos^2 (\frac{\pi}{8}) \approx 85.35\%$. By first sharing a EPR pair, simply by changing the measurement basis according to the input, the winning probability is improved:</p>
+
+<ul>
+<li>Alice: If $x = 0$, measure in $\{ \ket{0}, \ket{1} \}$. If $x = 1$, measure in $\{ \ket{+}, \ket{-} \}$.</li>
+<li>Bob: If $y = 0$, measure in $\{ \exp \frac{\pi i}{8}, \exp \frac{5\pi i}{8} \}$. If $y = 1$, measure in $\{ \exp \frac{-\pi i}{8}, \exp \frac{3\pi i}{8} \}$. </li>
+</ul>
+
+<p>For each pair of $(x, y)$, the winning probability is exactly $\cos^2 (\frac{\pi}{8})$.</p>
+
+<h2>Quantum Circuit</h2>
+
+<p>In the classical boolean circuit model, we have (1) <b>input wires</b>, (2) <b>logic gates</b>, and (3) <b>output wires</b>, and we wish to compute some functions $f: \mathbb{B}^n \rightarrow \mathbb{B}^m$. The <b>size</b> of the circuit is the number of gates used whereas the <b>depth</b> of the circuit is the longest path from input to output. Meanwhile, {AND, OR, XOR} or {NAND} are <b>universal</b>. How to have a quantum analogue of the above?</p>
+
+<h3>Universal Gates</h3>
+
+<p>Notice that the classical AND has a fan-in of 2 and fan-in of 1, so it cannot be represented by unitary matrices. Therefore, we need the <b>Toffoli (CCNOT) Gate</b>, which is defined as $(a, b, c) \mapsto (a, b, c \oplus (a \cdot b))$.</p>
+
+<div id="circuit-toffoli-gate" class="circuit-container"> </div>
+
+<p>Similarly, we can implement the classical OR with Toffoli Gate:</p>
+
+<div id="circuit-classical-or" class="circuit-container"> </div>
+
+<h3>Quantum Oracle on Classical Function</h3>
+
+<p>With <b>ancillia qubits</b> and universal gates, we can create oracle $\mathcal{O}_f$ for every classical functions $f$ as $\mathcal{O}_f : \ket{x, z} \rightarrow \ket{x, f(x) \oplus z}$.</p>
+
+<p>Notice that $$ \mathcal{O}_f \ket{x} \ket{-} = \frac{1}{\sqrt{2}} \ket{x} \otimes (\ket{f(x)} - \ket{f(x) \oplus 1}) = (-1)^{f(x)} \ket{x} $$ Hiding $z = \ket{-}$, we have the <b>Phase Oracle</b> $\mathcal{PhO}_f$ defined by $$ \mathcal{PhO}_f \ket{x} = (-1)^{f(x)} \ket{x} $$</p>
+
+<h3>Universal Gates for quantum circuit</h3>
+
+<p>Note that unlike classical circuit, there are infinite number of unitary matrices! Therefore, we need approximations for the universal gates. Since there seems to be no easy proof, two facts are stated here: (1) All the 1-qubit gates plus one entangling 2-qubit gate is universal, and (2) We can implement $2^n \times 2^n$ unitary matrix with $O(n^2 4^n)$ gates.</p>
+
+<p><b>Solovay-Kitaev Theorem</b> states that for any set $\Gamma \in \mathcal{SU}(\mathbb{C}^2)$ such that $\Gamma$ generates a dense subgroup of $\mathcal{SU}(\mathbb{C}^2)$ and closed under inverse, then we can approximate any $U \in \mathcal{SU}(\mathbb{C}^2)$ with error $\varepsilon$ by $O(\log^c \varepsilon^{-1})$ gates where $c \approx 2$.</p>
+
+<h2>Quantum Algorithms</h2>
 
 <script>
-  const { Circuit, Renderer, HadamardGate, CNOTGate } = QuantumCircuitDrawer;
+  const { Circuit, Renderer, MeasurementGate, HadamardGate, PauliXGate, CNOTGate, CXGate, CZGate } = QuantumCircuitDrawer;
 
-    const circuitStyle = {
-      gateFill: "#cccccc",
-      gateStroke: "#606060",
-      lineColor: "#cccccc",
-      lineWidth: "2px",
-      gateStrokeWidth: "2px",
-      fontColor: "#151515",
-      fontSize: "20px"
-    };
+  const circuitStyle = {
+    gateFill: "#cccccc",
+    gateStroke: "#606060",
+    lineColor: "#cccccc",
+    fontColor: "#151515",
+    backgroundColor: "#151515",
+    fontSize: "20px",
+    lineWidth: 2,
+    gateStrokeWidth: 2,
+    gateWidth: 45,
+    gateHeight: 40
+  };
 
+  const drawCircuit = function(circuitName, circuit) {
+    const renderer = new Renderer(circuit, `circuit-${circuitName}`, circuitStyle);
+    renderer.draw();
+  }
+
+  {
     const circuit = new Circuit(2);
     circuit.addGate(new HadamardGate(0));
     circuit.addGate(new CNOTGate(0, 1));
+    drawCircuit("epr-pair", circuit);
+  }
 
-    const renderer = new Renderer(circuit, "circuit-epr-pair", circuitStyle);
-    renderer.draw();
+  {
+    const circuit = new Circuit(3);
+    circuit.addGate(new CNOTGate(0, 1));
+    circuit.addGate(new HadamardGate(0));
+    circuit.addGate(new MeasurementGate([0, 1]));
+    circuit.addGate(new CXGate(1, 2));
+    circuit.addGate(new CZGate(0, 2));
+    drawCircuit("quantum-teleport", circuit);
+  }
+
+  {
+    const circuit = new Circuit(4, [2, 2, 1, 1]);
+    circuit.addGate(new CZGate(0, 2));
+    circuit.addGate(new CXGate(1, 2));
+    circuit.addGate(new CXGate(2, 3));
+    circuit.addGate(new HadamardGate(2));
+    drawCircuit("superdense-coding", circuit);
+  }
+
+  {
+    const circuit = new Circuit(3);
+    circuit.addGate(new CNOTGate([0, 1], 2));
+    drawCircuit("toffoli-gate", circuit);
+  }
+
+  {
+    const circuit = new Circuit(3);
+    circuit.addGate(new PauliXGate([0, 1]));
+    circuit.addGate(new CNOTGate([0, 1], 2));
+    circuit.addGate(new PauliXGate(2));
+    drawCircuit("classical-or", circuit);
+  }
 </script>

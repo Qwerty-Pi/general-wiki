@@ -2,41 +2,107 @@
 layout: default
 ---
 
+<!-- Latex Macros -->
+<span style="display: none">
+\[
+	\newcommand{\ip}[2] {
+		\langle #1 | #2 \rangle
+	}
+\]
+</span>
+
+<style>
+  .circuit-container {
+    text-align: center;
+  }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.2.4/svg.min.js"></script>
+<script src="{{site.base_url}}/quantum-circuit-drawer.js"></script>
+
 <h1>CSCI3350 Introduction to Quantum Computing</h1>
 
 <h2>Introduction</h2>
 
 <h3>Quantum Mechanics</h3>
 
-<p><b>Schrödinger equation</b> states that $$ i \hbar \frac{\partial}{\partial t} | \psi(t) \rangle = \hat H | \psi(t) \rangle $$</p>
+<p><b>Schrödinger equation</b> states that $$ i \hbar \frac{\partial}{\partial t} \ket{\psi(t)} = \hat H \ket{\psi(t)} $$</p>
 
 <p>We don't actually care about quantum mechanics, so the only thing important is that this is an <b>unitary action</b> on the <b>state vector</b>.</p>
 
 <h3>Linear Algebra</h3>
 
-<p>Refers to the <a href="{{site.base_url}}/CUHK/MATH2040.html">MATH2040</a> notes for the basics. There are some notations that are unique here, though. For example, $0$-based are used instead of $1$-based. Also the followings:</p>
+<p>Refers to the <a href="{{site.base_url}}/CUHK/MATH2040.html">MATH2040</a> notes for the basics. There are some unique notations here though. For example, $0$-based are used instead of $1$-based. Also the followings:</p>
 
 <p><b>Hilbert Space</b> is a <b>Complete</b> <b>Inner-Product Space</b>. The completeness is in the metric sense.</p>
 
-<p><b>Dirac Notation</b> is essentially instead of using arrows, we use $| \psi \rangle$ and $\langle \psi |$ to denote column and row vectors respectively, with $\langle \psi | = | \psi \rangle^{\dagger}$ and $A^\dagger$ being the <b>conjugate transpose</b> of $A$. This means the <b>inner product</b> of $|\phi\rangle$ and $|\psi\rangle$ can be conveniently written as $\langle \phi | \psi \rangle$. <b>Projection Operator</b> $\Pi_{\psi}$ along $|\psi\rangle$ can also be written conveniently as $| \psi \rangle \langle \psi | $. We also abbreviate $| k \rangle = e_k$ and $| \pm \rangle = \frac{1}{\sqrt{2}} (| 0 \rangle \pm | 1 \rangle)$. The basis $\{ | 0 \rangle, | 1 \rangle \}$ is called the <b>computational basis</b>, whereas $\{ | + \rangle, | - \rangle \}$ is called the <b>Hadamard basis</b>.</p>
+<p><b>Dirac Notation</b> is essentially instead of using arrows, we use $\ket{\psi}$ and $\bra{\psi}$ to denote column and row vectors respectively, with $\bra{\psi} = \ket{\psi}^{\dagger}$ and $A^\dagger$ being the <b>conjugate transpose</b> of $A$. This means the <b>inner product</b> of $|\phi\rangle$ and $|\psi\rangle$ can be conveniently written as $\langle \phi \ket{\psi}$. <b>Projection Operator</b> $\Pi_{\psi}$ along $|\psi\rangle$ can also be written conveniently as $\ket{\psi} \bra{\psi} $. We also abbreviate $\ket{k} = e_k$ and $\ket{\pm} = \frac{1}{\sqrt{2}} (\ket{0} \pm \ket{1})$. The basis $\{ \ket{0}, \ket{1} \}$ is called the <b>computational basis</b>, whereas $\{ \ket{+}, \ket{-} \}$ is called the <b>Hadamard basis</b>.</p>
 
 <p>Some <b>unitary matrices</b> that are often used are <b>Pauli Matrices</b> $X$ (bit-flip), $Y$ (combination), $Z$ (phase-flip) and <b>Hadamard Matrix</b> $H$: $$ X = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix} \quad Y = \begin{bmatrix} 0 & -i \\ i & 0 \end{bmatrix} \quad Z = \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix} \quad H = \frac{1}{\sqrt{2}} \begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix} $$</p>
 
-<p>The <b>spectral decomposition</b> of <b>Hermitian (observable)</b> $A$ can be stated as $A = \sum_{m} \lambda_m \Pi_m = \sum_{m} \lambda_m | \psi_m \rangle \langle \psi_m |$.</p>
+<p>The <b>spectral decomposition</b> of <b>Hermitian (observable)</b> $A$ can be stated as $A = \sum_{m} \lambda_m \Pi_m = \sum_{m} \lambda_m \ket{\psi_m} \bra{\psi_m}$.</p>
 
-<p>Consider a <b>bipartite</b> Hilbert Space $\mathcal{H} = \mathcal{H}_A \otimes \mathcal{H}_B$. For $| \psi \rangle \in \mathcal{H}$, if $| \psi \rangle = | \psi_A \rangle \otimes | \psi_B \rangle $ for some $| \psi_A \rangle \in \mathcal{H}_A$ and $| \psi_B \rangle \in \mathcal{H}_B$, then $| \psi \rangle$ is called <b>separable</b>, and <b>entangled</b> if otherwise. We can define analogously for unitary operators as well.</p>
+<p>Consider a <b>bipartite</b> Hilbert Space $\mathcal{H} = \mathcal{H}_A \otimes \mathcal{H}_B$. For $\ket{\psi} \in \mathcal{H}$, if $\ket{\psi} = \ket{\psi_A} \otimes \ket{\psi_B} $ for some $\ket{\psi_A} \in \mathcal{H}_A$ and $\ket{\psi_B} \in \mathcal{H}_B$, then $\ket{\psi}$ is called <b>separable</b>, and <b>entangled</b> if otherwise. We can define analogously for unitary operators as well.</p>
 
 <h2>The Four Postulates</h2>
 
 <p>The four postulates are stated below: </p>
 
 <ol>
-<li>A quantum physical system is described by a <b>state vector</b>, which is a <b>unit vector</b> $ | \psi \rangle $ in <b>some Hilbert Space</b>.</li>
-<li>The evolution of closed quantum system is described by a <b>unitary action</b> $U$, that is $ | \psi' \rangle = U | \psi \rangle$.</li>
-<li>The measurement of quantum system can be described by a collection of <b>measurement operators</b> $\{ M_m \}$ satisfying the <b>completeness condition</b> $ \sum_{m} M_m^{\dagger} M_m = I $, where the outcome is $m$ and the state vector collapses to $ \widehat{M_m | \psi \rangle} $ with probability $|| M_m | \psi \rangle ||^2$. </li>
+<li>A quantum physical system is described by a <b>state vector</b>, which is a <b>unit vector</b> $ \ket{\psi} $ in <b>some Hilbert Space</b>.</li>
+<li>The evolution of closed quantum system is described by a <b>unitary action</b> $U$, that is $ \ket{\psi'} = U \ket{\psi}$.</li>
+<li>The measurement of quantum system can be described by a collection of <b>measurement operators</b> $\{ M_m \}$ satisfying the <b>completeness condition</b> $ \sum_{m} M_m^{\dagger} M_m = I $, where the outcome is $m$ and the state vector collapses to $ \widehat{M_m \ket{\psi}} $ with probability $|| M_m \ket{\psi} ||^2$. </li>
 <li>The state space of a composite quantum system is the <b>tensor product</b> of the state spaces of the component physical systems.</li>
 </ol>
 
 <h2>Basic Quantum-Exclusive Effects</h2>
 
 <h3>Elitzur-Vaidman Bomb</h3>
+
+<p>Consider the set-up where there is maybe a bomb inside a suitcase, and you want to know whether the suitcase is innocent or malicious. We model this as a quantum state $\ket{\psi}$, which is $\ket{0}$ initially.</p>
+
+<ul>
+	<li>If the suitcase is innocent, then $ \ket{\psi'} = \ket{\psi} $.</li>
+	<li>If the suitcase is malicious, then $\ket{\psi} $ is measured in the computational basis. If the outcome is $0$, nothing happens. If the outcome is $1$, the bomb explodes and game over.</li>
+</ul>
+
+<p>Classically, this is unsolvable at all. However, if we talk in quantum, there is an algorithm to solve this. Take $\varepsilon = \dfrac{\pi}{2T}$ for some large $T \in \mathbb{N}$, then for $i = 0$ to $T - 1$, update $\ket{\psi_i} = R_{\varepsilon} | \psi_{i - 1} \rangle$ and query using $ \ket{\psi_i} $. Finally, measure $ \ket{\psi_T} $ in computational basis. If the outcome is $1$, then report innocent, and report malicious otherwise.</p>
+
+<ul>
+	<li>If the suitcase is innocent, $ \ket{\psi_T} = R_{T \varepsilon} \ket{0} = \ket{1}$, so innocent is always reported.</li>
+	<li>If the suitcase is malicious, there is a $\sin^2 \varepsilon$ chance in each round that the bomb is triggered. Otherwise, $\ket{\psi_i}$ is reset to $\ket{0}$. So malicious is always reported with explosion probability not exceeding $ \varepsilon^{-1} \sin^2 \varepsilon \le \varepsilon$, by the <b>union bound</b>.</li>
+</ul>
+
+<h3>No-Cloning Theorem</h3>
+
+<p>Classically, we can always copy a bit deterministically as $b \mapsto (b, b)$. We can also always "re-prepare" known quantum states. However, a universal quantum algorithm for $|\psi \rangle \mapsto (\ket{\psi}, \ket{\psi} ) $ cannot exist.</p>
+
+<p>The proof is simple - Assume on contrary that such unitary operator $U$ exists. Then $U \ket{\psi, e} = \ket{\psi, \psi}$ and $U \ket{\phi, e} = \ket{\phi, \phi}$ for arbitrary $\ket{\psi} \ne \ket{\phi}$. Then $ \ip{\psi, e}{\phi, e} = \ip{\psi, \psi}{\phi, \phi}$, implying $\ip{\psi}{\phi} = \ip{\psi}{\phi}^2$ and that $\ip{\psi}{\phi}$ is either $0$ or $1$ - So $U$ is not universal at all.</p>
+
+<h3>Quantum Teleportation</h3>
+
+<p>How can we transfer a qubit? We first introduce the <b>CNOT (Controlled-Not) Gate</b> and the <b>EPR Pair</b>. The CNOT gate acts on two qubits as $ \text{CNOT} \ket{a, b} = \ket{a, a \oplus b}$, where the EPR Pair is the entangled state $\ket{\Phi^{+}} := \frac{1}{\sqrt{2}} (\ket{00} + \ket{11}) = \text{CNOT}(H \oplus I) \ket{00}$.</p>
+
+<div id="circuit-epr-pair" class="circuit-container"></div>
+
+
+<script>
+  const { Circuit, Renderer, HadamardGate, CNOTGate } = QuantumCircuitDrawer;
+
+    const circuitStyle = {
+      gateFill: "#cccccc",
+      gateStroke: "#606060",
+      lineColor: "#cccccc",
+      lineWidth: "2px",
+      gateStrokeWidth: "2px",
+      fontColor: "#151515",
+      fontSize: "20px"
+    };
+
+    const circuit = new Circuit(2);
+    circuit.addGate(new HadamardGate(0));
+    circuit.addGate(new CNOTGate(0, 1));
+
+    const renderer = new Renderer(circuit, "circuit-epr-pair", circuitStyle);
+    renderer.draw();
+</script>

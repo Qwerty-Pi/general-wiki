@@ -14,13 +14,17 @@ layout: default
 
 <h3>Linear Algebra</h3>
 
-<p>The only thing we care are <b>Vector Spaces</b>, <b>Unitary Action</b> and <b>Tensor Product</b> - refers to the <a href="{{site.base_url}}/CUHK/MATH2040.html">MATH2040</a> notes. There are some notations that are unique here, though. For example, $0$-based are used instead of $1$-based. Also the followings:</p>
+<p>Refers to the <a href="{{site.base_url}}/CUHK/MATH2040.html">MATH2040</a> notes for the basics. There are some notations that are unique here, though. For example, $0$-based are used instead of $1$-based. Also the followings:</p>
 
 <p><b>Hilbert Space</b> is a <b>Complete</b> <b>Inner-Product Space</b>. The completeness is in the metric sense.</p>
 
-<p><b>Dirac Notation</b> is essentially instead of using arrows, we use $| \psi \rangle$ and $\langle \psi |$ to denote column and row vectors respectively, with $\langle \psi | = | \psi \rangle^{\dagger}$ and $A^\dagger$ being the <b>conjugate transpose</b> of $A$. This means the <b>inner product</b> of $|\phi\rangle$ and $|\psi\rangle$ can be conveniently written as $\langle \phi | \psi \rangle$. <b>Projection Operator</b> $P_{\psi}$ along $|\psi\rangle$ can also be written conveniently as $| \psi \rangle \langle \psi | $.</p>
+<p><b>Dirac Notation</b> is essentially instead of using arrows, we use $| \psi \rangle$ and $\langle \psi |$ to denote column and row vectors respectively, with $\langle \psi | = | \psi \rangle^{\dagger}$ and $A^\dagger$ being the <b>conjugate transpose</b> of $A$. This means the <b>inner product</b> of $|\phi\rangle$ and $|\psi\rangle$ can be conveniently written as $\langle \phi | \psi \rangle$. <b>Projection Operator</b> $\Pi_{\psi}$ along $|\psi\rangle$ can also be written conveniently as $| \psi \rangle \langle \psi | $. We also abbreviate $| k \rangle = e_k$ and $| \pm \rangle = \frac{1}{\sqrt{2}} (| 0 \rangle \pm | 1 \rangle)$. The basis $\{ | 0 \rangle, | 1 \rangle \}$ is called the <b>computational basis</b>, whereas $\{ | + \rangle, | - \rangle \}$ is called the <b>Hadamard basis</b>.</p>
 
-<p>Some <b>unitary matrices</b> that are often used are <b>Pauli Matrices</b> $X, Y, Z$ and <b>Hadamard Matrix</b> $H$</p>
+<p>Some <b>unitary matrices</b> that are often used are <b>Pauli Matrices</b> $X$ (bit-flip), $Y$ (combination), $Z$ (phase-flip) and <b>Hadamard Matrix</b> $H$: $$ X = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix} \quad Y = \begin{bmatrix} 0 & -i \\ i & 0 \end{bmatrix} \quad Z = \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix} \quad H = \frac{1}{\sqrt{2}} \begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix} $$</p>
+
+<p>The <b>spectral decomposition</b> of <b>Hermitian (observable)</b> $A$ can be stated as $A = \sum_{m} \lambda_m \Pi_m = \sum_{m} \lambda_m | \psi_m \rangle \langle \psi_m |$.</p>
+
+<p>Consider a <b>bipartite</b> Hilbert Space $\mathcal{H} = \mathcal{H}_A \otimes \mathcal{H}_B$. For $| \psi \rangle \in \mathcal{H}$, if $| \psi \rangle = | \psi_A \rangle \otimes | \psi_B \rangle $ for some $| \psi_A \rangle \in \mathcal{H}_A$ and $| \psi_B \rangle \in \mathcal{H}_B$, then $| \psi \rangle$ is called <b>separable</b>, and <b>entangled</b> if otherwise. We can define analogously for unitary operators as well.</p>
 
 <h2>The Four Postulates</h2>
 
@@ -29,6 +33,10 @@ layout: default
 <ol>
 <li>A quantum physical system is described by a <b>state vector</b>, which is a <b>unit vector</b> $ | \psi \rangle $ in <b>some Hilbert Space</b>.</li>
 <li>The evolution of closed quantum system is described by a <b>unitary action</b> $U$, that is $ | \psi' \rangle = U | \psi \rangle$.</li>
-<li>The measurement of quantum system can be described by a collection of <b>measurement operators</b> $\{ M_m \}$ satisfying the <b>completeness condition</b> $ \sum_{m} M_m^{\dagger} M_m = I $, where the result is $m$ and the state vector collapses to $ \widehat{M_m | \psi \rangle} $ with probability $|| M_m | \psi \rangle ||^2$. </li>
+<li>The measurement of quantum system can be described by a collection of <b>measurement operators</b> $\{ M_m \}$ satisfying the <b>completeness condition</b> $ \sum_{m} M_m^{\dagger} M_m = I $, where the outcome is $m$ and the state vector collapses to $ \widehat{M_m | \psi \rangle} $ with probability $|| M_m | \psi \rangle ||^2$. </li>
 <li>The state space of a composite quantum system is the <b>tensor product</b> of the state spaces of the component physical systems.</li>
 </ol>
+
+<h2>Basic Quantum-Exclusive Effects</h2>
+
+<h3>Elitzur-Vaidman Bomb</h3>

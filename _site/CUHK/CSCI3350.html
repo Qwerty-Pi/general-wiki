@@ -140,7 +140,7 @@
 
 <p>In the classical boolean circuit model, we have (1) <b>input wires</b>, (2) <b>logic gates</b>, and (3) <b>output wires</b>, and we wish to compute some functions $f: \mathbb{B}^n \rightarrow \mathbb{B}^m$. The <b>size</b> of the circuit is the number of gates used whereas the <b>depth</b> of the circuit is the longest path from input to output. Meanwhile, {AND, OR, XOR} or {NAND} are <b>universal</b>. How to have a quantum analogue of the above?</p>
 
-<h3>Universal Gates</h3>
+<h3>Implementing Classical Universal Gates</h3>
 
 <p>Notice that the classical AND has a fan-in of 2 and fan-in of 1, so it cannot be represented by unitary matrices. Therefore, we need the <b>Toffoli (CCNOT) Gate</b>, which is defined as $(a, b, c) \mapsto (a, b, c \oplus (a \cdot b))$.</p>
 
@@ -156,7 +156,7 @@
 
 <p>Notice that $$ \mathcal{O}_f \ket{x} \ket{-} = \frac{1}{\sqrt{2}} \ket{x} \otimes (\ket{f(x)} - \ket{f(x) \oplus 1}) = (-1)^{f(x)} \ket{x} $$ Hiding $z = \ket{-}$, we have the <b>Phase Oracle</b> $\mathcal{PhO}_f$ defined by $$ \mathcal{PhO}_f \ket{x} = (-1)^{f(x)} \ket{x} $$</p>
 
-<h3>Universal Gates for quantum circuit</h3>
+<h3>Universal Gates for Quantum Circuit</h3>
 
 <p>Note that unlike classical circuit, there are infinite number of unitary matrices! Therefore, we need approximations for the universal gates. Since there seems to be no easy proof, two facts are stated here: (1) All the 1-qubit gates plus one entangling 2-qubit gate is universal, and (2) We can implement $2^n \times 2^n$ unitary matrix with $O(n^2 4^n)$ gates.</p>
 

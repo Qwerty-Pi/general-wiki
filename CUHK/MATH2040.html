@@ -1,0 +1,62 @@
+---
+layout: default
+---
+
+<style>
+@media print {
+	p {
+		font-size: 11px;
+	}
+	h1 {
+		font-size: 20px;
+	}
+	h2 {
+		font-size: 15px;
+	}
+	h3 {
+		font-size: 13px;
+	}
+}
+</style>
+
+<h1>MATH2040 Linear Algebra II</h1>
+
+<h2>Vector Space</h2>
+
+<p>A <b>vector space</b> over <b>field</b> $F$ is a set $V$ equipped with $+$ and $\times$, satisfying the axioms.</p>
+
+<p>A <b>subspace</b> $W$ of vector space $V/F$ is a non-empty set where its closed under $+$ and $\times$.</p>
+
+<h3>Linear Independent, Span and Basis</h3>
+
+<p>Given a vector space $V$ and a set $S \subset V$. A vector $v$ is a <b>linear combination</b> of vectors in $S$, or in the <b>span</b> of $S$, $\langle S \rangle$, iff $$ v = a_1 \cdot u_1 + \cdots + a_n \cdot u_n $$ for some $a_i \in F$, $u_i \in V$. A relevant definition is that a set is <b>linear independent</b> iff we can only represent $0$ in one way, i.e., $$ 0 = a_1 \cdot u_1 + \cdots + a_n \cdot u_n \implies a_1 = \cdots = a_n = 0 $$ A set $S$ is a <b>basis</b> of $V$ if it is both linearly independent and spans $V$. The <b>dimension</b> of the vector space is defined to be the cardinality of its basis. A basis is guaranteed by <b>Zorn's lemma</b>, and all should have the same cardinality.</p>
+
+<h3>Operations on Vector Space</h3>
+
+<p>The <b>sum</b> of two subspaces $U$ and $W$ is defined to be $$ U + W = \{ u + w : u \in U, v \in W \} $$ If $ U \cap W = \{ 0 \} $, then it is called <b>direct sum</b> and is denoted $ U \oplus W $. Obviously $\dim (U \oplus W) = \dim (U) + \dim (W)$.</p>
+
+<p>With this, we can define a <b>projection</b> operator $P : V \rightarrow U$ on $V = U \oplus W$ by mapping $u + w \in V$ to $u \in U$.</p>
+
+<p>Similarly, the <b>direct (cartesian) product</b> of two vector spaces is defined by $$U \times W = \{ (u, w) : u \in U, w \in W \} $$</p>
+<p><b>Quotient Space</b> $V / W$ is defined on <b>cosets</b> $v + W$ for $v \in V$ under the same operators.</p>
+
+
+<h2>Linear Transformation</h2>
+
+<p>A <b>linear transformation</b> $T : V \rightarrow W$ is a map satisfying $T(v + w) = T(v) + T(w)$ and $T(av) = aT(v)$ for all $a \in F, v \in V, w \in W$.</p>
+
+<p>The <b>null space (kernel)</b> of $T$ is defined as $$ \mathcal{N}(T) = \{ v: T(v) = 0 \} $$ Whereas the <b>range (image)</b> is defined as $$ \mathcal{R}(T) = \{ T(v) : v \in V \} $$ <b>Rank-Nullity Theorem</b> states that $$ \dim \mathcal{N}(T) + \dim \mathcal{R}(T) = \dim V $$</p>
+
+<h3>Matrix Representation</h3>
+
+<p>We can encode linear transformations with <b>matrices</b>. Consider finite-dim $V$ and $W$ with <b>ordered basis</b> $ \beta = \{ v_1, \cdots, v_n \} $ and $ \gamma = \{ w_1, \cdots, w_m \} $.</p>
+
+<p>For vectors, say $v = a_1 v_1 + \cdots + a_n v_n$, then $$\phi_\beta(v) = [v]_\beta = (a_1, \cdots, a_n)^T$$ While for linear transformation $ T : V \rightarrow W $, we write $$ \Phi_{\beta, \gamma}(T) = [T]_\beta^\gamma = ( [Tv_1]_\gamma | \cdots | [Tv_n]_\gamma ) $$</p>
+
+<p>Intuitively, we have $[T]_\beta^\gamma \cdot [U]_\alpha^\beta = [TU]_\alpha^\gamma$ and $[Tv]_\gamma = [T]_\beta^\gamma \cdot [v]_\beta$. For inverse linear map $T^{-1}$, we also have $ [T]_\beta \cdot [T^{-1}]_\beta = I $.</p>
+
+<p>We can denote the <b>space of linear transformation</b> from $V$ to $W$ by $\mathcal{L}(V, W)$. The <b>dual space</b> is $V^* = \mathcal{L}(V, F)$, collection of <b>linear functionals</b>. If we define the <b>dual map</b> $T^* : W^* \rightarrow V^* $ to be $$ T^*(g) = g(T) \quad \forall g \in W^* $$ Then we have $ [T^*]_{\gamma^*}^{\beta^*} = ([T]_\beta^\gamma)^T$.</p>
+
+<p>Finally, we can introduce the <b>change of coordianates matrices</b>. This is simply defined as $Q = [I_V]_\beta^\gamma$, which means $$ [T]_\beta = Q^{-1} \cdot [T]_\gamma \cdot Q$$ Two matrices are called <b>similar</b> iff there exists <b>invertible</b> $Q$ such that $$ B = Q^{-1} \cdot A \cdot Q $$</p>
+
+<h2>Diagonalisation</h2>

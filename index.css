@@ -16,9 +16,17 @@
     font-family: 'Cascadia Code';
     ::selection {
         color: var(--text-color);
-	background-color: var(--selection-color);
+	    background-color: var(--selection-color);
     }
     color: var(--text-color);
+}
+
+mjx-container * {
+    /* user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none; */
 }
 
 body {

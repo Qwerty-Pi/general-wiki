@@ -29,6 +29,10 @@ mjx-container * {
     -o-user-select: none; */
 }
 
+ol, ul {
+    margin-top: 0.5em;
+}
+
 body {
     font-size: 15px;
     background-color: var(--background-color);

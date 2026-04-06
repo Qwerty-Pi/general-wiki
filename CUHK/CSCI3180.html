@@ -1,0 +1,170 @@
+---
+layout: default
+---
+<h1>CSCI3180 Principles of Programming Languages</h1>
+
+<h2>Introduction</h2>
+
+<p>Consider a <b>program</b> in <b>language</b> $\mathcal{L}$. We care about mainly two things: (1) <b>Syntax</b> (definition of set $\mathcal{L}$) and <b>Semantic</b> (how the program in $\mathcal{L}$ does). Mathematically, we can treat <b>interpreter</b> as a partial function that maps from the language to values: $$\text{Interpreter}_{\mathcal{L}} : \mathcal{L} \rightharpoonup \mathcal{V}$$</p>
+
+<p>Whereas <b>compiler</b> is a function between two languages where $$ \text{Interpreter}_{\mathcal{L}_1} = \text{Interpreter}_{\mathcal{L}_2} \circ \text{Compiler}_{\mathcal{L}_1 \rightarrow \mathcal{L}_2}$$</p>
+
+<p>Sometimes we create <b>syntactic sugar</b>, for instance (not e) === (if e then true else false). We can denote this relation as $$ \text{Evaluator}_{\mathcal{L}} = \text{Evaluator}_{\mathcal{L}_\text{core}} \circ \text{Desugarer}_{\mathcal{L}} $$ </p>
+<p>Target: Can we create an <b>abstracted</b> mathematical model for programs?</p>
+
+<h2>Syntax and Formal Language</h2>
+
+<p><b>Backus-Naur Form (BNF)</b> is a way for us to specify the grammar of a language. An example for boolean is t ::= true | false | t and t | t or t, where t is called <b>metavariables</b> (to distinguish with actual variables). Given such a grammar, we can create the <b>parse tree</b> of any syntactically valid <b>term</b>, which is the <b>Abstract Syntax Tree (AST)</b>, and can be translated to <b>Abstract Data Type (ADT)</b> in programming languages.</p>
+
+<p>We can define potentials on ASTs such as constants, size and depth, and carry out <b>Structural Induction</b> on AST (simply because it is a rooted tree). <b>Well-founded relation</b> are partial order such that there does not exists infinite descending chain, which we can induct on it.</p>
+
+<p>Simply refer to <a href="{{site.baseurl}}/CUHK/CSCI3130.html">CSCI3130 Notes</a> for more details.</p>
+
+<h2>Semantics</h2>
+
+<p>There are three styles of discussing semantics, as listed as follows:</p>
+
+<ol>
+	<li><b>Operational Semantics</b>: context |- term -> (new term, new context)</li>
+	<li><b>Denotational Semantics</b>: [[term]] := context -> value</li>
+	<li><b>Axiomatic Semantics</b>: (<b>Hoare triple</b>) {predicate P} program {predicate Q}</li>
+</ol>
+
+<p>Each of them are slightly different, but yet the main idea is the same: to find out the axiomatic <b>inference rules</b> for basic programming blocks (boolean, if-then-else, while-loop, etc), and use them to apply on everything.</p>
+
+<p><b>Abstract Rewriting System</b> over language $\mathcal{L}$ is a <b>relation</b> $\mathcal{R}$ over $\mathcal{L} \times \mathcal{L}$ where we can replace $x \in \mathcal{L}$ by $y$ iff $(x, y) \in \mathcal{R}$, which is called <b>(small-step) reduction</b>, and is denoted as $x \rightarrow y$. We denote its <b>transitive closure</b>, <b>(big-step) evaluation</b>, as $x \Downarrow y$. A <b>Proof System</b> is a special case where we derive truth ($\top$) and false ($\bot$).</p>
+
+<p>We call $(\mathcal{L}, \rightarrow)$ is <b>confluent</b> iff $w \Downarrow x \land w \Downarrow y \implies x \Downarrow z \land y \Downarrow z$ for some $z \in \mathcal{L}$, which is exactly when the evaluated result is <b>deterministic</b> (the actual evaluation is not required to be deterministic). Meanwhile, we call $\rightarrow$ as <b>terminating</b> if for all $x \in \mathcal{L}$, any reduction chain is finite.</p>
+
+<p>We define $x \in \mathcal{L}$ to be in <b>normal form</b> iff $x$ cannot be further reduced, while we usually also denote a subset of <b>normal form</b> as <b>values</b> which is the set of expected results. <b>Non-value normal form</b> indicates the program has gotten <b>stuck</b> and runtime-error has occured.</p>
+
+<h2>Untyped Imperative Language</h2>
+
+<p>There are two main components: The <b>syntactic form</b> (syntax) and <b>evaluation rules</b> (semantics). First, arithmetics:</p>
+
+<h3>Booleans $\mathbb{B}$</h3>
+
+<div>
+<b>Syntactic Forms</b>
+<ul>
+	<li>Terms t ::= true | false | if t then t else t</li>
+	<li>Values v ::= true | false</li>
+</ul>
+</div>
+
+<div>
+<b>Evaluation Rules</b>
+<ul>
+	<li>if true then t2 else t3 -> t2</li>
+	<li>if false then t2 else t3 -> t3</li>
+	<li>t1 -> t1' => if t1 then t2 else t3 -> if t1' then t2 else t3</li>
+</ul>
+</div>
+
+<h3>Natural Numbers $\mathbb{N}$</h3>
+
+<div>
+<b>Syntactic Forms</b>
+<ul>
+	<li>Terms t ::= 0 | succ t | pred t | iszero t</li>
+	<li>Values v ::= nv</li>
+	<li>Numeric Values nv ::= 0 | succ nv</li>
+</ul>
+</div>
+
+<p>The evaluation rules are just common senses so I omit them. The above are in the style of <b>small-step operational semantics</b>.</p>
+
+<h3>Simple Imperative Language (SIMPL)</h3>
+
+<div>
+<b>Syntactic Forms</b>
+<ul>
+	<li>Terms t ::= v | skip | r := t (assignment) | !r (deference) | t1; t2 (sequence) | if t1 then t2 else t3 | while t1 do t2 | t1 op t2</li>
+	<li>Operators op ::= + | - | * | / | &lt;=</li>
+	<li>Values v ::= b: bool | z: int</li>
+</ul>
+</div>
+
+<p>Common sense prevails. One may deduce the evaluation rules in both <b>small-step</b> and <b>big-step operation semantics</b>.</p>
+
+<h2>Functions</h2>
+
+<p>Idea: can we encode functions as objects? Turns out we can!</p>
+
+<h3>Lambda Calculus (λ)</h3>
+<div>
+<b>Syntactic Forms</b>
+<ul>
+	<li>Terms t ::= x | λx. t (abstraction) | t1 t2 (application)</li>
+	<li>Values v ::= x | λx. t</li>
+</ul>
+</div>
+
+<div>
+<b>Evaluation Rules</b>
+<ul>
+	<li>t1 -> t1' => t1 t2 -> t1' t2</li>
+	<li>t2 -> t2' => t1 t2 -> t1 t2'</li>
+	<li>(λx. t) v -> [x |-> v] t or t[v/x]</li>
+</ul>
+</div>
+
+<p>The <b>binder</b> λx has its <b>scope</b> extends rightwards. A variable $x$ is <b>bounded</b> if it is in scope of some λx, and <b>free</b> otherwise. A λ-term without free variables is called <b>closed</b> and is a <b>combinator</b>. It is possible to have <b>nameless</b> version of λ-Calculus by replacing variable names with integers. <b>Capture-avoiding Substitution</b> is always done, which simply means when substitution we avoid captures to not change the meaning.</p>
+
+<p>A term of the form (λx. t) v is called a <b>redex (reducible expression)</b>. There are different evaluation strategies: (1) beta-reduction: reduce everything (Church-Rosser Theorem states that this is confluent); (2) call-by-name: only reduce term outside abstraction, and from out to in; (3) call-by-value: only reduce term outside abstraction, and from in to out; (4) call-by-need: only lazily call when needed by using <b>thunks</b>, which abstracts the function to a value in a call-by-value scenario, whereas memorisation can also be done. <b>Infinite lazy list</b> can be defined as well. </p>
+
+<p>The <b>Church Encoding</b> allows us to express everything in λ-Calculus:</p>
+
+<div>
+<b>Church Boolean</b>
+<ul>
+	<li>tru = λt. λf. t (true)</li>
+	<li>fls = λt. λf. f (false)</li>
+	<li>test = λl. λm. λn. l m n (if-then-else)</li>
+</ul>
+</div>
+
+<div>
+<b>Church Pair</b>
+<ul>
+	<li>pair = λf. λs. λb. b f s</li>
+	<li>fst = λp. p tru</li>
+	<li>snd = λp. p fls</li>
+</ul>
+</div>
+
+<div>
+<b>Church Numeral</b>
+<ul>
+	<li>c<sub>0</sub> = λs. λz. z</li>
+	<li>c<sub>n</sub> = λs. λz. s<sup>n</sup>(z)</li>
+	<li>scc = λn. λs. λz. s (n s z)</li>
+</ul>
+</div>
+
+<h3>Simple Abstract Machine Language (SAML)</h3>
+<div>
+<b>Syntactic Forms</b>
+<ul>
+	<li>Terms t ::= id | if t1 then t2 else t3 | fun args -> t | t1 t2 | let bind in t | op t | t1 binop t2 | let rec x = fun x -> t in t</li>
+	<li>Bindings bind ::= x = e | x = e, bind</li>
+	<li>Identifiers id ::= x | z | b</li>
+	<li>Arguments args ::= x | x args</li>
+	<li>Binary Operators binop ::= + | - | * | / | and | or | &lt;=</li>
+	<li>Unitary Operator op ::= not</li>
+	<li>Values v ::= z | b | fun args -> t</li>
+</ul>
+</div>
+
+<p>For a matter of fact, some of the above -> are actually partial functions, but one may just interpret them using common sense.</p>
+
+<h3>Recursion</h3>
+
+<p>How to define recursions? In fact, for f: X -> Y we can define F : (X -> Y) -> X -> Y that maps f to f'. By fix f = λf. (λx. f(λy. x x y)) (λx. f(λy. x x y)), we have fix F = F(fix F) a <b>fixed point</b> of F, which is computes the result of the recursion given that it terminates.</p>
+
+<h3>Scoping</h3>
+<p>There are two major types of scoping: (1) <b>Lexical (Static) scoping</b>, which the scope is deduced from syntax; (2) <b>Dynamic Scoping</b>, which the scope is deduced from semantics, e.g., OCaml is static scoping. In many languages, there are also <b>global scope</b> and <b>local scope</b>, and we can <b>alias</b> variables.</p>
+
+<p>With (mutable) <b>environment</b> (in constract with immutable context), we can no longer treat functions as first-class, and we need to treat function along the environment as a <b>closure</b>.</p>
+
+<h2>Typed System</h2>

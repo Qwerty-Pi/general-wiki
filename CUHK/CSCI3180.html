@@ -14,9 +14,9 @@ layout: default
 
 <h2>Syntax and Formal Language</h2>
 
-<p><b>Backus-Naur Form (BNF)</b> is a way for us to specify the grammar of a language. An example for boolean is t ::= true | false | t and t | t or t, where t is called <b>metavariables</b> (to distinguish with actual variables). Given such a grammar, we can create the <b>parse tree</b> of any syntactically valid <b>term</b>, which is the <b>Abstract Syntax Tree (AST)</b>, and can be translated to <b>Abstract Data Type (ADT)</b> in programming languages.</p>
+<p><b>Backus-Naur Form (BNF)</b> is a way for us to specify the grammar of a language. An example for boolean is t ::= true | false | t and t | t or t, where t is called <b>metavariables</b> (to distinguish with actual variables). Given such a grammar, we can create the <b>parse tree</b> of any syntactically valid <b>term</b>, forming the <b>Abstract Syntax Tree (AST)</b> and can be translated to <b>Algebraic Data Type (ADT)</b> in programming languages.</p>
 
-<p>We can define potentials on ASTs such as constants, size and depth, and carry out <b>Structural Induction</b> on AST (simply because it is a rooted tree). <b>Well-founded relation</b> are partial order such that there does not exists infinite descending chain, which we can induct on it.</p>
+<p>We can define potentials on ASTs such as constants, size and depth, and carry out <b>Structural Induction</b> on AST (since, well, they are rooted trees). <b>Well-founded relation</b> are partial order $\prec$ such that there does not exists infinite descending chain, which we can induct on it.</p>
 
 <p>Simply refer to <a href="{{site.baseurl}}/CUHK/CSCI3130.html">CSCI3130 Notes</a> for more details.</p>
 
@@ -25,18 +25,18 @@ layout: default
 <p>There are three styles of discussing semantics, as listed as follows:</p>
 
 <ol>
-	<li><b>Operational Semantics</b>: context |- term -> (new term, new context)</li>
-	<li><b>Denotational Semantics</b>: [[term]] := context -> value</li>
+	<li><b>Operational Semantics</b>: state |- term -> (new term, new state)</li>
+	<li><b>Denotational Semantics</b>: [[term]] := state -> value</li>
 	<li><b>Axiomatic Semantics</b>: (<b>Hoare triple</b>) {predicate P} program {predicate Q}</li>
 </ol>
 
 <p>Each of them are slightly different, but yet the main idea is the same: to find out the axiomatic <b>inference rules</b> for basic programming blocks (boolean, if-then-else, while-loop, etc), and use them to apply on everything.</p>
 
-<p><b>Abstract Rewriting System</b> over language $\mathcal{L}$ is a <b>relation</b> $\mathcal{R}$ over $\mathcal{L} \times \mathcal{L}$ where we can replace $x \in \mathcal{L}$ by $y$ iff $(x, y) \in \mathcal{R}$, which is called <b>(small-step) reduction</b>, and is denoted as $x \rightarrow y$. We denote its <b>transitive closure</b>, <b>(big-step) evaluation</b>, as $x \Downarrow y$. A <b>Proof System</b> is a special case where we derive truth ($\top$) and false ($\bot$).</p>
+<p><b>Rewriting System</b> over language $\mathcal{L}$ is a <b>relation</b> $\rightarrow$ over $\mathcal{L} \times \mathcal{L}$ where we can replace $x \in \mathcal{L}$ by $y$ iff $x \rightarrow y$, which is called <b>(small-step) reduction</b>. We denote its <b>transitive closure</b>, <b>(big-step) evaluation</b>, as $x \Downarrow y$ (equivalently $x \rightarrow^* y$). A <b>proof system</b> is a special case where we derive with truth value ($\top$) and false value ($\bot$).</p>
 
-<p>We call $(\mathcal{L}, \rightarrow)$ is <b>confluent</b> iff $w \Downarrow x \land w \Downarrow y \implies x \Downarrow z \land y \Downarrow z$ for some $z \in \mathcal{L}$, which is exactly when the evaluated result is <b>deterministic</b> (the actual evaluation is not required to be deterministic). Meanwhile, we call $\rightarrow$ as <b>terminating</b> if for all $x \in \mathcal{L}$, any reduction chain is finite.</p>
+<p>A rewriting system $(\mathcal{L}, \rightarrow)$ is <b>confluent</b> iff for all $w \in \mathcal{L}$ we have $w \Downarrow x \land w \Downarrow y \implies x \Downarrow z \land y \Downarrow z$ for some $z \in \mathcal{L}$, which is exactly when the evaluated result is <b>deterministic</b> (note the actual evaluation is not required to be deterministic for this). Meanwhile, we call $\rightarrow$ <b>terminating</b> if for all $x \in \mathcal{L}$, any reduction chain is finite, which is exactly when $\rightarrow$ is <b>well-founded</b>.</p>
 
-<p>We define $x \in \mathcal{L}$ to be in <b>normal form</b> iff $x$ cannot be further reduced, while we usually also denote a subset of <b>normal form</b> as <b>values</b> which is the set of expected results. <b>Non-value normal form</b> indicates the program has gotten <b>stuck</b> and runtime-error has occured.</p>
+<p>We call $x \in \mathcal{L}$ to be in <b>normal form</b> iff $x$ cannot be further reduced, while a subset of <b>normal form</b> is considered as <b>values</b> which is the set of expected results. <b>Non-value normal form</b> normally indicates the program has gotten <b>stuck</b>.</p>
 
 <h2>Untyped Imperative Language</h2>
 
@@ -160,7 +160,7 @@ layout: default
 
 <h3>Recursion</h3>
 
-<p>How to define recursions? In fact, for f: X -> Y we can define F : (X -> Y) -> X -> Y that maps f to f'. By fix f = λf. (λx. f(λy. x x y)) (λx. f(λy. x x y)), we have fix F = F(fix F) a <b>fixed point</b> of F, which is computes the result of the recursion given that it terminates.</p>
+<p>How to define recursions in λ-Calculus? In fact, for f: X -> Y we can define F : (X -> Y) -> X -> Y that maps f to f'. By fix f = λf. (λx. f(λy. x x y)) (λx. f(λy. x x y)), we have fix F = F(fix F) a <b>fixed point</b> of F, which is computes the result of the recursion given that it terminates.</p>
 
 <h3>Scoping</h3>
 <p>There are two major types of scoping: (1) <b>Lexical (Static) scoping</b>, which the scope is deduced from syntax; (2) <b>Dynamic Scoping</b>, which the scope is deduced from semantics, e.g., OCaml is static scoping. In many languages, there are also <b>global scope</b> and <b>local scope</b>, and we can <b>alias</b> variables.</p>
@@ -168,3 +168,40 @@ layout: default
 <p>With (mutable) <b>environment</b> (in constract with immutable context), we can no longer treat functions as first-class, and we need to treat function along the environment as a <b>closure</b>.</p>
 
 <h2>Typed System</h2>
+
+<p><b>Types</b> are used to detect errors in programs statically before even running the programs. The <b>typing relation</b> t: T can be introduced with <b>inductive</b> typing rules.</p>
+
+<p><b>Typing system</b> can be as well treated as a <b>proof system</b> of propositions in the form "The term t is of type T". The <b>typing relation</b> is the (smallest) relation between terms and types satisfying the typing rules.</p>
+
+<h3>Well-typed and Type Safety</h3>
+
+<p>A term t is <b>well-typed</b> if its type can be deduced from the syntax alone, without resort to semantics. For example, "if true then 0 else false" evaluates to 0 and has the type of Nat (|= if true then 0 else false: Nat), but it is <b>not well-typed</b> and we <b>cannot prove</b> the type according to the typing rules.</p>
+
+<p>A type system is <b>safe</b> when combining (1) <b>progress</b> (well-typed term does not stuck) and (2) <b>preservation</b> (well-typed term stays well-typed after reduction).</p>
+
+<p>Denote Γ be the typing context, a map between variables and their types. Then for λ-Calculus we have
+<ul>
+	<li>(Abstraction) Γ, x: T1 |- t2: T2 => Γ |- λx: T1. t2 : T1 -> T2</li>
+	<li>(Application) Γ |- t1: T1 -> T2, Γ |- t2: T1 => Γ |- t1 t2 : T2</li>
+</ul>
+</div>
+
+<p>Well-typed terms under simple systems are always <b>normalisable</b> (halts and reduces to value).</p>
+
+<h3>Side Notes</h3>
+
+<p><b>Curry-Howard Correspondence</b> is the correspondence between <b>propositions</b> and <b>types</b>, which we can treat the typing of a term as the proposition it proves. <b>Curry-style</b> systems are implicit which allows non well-typed terms, meanwhile <b>Church-style</b> systems disallow ill-typed terms at all.</p>
+
+<p><b>Extensions</b> can be made to the typing system, for example unit, sequencing, ascriptions, let bindings, tuples, records, sums, lists and variants.</p>
+
+<p><b>Polymorphism</b> includes <b>parametric polymorphism</b> (type variables), <b>ad-hoc polymorphism</b> (overloading names) and <b>subtype polymorphism</b> (inherit classes).</p>
+
+<p><b>Subtyping</b> $&lt;:$ is defined as as where $\tau \lt: \tau'$ iff $\tau$ is a subtype of $\tau'$, and it is safe to use $\tau'$ in place of $\tau$.</p>
+
+<h3>Recursive Types</h3>
+
+<p><b>Recursive types</b> are of the form list = &lt;nil: unit, cons: {T, list}&gt;. We can introduce the <b>recursion operator</b> µ where the types are defined recursively. For example, <b>list</b> = µX. &lt;nil: unit, cons: {T, X}&gt;, whereas <b>stream</b> = µA. unit -> {T, A}. We can then introduce the typed fixed-point combinator as fix<sub>T</sub> = λf: T -> T. (λx: (µA. A -> T). f(x x)) (λx: (µA. A -> T). f(x x)).</p>
+
+<p>There are two ways of treating recursive types, namely <b>equi-recursive</b> (folds is equivalent) or <b>iso-recursive</b> (folds is isomorphic only).</p>
+
+<p>Formally we consider operator (generating functions) on power set on $\mathcal{U} \times \mathcal{U}$, the set of all typing relations. Denote $F$ be <b>monotone</b> if $X \subset Y \implies F(X) \subset Y$. Then $X$ is <b>F-closed</b> iff $F(X) \subset X$ and is <b>F-consistent</b> if $X \subset F(X)$, and <b>fixed point</b> if $F(X) = X$. Knaster-Tarski theorem states that intersection of all F-closed sets is the <b>least fixed point</b> µF, whereas the union of all F-consistent sets is the <b>greatest fixed point</b> νF.</p>

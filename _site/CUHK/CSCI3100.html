@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script>
+		window.MathJax = {
+			tex: {
+				inlineMath: {'[+]': [['$', '$']]},
+				processEscapes: true
+			},
+			output: {
+				scale: 1.00
+			},
+			options: {
+				menuOptions: {
+					settings: {
+						enrich: false
+					}
+				}
+			}
+		}
+	</script>
+	<meta charset="utf-8">
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+	<link rel="stylesheet" type="text/css" href="/index.css">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+	<meta content="width=device-width, initial-scale=1" name="viewport"/>
+</head>
+<body>
+	<h1>CSCI3100 Software Engineering</h1>
+
+<h2>Introduction</h2>
+
+<p>Target: Learn how to blow water on the theory of software development.</p>
+
+<h3>Software Development Processes</h3>
+<p><b>Plan-and-Development</b>: specification -> design -> implementation -> verification -> maintanence</p>
+<p><b>Agile Manifesto</b>: speed up <b>life-cycles</b> + interaction with users (<b>user stories</b>) + respond to change + <b>test-driven development (TDD) (autotest)</b> + <b>behaviour-driven development (BDD) (cucumber)</b></p>
+<p><b>Testing</b>: for <b>quality assurance (QA)</b>, <b>verification</b> (match spec?) + <b>validation</b> (spec correct?), <b>unit -> module -> integration -> system testing</b></p>
+<p><b>Productivity</b>: clarity (conciseness) + synthesis (gen code by code) + reuse (Don't Repeat Yourself, DRY) + automation (use tools)</p>
+
+<p><b>Software-as-a-Service (SaaS)</b>: <b>Service-oriented architecture (SOA)</b> and <b>microservices</b> (e.g. <b>cloud computing</b> or <b>webpages</b>) are popular.</p>
+
+<h3>Learning Languages and Frameworks</h3>
+<p>Steps: Type -> Primitive -> Method -> Class -> Symbols -> Library -> Debugging -> Testing</p>
+
+<p>Ruby is <b>weak-typing</b>, everything is an <b>object</b> (only nil and false are falsy), where function calls are simply <b>sending signals</b> to the <b>receiver</b>. Sometimes {} and () are <b>optional</b>. </p>
+
+<p>class A &lt; B; @balance (instance variable); @@bank (class variable); balance (instance method); self.bank (class method); attr_accessor: (R+W) / attr_reader: (R) / attr_writer: (W)</p>
+
+<p>Hashs: {:a => 1, :b => "two"}, :a are enumerables, f-string "Answer is #{@foo}" or %Q{Answer is #{@foo + 1}}</p>
+
+<p>Lists: x.sort (include Comparable; &lt;=&gt;), x.reverse! (modifies), x.filter do |f| f.includes?("e") end, x.any? { |f| f.length > 5 }; yield and iterator</p>
+
+<p>Library: <b>gem</b>, require "abc" then bundle install, specified in Gemfile (Gemfile.lock)</p>
+
+<h3>Software-as-a-Service (SaaS)</h3>
+<p><b>Client-Server Pattern</b>: a server responds to many clients; <b>Peer-to-Peer Architecture</b>: everyone serves as client and server</p>
+<p><b>HTTP</b> is <b>stateless</b> and relies on <b>TCP/IP</b> protocols; <b>Web 2.0</b> involves the introduction of <b>javascript</b> (<b>Asynchonous JavaScript - AJAX</b> and <b>XmlHttpRequest</b>).</p>
+<p><b>RESTful API</b> (<b>RE</b>presentational <b>S</b>tate <b>T</b>ransfer): Represent <b>requests</b> to <b>action</b> on <b>resources</b>, which <b>JSON</b> (<b>J</b>ava<b>S</b>cript <b>O</b>bject <b>N</b>otation) are useful.</p>
+<p><b>Sinatra</b>: path /:user/account -> params[]; Views: .erb; erb :view; cookies: session[]</p>
+
+<h3>Model-View-Controller (MVC) Framework - Rails</h3>
+<p><b>Model</b>: how data are stored and manipulated (CRUD); <b>View</b>: how to display data for users to interact; <b>Controller</b>: <b>controller actions</b> are generated in front-end and handled back-end</p>
+<p><b>Rails</b>'s <b>MVC</b>: models/*.rb <-> controllers/*.rb (MoveController#show) <-> views/[action].html.erb. <b>Routes</b>: get '/movie/:id', debug(@movie)</p>
+<p><b>Database</b>: ApplicationRecord, Movie.where("rating = :rating", rating: 'PG'); new, save, save! (exception), update, destroy; Foreign key: has_many, belongs_to; scope for lambdas</p>
+<p>Validation: validate :function or valid? Filters: before_action :function_name; Shared templates: &lt;%= render "form", moviegoer: @moviegoer %&gt;</p>
+<p><b>Single Sign On (SSO)</b>: Third party login</p>
+
+<h3>Behaviour-Driven Design (BDD)</h3>
+<p><b>User Story</b>: a "story" to verify if execute correctly (<b>cucumber</b>)</p>
+<p>Feature: story name; Scenario: path; describe: context; Given [condition] When [do something] Then [check condition] And [condition] But [condition]</p>
+<p><b>Capybara</b>: visit; click_link; fill_in "xxx", :with => "yyy"; select "xxx" form "yyy"; click_button "xxx"; .find (with selenium)</p>
+<p><b>Declarative Scenario</b>: Given /I have added "(.*)" with rating "(.*)"/ do |title, rating|</p>
+
+<h3>Test-Driven Development (TDD)</h3>
+
+<p><b>RSpec</b>: [precondition] act [assert]. expect(x).to eq('Ruby'); expect(res).to render_template("movies/search"); allow, double</p>
+
+<h3>Design Pattern</h3>
+<p><b>Single Responsibility Principle</b>: Everything do one thing</p>
+<p><b>Open/Closed Principle</b>: Open for extension, closed for modification</p>
+<p><b>Liskov Substitution Principle</b>: Subtype can substitute base type</p>
+<p><b>Injecting Dependency</b>: create abstraction to reduce source modification</p>
+<p><b>Demeter Principle</b>: minimally expose yourself</p>

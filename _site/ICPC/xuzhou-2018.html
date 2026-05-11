@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script>
+		window.MathJax = {
+			tex: {
+				inlineMath: {'[+]': [['$', '$']]},
+				processEscapes: true
+			},
+			output: {
+				scale: 1.00
+			},
+			options: {
+				menuOptions: {
+					settings: {
+						enrich: false
+					}
+				}
+			}
+		}
+	</script>
+	<meta charset="utf-8">
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+	<link rel="stylesheet" type="text/css" href="/index.css">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+	<meta content="width=device-width, initial-scale=1" name="viewport"/>
+</head>
+<body>
+	The 2018 ACM-ICPC Asia Xuzhou Regional Programming Contest<br> <br>
+
+A. Rikka with Minimum Spanning Trees <br>
+int minimum_spanning_tree(int N, int M, edge[] E); <br>
+- Find the minimum spanning tree of the graph G. <br> <br>
+
+B. Rikka with Line Graphs <br>
+int count_vertices(int N, int M, edge[] E); <br>
+- Count the number of vertices in L^6(G), where L(G) is the line graph of G. <br> <br>
+
+C. Rikka with Consistency <br>
+double minimum_time(int N, int[] H); <br>
+- Given a polyline connecting (i - 1, H[i - 1]) and (i, H[i]) for all i. <br>
+- Piece A at (0, 0) and piece B at (N, 0). Move simulatenously with larger time. <br>
+- Find minimum time to swap pieces A and B. <br> <br>
+
+D. Rikka with Subsequences <br>
+int cube_sum(int N, int[] A, bool[][] R); <br>
+- Valid subsequence B of A are those with R[B[i]][B[i + 1]] all true. <br>
+- Count the sum of cube of occurrences for each distinct subsequence. <br> <br>
+
+E. Rikka with Data Structure <br>
+void init(int N, int[] A); <br>
+- Given a integer array A of length N. <br>
+void range_add(int L, int R, int K); <br>
+- For all i in [L, R], A[i] := A[i] + K. <br>
+void range_update(int L, int R, int K); <br>
+- For all i in [L, R], A[i] := K. <br>
+int count(int L, int R, int X); <br>
+- Count number of indices Y such that max(A[min(X, Y)..max(X, Y)]) = max(A[X], A[Y]). <br> <br>
+
+F. Rikka with Nice Counting Striking Back <br>
+int count_nice_substrings(string S); <br>
+- A substring T is nice iff TP is not substring of S for all P where TP = PT. <br>
+- Count the number of nice substrings. <br> <br>
+
+G. Rikka with Intersection of Paths <br>
+int count_paths(int N, edge[] E, int M, int K, path[] P); <br>
+- Given a tree T of N nodes and M paths on the tree P. <br>
+- Count the number of ways to select K paths such that each pair has intersection. <br> <br>
+
+H. Rikka with A Long Colour Palette <br>
+int[] colourful_segments(int N, int K, range[] A); <br>
+- Given N ranges. Colour the segments such that positions with all K colours is maximised. <br> <br>
+
+I. Rikka with Sorting Networks <br>
+int count_almost_sorted(int N, int K, (int, int)[] C); <br>
+- Given an arbitrary permutation of length N and K comparators C. <br>
+- A permutation is almost sorted iff its longest increasing subsequence is of length at least N - 1. <br>
+- Count the number of permutations that is almost sorted after the sorting network. <br> <br>
+
+J. Rikka with An Unnamed Temple <br>
+(int, int) find_paths(int N, int[] W, int[] C, int M, edge[] E, int K, int T); <br>
+- Given a direct acyclic graph G. <br>
+- Each node i has treasure of weight W[i] and value C[i]. <br>
+- Find maximum total value and the respective number of paths, with total weight modulo K is T. <br> <br>
+
+K. Rikka with Ants <br>
+double minimise_time(int N, int[] A, int S1, int E1, int S2, int E2); <br>
+- Given a cyclic graph of N nodes where the distance between node i and node i + 1 is A[i]. <br>
+- For mixed strategy, minimise the expected time for one to move from S1 to E1 and another to move from S2 to E2. <br> <br>
+
+L. Rikka with Grid Graphs <br>
+int count_orientations(int N, int M, char[][] A); <br>
+- Given a grid graph of N rows and M columns. <br>
+- Count the number of orientations of edges such that the result graph does not contain cycle. <br> <br>
+
+M. Rikka with Illuminations <br>
+int shiny_days(int N, point[] P, int M, point[] I); <br>
+- Given a convex polygon P and M points I. <br>
+- Pick minimum number of points in I such that all the exterior of P are light. <br> <br>

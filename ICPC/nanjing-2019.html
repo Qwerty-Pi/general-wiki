@@ -1,0 +1,60 @@
+---
+layout: default
+---
+The 2019 Asia Nanjing Regional Contest <br> <br>
+
+A. A Hard Problem <br>
+int all_divisible(int N); <br>
+- Returns minimum K such that all subset of size K of [N] contains divisible elements. <br> <br>
+
+B. Chessboard <br>
+int count_ways(int N, int M); <br>
+- Count the number of ways to walk through a N-by-M chessboard, with all prefix no gap. <br> <br>
+
+C. Digital Path <br>
+int count_paths(int N, int M, int[][] A); <br>
+- Count the number of maximal paths, such that each subsequent step increase value by 1. <br> <br>
+
+D. Holes <br>
+int[] expected_time(int N, int K, point[] H, point A); <br>
+- Given a N-by-N chessboard and K holes H. <br>
+- Start at A, find expected time to reach each hole. <br> <br>
+
+E. Observation <br>
+int[] count_positions(int L, int R); <br>
+- Define f(d) be the number of (x, y, z) in Z^3 such that x^2 + y^2 + z^2 = d^2. <br>
+- Returns f(d) for each d in [L, R]. <br> <br>
+
+F. Paper Grading <br>
+void init(int N, string[] S); <br>
+- Given N strings as in S. <br>
+void swap_string(int X, int Y); <br>
+- Swap S[X] and S[Y]. <br>
+int calc_score(string T, int K, int L, int R); <br>
+- Returns the number of substring in S[L..R] which has common prefix with T of length at least K. <br> <br>
+
+G. Poker Game <br>
+int[] simulate_poker(int[] A); <br>
+- Simulate poker games between five players, and return the final pot. <br> <br>
+
+H. Prince and Princess <br>
+optional(int) minimum_questions(int A, int B, int C); <br>
+- Given A persons always say truth, B persons always lie and C persons arbirary. <br>
+- Ask three kinds of queries: (1) Who are you, (2) Who in that room, (3) Which room princess stays. <br>
+- Find princess with minimum queries. <br> <br>
+
+I. Space Station <br>
+int count_ways(int N, int[] A); <br>
+- Given N + 1 space stations each of A[i] energy, which you can only visit if you get at least that energy. <br>
+- Count the number of ways to visit each space station once. <br> <br>
+
+J. Spy <br>
+int maximum_reputation(int N, int[] A, int[] P, int[] B, int[] C); <br>
+- Consider the matching (B[j], C[k]) that sums to A'. <br>
+- The reputation is defined to be sum of P[i] where A'[i] > A[i]. <br>
+- Find the matching that maximises the reputation. <br> <br>
+
+K. Triangle <br>
+point cut_half(point A, point B, point C, point D); <br>
+- Given triangle ABC where D on the border. <br>
+- Find the point that cuts ABC in half.

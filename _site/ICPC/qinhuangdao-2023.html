@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script>
+		window.MathJax = {
+			tex: {
+				inlineMath: {'[+]': [['$', '$']]},
+				processEscapes: true
+			},
+			output: {
+				scale: 1.00
+			},
+			options: {
+				menuOptions: {
+					settings: {
+						enrich: false
+					}
+				}
+			}
+		}
+	</script>
+	<meta charset="utf-8">
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+	<link rel="stylesheet" type="text/css" href="/index.css">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+	<meta content="width=device-width, initial-scale=1" name="viewport"/>
+</head>
+<body>
+	The 2023 Chinese College Programming Contest (Qinhuangdao) Official <br> <br>
+
+A. Make SYSU Great Again I <br>
+(int, int)[] construct_grid(int N, int K);<br>
+- Construct a N-by-N grid, such that the following conditions hold.<br>
+- Each row and column has at least two number. <br>
+- Greatest common divisor of Row i equals that of Column i. <br> <br>
+
+B. Yet Another Subsequence Problem <br>
+int count_below(int A, int B); <br>
+- Count the number of subsequence of the string by the below-diagonal walk in A-by-B grid. <br> <br>
+
+C. Palindrome <br>
+(int, int)[] minimum_costs(int N, string S, int M, range[] A); <br>
+- Operation: delete a substring with the cost of the length. <br>
+- Find and count ways of minimum cost to make the substrings palindrome, applying at most one operation. <br> <br>
+
+D. Yet Another Coffee <br>
+int[] minimum_price(int N, int[] A, int M, int[] R, int[] W); <br>
+- The price of coffee at day i is A[i]. <br>
+- Coupons can be used on or after day R[j] and reduce the cost by W[j]. <br>
+- Find the minimum money spent if buy coffee on K days for all K. <br> <br>
+
+E. Coloring Tape <br>
+int count_ways(int N, int M, int R, int[] C, int[] X, int[] Y, int[] D); <br>
+- Given a grid of N rows and M columns, with N brushes of different colours at (i, 0). <br>
+- Given R restrictions of the form A[C[i]][X[i]] ^ A[C[i]][Y[i]] = D[i]. <br>
+- Count the number of ways of painting. <br> <br>
+
+F. Mystery of Prime <br>
+int sum_primes(int N, int[] A); <br>
+- Given an array A of length N. <br>
+- Minimise the number of changed elements to make all adjacent elements sum to prime. <br> <br>
+
+G. Path <br>
+int maximum_change(int N, int M, int[] A, int[] B); <br>
+- Given a N-by-M grid with C[x][y] = A[x] + B[y]. <br>
+- Maximise path from (1, 1) to (N, M) that maximise total absolute difference. <br> <br>
+
+H. Quake and Rebuild <br>
+void init(int N, int[] P); <br>
+- Given a rooted tree of N nodes. <br>
+void quake(int L, int R, int D); <br>
+- Set P[i] := max(0, P[i] - D) for all i in [L, R]. <br>
+int rebuild(int K, int[] B); <br>
+- Count the number of nodes on the virtual tree of B. <br> <br>
+
+I. Phony <br>
+void init(int N, int[] A, int K); <br>
+- Given an array of length N and a constant K. <br>
+void decrease(int T); <br>
+- Decrease the maximum element in A for K times. <br>
+int kth_max(int K); <br>
+- Returns the kth maximum of A. <br> <br>
+
+J. Keyi Likes Reading <br>
+int minimum_days(int M, int W, int[] C); <br>
+- Returns minimum number of bags of size W to contains all C[i]. <br> <br>
+
+K. Make SYSU Great Again II <br>
+int construct_grid(int N); <br>
+- Returns a grid that satisfy the following conditions. <br>
+- Each number appears at most five times. <br>
+- Each adjacent cells AND together is zero. <br> <br>
+
+L. Yet Another Maximize Permutation Subarrays <br>
+(int, int) best_swap(int N, int[] A); <br>
+- Swap two elements in A that maximise the number of subarray permutations. <br> <br>
+
+M. Inverted <br>
+int[] count_spanning_trees(int N, edge[] E, int[] B); <br>
+- Given a tree of N nodes and operate on nodes N - 1 times. <br>
+- To operate on node x, create node x + N and for each edge (x, y), connect (x + N, y) or (x + N, y + N).

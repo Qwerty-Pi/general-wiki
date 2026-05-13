@@ -21,27 +21,34 @@ layout: default
 
 <h1>MATH3240 Numerical Methods for Differential Equations</h1>
 
-<h2>Order Notations</h2>
+<h2>Order of Estimations</h2>
 
 <h3>Continuity and Differentiation</h3>
 
-<p>The key idea is bascially continuity in compact set is strong, since it implies Lipschitz immediately. We can state such continuity as $$ f(x + h) = f(x) + O(h) $$</p>
+<p>Since continuity in compact set implies Lipschitz, we can estimate $f : [a, b] \rightarrow \mathbb{R}$ with $f$ continuous as $$ f(x + h) = f(x) + O(h) $$</p>
 
-<p>In general, given a $n$-times differentiable function $f$, we can have for some $\xi \in (x, x + h)$, $$ f(x + h) = \sum_{k = 0}^{n} \frac{f^{(k)}(x)}{k!} h^k + o(h^n) = \sum_{k = 0}^{n - 1} \frac{f^{(k)}(x)}{k!} h^k + \frac{f^{(n)}(\xi)}{n!} h^n $$ From definition and by repeated application of Mean-Value Theorem. Henceforth if $f$ is $\mathcal{C}^n$, the error term becomes $O(h^{n + 1})$.</p>
+<p>In general, given a $n$-times differentiable function $f$, we can have for some $\xi \in (x, x + h)$, $$ f(x + h) = \sum_{k = 0}^{n - 1} \frac{f^{(k)}(x)}{k!} h^k + \frac{f^{(n)}(\xi)}{n!} h^n $$ Hence, for $f$ being $\mathcal{C}^n$, the error term is of $O(h^{n + 1})$.</p>
 
 <h3>Integration</h3>
 
-<p>We wish to approximate for (Lipschitz) continuous $f$, the value of $$ \int_{a}^{a + h} f(s) \, ds $$ There are mainly four ways: Rectangular ([0, 0, 1] or [1, 0, 0], 1st order), Mid-Point ([0, 1, 0], 2nd order), Trapezoid ([1, 0, 1], 3nd order) and Simpson ([1, 4, 1], 4rd order). </p>
+<p>We wish to approximate for (Lipschitz) continuous $f$, the value of $ \int_{a}^{a + h} f(s) \, ds $ numerically. There are mainly four ways:
+<ul>
+	<li>Rectangular (1st order): $h f(a)$ or $h f(a + h)$</li>
+	<li>Mid-Point (2nd order): $h f(a + \frac{h}{2}) $</li>
+	<li>Trapezoid (3nd order): $\frac{h}{2} [f(a) + f(a + h)]$</li>
+	<li>Simpson (4th order): $\frac{h}{6} [f(a) + 4 f(a + \frac{h}{2}) + f(a + h)]$</li>
+</ul>
+</p>
 
-<p>To observe the order of the estimations, simply note that it suffices for us to estimate $f$ by degree-$d$ polynomial $p$ where $||f - p||_{\infty} = O(h^{d + 1})$. If the numerical integration works for the polynomial, then the error is $O(h^{d + 2})$.</p>
+<p>To find out the orders of the estimations, it suffices for us to estimate $f$ by degree-$d$ (taylor) polynomial $p$ where $||f - p||_{\infty} = O(h^{d + 1})$. If the numerical method matches the actual integration result, the error is $O(h^{d + 2})$.</p>
 
 <h2>Ordinary Differential Equations (ODE)</h2>
 
 <h3>Initial Value Problem (IVP)</h3>
 
-<p>The simplest ODE is of the form $$ \biggl\{ \begin{aligned} x'(t) &= f(t, x) \\ x(t_0) &= x_0 \end{aligned} $$ Which we can trivially extend it to vector-form.</p>
+<p>The simplest ODE is of the form $$ \biggl\{ \begin{aligned} x'(t) &= f(t, x) \\ x(t_0) &= x_0 \end{aligned} $$ Which we can extend it to vector-form. Numerical schemes are equally applicable for vector-form IVP.</p>
 
-<p><b>Delay Differential Equation</b>: $x'(t) = f(x(t), x(t - a))$ with initial values $x(t)$ for $t \in [-a, 0]$.</p>
+<p><b>Delay Differential Equation</b>: $x'(t) = f(x(t), x(t - a))$ with initial values $x(t)$ for $t \in [t_0 - a, t_0]$.</p>
 
 <h3>Existence and Uniqueness of Solution</h3>
 
@@ -53,21 +60,19 @@ layout: default
 
 <p>To prove for existence, we simply use iteration. Introduce the mapping $T$ over $L_{\infty}(\mathcal{C})$ with $$ (Tx)(t) = x(t_0)  + \int_{t_0}^{t} f(s, x(s)) \, ds $$ Since $f$ is uniformly continuous over compact rectangle, there exists $L \gt 0$ where $|f(t, x) - f(t, y)| \le L |x - y|$. We have $$ |Tx(t) - x(t)| = \Bigg|\int^{t}_{t_0} \Big[f(s, Tx(s)) - f(s, x(s)\Big]\,ds\Bigg| \le L \int^{t}_{t_0} |Tx(s) - x(s)|\,ds $$ Therefore, for $|t - t_0| \lt \frac{1}{L}$, the sequence $\{ T^kx(t) \}$ is Cauchy and converges. We can simply repeat the process for different $t$.</p>
 
-<p>For uniqueness, we essentially apply the same idea. We wish to show the above is a contraction over the metric space of continuous functions with sup-norm. We have $$|Tx(t) - Ty(t)| = \Bigg| \int_{t_0}^t f(s, x(s)) - f(s, y(s)) \, ds \Bigg| \le L |t - t_0| \cdot ||x - y||_{\infty}$$ Which is contraction for sufficiently small $|t - t_0|$.</p>
+<p>For uniqueness, we essentially apply the same idea. We wish to show the above is a contraction over the metric space of continuous functions with sup-norm. We have $$|Tx(t) - Ty(t)| = \Bigg| \int_{t_0}^t f(s, x(s)) - f(s, y(s)) \, ds \Bigg| \le L |t - t_0| \cdot ||x - y||_{\infty}$$ Which is contraction for sufficiently small $|t - t_0|$, which means the fixed point is unique.</p>
 
 <h3>Taylor-Series (T-S) Method</h3>
 
-<p>For the sake of convenience, we pick nodal points as $t_j = t_0 + jh$ for $j \in \mathbb{N}$, and we want to approximate $x(t_j)$ as $x_j$. How can we do that? One of the ways is to compute the points one-by-one by adjacent estimations.</p>
-
-<p>By T-S, we have $$ x(t + h) = x(t) + hx'(t) + \frac{h^2}{2} x''(t) + \frac{h^3}{6} x^{(3)}(t) + O(h^4)$$ Therefore, we can apply this for our estimation. For the sake of craziness, note that $$ \begin{align*} x' &= f \\ x'' &= f_t + f \cdot f_x \\ x^{(3)} &= f_{tt} + 2 f \cdot f_{tx} + f^2 \cdot f_{xx} + f_t \cdot f_x + f \cdot f_x^2 \end{align*} $$</p>
+<p>For the sake of convenience, we pick nodal points as $t_j = t_0 + jh$ for $j \in \mathbb{N}$, and our target is to approximate $x(t_j)$ as $x_j$. How can we do that? The simplest way is to compute the points one-by-one with estimations based on adjacent points. By T-S, we have $$ x(t + h) = x(t) + hx'(t) + \frac{h^2}{2} x''(t) + \frac{h^3}{6} x^{(3)}(t) + \cdots$$ Therefore, we can apply this for our estimation. With the aid of chain rule, we get $ x' = f $, $ x'' = f_t + f \cdot f_x $ and $ x^{(3)} = f_{tt} + 2 f \cdot f_{tx} + f^2 \cdot f_{xx} + f_t \cdot f_x + f \cdot f_x^2 $ to express the taylor series in terms of $f$.</p>
 
 <p><b>Euler's Method</b> (E-M, T-S of order 1): $ x_{j + 1} = x_j + h \cdot f(t_j, x_j) $.</p>
 
 <h3>Runge-Kutta (R-K) Method</h3>
 
-<p>TLDR: We use the same idea as T-S Method, but replace all the derivatives by $f$, so that the numerical scheme does not involve taking derivative, which requires heavy computation.</p>
+<p>TLDR: We use the same idea as T-S Method, but replace all the derivatives by $f$, so that the numerical scheme does not involve taking derivative (which is hard to compute).</p>
 
-<p>For the second-order R-K Method, we can view as $$ x(t + h) = x + \alpha hf + \beta hf(t + \gamma h, x + \mu h f) + O(h^3) $$ And get $$ x(t + h) = x + \alpha hf + \beta \gamma h^2 f_t + \beta \mu h^2 f_x + O(h^3)$$ Which matches the 2nd-order T-S expansion iff $\alpha = 1$ and $\beta \gamma = \beta \mu = \frac{1}{2}$.</p>
+<p>For the second-order R-K Method, we can view as $$ x(t + h) = x + \alpha hf + \beta hf(t + \gamma h, x + \mu h f) + O(h^3) $$ And get $$ x(t + h) = x + (\alpha + \beta) hf + \beta \gamma h^2 f_t + \beta \mu h^2 f_x + O(h^3)$$ Which matches the 2nd-order T-S expansion iff $\alpha + \beta = 1$ and $\beta \gamma = \beta \mu = \frac{1}{2}$.</p>
 
 <p><b>Second-order Runge-Kutta Method</b> (R-K of order 2): $ x_{j + 1} = x_j + \frac{1}{2} hf_j + \frac{1}{2} hf(t_j + h, x_j + hf_j)$</p>
 

@@ -1,0 +1,163 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script>
+		window.MathJax = {
+			tex: {
+				inlineMath: {'[+]': [['$', '$']]},
+				processEscapes: true
+			},
+			output: {
+				scale: 1.00
+			},
+			options: {
+				menuOptions: {
+					settings: {
+						enrich: false
+					}
+				}
+			}
+		}
+	</script>
+	<meta charset="utf-8">
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+	<link rel="stylesheet" type="text/css" href="/index.css">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+	<meta content="width=device-width, initial-scale=1" name="viewport"/>
+</head>
+<body>
+	<style>
+@media print {
+	p {
+		font-size: 11px;
+	}
+	h1 {
+		font-size: 20px;
+	}
+	h2 {
+		font-size: 15px;
+	}
+	h3 {
+		font-size: 13px;
+	}
+}
+</style>
+
+<h1>MATH3240 Numerical Methods for Differential Equations</h1>
+
+<h2>Order of Estimations</h2>
+
+<h3>Continuity and Differentiation</h3>
+
+<p>Since continuity in compact set implies Lipschitz, we can estimate $f : [a, b] \rightarrow \mathbb{R}$ with $f$ continuous as $$ f(x + h) = f(x) + O(h) $$</p>
+
+<p>In general, given a $n$-times differentiable function $f$, we can have for some $\xi \in (x, x + h)$, $$ f(x + h) = \sum_{k = 0}^{n - 1} \frac{f^{(k)}(x)}{k!} h^k + \frac{f^{(n)}(\xi)}{n!} h^n $$ Hence, for $f$ being $\mathcal{C}^n$, the error term is of $O(h^{n + 1})$.</p>
+
+<h3>Integration</h3>
+
+<p>We wish to approximate for (Lipschitz) continuous $f$, the value of $ \int_{a}^{a + h} f(s) \, ds $ numerically. There are mainly four ways:
+<ul>
+	<li>Rectangular (1st order): $h f(a)$ or $h f(a + h)$</li>
+	<li>Mid-Point (2nd order): $h f(a + \frac{h}{2}) $</li>
+	<li>Trapezoid (3nd order): $\frac{h}{2} [f(a) + f(a + h)]$</li>
+	<li>Simpson (4th order): $\frac{h}{6} [f(a) + 4 f(a + \frac{h}{2}) + f(a + h)]$</li>
+</ul>
+</p>
+
+<p>To find out the orders of the estimations, it suffices for us to estimate $f$ by degree-$d$ (taylor) polynomial $p$ where $||f - p||_{\infty} = O(h^{d + 1})$. If the numerical method matches the actual integration result, the error is $O(h^{d + 2})$.</p>
+
+<h2>Ordinary Differential Equations (ODE)</h2>
+
+<h3>Initial Value Problem (IVP)</h3>
+
+<p>The simplest ODE is of the form $$ \biggl\{ \begin{aligned} x'(t) &= f(t, x) \\ x(t_0) &= x_0 \end{aligned} $$ Which we can extend it to vector-form. Numerical schemes are equally applicable for vector-form IVP.</p>
+
+<p><b>Delay Differential Equation</b>: $x'(t) = f(x(t), x(t - a))$ with initial values $x(t)$ for $t \in [t_0 - a, t_0]$.</p>
+
+<h3>Existence and Uniqueness of Solution</h3>
+
+<p>When does solution exists and unique? If such solution is not unique, then the numerical scheme would not work to converge to a single solution.</p>
+
+<p>If $f$ is linear in $x$ and continuous, we can write $x' = -p \cdot x + g$. Let integrating factor $\mu = \exp {\int p}$, then $\mu' = p \cdot \mu$, and $$ x = \frac{1}{\mu} \Big[ \int g \cdot \mu + x_0 \Big] $$ This is a solution to the ODE. What if $f$ is non-linear?</p>
+
+<p>If $f$ is continuous in rectangle $R = [t_0 - \alpha, t_0 + \alpha] \times [x_0 - \beta, x_0 + \beta]$, then IVP has solution for $|t - t_0| \le \min\{\alpha, \frac{\beta}{M}\}$ where $M = \max_R f$. Furthermore, if $f$ is Lipschitz continuous in $x$, potentially with $\beta \rightarrow \infty$, then such solution is unique.</p>
+
+<p>To prove for existence, we simply use iteration. Introduce the mapping $T$ over $L_{\infty}(\mathcal{C})$ with $$ (Tx)(t) = x(t_0)  + \int_{t_0}^{t} f(s, x(s)) \, ds $$ Since $f$ is uniformly continuous over compact rectangle, there exists $L \gt 0$ where $|f(t, x) - f(t, y)| \le L |x - y|$. We have $$ |Tx(t) - x(t)| = \Bigg|\int^{t}_{t_0} \Big[f(s, Tx(s)) - f(s, x(s)\Big]\,ds\Bigg| \le L \int^{t}_{t_0} |Tx(s) - x(s)|\,ds $$ Therefore, for $|t - t_0| \lt \frac{1}{L}$, the sequence $\{ T^kx(t) \}$ is Cauchy and converges. We can simply repeat the process for different $t$.</p>
+
+<p>For uniqueness, we essentially apply the same idea. We wish to show the above is a contraction over the metric space of continuous functions with sup-norm. We have $$|Tx(t) - Ty(t)| = \Bigg| \int_{t_0}^t f(s, x(s)) - f(s, y(s)) \, ds \Bigg| \le L |t - t_0| \cdot ||x - y||_{\infty}$$ Which is contraction for sufficiently small $|t - t_0|$, which means the fixed point is unique.</p>
+
+<h3>Taylor-Series (T-S) Method</h3>
+
+<p>For the sake of convenience, we pick nodal points as $t_j = t_0 + jh$ for $j \in \mathbb{N}$, and our target is to approximate $x(t_j)$ as $x_j$. How can we do that? The simplest way is to compute the points one-by-one with estimations based on adjacent points. By T-S, we have $$ x(t + h) = x(t) + hx'(t) + \frac{h^2}{2} x''(t) + \frac{h^3}{6} x^{(3)}(t) + \cdots$$ Therefore, we can apply this for our estimation. With the aid of chain rule, we get $ x' = f $, $ x'' = f_t + f \cdot f_x $ and $ x^{(3)} = f_{tt} + 2 f \cdot f_{tx} + f^2 \cdot f_{xx} + f_t \cdot f_x + f \cdot f_x^2 $ to express the taylor series in terms of $f$.</p>
+
+<p><b>Euler's Method</b> (E-M, T-S of order 1): $ x_{j + 1} = x_j + h \cdot f(t_j, x_j) $.</p>
+
+<h3>Runge-Kutta (R-K) Method</h3>
+
+<p>TLDR: We use the same idea as T-S Method, but replace all the derivatives by $f$, so that the numerical scheme does not involve taking derivative (which is hard to compute).</p>
+
+<p>For the second-order R-K Method, we can view as $$ x(t + h) = x + \alpha hf + \beta hf(t + \gamma h, x + \mu h f) + O(h^3) $$ And get $$ x(t + h) = x + (\alpha + \beta) hf + \beta \gamma h^2 f_t + \beta \mu h^2 f_x + O(h^3)$$ Which matches the 2nd-order T-S expansion iff $\alpha + \beta = 1$ and $\beta \gamma = \beta \mu = \frac{1}{2}$.</p>
+
+<p><b>Second-order Runge-Kutta Method</b> (R-K of order 2): $ x_{j + 1} = x_j + \frac{1}{2} hf_j + \frac{1}{2} hf(t_j + h, x_j + hf_j)$</p>
+
+<p><b>Modified Euler's Method</b> (M-E-M, R-K of order 2): $ x_{j + 1} = x_j + hf(t_j + \frac{1}{2} h, x_j + \frac{1}{2} hf_j) $ </p>
+
+<p><b>Fourth-order Runge-Kutta Method</b> (R-K of order 4): $ x_{j + 1} = x_j + \frac{1}{6}(F_1 + 2F_2 + 2F_3 + F_4)$ with $$ \begin{align*} F_1 &= hf(t, x) \\ F_2 &= hf(t + \frac{1}{2} h, x + \frac{1}{2} F_1) \\ F_3 &= hf(t + \frac{1}{2} h, x + \frac{1}{2} F_2) \\ F_4 &= hf(t + h, x + F_3) \end{align*}$$</p>
+
+<h3>Multi-Step Method</h3>
+
+<p>Multi-Step Methods are those numerical schemes that involve multiple previous terms. The general idea is to use the identity $$x(t_{n + 1}) = x(t_n) + \int_{t_n}^{t_{n + 1}} f(t, x(t)) \, dt$$ Along with approximation of $f$ with polynomial and quadrature methods.</p>
+
+<p><b>Explicit Methods</b> are those can be directly computed, whereas <b>Implcit Methods</b> are those that requires solving equations.</p>
+
+<p>How to derive multistep methods? There are mainly three ways: (1) Test with Low-degree Polynomials, (2) Adams Methods (Interpolation over $[t_n, t_{n + 1}]$, Explicit: Adams-Bashforth; Implcit: Adams-Moulton), and (3) Milne-Simpson Methods (Interpolation over $[t_{n - 1}, t_{n + 1}]$).</p>
+
+<h4>I. Test with Polynomial</h4>
+
+<p>Target: We want to approximate $$ \int^{t_{n + 1}}_{t_n} f(t, x(t)) \, dt \approx h \sum_{j = 0}^{k} c_j \cdot f(t_{n - k + j}, x(t_{n - k + j})) $$ This should holds for low-order polynomial, so we can write $$ \int^{1}_{0} g(s) \, ds = \sum_{j = 0}^{k} c_j \cdot g(-k + j) $$ And solve for $g(s) = s^j$ where $0 \le j \le k$.</p>
+
+<h4>II. Adams Methods</h4>
+
+<p><b>Adams-Bashforth Method</b> (A-B): Interpolate $f$ at $t_{n}, \cdots, t_{n - k}$. We can write $$ L_k f = \sum_{j = 0}^{k} f_{n - j} \prod_{i \ne j} \frac{t - t_{n - j}}{t_{n - i} - t_{n - j}} $$ and approximate $f$ with $L_k f$.</p>
+
+<p><b>Adams-Moulton Method</b> (A-M): Interpolate $f$ at $t_{n + 1}, \cdots, t_{n - k + 1}$. Note that by Newton's way of interpolation, $$ L_k f = \sum_{i = 0}^{k} \frac{\nabla^i f_{n + 1}}{i!h^i} \prod_{j = 0}^{i - 1} (t - t_{n + 1 - j}) $$ Therefore, we have $x_{n + 1} \approx x_n + \int_{t_n}^{t_{n + 1}} L_kf(t)\, dt $ and $$x_{n + 1} = x_n + h \sum_{i = 0}^{k} (-1)^i \nabla^i f_{n + 1} \int^1_0 \binom{-s + 1}{i} ds$$</p>
+
+<p><b>Crank-Nicoson Method</b> (C-N, A-M of order 1): $x_{n + 1} = x_n + \frac{h}{2} \{ f_{n + 1} + f_n \}$</p>
+<h4>III. Milne-Simpson Methods (M-S)</h4>
+
+<p>We have simply $$x_{n + 1} = x_{n - 1} + h \sum_{i = 0}^k (-1)^i \nabla^i f_{n + 1} \int^1_{-1} \binom{-s + 1}{i} ds$$</p>
+
+<h3>Implicit Methods</h3>
+
+<p>How can we solve for implicit numerical equations, say $x = \Psi(x)$? There are indeed several ways to do this.</p>
+
+<p><b>I. Newton's Method</b>: Define $\Phi(x) = x - \Psi(x)$, then the iterative step is $$ x_{(k + 1)} = x_{(k)} - \frac{\Phi(x_{(k)})}{\Phi'(x_{(k)})} $$</p>
+
+<p><b>II. Fixed-point Iterative Method</b>: Simply use $$ x_{(k + 1)} = \Psi(x_{(k)}) $$</p>
+
+<p><b>III. Predictor-Corrector Method</b>: The iterative methods take time to converge, so we can instead predict the value with <b>explicit method (predictor)</b> then correct the value with <b>implicit method (corrector)</b>.</p>
+<h4></h4>
+
+<h3>Analysis on Linear Multi-Step Methods</h3>
+
+<p>We can write all linear multi-step methods in the form $$ \sum_{i = 0}^{k} a_i \cdot x_{n - k + i} = h \sum_{i = 0}^{k} b_i \cdot f_{n - k + i} $$ Under the condition $a_k \ne 0$. If $b_k = 0$, the method is explicit, or otherwise implicit.</p>
+
+<p>Let's introduce some concepts to "judge" whether a linear multi-step methods are good or not. Namely, we will introduce <b>order</b>, <b>consistency</b>, <b>stability</b> and <b>convergence</b>.</p>
+
+<h4>Order</h4>
+
+<p>Naturally, we can define the error function $L_n \, x$ to be $$ L_n \, x = \sum_{i = 0}^{k} a_i \cdot x_{n - k + i} - h \sum_{i = 0}^{k} b_i \cdot f_{n - k + i} $$ Then, we can consider the Taylor expansion of $L_n \, x$ at $t_n$. If $L_n \, x = O(h^{m + 1})$, the numerical method is said to be of order $m$: That means if we write $$ L_n \, x = \sum_{j} d_j \cdot x^{(j)}(t_n) \cdot h^j $$ We have $d_0 = d_1 = \cdots = d_m = 0$.</p>
+
+<h4>Consistency, Stability and Convergence</h4>
+
+<p>We can introduce <b>characteristic polynomials</b> for the numerical scheme: Define $$ p(z) = a_k z^k + a_{k - 1} z^{k - 1} + \cdots + a_0 $$ $$ q(z) = b_k z^k + b_{k - 1} z^{k - 1} + \cdots + b_0 $$</p>
+
+<p>The <b>local truncation error</b> $\tau_n$ is defined to be $$ \tau_n(h) = \frac{1}{h} \Bigg( \sum_{i = 0}^{k} a_i \cdot x_{n - k + i} - h \sum_{i = 0}^{k} b_i \cdot f_{n - k + i} \Bigg) $$ For the sake of convenience, we can denote $$ \tau(h) = \max_{0 \le n \le M_h} \tau_n(h) $$</p>
+
+<p>The numerical scheme is called <b>consistent</b> if and only $$ \lim_{h \rightarrow 0} \tau(h) = 0 $$ Which we say the method has order $m$ if $\tau(h) = O(h^m)$ for $m \ge 1$.</p>
+
+<h2>Galerkin Methods for Elliptic Equations</h2>
+
+<p>Divergence Theorem: $$ \int_{\Omega} (\nabla \cdot F) \, dx = \int_{\partial \Omega} (F \cdot \mathbf{n}) \, ds$$</p>
+<p>Integration by Parts: $$ \int_{\Omega} (\nabla \cdot A) \phi \, dx = \int_{\partial \Omega} (A \phi \cdot \mathbf{n}) \, ds - \int_{\Omega} (A \cdot \nabla \phi) \, dx$$</p>
+

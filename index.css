@@ -34,11 +34,8 @@ ol, ul {
 }
 
 body {
-    background-color: var(--background-color);
-}
-
-p {
     font-size: 15px;
+    background-color: var(--background-color);
 }
 
 .hljs {

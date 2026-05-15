@@ -1,7 +1,7 @@
 :root {
     --text-color: #cccccc;
     --background-color: #151515;
-    --selection-color: #f5c36060;
+    --selection-color: #ff00ff60;
 }
 
 @media print {

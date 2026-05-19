@@ -28,6 +28,8 @@
 <body>
 	<span style="display: none">
 \(
+	\def\O{\mathcal{O}}
+	\def\T{\mathcal{T}}
 	\def\U{\mathcal{U}}
 	\def\V{\mathcal{V}}
 	\def\W{\mathcal{W}}
@@ -41,11 +43,11 @@
 
 <p>To discuss vector space, we first need a notion of <b>field</b>. A field $F$ is an abstraction over $\mathbb{R}$, which is an algebraic structure that supports binary operations $+$ (addition) and $\cdot$ (multiplication) as well as their inverses, subtraction and division (dividing non-zero elements). The distributive law also holds for field, that is, $\cdot$ is distributive over $+$.</p>
 
-<p>A <b>vector space</b> is a set of <b>vectors</b> $\mathcal{V}$ over <b>scalar field</b> $F$, equipped with $+: \mathcal{V} \times \mathcal{V} \rightarrow \mathcal{V}$ and $\cdot: F \times \V \rightarrow \V$ such that $(\vec{x}, \vec{y}) \mapsto \vec{x} + \vec{y}$ and $(a, \vec{x}) \mapsto a \vec{x}$ where $\vec{x}, \vec{y} \in V$, $a \in F$, where the arrow above $x$ is used to denote vectors (omitted when clear). Similar to other algebraic structures, the reason why we introduced this definition is for the sake of abstraction. In fact, vector space generalises the concept of sequences or euclidean space. Examples of vector space includes $F^n$, $M_{m \times n}(F)$ ($m \times n$ matrices), $P(F)$ (polynomials), $F^{\infty}$ (infinite sequences), $\text{Sym}_{n \times n}(F)$ (symmetric matrices) and $\mathcal{F}(S, F)$ (functions from $S$ to $F$).</p>
+<p>A <b>vector space</b> is a set of <b>vectors</b> $\V$ over <b>scalar field</b> $F$, equipped with $+: \V \times \V \rightarrow \V$ and $\cdot: F \times \V \rightarrow \V$ such that $(\vec{x}, \vec{y}) \mapsto \vec{x} + \vec{y}$ and $(a, \vec{x}) \mapsto a \vec{x}$ where $\vec{x}, \vec{y} \in \V$, $a \in F$, where the arrow above $x$ is used to denote vectors (omitted when clear). Similar to other algebraic structures, the reason why we introduced this definition is for the sake of abstraction. In fact, vector space generalises the concept of sequences or euclidean space. Examples of vector space includes $F^n$, $M_{m \times n}(F)$ ($m \times n$ matrices), $P(F)$ (polynomials), $F^{\infty}$ (infinite sequences), $\text{Sym}_{n \times n}(F)$ (symmetric matrices) and $\mathcal{F}(S, F)$ (functions from $S$ to $F$).</p>
 
 <h3>Vector Subspace</h3>
 
-<p>The vector space $\W \subset \V$ is called a <b>subspace</b> of $\V$ whenever $0_\V \in \W$ and is closed under $+$ and $\cdot$. Note that any intersection of subspaces $\bigcap_{\W \in S} \W \subset \V$ is a subspace as well straight from definition.</p>
+<p>The vector space $\W \subset \V$ is called a <b>subspace</b> of $\V$ whenever $0_\V \in \W$ and is closed under $+$ and $\cdot$. Note that <b>any</b> intersection of subspaces $\bigcap_{\W \in S} \W \subset \V$ is a subspace as well straight from definition.</p>
 
 <p>For subspaces $\U, \W \subset \V$, the <b>sum</b> of $\U$ and $\W$ is defined as $\U + \W = \{ x + y : x \in \U, y \in \W \}$. We denote $\V = \U \oplus \W$ in which $\V$ is the <b>direct sum</b> of $\U$ and $\W$ when $\V = \U + \W$ and $\U \cap \W = \{ 0 \}$, which specially each $v \in \V$ can be uniquely written as $u + w$ with $u \in \U$ and $w \in \W$. Direct sum of multiple subspaces is written as $\U_1 \oplus \U_2 \oplus \cdots \oplus \U_k$. Note that all the above creates new vector subspaces. We can further define <b>projection</b> $\Pi: \U \oplus \W \rightarrow \U$ with $u + w \mapsto u$, which intuitively projects vector in $\U \oplus \W$ onto $\U$.</p>
 
@@ -63,13 +65,13 @@
 
 <h2>Linear Transformation</h2>
 
-<p>A <b>linear transformation</b> is a linear map between vector spaces. Suppose $T: \V \rightarrow \W$. What does it means for $T$ to be "linear"? Intuitively, we have $T(x + y) = T(x) + T(y)$ and $T(a \cdot x) = a \cdot T(x)$ for $x, y \in \V$ and $a \in F$. The set of all linear transformations from $\V$ to $\W$ is denoted as $\mathcal{L}(\V, \W)$. Example includes $T_0$ (zero transformation), $I_\V$ (identity transformation), $L_A : F^n \rightarrow F^m$ (left matrix multiplication).</p>
+<p>A <b>linear transformation</b> is a linear map between vector spaces. Suppose $\T: \V \rightarrow \W$. What does it means for $\T$ to be "linear"? Intuitively, we have $\T(x + y) = \T(x) + \T(y)$ and $\T(a \cdot x) = a \cdot \T(x)$ for $x, y \in \V$ and $a \in F$. The set of all linear transformations from $\V$ to $\W$ is denoted as $\mathcal{L}(\V, \W)$. Example includes $\T_0$ (zero transformation), $I_\V$ (identity transformation), $L_A : F^n \rightarrow F^m$ (left matrix multiplication).</p>
 
 <h3>Range and Null Space</h3>
 
-<p>Given a linear transform $T \in \mathcal{L}(\V, \W)$, we can define the <b>range (image)</b> $\mathcal{R}(T) := \{ T(x) : x \in \V \}$ and <b>null space (kernel)</b> $\mathcal{N}(T) := \{ x \in \V : T(x) = 0_\W \}$. Consequently, $T$ is 1-1 (injective) iff $\mathcal{N}(T) = \{ 0 \}$, onto (surjective) iff $\mathcal{R}(T) = \W$. A fact to note is that $T$ is uniquely determined by its value at basis of $\V$.</p>
+<p>Given a linear transform $\T \in \mathcal{L}(\V, \W)$, we can define the <b>range (image)</b> $\mathcal{R}(\T) := \{ \T(x) : x \in \V \}$ and <b>null space (kernel)</b> $\mathcal{N}(\T) := \{ x \in \V : \T(x) = 0_\W \}$. Consequently, $\T$ is 1-1 (injective) iff $\mathcal{N}(\T) = \{ 0 \}$, onto (surjective) iff $\mathcal{R}(\T) = \W$. A fact to note is that $T$ is uniquely determined by its value at basis of $\V$.</p>
 
-<p>Clearly both the range and the null space are subspaces (of $\W$ and $\V$) from definition. Therefore, we call $\dim \mathcal{R}(T)$ the <b>rank</b> and $\dim \mathcal{N}(T)$ as the <b>nullity</b> of $T$. With manipulation on bases, we may show that $\dim \mathcal{N}(T) + \dim \mathcal{R}(T) = \dim \V$, which is the <b>rank-nullity theorem</b>.</p>
+<p>Clearly both the range and the null space are subspaces (of $\W$ and $\V$) from definition. Therefore, we call $\dim \mathcal{R}(\T)$ the <b>rank</b> and $\dim \mathcal{N}(\T)$ as the <b>nullity</b> of $\T$. With manipulation on bases, we may show that $\dim \mathcal{N}(\T) + \dim \mathcal{R}(\T) = \dim \V$, which is the <b>rank-nullity theorem</b>.</p>
 
 <h3>Matrix Representation</h3>
 
@@ -77,10 +79,44 @@
 
 <p>Suppose $\V$ is a finite-dim vector space with <b>ordered basis</b> $\beta = \{ \vec{u_1}, \dots, \vec{u_n} \}$. Then for each $\vec{x} \in \V$, we can represent it as <b>coordinate vector</b> with respect to $\beta$, which is $[\vec{x}]_\beta = (a_1 \; a_2 \; \cdots \; a_n)^T \in F^n$ where $\vec{x} = a_1 \vec{u_1} + \cdots + a_n \vec{u_n}$. The choice to represent $x$ as column vectors is simply out of taste.</p>
 
-<p>If finite-dim $\W$ has ordered basis $\gamma = \{ \vec{w_1}, \cdots, \vec{w_m} \}$, then we can represent $T(\vec{v_j})$ as $\sum_{i = 1}^{m} a_{ij} \vec{w_i}$. We may define $A = (a_{ij}) = [T]_\beta^\gamma$ as the <b>matrix representation</b> of $T$ with respect to $\beta$ and $\gamma$, which visually it just encode the linear transformation in the form $\left(\;[T(\vec{v_1})]_\gamma \; | \cdots | \; [T(\vec{v_n})]_\gamma \; \right)$.</p>
+<p>If finite-dim $\W$ has ordered basis $\gamma = \{ \vec{w_1}, \cdots, \vec{w_m} \}$, then we can represent $\T(\vec{v_j})$ as $\sum_{i = 1}^{m} a_{ij} \vec{w_i}$. We may define $A = (a_{ij}) = [\T]_\beta^\gamma$ as the <b>matrix representation</b> of $\T$ with respect to $\beta$ and $\gamma$, which visually it just encode the linear transformation in the form $\left(\;[T(\vec{v_1})]_\gamma \; | \cdots | \; [T(\vec{v_n})]_\gamma \; \right)$.</p>
 
-<p>Intuitively, given linear map $\U: \W \rightarrow \Z$, $\U T : \V \rightarrow \Z$ is linear as well with $[\U T]_\alpha^\gamma = [\U]_\beta^{\gamma} [T]_\alpha^{\beta}$, while $[T(\vec{u})]_\gamma = [T]_\beta^{\gamma}[\vec{u}]_\beta$, which can be proven with a bunch of summations.</p>
+<p>Intuitively, given linear map $\U: \W \rightarrow \Z$, $\U \T : \V \rightarrow \Z$ is linear as well with $[\U \T]_\alpha^\gamma = [\U]_\beta^{\gamma} [\T]_\alpha^{\beta}$, while $[\T(\vec{u})]_\gamma = [\T]_\beta^{\gamma}[\vec{u}]_\beta$, which can be proven with a bunch of summations.</p>
 
 <h3>Invertibility</h3>
 
-<p>When is a linear transformation $T$ <b>invertible</b>?</p>
+<p>When is a linear transformation $\T: \V \rightarrow \W$ <b>invertible</b>? By definition, there should exists another $\T^{-1}: \W \rightarrow \V$ such that $\T^{-1} \circ \T = I_\V$ and $\T \circ \T^{-1} = I_\W$. In the function sense, we require $\T$ to be <b>bijective</b>, which is true whenever $\dim \V = \text{rank} \; \T = \dim \W$. Naturally, we have $[\T^{-1}]_\gamma^\beta = \left([\T]_\beta^\gamma\right)^{-1}$. We also say $\T$ is an <b>isomorphism</b> between the vector spaces $\V$ and $\W$ and writes $\V \cong \W$. In the finite-dim case, if $\dim \V = n$ we have $\V \cong F^n$, simply by considering the standard representation $\phi_\beta : V \xrightarrow{\sim} F^n$ with $\vec{x} \mapsto [\vec{x}]_\beta$. Similarly, we can consider the <b>space of linear transformation</b> $\mathcal{L}(\V, \W)$ and have $\mathcal{L}(\V, \W) \xrightarrow{\sim} M_{m \times n}(F)$ naturally by $\T \mapsto [\T]_\beta^\gamma$, which $\xrightarrow{\sim}$ refers to isomorphism.</p>
+
+<h3>Dual Space</h3>
+
+<p>We call a linear map with the form $\V \rightarrow \V$ a <b>linear operator</b> and with the form $\V \rightarrow F$ a <b>linear functional</b>. Alternatively, we can denote $\V^* = \mathcal{L}(\V, F)$ as the <b>dual space</b>, the collection of all linear functionals $f : \V \rightarrow F$. Obviously we have $\dim \V = \dim \V^*$, while $l: \V \rightarrow \V^{**}$ with $l(\vec{v})(f) = f(\vec{v})$ is an isomorphism between $\V$ and $\V^{**}$ whenever $\V$ is finite-dim.</p>
+
+<p>We can define <b>dual map</b> for linear transformation $\T: \V \rightarrow \W$ as well. Define $\T^* : \W^* \rightarrow \V^*$ with $g \mapsto g \circ \T$, then $[\T^*]_{\gamma^*}^{\beta^*} = \left( [\T]_\beta^\gamma \right)^T$, the transpose matrix of $[\T]_\beta^\gamma$. Intuitively, $v_j \xrightarrow{\T} \sum_{i} a_{ij} \cdot w_i \xrightarrow{w_i^*} a_{ij}$, so $\T^*(w_i^*)(v_j) = a_{ij}$.</p>
+
+<h3>Change of Coordinates</h3>
+
+<p>Let's say the same vector space $\V$ has two bases $\beta$ and $\beta'$. To convert between these two bases, we can obviously define the <b>change of coordinate matrix</b> $Q = [I_\V]_{\beta'}^\beta$, essentially changing coordinates from $\beta'$ to $\beta$. From definition, we have $[v]_{\beta} = Q[v]_{\beta'}$ for all $v \in \V$ and $[\T]_{\beta} = Q^{-1} [T]_{\beta'} Q$.</p>
+
+<p>Specially, if $\beta'$ is the <b>standard basis</b>, then $[L_A]_\gamma = Q^{-1} A Q$. We call two matrices $A \sim B$ <b>similar</b> if they represent the same linear transformation under different bases, that is, when $B = Q^{-1} A Q$ for some invertible $Q$. </p>
+
+<h3>Diagonalisation</h3>
+
+<p>Sometimes we want to <b>diagonalise</b> a linear operator. Intuitively, when $\T(v) = \lambda v$ where $\T: \V \rightarrow \V$ and $v \in \V$, then we can compute $\T^n(v) = \lambda^n v$ pretty efficiently. When this happens, $v$ is called an <b>eigenvector</b> (whenever $v \ne 0$) and $\lambda$ is the corresponding <b>eigenvalue</b> (eigen- means self-). What we want to do is to find an <b>eigenbasis</b> $\beta$ of $\V$, that is, a basis consists of eigenvectors of $\T$, so that $[\T]_\beta = D$ where $D$ is a <b>diagonal matrix</b> $\text{diag}(\lambda_1, \lambda_2, \dots, \lambda_n)$.</p>
+
+<p>How to find eigenvalues (and eigenvectors)? For $\T(v) = \lambda v$, it must be the case where $[\T]_\beta [v]_\beta = \lambda [v]_\beta$, which means $([\T]_\beta - \lambda I_n) [v]_\beta = 0$ or $\det ([\T]_\beta - \lambda I_n) = 0$. Note that the choice of the basis does not matter at all, since $\det(Q^{-1}AQ - \lambda I_n) = \det Q^{-1} \cdot \det (A - \lambda I_n) \cdot \det Q = \det (A - \lambda I_n)$! Thus we can define the <b>characteristic polynomial</b> of $\T$ as $f_\T(t) = \det([\T]_\beta - tI_n) \in P_n(F)$, and the roots of $f_\T(t)$ are the eigenvalues of $\T$. We may define the <b>eigenspace</b> $\mathcal{E}_\lambda := \mathcal{N}(\T - \lambda I_\V) \subseteq \V$, containing eigenvectors for $\lambda$. Note that eigenvectors in different eigenspaces are linear independent, which can be proven by applying $\T$ on the linear combination and carry out some induction.</p>
+
+<p>For an eigenvalue $\lambda$, we may define the <b>algebraic multiplicity</b> $\mu_\T(\lambda)$ as the order of $\lambda$ as root of $f_\T(t)$, and the <b>geometric multiplicity</b> $\gamma_\T(\lambda) = \dim \mathcal{E}_\lambda \ge 1$. Thus, when $f_\T(t)$ <b>splits over</b> $F$ (can be written as product of linear polynomials), and that $\mu(\lambda) = \gamma(\lambda)$ for all $\lambda$, then $\T$ is <b>diagonalisable</b>. We can in fact shows that $\mu(\lambda) \ge \gamma(\lambda)$, algebraic multiplicity is always greater or equal to geometric multiplicity, with the use of <b>T-cyclic subspaces</b>.</p>
+
+<h3>$\T$-cyclic Subspace</h3>
+
+<p>Define <b>$\T$-invariant subspace</b> as a subspace $\W \subseteq \V$ such that $\T(\W) \subseteq \W$, which is exactly when we can <b>restrict</b> $\T$ to $\W$ as $\T|_\W$. For any $v \in \V$, we can define $\W = \langle \T^k v : k \in \mathbb{N} \rangle$ as the <b>$\T$-cyclic subspace</b> of $v \in \V$, which is clearly $\T$-invariant as well. Now note that for $\dim \W = k$, we must have $\beta = \{ v, \T v, \dots, \T^{k - 1} v \}$ being the basis of $\W$, which thus we have $f_{\T|_\W}(t) = \det ([\T]_\beta - tI) = (-1)^k (a_0 + a_1 t + \cdots + t^k)$ with $a_0 + a_1 \T + \cdots + \T^k = \O$.</p>
+
+<p>For any $\T$-invariant subspace $\W$, note that $f_{\T|_\W} (t) \mid f_{\T}(t)$ by extending basis of $\W$ to $\V$. Therefore, we can prove the <b>Cayley-Hamilton Theorem</b> that $f_\T(\T) = \O$. Note that the eigenspace $\mathcal{E}_\lambda$ is $\T$-invariant as well. By picking any basis $\gamma$, then $[\T|_{\mathcal{E}_\lambda}]_\gamma = \lambda I$, and so $f_{\mathcal{E}_\lambda}(t) = (\lambda - t)^{\gamma(\lambda)}$. Since $f_{\mathcal{E}_\lambda}(t) \mid f_\V (t)$, we have $\gamma(\lambda) \le \mu(\lambda)$.</p>
+
+<h3>Tensor Product Space</h3>
+
+<p>A <b>tensor product space</b> is a space which it behaves like multiplying two polynomials. Consider a <b>bilinear</b> transformation $\mu: \V_1 \times \V_2 \rightarrow Y$, then we write $Y = \V_1 \otimes \V_2$ whenever $\mu(\beta_1 \times \beta_2)$ forms a basis for $Y$. For example, when $\V = P(F)$, then $\V \otimes \V = P(F^2)$. We can also treat $\V^* \otimes \W$ as $\mathcal{L}(\V, \W)$ by $(f_i \otimes w_j)(v) = f_i(v) \cdot w_j$ for $f_i$ and $w_j$ in basis of $\V^*$ and $\W$ respectively, and henceforth define <b>trace</b> $\text{Tr}: \V^* \otimes \V \rightarrow F$ by $\text{Tr}(f_i \otimes v_j) = f_i(v_j)$ where $\text{Tr}(\T) = A_{11} + A_{22} + \cdots + A_{nn}$ where $A = [\T]_\beta$, $\beta = \{v_1, \dots, v_n\}$ the basis of $\V$. Note that trace is independent of the basis considered.</p>
+
+<h2>Inner Product Space</h2>
+
+<p></p>

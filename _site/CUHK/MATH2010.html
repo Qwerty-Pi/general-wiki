@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script>
+		window.MathJax = {
+			tex: {
+				inlineMath: {'[+]': [['$', '$']]},
+				processEscapes: true
+			},
+			output: {
+				scale: 1.00
+			},
+			options: {
+				menuOptions: {
+					settings: {
+						enrich: false
+					}
+				}
+			}
+		}
+	</script>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="/index.css">
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+	<meta content="width=device-width, initial-scale=1" name="viewport"/>
+</head>
+<body>
+	<span style="display: none">
+\(
+	\def\R{\mathbb{R}}
+\)
+</span>
+
+<h1>MATH2010 Advanced Calculus I</h1>
+
+<p>Single-variable calculus are somewhat more simple. How about <b>vector-valued</b> <b>multi-variable</b> functions? Can we study rate of change, finding maximum / minimum and do approximations, say for function $f: \mathbb{R}^3 \rightarrow \mathbb{R}^2$ with $f(x, y, z) = (x + y, e^x)$? Well, we have to first define what a <b>vector</b> is in the <b>Euclidean Space</b>.</p>
+
+<h2>Euclidean Space</h2>
+
+<p>The <b>Euclidean Space</b> $\R^n = \R \times \R \times \cdots \times \R = \{ (x_1, x_2, \dots, x_n) : x_i \in \R \}$ is the set of <b>points</b> (or <b>vectors</b>) in the $n$-dimensional space. We also call the elements of $\R$ <b>scalars</b>. For points $A, B \in \R^n$, the vector $\overrightarrow{AB}$ is the vector from $A$ to $B$, where $\big\Vert \overrightarrow{AB} \big\Vert$ is the <b>magnitude</b> or <b>norm</b> of $\overrightarrow{AB}$.</p>
+
+<h3>Vector Operations</h3>
+
+<p>We may simply define vector operations such as <b>equality</b>, <b>addition</b> and <b>scalar multiplication</b> just normally. How to define length, area and volume in terms of vectors?</p>
+
+<p>To incorporate the idea of length, we define <b>dot product</b> $a \cdot b = \sum a_i \cdot b_i$ for $a, b \in \R^n$. The <b>euclidean norm</b> of vector $a$ is just $\Vert a \Vert = \sqrt{a \cdot a}$. Alternatively, it can be represent as $\langle a, b \rangle$. We can derive two inequalities, the <b>Cauchy-Schwarz inequality</b>, $| a \cdot b | \le \Vert a \Vert \cdot \Vert b \Vert$ and the <b>triangle inequality</b>, $\Vert a + b \Vert \le \Vert a \Vert + \Vert b \Vert$, which can both be easily proven.</p>
+
+<p>How about areas and volumes? We just handle the case for $\R^3$ here, because higher dimension area or volume is hard to define. We may introduce the <b>cross product</b> $a \times b$, defined as $$ \begin{vmatrix} \hat{i} & \hat{j} & \hat{k} \\ a_1 & a_2 & a_3 \\ b_1 & b_2 & b_3 \end{vmatrix}$$ Clearly $\times$ is <b>bilinear</b> and $b \times a = - a \times b$ directly from the properties of determinant. Similarly, we may define the <b>triple product</b> $a \cdot (b \times c)$ as $$ \begin{vmatrix} a_1 & a_2 & a_3 \\ b_1 & b_2 & b_3 \\ c_1 & c_2 & c_3 \end{vmatrix}$$ Also rely on the notion of determinant.</p>
+
+<p>From elementary geometry we can deduce that if the inclined angle between $a$ and $b$ is $\theta$, then $a \cdot b = \Vert a \Vert \Vert b \Vert \cos \theta$ and $\Vert a \times b \Vert = \Vert a \Vert \Vert b \Vert \sin \theta$, so cross product $\Vert a \times b \Vert$ is the area of the parallelogram formed by $a$ and $b$. Note $a \times b \perp a, b$, so the triple product $(a \times b) \cdot c$ is actually the <b>signed volume</b> of the parallelopipe formed by $a$, $b$ and $c$.</p>
+
+<h3>Linear Objects</h3>
+
+<p>In the 2D plane everything is simple: We can either define lines in the form of <b>linear equations</b> $ax + by = c$ for $a, b, c \in \R$, or in <b>parametric form</b> $a + bt$ for $a, b \in \R^n$ and $t \in \R$. How can we translate those ideas into higher dimensions?</p>
+
+<p>Actually it is pretty simple as well. We may define a <b>hyperplane</b> as set of points in the form $\{ x \in \R^n : a \cdot x = b \}$ where $a \in \R^n \setminus \{ 0 \}$ and $b \in \R$. Then, a <b>linear object</b> can be defined as <b>intersection of hyperplanes</b>. Linear algebra wise, then the dimension of the hyperplane is simply $n - k$ where $k$ is the rank of $A$ as in $A \cdot x = b$. Alternatively, it can also be represented similarly in the <b>parametric form</b> $a + b_1 t_1 + \cdots + b_k t_k$ with $\{ b_i \}$ being <b>linear independent</b> and $t_i \in \R$, representing a linear object of dimension $k$.</p>
+
+<h3>Curves</h3>
+
+<p>How about <b>curves</b>? We want to have a formal definition that encodes the intuitive definition of "put down a pen, move the pen, lift up the pen". Formally, a curve is a <b>continuous function</b> $x: I \rightarrow \R^n$ where $I \subset \R$ is <b>interval</b>. A curve $x: [a, b] \rightarrow \R^n$ is <b>closed</b> if $x(a) = x(b)$, and <b>simple</b> if $x(t_1) \ne x(t_2)$ for all $t_1 \lt t_2$ except at endpoints.</p>
+	
+<p>It is natural for us to extend the definition of <b>limit</b> and <b>derivative</b> from the single-variable cases as $\lim_{t \rightarrow a} x(t) = (\lim_{t \rightarrow a} x_1(t), \dots, \lim_{t \rightarrow a} x_n(t))$ and $x'(t) = \lim_{h \rightarrow 0} \frac{x(t + h) - x(t)}{h}$. We call $x'(t)$ the <b>tangent vector</b> of $x(t)$. Clearly $x'$ inherits all the single-variable rules.</p>
+
+<p>How about the <b>arclength</b> of $\mathcal{C}^1$ (continuous-differentiable) curve $x$ for $a \le t \le b$? Intuitively, we may define the arclength $s$ as $\sup_{\{t_i\}} \Vert x(t_i) - x(t_{i - 1}) \Vert$, the supremum of the length of piecewise approximation, and equivalently $\int_{a}^b \Vert x'(t) \Vert \, dt$, noting $x(t_i) - x(t_{i - 1}) = x'(\xi) (t_i - t_{i - 1})$ for some $\xi \in (t_{i - 1}, t_i)$ by <b>mean-value theorem</b>.</p>
+
+<h3>Coordinate Systems</h3>
+
+<p>Other than the old-boring rectangular coordinates, sometimes we will handle points on circles, cylinder, spheres etc. How should we encode points in these coordinate systems?</p>
+
+<p>First of all, we have the <b>polar coordinates</b> $(r, \theta)$ in $\R^2$, where $$\begin{cases} x = r \cos \theta \\ y = r \sin \theta \end{cases} \hspace{10mm} \begin{cases} r = \sqrt{x^2 + y^2} \\ \theta = \arctan \frac{y}{x} \end{cases}$$ Conventionally, we assume $r \in [0, \infty)$ and $\theta \in \R$. Intuitively, $r$ is the distance from the point to the origin while $\theta$ is the inclined angle.</p>
+
+<p>Second, we have the <b>cylindrical coordinates</b> $(r, \theta, z)$ in $\R^3$, which is simply adding the third dimension, z-axis, to the polar coordinates.</p>
+
+<p>A more complicated one is the <b>spherical coordinates</b> $(\rho, \theta, \phi)$, where $$\begin{cases} x = \rho \sin \phi \cos \theta \\ y = \rho \sin \phi \sin \theta \\ z = \rho \cos \phi \end{cases} \hspace{10mm} \begin{cases} \rho = \sqrt{x^2 + y^2 + z^2} \\ \theta = \arctan \frac{y}{x} \\ \phi = \arccos \frac{z}{\sqrt{x^2 + y^2 + z^2}}\end{cases}$$ Where essentially $\rho$ is the distance to origin, $\theta \in \R$ is the latitude and $\phi \in [0, \pi]$ is the longitude. This is especially useful when, well, handling spherical stuff.</p>
+
+<h3>Topology in Euclidean Space</h3>
+
+<p>In the euclidean space $\R^n$, we can define an <b>open ball</b> as $$B_\varepsilon(x_0) = \{ x \in \R^n : \Vert x - x_0 \Vert \lt \varepsilon \}$$ And a <b>closed ball</b> as $$\overline{B_\varepsilon(x_0)} = \{ x \in \R^n : \Vert x - x_0 \Vert \le \varepsilon \}$$ For $S \subset \R^n$, we define the <b>interior</b> of $S$ as $$ \text{Int}(S) := \{ x \in \R^n : B_\varepsilon(x) \subset S \text{ for some } \varepsilon \gt 0 \} $$ Similarly, we define the <b>exterior</b> of $S$ as $$ \text{Ext}(S) := \{ x \in \R^n : B_\varepsilon(x) \subset \R^n \setminus S \text{ for some } \varepsilon \gt 0 \} $$ Finally, the <b>boundary</b> of $S$ as $$ \partial S := \R^n \setminus (\text{Int}(S) \cup \text{Ext}(S))$$</p>
+
+<p>Specifically, we call a set <b>open</b> when $S = \text{Int}(S)$, and <b>closed</b> when $S = \text{Int}(S) \cup \partial S$. We also define the <b>closure</b> of $S$ as $S \cup \partial S$. Note that open and closed are not of opposite definitions; rather these are two related properties. Specially, $\R^n$ and $\varnothing$ are both open and closed, while set like $\mathbb{Q}$ are neither open or close in $\R$. </p>
+
+<p>Finally, we also say $S \subset \R^n$ is <b>bounded</b> whenever there exists an $M$ where $S \subset B_M(0)$, and <b>unbounded</b> otherwise; And a set $S$ is <b>connected</b> whenever for all $x, y \in S$ there exists a curve connecting $x$ and $y$, and <b>disconnected</b> otherwise. The <b>Jordan Curve Theorem</b> states that a simple closed curve in $\mathbb{R}^2$ partition the region into two connected components, one bounded and one unbounded.</p>
+
+<h3>Limit and Continuity</h3>
+
+<p>After introducing topological terminology, we can define limit and continuity rigourously. What is limit? Intuitively, that is</p>

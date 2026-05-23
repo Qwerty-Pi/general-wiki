@@ -97,9 +97,9 @@ layout: default
 
 <h3>Finding Extrema</h3>
 
-<p>For a function $f : \Omega \subset \R^n \rightarrow \R$, we can define its <b>global maximum</b> and <b>local maximum</b> naturally, where $f$ has global maximum at $a$ iff $f(a) \ge f(x)$ for all $x \in \Omega$ and $f$ has local maximum at $a$ iff $f(a) \ge f(x)$ for all $x \in \Omega \cap B_{\varepsilon}(a)$ for some $\varepsilon > 0$. The case for minimum is just analogous.</p>
+<p>For a function $f : \Omega \subset \R^n \rightarrow \R$, we can define its <b>global maximum</b> and <b>local maximum</b> naturally, where $f$ has global maximum at $a$ iff $f(a) \ge f(x)$ for all $x \in \Omega$ and $f$ has local maximum at $a$ iff $f(a) \ge f(x)$ for all $x \in \Omega \cap B_{\varepsilon}(a)$ for some $\varepsilon \gt 0$. The case for minimum is just analogous.</p>
 
-<p>When does a function has global maximum (and minimum)? For example, $f(x) = e^x$ on $\R$ does not have a global maximum nor minimum. According to the <b>extreme value theorem</b>, $f$ has global maximum and minimum whenever $\Omega$ is <b>compact</b> (closed and bounded) and $f$ continuous, since continuity preserves compactness and compact set (in $\mathbb{R}$) contains its supremum.</p>
+<p>When does a function has global maximum (and minimum)? For example, $f(x) = e^x$ on $\R$ does not have a global maximum nor minimum. According to the <b>extreme value theorem</b>, $f$ has global maximum and minimum whenever $\Omega$ is <b>compact</b> (closed and bounded) and $f$ continuous, since continuity preserves compactness and compact set in $\mathbb{R}$ contains its supremum.</p>
 
 
 <p>How can we find extrema then? The <b>first derivative test</b> states that if $f$ attains extremum at $a \in \text{Int}(\Omega)$, then $a$ is <b>critical point</b>, that is points where either the gradient is undefined or vanishes. Therefore, to find extrema, we may simply seek all the crtical points of $f$ in $\text{Int}(\Omega)$ and on the boundary $\partial \Omega$. For unbounded regions, a simple strategy is to simply first bound the region, then claim every point outside is obviously not going to be extrema with inequalities. </p>
@@ -116,4 +116,8 @@ layout: default
 
 <p>How can we <b>find extrema under contraints</b>? For example, if $f(x, y) = xy$ and we know that $g(x, y) = x + y = 16$, how can we show that $f(x, y) \le 64$ with a generic way? We can for sure do that with the method of <b>Lagrange Multipliers</b>.</p>
 
-<p>Suppose $f, g$ are $\mathcal{C}^1$ functions on $\Omega \subset \R^n$ where the codomain of $g$ is $\R^k$ and $S = g^{-1}(c) = \{ x \in \Omega : g(x) = c \}$. According to <b>Lagrange Multipliers</b>, if $a$ is a local extremum of $f$ on $S$ and $\text{rank}\ Dg(a) = k$, then $\nabla f$ is a <b>linear combination of the rows</b> of $Dg(a)$ as well. Why? By letting $F(x, \lambda) = f(x) - \lambda \cdot (g - c)$, we have $\nabla F = (\nabla f - \lambda \cdot (Dg)^T, g - c)$, which means finding points where $\nabla f \in \mathcal{R}(Dg)$ is equivalent to find points where $\nabla F = 0$ on $\R^{n + k}$. The condition $\text{rank}\ Dg(a) = k$ ensures that <b>implicit function</b> $\gamma: \R^{n - k} \rightarrow \Omega$ defined on $S$ near $a$ is well-defined. </p>
+<p>Suppose $f, g$ are $\mathcal{C}^1$ functions on $\Omega \subset \R^n$ where the codomain of $g$ is $\R^k$ and $S = g^{-1}(c) = \{ x \in \Omega : g(x) = c \}$. Using the method of the <b>Lagrange Multipliers</b>, if $a$ is a local extremum of $f$ on $S$ and $Dg(a)$ is <b>full-rank</b> (which implies $S$ does not degenerate at $a$), then $\nabla f \perp T_S(a)$ where $T_S(a)$ denotes the <b>tangent space</b> of $S$ at $a$, since otherwise we can "move" on $S$ to make $f$ larger. Since $T_S(a)^{\perp} = \langle \nabla g_1, \cdots, \nabla g_k \rangle$, we have $\nabla f \in \langle \nabla g_1, \cdots, \nabla g_k \rangle$.</p>
+
+<h3>Implicit Function Theorem</h3>
+
+<h3>Inverse Function Theorem</h3>

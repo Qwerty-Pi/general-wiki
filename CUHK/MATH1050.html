@@ -1,0 +1,83 @@
+---
+layout: default
+---
+<span style="display: none">
+\(
+\)
+</span>
+
+<h1>MATH1050 Introduction to Modern Mathematics</h1>
+
+<p>The basis of modern mathematics lies around axiomatic and formal proofs, with mathematical objects constructed to be as simple and as generic as possible. Here, we will only go through the mathematical objects and skipping the trivial logics.</p>
+
+<h2>Number Systems</h2>
+
+<h3>Real Numbers $\mathbb{R}$</h3>
+
+<p>What is a <b>real number</b>? Intuitively, the collection of real numbers is the "things" that we can (1) do arithmetic, (2) compare two numbers and (3) contains "every" numbers. Those are what we "believe" to be true, so we create axioms to display our beliefs.</p>
+
+<p>For arithmetics, we say $\mathbb{R}$ is a <b>field</b>, which is closed under $+$ and $\times$, identity and inverse exists, associative and commutative. For ordering, we say $\mathbb{R}$ is <b>total order</b>, which the operator $\le$ is reflexive, anti-symmetric, transitive and strongly connected. Finally, to encode the information that $\mathbb{R}$ to contain every number, we have the <b>axiom of completeness</b>, stating the <b>supremum</b> $\sup S := \min \{ x \in S : x \ge y \land y \in S \}$ always exists for any set of real numbers.</p>
+
+<p>With those axioms in place, we may build other theorems upon them, including inequalities. For example, the <b>Bernoulli's Inequality</b> states that for all $r, b \in \mathbb{R}$ and $b \gt -1$, we have $(1 + b)^r \ge 1 + rb$ if $r \lt 0$ or $r \gt 1$, and $(1 + b)^r \le 1 + rb$ if $0 \lt r \lt 1$. Meanwhile, <b>Weierstrass Inequality</b> states that for any finite sequence $\{ x_i \} \in \mathbb{R}_{\ge 0}^n$, then $\prod (1 + x_i) \ge 1 + \sum x_i$, while if $\{ x_i \} \in [0, 1]^n$ then $\prod (1 - x_i) \ge 1 - \sum x_i$. Both of them can be proven with simple calculus.</p>
+
+<h3>Complex Numbers $\mathbb{C}$</h3>
+
+<p><b>Complex Numbers</b> $\mathbb{C}$ is an extension to $\mathbb{R}$ to solve the issue of $\sqrt{-1}$. The complex numbers $\mathbb{C}$ is defined to be $\{ s + ti : s, t \in \mathbb{R} \}$, where we can write every complex numbers as $z = s + ti = re^{i \theta}$, where $s = \text{Re}(z)$ and $t = \text{Im}(z)$ are the <b>real part</b> and <b>imaginary part</b> of $z$ respectively, whereas $r = |z|$ and $\theta = \arg z$ are called the <b>modulus</b> and the <b>argument</b> of $z$.</p>
+
+<p>We can define the <b>conjugate</b> of a complex number $z = s + ti$ as $\overline{z} = s - ti$ for $s, t \in \mathbb{R}$. Clearly, $|\overline{z}| = |z|$ and we can represent $\text{Re}(z) = \frac{z + \overline{z}}{2}$ and $\text{Im(z)} = \frac{z - \overline{z}}{2i}$. Interestingly, for $u, v \in \mathbb{C}$ we have $\overline{u + v} =\overline{u} + \overline{v}$ and $\overline{u \cdot v} = \overline{u} \cdot \overline{v}$. Sometimes we can consider the <b>argand plane</b> with an real axis and imaginary axis.</p>
+
+<p>Note that $e^{i\theta} = (\cos \theta + i \sin \theta)$, so we have the <b>De Moivre's Theorem</b> $(\cos \theta + i \sin \theta)^n = \cos n \theta + i \sin \theta$ for all integer $n$. We also define the <b>roots of unity</b> $\xi_n = e^{\frac{2\pi i}{n}}$ as the $n$-th root of unity where $\xi_n^n = 1$.</p>
+
+<h3>Integers $\mathbb{Z}$</h3>
+
+<p>We all know that <b>integers</b> is the set of $\{ \dots, -2, -1, 0, 1, 2, \dots \}$. What so special about it? The special property on $\mathbb{Z}$ is that the <b>well-ordering principle</b>: for all set $S \subseteq \mathbb{Z}$ and bounded below, then $S$ contains the least element. Thus, we have the <b>principle of mathematical induction</b>: consider a <b>predicate</b> $P$ with variable $x$ and denote $\vdash P(x)$ as $P(x)$ is true for $x \in \mathbb{N}$. If $\vdash P(0)$ and $\vdash P(x) \implies P(x + 1)$ for all $x \in \mathbb{N}$, then $\vdash P(n)$ for all $n \in \mathbb{N}$, where $\mathbb{N} \subset \mathbb{Z}$ is the <b>natural numbers</b>. The <b>strong induction</b> form is if $\vdash P(0)$ and $\vdash P(0), \dots, P(x) \implies P(x + 1)$ for all $x \in \mathbb{N}$, then we still have $\vdash P(n)$ for all $n \in \mathbb{N}$. </p>
+
+<p>Note that the <b>well-ordering princple</b> and <b>principle of mathematical induction</b> are equivalent axioms - we can deduce one principle as theorem taking the other as axiom, but not deduce from nothing. We may deduce the <b>Fundamental Theorem of Arithmetic</b> base on well-ordering principle: Let $S \subset \mathbb{N}$ be the non-empty set integers that cannot be fully factorised into <b>primes</b>, say $\min S = n$, then we can factorise $n = a \times b$ where $a, b \lt n$, so either $a$ or $b$ cannot be fully factorised, and so contradiction arises and we must have $S = \varnothing$.</p>
+
+<h2>Axiomatic Set Theory</h2>
+
+<h3>Sets</h3>
+
+<p>Most of mathematics relies on the notation of <b>sets</b>. Every collection of stuff forms a "set", where stuff can basically be anything. The statement $x \in A$ means that $x$ <b>belongs to</b> $A$ or $A$ <b>contains</b> $x$, and $x \not\in A$ means the opposite. We also write $A \subset B$ ($A \subseteq B$) where $A$ is <b>subset</b> of $B$ or $B$ is the <b>superset</b> of $A$, that is, for all $x \in A$, we also have $x \in B$. When the inclusion is <b>proper</b>, we write $A \subsetneq B$ to emphasize that $A \ne B$. The <b>empty set</b>, the set contains nothing is written as $\varnothing$, while set $\{ x \}$ containing only one element $x$ is called <b>singleton</b>.</p>
+
+<p>We usually use the <b>method of specification</b> to describe (possibly infinite) sets, that is in the form of $\{ x \mid P(x) \}$ or $\{ x \in U : P(x) \}$ where $U$ is a set and $P(x)$ is a predicate, which contains all elements that satisfy the predicate $P(x)$. The symbol $\mid$ and $:$ can be used interchangably to separate the element and the condition. Simple examples include the notation of <b>intervals</b>, where $\{ x \in \mathbb{R} : a \le x \le b \} = [a, b]$ is <b>closed interval</b> and $\{ x \in \mathbb{R} : a \lt x \lt b \} = (a, b)$ is <b>open interval</b>.</p>
+
+<p>Why we need $U$ in the second notation? Here comes <b>Russell's paradox</b>: The set $S = \{ x : x \not\in x \}$. Then $S \in S \iff S \not\in S$, making set theory <b>inconsistent</b>! The <b>Zermelo-Fraenkel Set Theory</b> avoids the construction of absurd sets by requiring $x$ to be chosen from some known set $U$. Even if $S \in S \iff S \not\in S$ now, it is under the assumption that $S \in U$, so the only thing we derive is $S \not\in U$, no inconsistent arises.</p>
+
+<p>Let's introduce operations on sets. We define the <b>union</b> $A \cup B$ as $\{ x : x \in A \text{ and } x \in B \}$, the <b>intersection</b> $A \cap B$ as $\{ x : x \in A \text{ or } x \in B \}$, the <b>difference</b> $A \setminus B$ as $\{ x : x \in A \text{ and not } x \in B \}$, and finally the <b>symmetric difference</b> $A \operatorname\Delta B$ as $\{ x: x \in A \text{ xor } x \in B \}$. We can also define <b>ordered pair</b> base on set theory as $(x, y) = \{ \{ x \}, \{ x, y \} \}$. The <b>cartesian product</b> $A \times B$ is defined as $\{ (x, y) : x \in A \text{ and } y \in B \}$ while the <b>power set</b> $\mathcal{P}(A)$ is defined as $\{ S : S \subset A \}$. Finally, we have the generalised union and intersection as $\bigcup_{S \in \mathcal{C}} S = \{ x : \exists S \in \mathcal{C} (x \in S)\}$ and $\bigcap_{S \in \mathcal{C}} S = \{ x : \forall S \in \mathcal{C} (x \in S)\}$. Note that $\mathcal{C}$ is not necessarilly finite for them to be well-defined.</p>
+
+<h3>Functions</h3>
+
+<p>What is a <b>function</b>? Essentially, a function "inputs" from a set $A$ called <b>domain</b> and "outputs" to a set $B$ called <b>codomain</b>. The function is denoted as $f: A \rightarrow B$, where for each $a \in A$, an unique $b \in B$ is assigned to it, written as $f(a)$. We may <b>compose</b> functions together as $g \circ f$, where $(g \circ f)(x) = g(f(x))$. Note that the order of function composition is from right to left due to evaluation order. We have the <b>identity function</b> $\text{id}_A : A \rightarrow A$ where $\text{id}_A (x) = x$ for all $x \in A$, and the <b>inclusion function</b> as $\iota_S^{A}: S \rightarrow A$ where $\iota_S^{A}(x) = x$ for all $x \in S$ with $S \subset A$. We also call $G = \{ (x, f(x)) : x \in A \}$ the <b>graph</b> of $f$.</p>
+
+<p>We give names to functions satisfying different properties. For the function $f: A \rightarrow B$, if for every $y \in B$ there exists some $x \in A$ such that $y = f(x)$, then we call $f$ <b>surjective</b> or <b>onto</b>; and if for every $x, y \in A$, $f(x) = f(y) \implies x = y$, then we call $f$ <b>injective</b> or <b>1-1</b>. We can define the <b>image set</b> $f(S) = \{ f(x) \in B : x \in S \}$ for $S \subset A$ and the <b>pre-image set</b> $f^{-1}(T) = \{ x: x \in A, f(x) \in T \}$. We may deduce some interesting properties. For example, for $f, g$ injective (surjective) we have $g \circ f$ injective (surjective); If $g \circ f$ is injective, then $f$ is injective, whereas if $g \circ f$ is surjective, $g$ is surjective. All these relations can be deduced from basic principles.</p>
+
+<p>Finally, a <b>bijective</b> function is one which are both injective and surjective. For bijective function $f$, its <b>inverse function</b> is defined to be $g = f^{-1}$ where for all $x \in A$, $(g \circ f)(x) = x$ and for all $y \in B$, $(f \circ g)(y) = y$.</p>
+
+<p>How to create sequence from recursion? The <b>recursion theorem</b> states that for $\varphi: A \rightarrow A$ and any $b \in A$, there exists an unique function $f: \mathbb{N} \rightarrow A$ such that $f(0) = b$ and $f(n + 1) = \varphi(f(n))$ for all $n \in \mathbb{N}$, which may be proven simply by invoking induction.</p>
+
+<h3>Relations</h3>
+
+<p>We can generalise a function to a <b>relation</b>. Essentially, a relation is formed between two sets $S$ and $T$ with $G \subset S \times T$. If for all $x \in S$ there exists an <b>unique</b> $y \in T$ such that $(x, y) \in G$, then we can transform the relation into a function.</p>
+
+<p>Interesting relations including the <b>equivalence relation</b> and the <b>partial-ordering relations</b>. For example, <b>equivalence relation</b> $\sim$ are relation of $A \times A$ that is satisfying (1) reflexive ($a \sim a$), (2) symmetric ($a \sim b \iff b \sim a$) and (3) transitive ($a \sim b \land b \sim c \implies a \sim c$). With equivalence relations, we may induce a <b>partition</b> on $A$ where the <b>equivalence classes</b> are $[a] := \{ x \in A : a \sim x \}$. On the other hand, a <b>partial-ordering relation</b> $\preceq$ is one that satisfies (1) reflexive ($a \preceq a$), (2) anti-symmetric ($a \preceq b \land b \preceq a \implies a = b$) and (3) transitive ($a \preceq b \land b \preceq c \implies a \preceq c$). A set with a partial order is called a <b>poset</b>. If every two elements are comparable, that is, $a \preceq b \lor b \preceq a$ always holds, then it is called a <b>total order</b>.</p>
+
+<h3>Set Cardinality</h3>
+
+<p>One thing that interests us is the "size" of the sets. For finite sets the size is obvious - but how about infinite sets? How shall we define them?</p>
+
+<p>To start with, we use $A \sim B$ to denote that the sets $A$ and $B$ are <b>equipotence</b> or cardinally equal, that is, there exists a bijective function from $A$ to $B$. For example, we have $\mathbb{N} \sim \mathbb{Z} \sim \mathbb{N}^2 \sim \mathbb{Q}$ and $\mathcal{P}(A) \sim \mathcal{F}(A, \{ 0, 1 \})$.</p>
+
+<p>The <b>Glueing Lemma</b> states that if $A = \bigcup_{n \in \mathbb{N}} A_n$ and $B = \bigcup_{n \in \mathbb{N}} B_n$ where $A_n \sim B_n$ for all $n \in \mathbb{N}$ and $\{ A_n \}$, $\{ B_n \}$ all disjoint, then $A \sim B$. The proof is trivial - really just "glue" the functions together.</p>
+
+<p>Is all infinite sets with same cardinality? Turns out, no - as shown by the <b>Cantor Diagonal Argument</b>. Consider a bijection $\Phi : \mathbb{N} \rightarrow \mathcal{F}(\mathbb{N}, \{ 0, 1 \})$. Define $f \in \mathcal{F}(\mathbb{N}, \{ 0, 1 \})$ where $f_n = 1 - \Phi(n)_n$, then $f \not\in \Phi(\mathbb{N})$ and contradiction arises. We denote this <b>subpotence relation</b> $A \lt \mathcal{P}(A)$. We call any set $A$ where $\mathbb{N} \lesssim A$ as <b>infinite set</b> and where $A \lesssim \mathbb{N}$ as <b>countable set</b>. The <b>Cantor's Continuum Hypothesis</b> guesses that for all set $S$ where $\mathbb{N} \lesssim S \lesssim \mathbb{R}$, then either $S \sim \mathbb{N}$ or $S \sim \mathbb{R}$, but it has not yer been proven. We denote $A \lesssim B$ when there exists an injective function $f: A \rightarrow B$. In fact, this condition is equivalent to there exists a surjective function $g: B \rightarrow A$: This may be proven with the <b>axiom of choice</b>, which states that the cartesian of arbitrary non-empty sets is non-empty.</p>
+
+<p>Finally, the <b>Schroder-Berstein Theorem</b> states that $A \lesssim B \sim B \lesssim A \implies A \sim B$. Why? Let $f: A \rightarrow B$ and $g: B \rightarrow A$ are injective functions. For any $a \in A$, consider the infinite sequence $\cdots \rightarrow f^{-1}(g^{-1}(a)) \rightarrow g^{-1}(a) \rightarrow a \rightarrow f(a) \rightarrow g(f(a)) \rightarrow \dots$. Clearly these sequences forms a partition on the sets $A$ and $B$. Thus, if $g^{-1}$ is not defined for some element, then $f$ is a bijection, and vice versa. Otherwise, the sequence is either doubly infinite or cyclic, which either $f$ or $g$ will do.</p>
+
+<h3>Axiom of Choice and Zorn's Lemma</h3>
+
+<p>The <b>Axiom of Choice</b> is used in many theorems handling infinity. There are three equivalent formulations: (AC1) Let $I, M$ non-empty sets where $\Phi: I \rightarrow \mathcal{P}(M)$ where $\Phi(\alpha) \ne \varnothing$ for all $\alpha \in I$, then there exists $\varphi: I \rightarrow M$ where $\varphi(\alpha) \in \Phi(\alpha)$ for all $\alpha \in I$; (AC2) For all $A \ne \varnothing$, there exists $\Psi: \mathcal{P}(A) \setminus \{ 0 \} \rightarrow A$ such that $\Psi(S) \in S$ for all $S \in \mathcal{P}(A) \setminus \{ 0 \}$; (AC3) Cartesian Product of any non-empty family of non-empty set is non-empty. Essentially we want to pick simultaneously from a possibly uncountably infinite set, since it is not really a well-defined thing to pick from an infinite collection simultaneously.</p>
+
+<p>The <b>Zorn's Lemma</b> is another formulation for the axiom of choice. It states that for a poset $P$, if every <b>chain</b> $x_1 \lt x_2 \lt \cdots$ is <b>bounded above</b>, then $P$ has a <b>maximal element</b> as well. Although it looks drastically different from the axiom of choice, we can actually show that they are equivalent.</p>
+
+<p>To show ZL implies AC, simply let $X$ be the collection of non-empty sets and $(C, \subseteq)$ the set of all choice functions. Since for a chain of choice functions their <b>union</b> is also a choice function as well, there exists a maximal element, necessarily choose for all elements in domain. On the other hand, to show AC implies ZL, first let $A$ be a poset that every chain is bounded above and denote $\Phi: A \rightarrow \mathcal{P}(A)$ where $\Phi(a) = \{ x \in P : a \lt x \}$. If any $\Phi(a)$ is empty then we already find a maximal element; Otherwise consider any choose function $f$. Define $a_0 \in A$, $a_{\alpha + 1} = f(\Phi(a_{\alpha}))$ where $\alpha$ is over the set of <b>ordinals</b>. For <b>limit ordinal</b> $\alpha$, since $\{ a_\beta : \beta \lt \alpha \}$ forms a chain as well, so $\bigcap_{\beta \lt \alpha} \Phi(\beta) \ne \varnothing$ and we may pick $a_\beta = f\left(\bigcap_{\beta \lt \alpha} \Phi(\beta)\right)$. Thus, we have an injection from the <b>proper class of ordinals</b> to $A$, which is absurd. </p>

@@ -90,9 +90,9 @@
 
 <p>After introducing topological terminology, we can finally define <b>limit</b> and <b>continuity</b> of a function rigourously. What is the limit of a function $f : \Omega \subset \R^n \rightarrow \R$ at point $x \in \overline{\Omega}$, or what does it mean by $f$ is continuous at point $x \in \Omega$?</p>
 
-<p>First, the limits. Intuitively, the statement $\lim_{x \rightarrow x_0} f(x) = L$ means that when $x$ approaches $x_0$, then $f(x)$ approaches $L$, where $f(x_0)$ not necessarily defined. How do we define "approaches"? There are actually two equivalent definitions: (1) $\varepsilon$-$\delta$: For every $\varepsilon \gt 0$, there exists $\delta \gt 0$ such that for all $x \in \Omega$ with $\Vert x - x_0 \Vert \lt \delta$, we have $\Vert f(x) - f(x_0) \Vert \lt \varepsilon$. (2) Sequential: For every sequence $\{ x_n \} \rightarrow x_0$, we have $\{ f(x_n) \} \rightarrow L$. Both can be shown to imply each other. The <b>squeeze theorem</b> states that for $f, g, h : \Omega \subset \R^n \rightarrow \R$ where $g(x) \le f(x) \le h(x)$ near $a \in \Omega$ and $\lim_{x \rightarrow a} g(x) = \lim_{x \rightarrow a} h(x) = L$, then $\lim_{x \rightarrow a} f(x) = L$ as well, which can be derive from definition.</p>
+<p>First, the limits. Intuitively, the statement $\lim_{x \rightarrow x_0} f(x) = L$ means that when $x$ approaches $x_0$, then $f(x)$ approaches $L$, where $f(x_0)$ not necessarily defined. How do we define "approaches"? There are actually two equivalent definitions: (1) $\varepsilon$-$\delta$: For every $\varepsilon \gt 0$, there exists $\delta \gt 0$ such that for all $x \in \Omega$ with $\Vert x - x_0 \Vert \lt \delta$, we have $\Vert f(x) - f(x_0) \Vert \lt \varepsilon$. (2) Sequential: For every sequence $\{ x_n \} \subset \R^n \rightarrow x_0$, we have $\{ f(x_n) \} \rightarrow L$. Both can be shown to imply each other. The <b>squeeze theorem</b> states that for $f, g, h : \Omega \subset \R^n \rightarrow \R$ where $g(x) \le f(x) \le h(x)$ near $a \in \Omega$ and $\lim_{x \rightarrow a} g(x) = \lim_{x \rightarrow a} h(x) = L$, then $\lim_{x \rightarrow a} f(x) = L$ as well, which can be derive from definition.</p>
 
-<p>Second, the continuity. We say $f$ is <b>continuous at $x_0$</b> if and only if $\lim_{x \rightarrow x_0} f(x) = f(x_0)$ is <b>well-defined</b>, and the function $f$ itself is called <b>continuous</b> if $f$ is continuous at every point in $\Omega$. Clearly the set of functions continuous at $x_0$ is closed under addition, multiplication and division (by function not vanishes at $x_0$). Continuity in fact is also preserved by function composition, which can be shown by using chained $\varepsilon$-$\delta$ argument.</p>
+<p>Second, the continuity. We say $f$ is <b>continuous at $x_0$</b> if and only if $\lim_{x \rightarrow x_0} f(x) = f(x_0)$ is <b>well-defined</b>, and the function $f$ itself is called <b>continuous</b> if $f$ is continuous at every point in $\Omega$. Clearly the set of functions continuous at $x_0$ is closed under addition, multiplication, division (by function not vanishes at $x_0$) and function composition, which can be shown with $\varepsilon$-$\delta$ arguments.</p>
 
 <h3>Partial Derivative</h3>
 
@@ -106,29 +106,50 @@
 
 <h3>Differentiability</h3>
 
-<p>What does it means by $f$ is <b>differentiable</b>? One of the perspective to see this is that $f$ can be well-approximated by a linear function. Let $\nabla$ be the <b>gradient operator</b> $(D_{x_1}, \dots, D_{x_n})$, then the condition becomes whether $f(x) = f(x_0) + \nabla f (x_0) \cdot (x - x_0) + \varepsilon(x)$ where $\lim_{x \rightarrow x_0} \frac{\varepsilon(x)}{\Vert x - x_0 \Vert} = 0$, where $L(x) = f(x_0) + \nabla f (x_0) \cdot (x - x_0)$ is called the <b>linearisation</b> of $f$ near $x_0$. Clearly differentability implies continuity. Also, since the linearisation is good approximation, we can compute the <b>directional derivative</b> as $D_u f(a) = \lim_{h \rightarrow 0} \frac{f(a + hu) - f(a)}{h} = \nabla f(a) \cdot u$ where $u$ is unit vector.</p>
+<p>What does it means by $f$ is <b>differentiable</b>? One of the perspective to see this is that $f$ can be well-approximated by a linear function. Let $\nabla$ be the <b>gradient operator</b> $\left( \frac{\partial}{\partial x_1}, \dots, \frac{\partial}{\partial x_n} \right)$, then the condition becomes $f(x) = f(a) + \nabla f (a) \cdot (x - a) + \varepsilon(x)$ where $\lim_{x \rightarrow a} \frac{\varepsilon(x)}{\Vert x - x_0 \Vert} = 0$, where $L(x) = f(a) + \nabla f (a) \cdot (x - a)$ is called the <b>linearisation</b> of $f$ near $a$. Clearly differentability implies continuity. Also, since the linearisation is "good" approximation, we can compute the <b>directional derivative</b> as $D_u f(a) = \lim_{h \rightarrow 0} \frac{f(a + hu) - f(a)}{h} = \nabla f(a) \cdot u$ where $u$ is unit vector.</p>
 
-<p>Interestingly, $\mathcal{C}^1$ implies differentiability on $\Omega$! This may be proven by simply splitting $x - x_0$ into components, then abuse the continuity of the partial derivatives. This is a quite useful property, since we may similarly extend to higher orders. We may define the <b>total differential</b> $df: \mathbb{R}^n \rightarrow \mathbb{R}$ as well, as $df = \sum D_{x_i} dx_i$, considering differentials as functions.</p>
+<p>Interestingly, $\mathcal{C}^1$ implies differentiability on $\Omega$! This may be proven by simply splitting $x - a$ into components, then abuse the continuity of the partial derivatives. This is a quite useful property, since we may similarly extend to higher orders. We may define the <b>total differential</b> $df: \mathbb{R}^n \rightarrow \mathbb{R}$ as well, as $df = \sum \frac{\partial f}{\partial x_i} dx_i$, considering differentials as functions.</p>
 
 <p><b>Vector-valued functions</b> are functions of the form $f: \Omega \subset \R^n \rightarrow \R^m$. Now, the range of the functions contains vectors instead of scalar. How shall we extend our analytic definitions to accomodate this?</p>
 
 <h3>Jacobian Matrix</h3>
 
-<p>Indeed, we can carry out linearisation on the vector-valued function similarly, where $f_i(x) = f_i(x_0) + \nabla f_i(x_0) \cdot (x - x_0) + \varepsilon_i(x)$. By writing $f$ as a column matrix (as convention), we have $ f(x) = f(x_0) + Df(x_0) (x - x_0) + \varepsilon(x)$ where $Df$ is the <b>Jacobian Matrix</b> $$ Df = \begin{bmatrix} \nabla f_1 \\ \nabla f_2 \\ \vdots \\ \nabla f_m \end{bmatrix}$$ Which clearly we have $df = Df \cdot dx$ as first-order linear approximations. </p>
+<p>Indeed, we can carry out linearisation on the vector-valued function $f: \Omega \subset \R^n \rightarrow \R^m$ similarly, by writing $f_i(x) = f_i(a) + \nabla f_i(a) \cdot (x - a) + \varepsilon_i(x)$. By writing $f$ as a column matrix, conventionally, we have $ f(x) = f(x_0) + Df(x_0) (x - x_0) + \varepsilon(x)$ where $Df$ is the <b>Jacobian Matrix</b> $$ Df = \begin{bmatrix} \nabla f_1 \\ \nabla f_2 \\ \vdots \\ \nabla f_m \end{bmatrix}$$ Which clearly we have $df = Df \cdot dx$ as first-order linear differentials. </p>
 
 <p>We also have the <b>chain rule</b> for multivariable: Simply described by $D(g \circ f)(a) = (Dg \circ f)(a) \cdot Df(a)$ Whenever $f$ and $g$ are differentiable at $a$ and $f(a)$ respectively, which can be proven with bounding the error of the linear approximation. This can be used to show that the for points $a$ in the <b>level set</b> $S = f^{-1}(c)$, $f$ differentiable at $a$ and $\nabla f (a) \ne 0$, then $\nabla f(a) \perp S$. That is, for every differentiable curve $\gamma$ on $S$ passing through $a$, we have $\nabla f(a) \cdot \gamma'(a) = 0$, which is true by $\nabla (f \circ \gamma) = 0$ and directly applying chain rule. We may as well use it to carry out <b>implicit differentiations</b>. </p>
 
-<h3>Taylor Series</h3>
-
-
+<p>Obviously we can have <b>Taylor Series</b> for multivariable functions as well, of the form $f(x) = f(a) + \sum (D_{x_i} f)(a) (x_i - a_i) + \frac{1}{2} \sum (D_{x_i} D_{x_j} f) (a) (x_i - a_i) (x_j - a_j) + \cdots = f(a) + \nabla f(a) \cdot (x - a) + (x - a)^T \cdot Hf(a) \cdot (x - a) + \cdots$ where $Hf$ is the <b>Hessian Matrix</b> where $(Hf)_{ij} = f_{x_i x_j}$. Whenever $f$ is $\mathcal{C}^2$, we clearly have $Hf$ being <b>symmetric</b>.</p>
 
 <h3>Finding Extrema</h3>
 
-<p>For a function $f : \Omega \subset \R^n \rightarrow \R$, we can define its <b>global maximum</b> and <b>local maximum</b> naturally, where $f$ has global maximum at $a$ iff $f(a) \ge f(x)$ for all $x \in \Omega$ and $f$ has local maximum at $a$ iff $f(a) \ge f(x)$ for all $x \in \Omega \cap B_{\varepsilon}(a)$ for some $\varepsilon > 0$. The case for minimum is just analogous.</p>
+<p>For a function $f : \Omega \subset \R^n \rightarrow \R$, we can define its <b>global maximum</b> and <b>local maximum</b> naturally, where $f$ has global maximum at $a$ iff $f(a) \ge f(x)$ for all $x \in \Omega$ and $f$ has local maximum at $a$ iff $f(a) \ge f(x)$ for all $x \in \Omega \cap B_{\varepsilon}(a)$ for some $\varepsilon \gt 0$. The case for minimum is just analogous.</p>
 
-<p>When does a function has global maximum (and minimum)? For example, $f(x) = e^x$ on $\R$ does not have a global maximum nor minimum. According to the <b>extreme value theorem</b>, $f$ has global maximum and minimum whenever $\Omega$ is <b>compact</b> (closed and bounded) and $f$ continuous, since continuity preserves compactness and compact set (in $\mathbb{R}$) contains its supremum.</p>
+<p>When does a function has global maximum (and minimum)? For example, $f(x) = e^x$ on $\R$ does not have a global maximum nor minimum. According to the <b>extreme value theorem</b>, $f$ has global maximum and minimum whenever $\Omega$ is <b>compact</b> (closed and bounded) and $f$ continuous, since continuity preserves compactness and compact set in $\mathbb{R}$ contains its supremum.</p>
 
 
 <p>How can we find extrema then? The <b>first derivative test</b> states that if $f$ attains extremum at $a \in \text{Int}(\Omega)$, then $a$ is <b>critical point</b>, that is points where either the gradient is undefined or vanishes. Therefore, to find extrema, we may simply seek all the crtical points of $f$ in $\text{Int}(\Omega)$ and on the boundary $\partial \Omega$. For unbounded regions, a simple strategy is to simply first bound the region, then claim every point outside is obviously not going to be extrema with inequalities. </p>
 
-<p></p>
+<h3>Second Derivative Test</h3>
+
+<p>Can we determine the nature of the extrema base on higher-order derivative, just as the single-variable case? Of course yes - consider $\mathcal{C}^2$ function $f : \Omega \subset \R^n \rightarrow \R$, then the second-order approximation of $f$ near $a$ is $f(x) = f(a) + \nabla f(a) \cdot (x - a) + \frac{1}{2} (x - a)^T \cdot Hf(a) \cdot (x - a) $, where $Hf$ is symmetric.</p>
+
+<p>For symmetric matrices $A$, we call $A$ <b>positive definite</b> if $x^T A x \gt 0$ for all $x \in \R^n \setminus \{ 0 \}$, and <b>negative definite</b> if $x^T A x \lt 0$ for all $x \in \R^n \setminus \{ 0 \}$. It is called <b>semi-definite</b> if the inequality sign is non-strict. Finally, if $x^T A x \gt 0$ and $y^T A y \lt 0$ for some $x, y \in \R^n \setminus \{ 0 \}$, then $A$ is called <b>indefinite</b>. Clearly these five cases enumerates all the possibilities.</p>
+
+<p>Now, we have the tools to introduce the <b>second derivative test</b>: Whenever $f$ is $\mathcal{C}^2$ and $a \in \Omega$ is critical, $a$ is <b>local min</b> / <b>local max</b> / <b>saddle point</b> if $Hf(a)$ is positive definite, negative definite and indefinite respectively. Since $Hf(a)$ is symmetric in $\R$, there exists an orthonormal eigenbasis for $Hf(a)$ and we can write it as $P^T \cdot Hf(a) \cdot P = D$, $P$ orthogonal and $D$ diagonal. Therefore, the cases of (1) positive definite, (2) negative definite and (3) indefinite corresponds to (1) all eigenvalues are positive, (2) all eigenvalues are negative and (3) some are positive, some are negative, respectively.</p>
+
+<h3>Lagrange Multipliers</h3>
+
+<p>How can we <b>find extrema under contraints</b>? For example, if $f(x, y) = xy$ given that $g(x, y) = x + y = 16$, how can we show that $f(x, y) \le 64$ generally? We can for sure do that with the method of <b>Lagrange Multipliers</b>.</p>
+
+<p>Suppose $f, g$ are $\mathcal{C}^1$ functions on $\Omega \subset \R^n$ where the codomain of $g$ is $\R^k$ and $S = g^{-1}(c) = \{ x \in \Omega : g(x) = c \}$. Using the method of the <b>Lagrange Multipliers</b>, if $a$ is a local extremum of $f$ on $S$ and $Dg(a)$ is <b>full-rank</b> (which implies $S$ does not degenerate at $a$), then $\nabla f \perp T_S(a)$ where $T_S(a)$ denotes the <b>tangent space</b> of $S$ at $a$, since otherwise we can "move" on $S$ to make $f$ larger. Since $T_S(a)^{\perp} = \langle \nabla g_1, \cdots, \nabla g_k \rangle$, we have $\nabla f \in \langle \nabla g_1, \cdots, \nabla g_k \rangle$.</p>
+
+<h3>Implicit Function Theorem</h3>
+
+<p>Given $F : \Omega \subset \R^{n + k} \rightarrow \R^k$ where $\Omega$ open and $F$ is $\mathcal{C}^1$. If we consider $F$ as a function on $x \in \R^n$ and $y \in R^k$, and $F(a, b) = c$ for $(a, b) \in \Omega$, can we treat $y \in \R^k$ as a $\mathcal{C}^1$ function of $x \in \R^n$ locally near $(a, b)$?</p>
+
+<p>Let's first suppose we can do so. Then we can write $F$ as $F(x, \varphi(x))$, and so $D_x F(x, \varphi(x)) = D_x F + D_y F \cdot D \varphi = 0$. Thus, when $D_y F$ is invertible or $\det D_y F \ne 0$, then $D \varphi = -D_x F \cdot (D_y F)^{-1}$. Turns out that $D_y F$ is invertible is also sufficient for us to write $y = \varphi(x)$ as <b>implicit function</b> of $x$ locally near $(a, b)$! This is the <b>implicit function theorem</b>, which would be proven in later courses.</p>
+
+<h3>Inverse Function Theorem</h3>
+
+<p>Given $F: \Omega \subset \R^n \rightarrow \R^n$ where $\Omega$ open and $F$ is $\mathcal{C}^1$. The <b>inverse function theorem</b> states that if $DF$ is invertible at $a \in \R^n$, then its inverse $F^{-1}$ exists <b>locally</b> as well with $D(F^{-1}) = (DF)^{-1}$ at $a$. By <b>locally</b>, we means some open set containing $a$, so that the derivatives remain well-defined, but the open set can be arbitrarily "small".</p>
+

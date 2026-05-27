@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script>
+		window.MathJax = {
+			tex: {
+				inlineMath: {'[+]': [['$', '$']]},
+				processEscapes: true
+			},
+			output: {
+				scale: 1.00
+			},
+			options: {
+				menuOptions: {
+					settings: {
+						enrich: false
+					}
+				}
+			}
+		}
+	</script>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="/index.css">
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+	<meta content="width=device-width, initial-scale=1" name="viewport"/>
+</head>
+<body>
+	<span style="display: none">
+\(
+\)
+</span>
+
+<h1>MATH2050 Mathematical Analysis I</h1>
+
+<p>To formally understand what is real number and do analysis on them, we must axiomatically deduce everything we use in daily life without thinking. What are the underlying principles in the real numbers $\mathbb{R}$?</p>
+
+<h2>Order Structures</h2>
+
+<h3>Partially Ordered Set</h3>
+
+<p>To start with, we must clarify the notations used in (partial) ordering. As the wordings looks quite the same if you consult common sense, but not mathematically. Consider the poset $(X, \le)$ where $\le$ is <b>reflexive</b> ($x \le x$), <b>anti-symmetric</b> ($x \le y \land y \le x \implies x = y$) and <b>transitive</b> ($x \le y \land y \le z \implies x \le z$) on the <b>ground set</b> $X$. For an arbitrary subset $S \subset X$, what can we define?</p>
+
+<p>First of all, the <b>upper bound</b> of $S$ is intuitively defined as $\{ x \in X: y \le x \text{ for all } y \in S \}$. Note that the upper bound of $S$ is not required to be in $S$; for example, we say $2$ is an upper bound $[1, 2)$ although $2 \not\in [1, 2)$. A set is said to be <b>bounded above</b> if the set of upper bound is non-empty. The <b>maximum</b> of $S$ is defined more strictly as $\{ x \in S: y \le x \text{ for all } y \in S \}$, which is required to be in $S$ itself. In that sense, $\max \ [1, 2)$ does not exist. Note that if maximum of $S$ exists, it must also be unique, since if $M_1$ and $M_2$ are both maximum of $S$ then $M_1 \le M_2$ and $M_2 \le M_1$, then by anti-symmetric of partial order we have $M_1 = M_2$. We say the <b>supremum</b> of $S$ as the <b>lowest upper bound</b> of $S$, that is, the minimum of the set of upper bounds for $S$. Since $\sup S$ is the minimum of some set, it is unique if exists as well. For example, $\sup \ [1, 2) = 2$. Finally, we define the <b>maximal elements</b> of $S$ as $\{ x \in S : x \le y \text{ for no } y \in S \}$.</p>
+
+<p>Obviously, we can define <b>lower bound</b>, <b>bounded below</b>, <b>minimum</b>, <b>infinum</b> and <b>minimal elements</b> in a similar manner as upper bound, bounded above, maximum, supremum and maximal elements respectively. Although these namings look strikely similar, they carry different meanings, which one shall be aware of.</p>
+
+<h3>Order Structure of $\mathbb{R}$</h3>
+
+<p>We all know that $\mathbb{R}$ is with <b>total order</b>, partial order where every two elements are comparable. What so special about the order structure of $\mathbb{R}$? Turns out it is related to supremum (infinum). By writing $L = \sup S$, we means (1) $L \ge x$ for all $x \in S$, and (2) if $L' \ge x$ for all $x \in S$, then $L' \ge L$. Similarly, by writing $\ell = \inf S$, we mean (1) $\ell \le x$ for all $x \in S$ and (2) if $\ell' \le x$ for all $x \in S$, then $\ell' \le \ell$. Clearly by defining $-S = \{ -x \in \mathbb{R} : x \in S \}$, we have $\inf (-S) = - \sup S$. </p>
+
+<p>In $\mathbb{R}$, there is another equivalent <b>$\varepsilon$-characterisation for supremum</b> (and infinum): $L = \sup S$ if (1) $L \ge x$ for all $x \in S$ and (2) for all $\varepsilon \gt 0$, there exists $x \in S$ where $x \gt L - \varepsilon$. The version for infinum is just direct translation. One may wonder why these two definitions are equivalent? A way of thinking is like this: the first definition says $L$ is the minimum of the set of upper bounds (smaller than any other upper bound), while the second definition says $L$ is a minimal element of the set of upper bounds (no smaller element can be upper bound). Since $\mathbb{R}$ has total order, minimal element is equivalent to a minimum!</p>
+
+<p>For the set of real numbers $\mathbb{R}$, we have the <b>axiom of completeness</b>: Every bounded-above non-empty subset of $\mathbb{R}$ always has a supremum. This is non as a trivial statement as it looks, since supremum is defined as the minimum of the upper bounds, which the minimum of an arbitrary set (for example $(1, 2]$) does not necessarily exists! However, interestingly, if the non-empty set is specified as a upper bound, then somehow we think the minimum always exists. From the word choice of axiom, we will actually take this for granted - and everything else will be proven based on the axiom of completeness.</p>
+
+<p>Noting the useful lemma that $e \le f \iff \forall \varepsilon \gt 0, \ e \lt f + \varepsilon$ and with the $\varepsilon$-characterisation of supremum, one may prove simple equalities like $\sup (A + B) = \sup A + \sup B$ whenever $\sup A$ and $\sup B$ exists. One may also prove the <b>Achimede's Property</b> (AP) that for all $x \in \mathbb{R}$, there exists $n \in \mathbb{N}$ such that $x \lt n$; Suppose otherwise, then $\mathbb{N}$ is upper bounded and so $\sup \mathbb{N}$ exists in $\mathbb{R}$ by axiom of completeness. Thus, there exists $m \in \mathbb{N}$ where $m \gt \sup \mathbb{N} - 1$ and $m + 1 \gt \sup \mathbb{N}$, contradiction. As a corollary, we have $\inf \{ n^{-1} : n \in \mathbb{Z}^+ \} = 0$.</p>
+
+<p>Finally, we discuss briefly the notion of <b>density</b>. A set $S \subset \mathbb{R}$ is <b>dense</b> if and only if for all set $a \lt b \in \mathbb{R}$, we have $(a, b) \cap S \ne \varnothing$. One may show that the set of rational numbers $\mathbb{Q}$ is dense in $\mathbb{R}$: By picking $\varepsilon = \frac{1}{n} \lt b - a$ by AP and also get $na \lt m$ where $m \in \mathbb{N}$ minimal by AP, we have $a \lt \frac{m}{n} \lt b$. Similarly, $\mathbb{R} \setminus \mathbb{Q} = \mathbb{Q}^c$ is also dense in $\mathbb{R}$ by simply considering $\mathbb{Q} \sqrt{2}$, which the existence of $\sqrt{2}$ is once again guaranteed by the axiom of completeness as $\inf \{ x \gt 0 : x^2 \le 2 \}$.</p>
+
+<h2>Sequences</h2>
+
+<p>A <b>sequence</b> on real numbers, denoted as $(x_n)$, can be considered as a function $x: \mathbb{Z}^+ \rightarrow \mathbb{R}$. As it turns out, sequences are quite useful in terms of real analysis.</p>
+
+<h3>Convergence</h3>
+
+<p>We say a sequence $(x_n)$ <b>convergent</b> iff $$ \forall \varepsilon \gt 0 \quad \exists N \in \mathbb{N} \quad \forall n \ge N \quad |x_n - L| \lt \varepsilon $$ Where $L = \lim x_n$ is called the <b>limit</b> of the sequence $(x_n)$. Alternatively we can also write $(x_n) \rightarrow L$. Intuitively speaking, it means that for every $\varepsilon \gt 0$, there exists a <b>tail</b> of the sequence such that the "fluctuation" is smaller than $\varepsilon$. If a sequence is not convergent, we say it is <b>divergent</b>. </p>
+
+<p>Clearly convergence implies <b>boundedness</b>, and if $\lim x_n = a$ and $\lim y_n = b$, then $\lim (x_n + y_n) = a + b$, $\lim (x_n y_n) = ab$ and $\lim \left(\frac{x_n}{y_n} \right) = \frac{a}{b}$ whenever division is well defined. We may also prove the <b>comparison theorem</b> that if $x_n \le y_n$ for all $n \in \mathbb{N}$, $(x_n) \rightarrow L_x$ and $(y_n) \rightarrow L_y$, then $L_x \le L_y$. Similarly, we have the <b>squeeze theorem</b>: for $x_n \le z_n \le y_n$ for all $n \in \mathbb{N}$ and $(x_n), (y_n) \rightarrow L$, then $(z_n) \rightarrow L$ as well. All the above can be proven base on the $\varepsilon$-characterisation.</p>
+
+<p>Interestingly, $L = \sup S$ iff $L$ is upper bound of $S$ and there exists a sequence $(x_n) \subset S$ where $(x_n) \rightarrow L$! One may note that both sides are just reformulations of the $\varepsilon$-characterisation for supremum with say $\varepsilon_n = \frac{1}{n}$. Finally, let's introduce two useful theorems.</p>
+
+<p>We say a sequence $(x_n)$ is <b>increasing</b> if $x_n \le x_{n + 1}$ for all $n$, and <b>strictly increasing</b> if the inequality is strict. We similarly define <b>decreasing</b> and <b>strictly decreasing</b>, and finally, a sequence is called <b>monotone</b> if it is either increasing or decreasing. With these definitions in mind, we can introduce the <b>monotone convergence theorem</b> - If a sequence $(x_n)$ is <b>monotone and bounded</b>, then it is also <b>convergent</b>, which the limit is exactly the supremum (for increasing sequence) or infinum (for decreasing sequence). This is also implicitly implied by the axiom of completeness.</p>
+
+<p>Finally, we have the <b>nested interval theorem</b>. For a sequence of nested intervals $$ I_1 \supseteq I_2 \supseteq \cdots \supseteq I_n \supseteq \cdots $$ Where $I_n = [a_n, b_n]$ are <b>closed intervals</b>, then the intersection $\bigcap \{ I_n \} \ne \varnothing$. Why? Note that $(a_n)$ and $(b_n)$ are monotone and bounded so they are convergent, while by comparison theorem we have $\lim a_n \le \lim b_n$. Hence, any $c \in \mathbb{R}$ where $\lim a_n \le c \le \lim b_n$ we have $c \in \bigcap \{ I_n \}$. Clearly for the special case where $\lim a_n = \lim b_n$, we have $\bigcap \{ I_n \} = \{ c \}$.</p>
+
+<h3>Subsequence</h3>
+
+<p>Formally speaking, a <b>subsequence</b> $(x_{n_k})$ is derived from the sequence $(x_k)$ where $n_k : \mathbb{Z^+} \rightarrow \mathbb{Z^+}$ is an <b>increasing</b> sequence. Turns out, the convergence of subsequences are interesting as well.</p>
+
+<p>Trivially, if $(x_n)$ converges to the limit $L$, then every subsequence $(x_{n_k})$ converges to the same limit $L$ as well. What if $(x_n)$ does not converges? In fact, we can always find a <b>convergent subsequence</b> as long as $(x_n)$ is bounded by the <b>Bolzano-Weierstrass Theorem</b>! Assume $X = \{ x_n : n \in \mathbb{N} \}$ is infinite since otherwise we are done. Then, let $S := \{ x \in \mathbb{R} : (x, \infty) \cap X \text{ is infinite} \}$. Since $X$ is bounded, $S$ is bounded and $\sup S$ is well-defined. Thus, $(\sup S - \varepsilon, \sup S + \varepsilon)$ always contain infinite elements of $\{ x_n \}$, and so we can find a subsequence of $(x_n)$ that converges to $\sup S$. Alternatively, Bolzano-Weierstrass can also be proven by nested interval theorem by essentially binary search on the set with infinite number of elements.</p>
+
+<p>The first proof of B-W inspires us for defining the limit supremum / infinum for (bounded) sequences, $\lim \sup x_n = \overline{\lim} x_n = \lim \sup \{ x_k : k \ge n \}$, and $\lim \inf x_n = \underline{\lim} x_n = \lim \inf \{ x_k : k \ge n \}$. Both of them always exists, since say for $\overline{\lim} x_n$, $\sup \{ x_k : k \ge n\}$ is always bounded and decreasing, and so it is convergent! Clearly we have $(x_n)$ convergent iff $\overline{\lim} x_n = \underline{\lim} x_n$, and we have the simple relations $\overline{\lim}(-x_n) = -\underline{\lim}(x_n)$, $\overline{\lim}(ax_n) = a(\overline{\lim}x_n)$ for $a \ge 0$ and $\underline{\lim} x_n + \underline{\lim} y_n \le \underline{\lim} (x_n + y_n) \le \overline{\lim} (x_n + y_n)$, all which can be proven from definitions.</p>
+
+<h3>Sequentially Compact Set</h3>
+
+<p>Another important definition to be gone through is the notion of <b>compactness</b>. For a set $A \subset \mathbb{R}$, it is called <b>sequentially compact</b> if for all $(x_n) \subset R$, there exists a <b>convergent subsequence</b> $(x_{n_k})$ such that $\lim x_{n_k} \in A$. Note that Bolzano-Weierstrass implies that any closed and bounded intervals are sequentially compact. In $\mathbb{R}$, how can we characterise all the sets that are sequentially compact?</p>
+
+<p>Let's delve slightly into topology. Let $A \subset \mathbb{R}$. Then $\ell \in \mathbb{R}$ is a <b>limit point</b> or <b>cluster point</b> of $A$ iff $$ \forall \varepsilon \gt 0 \quad \exists a \in A \quad 0 \lt |\ell - a| \lt \varepsilon $$ Where the set of all cluster points is denoted as $D(A)$. We say the set $A$ is <b>closed</b> whenever $D(A) \subseteq A$, and $\overline{A} = A \cup D(A)$ the <b>closure</b> of $A$. Of course we can define $D_\ell(A)$ and $D_r(A)$ be the cluster points when approaches from left and right respectively. For instances, $D((0, 1)) = [0, 1]$, $D_\ell((0, 1)) = (0, 1]$ and $D_r((0, 1)) = [0, 1)$.</p>
+
+<p>Let us look at some properties for closed sets. We see $\overline{A}$ is closed, since for $(x_n) \subset \overline{A}$ convergent, we can find $(y_n) \subset A$ with the same limit where $|x_n - y_n| \lt \frac{1}{n}$, while $A \subset \mathbb{R}$ is closed iff $\overline{A} = A \cup D(A) = A$. We also have the equivalent conditions $$ \begin{align*} & z \in \overline{A} \\ \iff & \forall \varepsilon \gt 0 \quad \exists a \in A \quad |z - a| \lt \varepsilon \\ \iff & \exists (x_n) \subset A \quad (x_n) \rightarrow z \end{align*} $$ While if $A \subseteq B$ where $B$ is closed, then $\overline{A} \subseteq B$. Really finally, $\overline{A} = \mathbb{R}$ if and only if $A$ is dense in $\mathbb{R}$. All these can be deduced from the definitions.</p>
+
+<p>Back to the original topic. In fact, a set $A$ is <b>sequentially compact</b> iff $A$ is <b>closed and bounded</b>. First assume $A$ is sequentially compact. If $A$ is unbounded, then we can simply find a sequence $(x_n)$ such that $\Vert x_n - x_1 \Vert \rightarrow \infty$ and so any subsequence of $(x_n)$ diverges, while sequentially compact obviously implies closeness. On the other hand, assuming $A$ is closed and bounded, we may first find a convergent subsequence $(x_{n_k})$ by Bolzano-Weierstrass, and since $A$ is closed, we have the limit of $x_{n_k}$ in $A$.</p>
+
+<h3>Compact Set</h3>
+
+<p>Actually, there is another equivalent criteria for <b>compactness</b>, albeit in completely different form. We say a set $U$ is <b>open</b> whenever for each $x \in U$, there exists some $r \gt 0$ where $(c - r, c + r) \subseteq U$. Note that open-ness remains holds for <b>arbitrary union</b> and <b>finite intersection</b> of open sets. Interestingly, $A$ is closed iff its complement $A^c$ is open. Intuitively speaking, both means that elements of $A^c$ cannot be approached arbitrarily close by sequences in $A$. We say a collection of open sets $\{ J_\alpha : \alpha \in \Lambda \}$ where as an <b>open cover</b> of $A$ if $A \subseteq \bigcup_{\alpha \in \Lambda} J_\alpha$.</p>
+
+<p>In fact, <b>Heine-Borel Theorem</b> stats that any <b>open cover</b> of a <b>closed bounded interval</b> admits a <b>finite subcover</b>. The proof is essentially by binary search on the intervals that does not have a finite subcover, but ultimately we have $\bigcap I_n = \{ c \}$ without a finite subcover, which is absurd. Inspired by this, we say a set $A \subset \mathbb{R}$ is <b>compact</b> iff for any open cover we can find a finite subcover.</p>
+
+<p>Turns out in $\mathbb{R}$, (1) compactness (finite subcover), (2) sequential compactness (convergent subsequence), (3) closed and bounded are equivalent conditions! We have previously see (2) and (3) are equivalent. To show (1) implies (3), assume $A$ is compact. Note that compactness implies bounded by consider any finite subcover, and if $(x_n) \rightarrow L \not\in A$, then for every $a \in A$ there exists $\delta_a \gt 0$ where $L \not\in J_a = (a - \delta_a, a + \delta_a)$. By compactness, $\bigcup \{ J_a \}$ admits a finite subcover, so $L$ must not be a cluster point, contradiction. Finally, to show (3) implies (1), assume $A$ is closed and bounded, and there is an open cover $\bigcup\{ J_\alpha \}$ of $A$. Note $A \subset [a, b]$ for some closed interval since $A$ is bounded, and for any $a \not\in A$ there exists $\delta_a \gt 0$ where $(a - \delta_a, a + \delta_a) \subset A^c$ since $A^c$ is open. Thus the open cover $\bigcup\{ J_\alpha \} \cup \bigcup \{ (a - \delta_a, a + \delta_a) \}$ admits a finite cover of $[a, b]$ and henceforth of $A$.</p>
+
+<p>Note that compactness and sequential compactness is equivalent in $\mathbb{R}$ (or more generally metric space) but not for general topological space.</p>
+
+<h3>Cauchy Sequence</h3>
+
+<p></p>
+

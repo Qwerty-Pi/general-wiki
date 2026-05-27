@@ -58,7 +58,7 @@ layout: default
 
 <h3>Sequentially Compact Set</h3>
 
-<p>Another important definition to be gone through is the notion of <b>compactness</b>. For a set $A \subset \mathbb{R}$, it is called <b>sequentially compact</b> if for all $(x_n) \subset R$, there exists a <b>convergent subsequence</b> $(x_{n_k})$ such that $\lim x_{n_k} \in A$. Note that Bolzano-Weierstrass implies that any closed and bounded intervals are sequentially compact. In $\mathbb{R}$, how can we characterise all the sets that are sequentially compact?</p>
+<p>Another important definition to be gone through is the notion of <b>compactness</b>. For a set $A \subset \mathbb{R}$, it is called <b>sequentially compact</b> if for all $(x_n) \subset A$, there exists a <b>convergent subsequence</b> $(x_{n_k})$ such that $\lim x_{n_k} \in A$. Note that Bolzano-Weierstrass implies that any closed and bounded intervals are sequentially compact. In $\mathbb{R}$, how can we characterise all the sets that are sequentially compact?</p>
 
 <p>Let's delve slightly into topology. Let $A \subset \mathbb{R}$. Then $\ell \in \mathbb{R}$ is a <b>limit point</b> or <b>cluster point</b> of $A$ iff $$ \forall \varepsilon \gt 0 \quad \exists a \in A \quad 0 \lt |\ell - a| \lt \varepsilon $$ Where the set of all cluster points is denoted as $D(A)$. We say the set $A$ is <b>closed</b> whenever $D(A) \subseteq A$, and $\overline{A} = A \cup D(A)$ the <b>closure</b> of $A$. Of course we can define $D_\ell(A)$ and $D_r(A)$ be the cluster points when approaches from left and right respectively. For instances, $D((0, 1)) = [0, 1]$, $D_\ell((0, 1)) = (0, 1]$ and $D_r((0, 1)) = [0, 1)$.</p>
 
@@ -72,10 +72,68 @@ layout: default
 
 <p>In fact, <b>Heine-Borel Theorem</b> stats that any <b>open cover</b> of a <b>closed bounded interval</b> admits a <b>finite subcover</b>. The proof is essentially by binary search on the intervals that does not have a finite subcover, but ultimately we have $\bigcap I_n = \{ c \}$ without a finite subcover, which is absurd. Inspired by this, we say a set $A \subset \mathbb{R}$ is <b>compact</b> iff for any open cover we can find a finite subcover.</p>
 
-<p>Turns out in $\mathbb{R}$, (1) compactness (finite subcover), (2) sequential compactness (convergent subsequence), (3) closed and bounded are equivalent conditions! We have previously see (2) and (3) are equivalent. To show (1) implies (3), assume $A$ is compact. Note that compactness implies bounded by consider any finite subcover, and if $(x_n) \rightarrow L \not\in A$, then for every $a \in A$ there exists $\delta_a \gt 0$ where $L \not\in J_a = (a - \delta_a, a + \delta_a)$. By compactness, $\bigcup \{ J_a \}$ admits a finite subcover, so $L$ must not be a cluster point, contradiction. Finally, to show (3) implies (1), assume $A$ is closed and bounded, and there is an open cover $\bigcup\{ J_\alpha \}$ of $A$. Note $A \subset [a, b]$ for some closed interval since $A$ is bounded, and for any $a \not\in A$ there exists $\delta_a \gt 0$ where $(a - \delta_a, a + \delta_a) \subset A^c$ since $A^c$ is open. Thus the open cover $\bigcup\{ J_\alpha \} \cup \bigcup \{ (a - \delta_a, a + \delta_a) \}$ admits a finite cover of $[a, b]$ and henceforth of $A$.</p>
+<p>Turns out in $\mathbb{R}$, (1) compactness (finite subcover), (2) sequential compactness (convergent subsequence), (3) closed and bounded are equivalent conditions! We have previously see (2) and (3) are equivalent. To show (1) implies (3), assume $A$ is compact. Note that compactness implies bounded by consider any finite subcover, and if $(x_n) \rightarrow L \not\in A$, then for every $a \in A$ there exists $\delta_a \gt 0$ where $L \not\in J_a = (a - \delta_a, a + \delta_a)$. By compactness, $\bigcup \{ J_a \}$ admits a finite subcover, so $L$ must not be a cluster point, contradiction. Finally, to show (3) implies (1), assume $A$ is closed and bounded, and there is an open cover $\bigcup\{ J_\alpha \}$ of $A$. Note $A \subset [a, b]$ for some closed interval since $A$ is bounded, and for any $a \not\in A$ there exists $\delta_a \gt 0$ where $(a - \delta_a, a + \delta_a) \subset A^c$ since $A^c$ is open. Thus the open cover $\bigcup\{ J_\alpha \} \cup \bigcup \{ (a - \delta_a, a + \delta_a) \}$ admits a finite subcover of $[a, b]$ and henceforth of $A$.</p>
 
 <p>Note that compactness and sequential compactness is equivalent in $\mathbb{R}$ (or more generally metric space) but not for general topological space.</p>
 
 <h3>Cauchy Sequence</h3>
 
-<p></p>
+<p>Next, we will introduce another criterion for determining convergence of a sequence. A sequence $(x_n)$ is called <b>Cauchy</b> iff $$ \forall \varepsilon \gt 0 \quad \exists N \in \mathbb{N} \quad \forall m, n \ge N \quad |x_m - x_n| \lt \varepsilon$$ It does look quite similar to the definition of the convergence, but here the limit $L$ is not involved. In fact, a sequence is Cauchy iff it is convergent - Clearly convergence imply Cauchy. Since Cauchy implies bounded, by Bolzano-Weierstrass there exists a subsequence $(x_{n_k}) \rightarrow L$. Thus, $(x_n) \rightarrow L$ as well as $(x_n)$ is Cauchy.</p>
+
+<p>For obvious sake, we can extend all the above definitions from $\mathbb{R}$ to $\mathbb{R}^m$ trivially.</p>
+
+
+<h2>Functions</h2>
+
+<p>Our next focus is on functions. Consider a function $f: A \subset \mathbb{R} \rightarrow \mathbb{R}$, what analytic properties can we deduce for $f$?</p>
+
+<h3>Function Limit</h3>
+
+<p>We first define the limit of the function. For $c \in D(A)$ a cluster point of $A$, we write $$ \lim_{x \rightarrow c} f(x) = L $$ Which means when $x$ approaches $c$, the value $f(x)$ approaches $L$. Formally using the $\varepsilon$-$\delta$ formulation, it means $$ \forall \varepsilon \gt 0 \quad \exists \delta \gt 0 \quad \forall y \in A \quad 0 \lt |y - c| \lt \delta \implies |f(y) - L| \lt \varepsilon $$ Equivalently, we have the <b>sequential criteria</b>: $$ \forall (x_n) \subset A \setminus \{ c \} \quad (x_n) \rightarrow c \implies (f(x_n)) \text{ converges } $$ It is more obvious that $\varepsilon$-$\delta$ implies sequential criteria; For the opposite direction, note that all limits are same since we can "merge" sequences $(x_n), (y_n) \rightarrow c$ into one by $(x_1, y_1, x_2, y_2, \dots)$. If the $\varepsilon$-$\delta$ criteria does not hold, then there exists a $\varepsilon \gt 0$ where $(x_n) \rightarrow c$ but $|f(y) - L| \ge \varepsilon$, which is absurd.</p>
+
+<p>Similar to the case for sequence limit, we may compute the limit for $f \pm g$, $f \cdot g$ and $f / g$ (where $0 \not\in g(A)$ and limit not $0$) intuitively, and the proof is also directly implied by the sequential criteria.</p>
+
+<p>We may define some extension to the above definitions for function limits. For example, by $\lim_{x \rightarrow c} f(x) \rightarrow \infty$ we actually means $$ \forall M \gt 0 \quad \exists \delta \gt 0 \quad 0 \lt |y - c| \lt \delta \implies f(x) \gt M $$ Or by $\lim_{x \rightarrow \infty} f(x) \rightarrow L$ we means $$ \forall \varepsilon \gt 0 \quad \exists R \quad \forall x \gt R \quad  |f(x) - L| \lt \varepsilon$$</p>
+
+<h3>Continuity</h3>
+
+<p>Next, continuity. What does it mean by $f$ is continuous at $c \in A$? That means $$ \forall \varepsilon \gt 0 \quad \exists \delta \gt 0 \quad \forall x \in A \quad |x - c| \lt \delta \implies |f(x) - f(c)| \lt \varepsilon$$ Note that for non limit point $x$, the condition vacuously holds. The reason why we only consider $c \in A$ is due to, well, we need $f(c)$ to be well-defined. In fact, continuity is related to open sets. The condition that $f$ is continuous on $A$ is equivalent to that for all open $V \subset \mathbb{R}$, then $f^{-1}(V)$ is also open. Also, for $c \in D(A) \cap A$ and $f$ continuous at $c$, we have $\lim_{x \rightarrow c} f(x) = f(c)$. Sequential criteria holds similarly; whereas for $f, g$ continuous, we have $f \pm g$, $f \cdot g$, $f/g$, $f \circ g$ continuous as well whenever compatible.</p>
+
+<p>Here comes an important theorem - the <b>Extreme Value Theorem</b>, which states that a <b>continuous</b> function $f$ defined on a <b>compact</b> set $A$ are <b>bounded</b> and have <b>extreme</b> values. The EVT can be proven via either definitions for compactness - (1) for all sequence in $A$, there exists a subsequence with limit in $A$; (2) every open cover of $A$ admits a finite subcover.</p>
+
+<p>First, with the sequential definition. Suppose $f$ is unbounded, then we can find $(x_n) \subset A$ where $(x_n) \rightarrow \infty$ or $-\infty$, which no convergent subsequence can be found, so $f$ must be bounded. so $L = \sup_{x \in A} \{ f(x) \}$ is well defined, and there exists $(x_n)$ such that $(f(x_n)) \rightarrow L$. We invoke the definition of sequential compactness again and we have $(x_{n_k}) \rightarrow a \in A$. Since $f$ is continuous, we have $f(a) = L$ and we are done.</p>
+
+<p>With the open cover definition we can prove similarly. First consider the open cover $A \subset \left\{ (x - \delta_x, x + \delta_x) \right\}$ where $|y - x| \lt \delta_x \implies |f(y) - f(x)| \lt \varepsilon$ for some fixed $\varepsilon \gt 0$. By the finite subcover we obviously have $f$ bounded. Once again we invoke the axiom of completeness and have $L = \sup_{x \in A} \{ f(x) \}$. If no $a \in A$ makes $f(a) = L$, then we can once again consider the open cover $\{ (x - \delta_x, x + \delta_x) \}$ where this time $|y - x| \lt \delta_x \implies |f(y) - f(x)| \lt |L - f(x)|$. Pass to the finite subcover, trivial to see $L$ cannot be the supremum.</p>
+
+<p>Turns out compactness is preserved by continuous functions as well! Here, we just use the open cover way to prove it. Intuitively, for any open cover of $f(A)$, we can pull it back to be a open cover of $A$, which has a finite subcover; and so mapping them back we have a finite subcover. We say two subsets are <b>homeomorphic</b> if there exists a bijection $f: A \rightarrow B$ where both $f$ and $f^{-1}$ are continuous. We also have that for continuous bijection $f: A \rightarrow B$ and $A$ compact, then $f$ is homeomorphism as well, which can be proven from definition.</p>
+
+<p>Finally, we have the <b>Intermediate Value Theorem</b> - Given continuous $f: [a, b] \rightarrow \mathbb{R}$ and $f(a) \lt L \lt f(b)$, then there exists $c \in (a, b)$ where $f(c) = L$. One may simply use binary search and nested interval theorem to show $f(c) = \lim f(a_n) = \lim f(b_n)$ and so $f(c) = L$. A corollary to IVT is that continuous functions map intervals to intervals.</p>
+
+<h3>Uniform Continuity</h3>
+
+<p><b>Uniform continuity</b> is a stronger condition to continuity - defined as $$ \forall \varepsilon \gt 0 \quad \exists \delta \gt 0 \quad \forall x, y \in A \quad |x - y| \lt \delta \implies |f(x) - f(y)| \lt \varepsilon$$ Which now the $\delta$ is picked for the whole function instead of point-wise. Turns out continuous functions defined on compact set are always uniformly continuous!</p>
+
+<p>With the open cover definition this is trivial, whereas for the sequential compactness, suppose $f$ is not uniformly continuous. Then there exists some $\varepsilon \gt 0$ where for all $\delta \gt 0$, there exists some $x, y \in A$ where $|x - y| \lt \delta$ and $|f(x) - f(y)| \ge \varepsilon$. Select subsequence by sequential compactness twice, we have both $(x_n)$ and $(y_n)$ converges but $|f(x_n) - f(y_n)| \ge \varepsilon$, contradiction.</p>
+
+<p>With the aid of uniform continuity, we can prove something like the <b>Weierstrass approximation theorem</b>: for every continuous function $f: [0, 1] \rightarrow \mathbb{R}$, we can approximate $f$ with a polynomial $p$ where $\Vert f - p \Vert_{\infty} \lt \varepsilon$ for any $\varepsilon$, using a linear combination of <b>Bernstein polynomials</b> $B_n(x) = \sum a_k \binom{n}{k} x^k (1 - x)^{n - k}$. We can approximate continuous functions on compact set with <b>piecewise-linear functions</b> as well - directly implied by $f$ being uniform continuous.</p>
+
+<p>Now, for a continuous function $f : (a, b) \rightarrow \mathbb{R}$, when can we extend the definition to $[a, b]$? Turns out the following definitions are equivalent: (1) existence of continuous $F: [a, b] \rightarrow \mathbb{R}$ where $F(x) = f(x)$ for all $x \in (a, b)$; (2) $f$ uniformly continuous on $(a, b)$; and (3) $\lim_{x \rightarrow a^+} f(x)$ and $\lim_{x \rightarrow b^-} f(x)$ both exists. All the implications are straight from definitions as you can see.</p>
+
+<h3>Lipschitz Continuity</h3>
+
+<p>A function $f: A \rightarrow \mathbb{R}$ is called <b>Lipschitz</b> if $$ \exists C \gt 0 \quad \forall x, y \in A \quad |f(x) - f(y)| \le C|x - y| $$ Clearly Lipschitz is even stronger than uniform continuity. When $0 \lt C \lt 1$, the function $f$ is called a <b>contraction</b>.</p>
+
+<p>For any closed subset $A$ and contraction $f: A \rightarrow A$, we can in fact show the fixed point $f(a) = a$ is unique. How? Simply note that $\{ f^n(a) \}$ is Cauchy and sequence generated by different $a$ must converges to the same limit. This holds more generally in <b>metric spaces</b>.</p>
+
+<h3>Monotonous Functions</h3>
+
+<p>Without loss of generality, we assume $f$ is an increasing function defined on $A \subset \mathbb{R}$. Define $L(c) = \inf_{x \gt c} f(x)$ and $\ell(c) = \sup_{x \lt c} f(x)$, then if $c$ is right limit we have $L(c) = \lim_{x \rightarrow c^+} f(x)$; and if $c$ is left limit we have $\ell(c) = \lim_{x \rightarrow c^-} f(x)$. Note that the set of discontinuity is actually countable, by investigating with standard techniques.</p>
+
+<h3>Limit Supremum and Infinum</h3>
+<p>We can also define $$\overline{\lim}_{x \rightarrow c} f(x) = \lim_{\delta \rightarrow 0^+} \left( \sup_{0 \lt |x - c| \lt \delta} f(x) \right)$$ And $$\underline{\lim}_{x \rightarrow c} f(x) = \lim_{\delta \rightarrow 0^+} \left( \inf_{0 \lt |x - c| \lt \delta} f(x) \right)$$ For $f$ <b>locally bounded</b> at $c$. Similar to the sequence case, we have $\overline{\lim}_{x \rightarrow c} f(x) = \underline{\lim}_{x \rightarrow c} f(x)$ iff $\lim_{x \rightarrow c} f(x)$ exists.</p>
+
+<h3>Bounded Variation</h3>
+
+<p>Finally we define the <b>total variation</b> of a function $f: [a, b] \rightarrow \mathbb{R}$ as $$ \Vert f \Vert_{BV} = \sup \left\{ \sum | f(x_k) - f(x_{k - 1}) | : a = x_0 \lt \cdots \lt x_n = b \right\} \lt \infty$$ Where $f$ is said to be of bounded variations. We can write $BV[a, b]$ as the set of all functions of bounded variations.</p>
+
+<p>Clearly $BV[a, b]$ is a vector space, bounded variation implies bounded while monotone / Lipschitz implies bounded variation. In fact, a function is of bounded variation iff it can be written as the difference of two increasing functions, which can be proven via potential functions.</p>

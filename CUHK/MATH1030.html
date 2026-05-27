@@ -8,31 +8,45 @@ layout: default
 
 <h1>MATH1030 Linear Algebra</h1>
 
-<p>The first step in linear algebra revolves around solving <b>simulatenous linear equations</b>. For example, given the system $$\begin{cases} 2x_1 + 3x_2 = 3 \\ x_1 - x_2 = 4 \end{cases}$$ Naturally you would try to solve it by <b>substitution</b> to try out the solutions, or use <b>elimination</b> to simpify the equations. An alternative way of writing simultaneous linear equations is write them in <b>vector form</b>: $$ x_1 \begin{bmatrix} 2 \\ 1 \end{bmatrix} + x_2 \begin{bmatrix} 3 \\ -1 \end{bmatrix} = \begin{bmatrix} 3 \\ 4 \end{bmatrix} $$ You can easily solve and get $(x_1, x_2) = (3, -1)$ - but can we have a more systematic way in solving systems of linear equations? (Note that throughout this we only care about fields - where every non-zero elements has inverse.)</p>
+<p>The foundation of linear algebra revolves around the urge to solve <b>simulatenous linear equations</b>. For example, given the system of linear equations $$\begin{cases} 2x_1 + 3x_2 = 3 \\ x_1 - x_2 = 4 \end{cases}$$ Naturally you would try to solve it by <b>substituting</b> values to $(x_1, x_2)$, or use <b>elimination</b> to cancel out terms in the equations. Alternatively, you can write the system in <b>vector form</b>: $$ x_1 \begin{bmatrix} 2 \\ 1 \end{bmatrix} + x_2 \begin{bmatrix} 3 \\ -1 \end{bmatrix} = \begin{bmatrix} 3 \\ 4 \end{bmatrix} $$ Essentially "grouping" the values and treat them as an object (vector). In the above example, you can easily solve and get $(x_1, x_2) = (3, -1)$ - but can we have a more systematic way in solving systems of linear equations?</p>
+
+<p>Note that throughout this notes, we assume everything is done on fields, say $\mathbb{R}$ (real numbers), $\mathbb{C}$ (complex numbers) or $\mathbb{F}_p$ (finite field of size $p$), where every non-zero elements has inverse.</p>
+
+<p>Intuitively speaking, a <b>scalar</b> refers to a value in the field, a <b>vector</b> refers to a list of values and a <b>matrix</b> refers to a 2d table of values. Essentially, we group values together as a bigger mathematical object, so that we can express stuff more elegantly.</p>
 
 <h2>System of Linear Equations</h2>
 
-<p>Formally, a <b>system of linear equations</b> is a set of linear equations of the form $\sum a_{ij} x_j = b_i$ where $\{ x_j \}$ is the set of <b>variables</b>, for example, $$ \begin{cases} a_{11} x_1 + a_{12} x_2 = b_1 \\ a_{21} x_1 + a_{22} x_2 = b_2 \end{cases} $$ The <b>solution set</b> is simply the set of all $x$ such that all the equations holds, where we say two systems are <b>equivalent</b> if their solution set are the same.</p>
+<p>A <b>system of linear equations</b> is a set of linear equations of the form $\sum a_{ij} x_j = b_i$ where $\{ x_j \}$ is the set of <b>variables</b>. For example, $$ \begin{cases} a_{11} x_1 + a_{12} x_2 = b_1 \\ a_{21} x_1 + a_{22} x_2 = b_2 \end{cases} $$ The <b>solution set</b> is the set of all $x$ such that all the equations holds. Two systems are said to be <b>equivalent</b> if and only if their solution set are the same.</p>
 
-<h3>Operations on Equations</h3>
+<h3>Equation Operations</h3>
 
-<p>Our quest is simple: We want to repeatedly simplify the equations, without changing the solution set. What is the set of operations we allow ourselves to do? (1) swap two equations ($R_i \longleftrightarrow R_j$); (2) multiply any equations by a <b>non-zero</b> scalar ($\alpha R_i$); (3) multiply an equation by scalar and add to other equation ($\alpha R_i + R_j$). It is pretty easy to see that all the above does not changes the solution set, therefore we can do $R_i \longleftrightarrow R_j$, $\alpha R_i$ and $\alpha R_i + R_j$ arbitrarily on the equations. </p>
+<p>Our quest is simple: We want to repeatedly modify the system of equations, without changing the solution set, while terms get eliminated. What is the <b>elementary operations</b> we allow ourselves to do, so that the resulting system stays <b>equivalent</b>?</p>
 
-<h3>Representation of Linear Systems</h3>
+<ol>
+	<li>Swap two equations, denotes as $R_i \longleftrightarrow R_j$.</li>
+	<li>Multiply any equation by a <b>non-zero</b> scalar, denotes as $\alpha R_i$.</li>
+	<li>Multiply any equation by <b>any</b> scalar and add to other equation, denotes as $\alpha R_i + R_j$.</li>
+</ol>
 
-<p>We can encode the linear system using matrices. For the linear system $$ \left\{\begin{array}{ccccccc} a_{11} x_1 &+& a_{12} x_2 &+& \cdots &+& a_{1n} x_n &=& b_1 \\ a_{21} x_1 &+& a_{22} x_2 &+& \cdots &+& a_{2n} x_n &=& b_2 \\ \vdots & & \vdots & & & & \vdots & & \vdots \\ a_{m1} x_1 &+& a_{m2} x_2 &+& \cdots &+& a_{mn} x_n &=& b_n \end{array}\right. $$We can pull out all the $(a_{ij})$ to form the <b>coefficient matrix</b> $A$, $(b_i)$ as the <b>constant vector</b> $b$ and finally $(x_i)$ as the <b>solution vector</b> $x$. We say $[A|b]$ the <b>augmented matrix</b>. The linear system can be written as $\mathcal{LS}(A, b)$, in which we can simply write the equation as $Ax = b$ in terms of matrix multiplication.</p>
+<p>Pretty easy to see that all the above elementary operations does not changes the solution set. As a result, we can do $R_i \longleftrightarrow R_j$, $\alpha R_i$ and $\alpha R_i + R_j$ arbitrarily on the linear system. (Side Note: If the underlying commutative ring of the system is not a field, say $\mathbb{Z}_6$, then $\alpha$ the operation $\alpha R_i$ would be required to be a unit; Otherwise, the solution set may be larger.)</p>
 
-<p>We may also encode the linear equations with vectors as $x_1 A_1 + x_2 A_2 + \cdots + x_n A_n = b$ where $\{A_i\}$ are the <b>column vectors</b>. Essentially, we are trying the write $b$ as a <b>linear combination</b> of $\{A_i\}$.</p>
+<h3>Representations of Linear Systems</h3>
+
+<p>We can of course linear system using matrices. For the linear system $$ \left\{\begin{array}{ccccccc} a_{11} x_1 &+& a_{12} x_2 &+& \cdots &+& a_{1n} x_n &=& b_1 \\ a_{21} x_1 &+& a_{22} x_2 &+& \cdots &+& a_{2n} x_n &=& b_2 \\ \vdots & & \vdots & & & & \vdots & & \vdots \\ a_{m1} x_1 &+& a_{m2} x_2 &+& \cdots &+& a_{mn} x_n &=& b_n \end{array}\right. $$We can pull out all the $(a_{ij})$ to form the <b>coefficient matrix</b> $A$, $(b_i)$ as the <b>constant vector</b> $b$ and finally $(x_i)$ as the <b>solution vector</b> $x$. Note that conventionally, by vectors we actually means <b>column vectors</b>. We can represent the linear system by $Ax = b$ according to the following $$ \begin{bmatrix} a_{11} & a_{12} & \cdots & a_{1n} \\ a_{21} & a_{22} & \cdots & a_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ a_{m1} & a_{m2} & \cdots & a_{mn} \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix} = \begin{bmatrix} b_1 \\ b_2 \\ \vdots \\ b_n \end{bmatrix}$$</p>
+
+<p>A way of thinking matrix multiplication is that, it is simply defined so that $Ax = b$ exactly represents the linear system shown above! Terminology wise, we say $[A|b]$ the <b>augmented matrix</b> of the linear system, whereas way may refer to the linear system as $\mathcal{LS}(A, b)$.</p>
+
+<p>We may also encode the linear equations with vectors as $x_1 A_1 + x_2 A_2 + \cdots + x_n A_n = b$ where $\{A_i\}$ are the <b>column vectors</b> of $A$: $$ x_1 \begin{bmatrix} a_{11} \\ a_{21} \\ \vdots \\ a_{m1} \end{bmatrix} + x_2 \begin{bmatrix} a_{12} \\ a_{22} \\ \vdots \\ a_{m2} \end{bmatrix} + \cdots + x_n \begin{bmatrix} a_{1n} \\ a_{2n} \\ \vdots \\ a_{mn} \end{bmatrix} = \begin{bmatrix} b_1 \\ b_2 \\ \vdots \\ b_n \end{bmatrix} $$ Essentially, we are trying the write $b$ as a <b>linear combination</b> of $\{A_i\}$. The key thing is that, the matrix representation and the vector representation is interchangable, and sometimes switching the representation may make you understand more what actually is going on.</p>
 
 <h3>Reduced Row Echelon Form</h3>
 
 <p>For any matrix $A$, we can find its <b>reduced row echelon form (RREF)</b> by repeatedly carry out row operations and simplify it. That way, any equations encoded by the matrix would have its solution set unchaged, and we can find out the solution set.</p>
 
-<p>How is RREF being found? It can be done using the well-known <b>Gaussian Elimination</b>. Our target is of the form $$ \begin{bmatrix} 1 & \ast & \cdots & 0 & \ast & \cdots & 0 & \ast \\ 0 & 0 & \cdots & 1 & \ast & \cdots & 0 & \ast \\ 0 & 0 & \cdots & 0 & 0 & \cdots & 1 & \ast \end{bmatrix} $$ The columns with only one $1$ which is leftmost of the row are called <b>pivot</b>, and <b>non-pivot</b> otherwise. Intuitively, simply loop through each column and find any "new" rows with non-zero entry, move it as one of the top rows, reduce it to 1, then subtract every other rows by multiple of that row. The number of non-empty rows is called the <b>rank</b> of the matrix.</p>
+<p>Our target is of the form $$ \begin{bmatrix} 1 & \ast & \cdots & 0 & \ast & \cdots & 0 & \ast \\ 0 & 0 & \cdots & 1 & \ast & \cdots & 0 & \ast \\ 0 & 0 & \cdots & 0 & 0 & \cdots & 1 & \ast \end{bmatrix} $$ The columns with only one $1$ which is leftmost of the row are called <b>pivot</b>, and <b>non-pivot</b> otherwise. The number of non-empty rows is called the <b>rank</b> of the matrix.</p>
 
-<h3>Solving System of Linear Equations</h3>
+<p>How is RREF being found? It can be done using the well-known <b>Gaussian Elimination</b>. Intuitively, simply loop through each column and find any "new" rows with non-zero entry, move it as one of the top rows ($R_i \longleftrightarrow R_j$), reduce the entry to 1 ($\alpha R_i$), then subtract every other rows by multiple of that row ($\alpha R_i + R_j$). Note that all these are row operations which known to not change the solution set!</p>
 
-<p>After taking the RREF form of the augmented matrix $[A|b]$, interestingly, solution exists (or the system is <b>consistent</b>) if and only if the last column is non-pivot, because that would mean $0 = 1$! Note that the <b>homogenous system</b> $\mathcal{LS}(A, 0)$ is always consistent since $A0 = 0$. The <b>null space</b> $\mathcal{N}(A)$ of $A$ is defined to be the solution set of $\mathcal{LS}(A, 0)$. Clearly $y$ is a solution to $\mathcal{LS}(A, b)$ iff $y = w + z$ where $y$ is a <b>particular solution</b> and $z \in \mathcal{N}(A)$.</p>
+<p>The RREF of a matrix is incredibly useful. Let's consider the RREF of the augmented matrix $[A|b]$. Then, solution exists (or the system is <b>consistent</b>) if and only if the last column is non-pivot! Note that the <b>homogenous system</b> $\mathcal{LS}(A, 0)$ is always consistent since $A0 = 0$. The <b>null space</b> $\mathcal{N}(A)$ of $A$ is defined to be the solution set of $\mathcal{LS}(A, 0)$. Clearly $y$ is a solution to $\mathcal{LS}(A, b)$ iff $y = w + z$ where $y$ is a <b>particular solution</b> and $z \in \mathcal{N}(A)$.</p>
 
 <h2>Matrices</h2>
 
@@ -57,7 +71,7 @@ layout: default
 
 <p><b>Determinant</b> of a matrix is a pretty important topic. Many things are somehow related to determinants. Formally, for a square matrix $A$ of size $n$, $\det A$ can be defined as $\sum_{\sigma \in S_n} (-1)^{\text{sgn} \sigma} \prod_i A_{i \sigma(i)}$ where $S_n$ is the set of all permutations. Alternatively, we have $\det A = \sum (-1)^{i - 1} \det (A(i|j))$. Trivially, we see $\det A = \det A^{T}$. Note that the determinant of elementary matrices corresponds to $R_i \longleftrightarrow R_j$, $\alpha R_i$ and $\alpha R_i + R_j$ are $-1$, $\alpha$ and $1$ respectively, simply think by expanding along rows $i$ and $j$.</p>
 
-<p>We can prove mechanically that $\det J \det A = \det JA$ for elementary $J$. Thus, for non-singular $A$ and $B$, we actually have $\det A \cdot \det B = \det AB$, by reduce the matrix into product of elementary matrices! On the other hand, we can also use $A \xrightarrow{\text{RREF}} I$ to compute the determinant of a matrix.</p>
+<p>We can prove mechanically that $\det J \cdot \det A = \det JA$ for elementary $J$. Thus, for non-singular $A$ and $B$, we actually have $\det A \cdot \det B = \det AB$, by reduce the matrix into product of elementary matrices! On the other hand, we can also use $A \xrightarrow{\text{RREF}} I$ to compute the determinant of a matrix.</p>
 
 <p>There is actually an interesting application of determinant as <b>Cramer's Rule</b>. Note that $A [\vec{e_1} | \cdots | \vec{e_{k - 1}} | \vec{x} | \vec{e_{k + 1}} | \cdots | \vec{e_n}] = [\vec{A_1} | \cdots | \vec{A_{k - 1}} | \vec{b} | \vec{A_{k + 1}} | \cdots | \vec{A_n} ] = A_k$, so $\det A \cdot x_k = \det A_k$ and $x_k = \frac{\det A_k}{\det A}$! By letting $b = \vec{e_j}$ then $x_k = \frac{(-1)^{j + k} \det A(j|k)}{\det A}$, which gives us the way to find the matrix inverse. (However, practically RREF works more, since finding determinant requires one to use RREF anyways!)</p>
 

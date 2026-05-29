@@ -1,0 +1,51 @@
+---
+layout: default
+---
+<span style="display: none">
+\(
+	\def\R{\mathbb{R}}
+	\def\P{\mathcal{P}}
+	\def\L{\mathcal{L}}
+	\def\U{\mathcal{U}}
+\)
+</span>
+
+<h1>MATH2020 Advanced Calculus II</h1>
+
+<p>Another thing in calculus that concerns us is integration. In higher dimensional Euclidean space, how can we define stuff like volumes and surface areas, or integral over a volume / surface rigourously?</p>
+
+<h2>Riemann Integral</h2>
+
+<p>Consider a <b>bounded</b> function $f: \Omega \subset \R^n \rightarrow \R$. How shall we define the integral $\int_{\Omega} f \, dV$, intuitively "summing" $f$ over some subset $\Omega$? Well, it is complicated to consider arbirary "shaped" $\Omega$, so let's first focus on the simple case - <b>rectangles</b>.</p>
+
+<h3>Rectangle and Partition</h3>
+
+<p>We define a <b>rectangle</b> $R$ over $\R^n$ as a set of the form $[a_1, b_1] \times [a_2, b_2] \times \cdots \times [a_n, b_n]$. The <b>volume</b> of a rectangle is intuitively defined as $\text{Vol}(R) = \prod_i (b_i - a_i)$. Let's say we subdivide each axis $[a_i, b_i]$ by $a_i = x_{i,0} \lt x_{i,1} \lt \cdots \lt x_{i,k_i} = b_i$, then we have a <b>partition</b> $\P$ of rectangle $R$. Note that partitions must be finite.</p>
+
+<p>For two partitions $\P_1$ and $\P_2$ of the same rectangle $R$, we say $\P_1$ is a <b>refinement</b> of $\P_2$ whenever $\P_1$ contains all the subdividing points of $\P_2$, or alternatively, for every $Q_1 \in \P_1$, there exists $Q_2 \in \P_2$ such that $Q_1 \subset Q_2$. For any two partitions, we can also consider their <b>common refinement</b> by considering the union of the subdividing points. Easy to see that one may treat the collection of all partitions as a <b>poset</b>.</p>
+
+<h3>Riemann Integrable over Rectangles</h3>
+
+<p>Let $f : R \subset \R^n \rightarrow \R$ be a <b>bounded</b> function defined on <b>rectangle</b> $R$. The core idea of integration is to cut the domain into small rectangles - let's say $\P$ is a partition of $R$. Then we can estimate the <b>lower sum</b> by $$\L(f, \P) = \sum_{Q \in \P} \inf_{x \in Q} f(x) \cdot \text{Vol}(Q) $$ And the <b>upper sum</b> by $$ \U(f, \P) = \sum_{Q \in \P} \sup_{x \in Q} f(x) \cdot \text{Vol}(Q) $$ Which essentially summing the extreme values over the subrectangles, which infinum and supremum exists since we assumed boundedness.</p>
+
+<p>We can deduce quite some inequalities from definitions and facts about infinum and supremum. First, we have $\L(f, \P) \le \U(f, \P)$ for any partition $\P$, since infinum is at most as large as supremum. Next, if $\P'$ is a refinement of $\P$, then $\L(f, \P) \le \L(f, \P')$ and $\U(f, \P') \le \U(f, \P)$, since $\inf_{x \in Q} f(x) \le \inf_{x \in Q'} f(x)$ for $Q \supset Q'$. Finally, for any two partitions $\P$ and $\P'$ of $R$, we have $\L(f, \P) \le \U(f, \P')$, since for the common refinement $\P''$ of $\P$ and $\P'$ we have $$ \L(f, \P) \le \L(f, \P'') \le \U(f, \P'') \le \U(f, \P') $$ And so $ \sup_\P \L(f, \P) \le \inf_\P \U(f, \P) $.</p>
+
+<p>Thus, we can define the <b>lower integral</b> as $$ \underline{\int}_R f \, dV = \sup_{\P} \L(f, \P) $$ And the <b>upper integral</b> as $$ \overline{\int}_R f \, dV = \inf_{\P} \U(f, \P) $$ Which is the limits of the lower sum and upper sum respectively in the analytical sense. We say $f$ is <b>Riemann integrable</b> when $\underline{\int}_R f \, dV = \overline{\int}_R f \, dV$, and <b>Riemann integral</b> $\int_R f \, dV$ is defined to the same value. Simply analysis gives us the alternative <b>Riemann condition</b> for deiciding whether a function $f$ is integrable, which is whenever for each $\varepsilon \gt 0$, there exists a partition $\P$ such that $\U(f, \P) - \L(f, \P) \lt \varepsilon$.</p>
+
+<h3>Integrating Continuous Functions</h3>
+
+<p>What if we additionally require $f$ being <b>continuous</b>? Turns out that is sufficient for us to claim that $\int_R f \, dV$ is well-defined. Since $R$ is <b>compact</b>, we can cover $R$ with finite number of cubes $C$ where $\sup_{x \in C} f(x) - \inf_{x \in C} f(x) \lt \varepsilon$, which implies $f$ is integrable by riemann condition by considering the partition induced by the cubes.</p>
+
+<p>With similar logic, if the set of discontinuity $D$ is not too "big", then $f$ is still reimann integrable. For example, if $D$ is just a singleton, then we can simply "encircle" the point with an infinitesimal rectangle, then the discontinuity would only affects a small volume. So the question now becomes - can we have some effective definitions for us to decide the set of discontinuity is not too "big"?</p>
+
+<h3>Content Zero and Measure Zero</h3>
+
+<p>Consider a set $A \subset \R^n$. We say $A$ is of <b>content zero</b> if foreach $\varepsilon \gt 0$, there exists <b>finite</b> set of rectangles $\{ R_i \}$ that <b>covers</b> $A$ where $\sum \text{Vol}(R_i) \lt \varepsilon$, and of <b>measure zero</b> if <b>countably infinite</b> set of rectangles allowed. (Note that sum of uncountable positive reals is always unbounded.)</p>
+
+<p>Clearly content zero implies measure zero, while the union of a countable collection of measure zero sets stays measure zero by taking $\varepsilon' = \varepsilon \cdot 2^{-n}$ on the $n$-th set. Consider the <b>boundary</b> $\partial A$ (can be approached from both outside and inside $A$), then if $A$ is content zero, $\partial A$ is content zero as well by slightly enlarging the rectangles. However, such does not hold for measure zero, since say $A = \mathbb{Q} \cap [0, 1]$ is measure zero but $\partial A = [0, 1]$ is not of measure zero.</p>
+
+<p>In fact, a bounded function $f$ is Riemann integrable over rectangle $R$ iff its set of discontinuity is measure zero.</p>
+
+<h3>Riemann Integrable over Arbitrary Subset</h3>
+
+<p>Now we generalise the definition to $f: \Omega \subset \R^n \rightarrow \R$ as a <b>bounded</b> function. To reuse the definition we have for rectangles, we define the extension $\overline{f}: R \rightarrow \R$ where $\overline{f}(x) = f(x)$ for all $x \in \Omega$ and $\overline{f}(x) = 0$ for all $x \in R \setminus \Omega$, such that $\Omega \subset R$ any rectangle. Clearly the choice of rectangle does not matter. Now, we simply have $\int_{\Omega} f \, dV = \int_R \overline{f} \, dV$.</p>

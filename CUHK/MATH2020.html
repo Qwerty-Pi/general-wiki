@@ -11,6 +11,8 @@ layout: default
 	\def\Int{\operatorname{Int}}
 	\def\Ext{\operatorname{Ext}}
 	\def\supp{\operatorname{supp}}
+	\def\curl{\operatorname{curl}}
+	\def\div{\operatorname{div}}
 \)
 </span>
 
@@ -130,6 +132,18 @@ layout: default
 
 <p>We denote $\Delta f = \nabla \cdot (\nabla f)$ is the <b>Laplacian</b> of $f$. By simple computation we have $ \nabla \times (\nabla f) = 0$ for function $f$ and $\nabla \cdot (\nabla \times F) = 0$ for vector field $F$ over $\R^3$. A question one may ask is - can we generalise curl over $\R^n$? Turns out yes - and will be mentioned later.</p>
 
-<h3>Stokes and Divergence Theorem</h3>
+<h3>Stokes' and Divergence Theorem</h3>
+
+<p>The Green's Theorem relates the line integral of $F$ on $\partial \Omega$ and integral of $\frac{\partial F_2}{\partial x} - \frac{\partial F_1}{\partial y}$ on $\Omega$. Essentially, "differentiate" the domain, or the function itself, should give us the same result. Can we generalise the Green's theorem to 3D? That's called the <b>Stokes' Theorem</b>.</p>
+
+<p>Given a parametised surface $S$ on $\R^3$ with measure zero boundary $\partial S$. Then for $\mathcal{C}^1$ vector field $F$ defined on open set containing $\overline{S}$, we have the <b>Stokes' Theorem</b> $$ \int_{\partial S} F \cdot dr = \iint_S (\nabla \times F) \cdot \vec{n} \, d\sigma $$ Which the orientation of $S$ and $\partial S$ are chosen so that $S$ is "on the left" of $\partial S$. Note that the Green's Theorem is merely a special case for Stokes' - simply take $F = (P, Q, 0)$ and $S$ lies on $z = 0$.</p>
+
+<p>Similarly, given an open set $\Omega \in \R^3$ bounded by measure zero surface $\partial \Omega$ with unit normal $\vec{n}$ points outwards, and $\C^1$ vector field $F$ define on open set containing $\overline{\Omega}$, then $$ \iint_{\partial \Omega} F \cdot \vec{n} \, d\sigma = \iiint_{\Omega} \nabla \cdot F \, dV $$ Which is called the <b>divergence theorem</b>. Note that the form of Stokes' and divergence theorem are very similar - and indeed we can generalise and unify these theorems!</p>
+
+<h2>Integration on Submanifold</h2>
+
+<p>How can we generalise the concept of "integration on surfaces"? We would need to generalise the idea of volumes, cross products and surfaces.</p>
+
+<h3>Differentials</h3>
 
 <p></p>

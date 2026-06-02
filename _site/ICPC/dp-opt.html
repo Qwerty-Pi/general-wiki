@@ -1,23 +1,34 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<script src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
 	<script>
-		MathJax.Hub.Config({
-			tex2jax: {
-				inlineMath: [['$','$'], ['\\(','\\)']],
+		window.MathJax = {
+			tex: {
+				inlineMath: {'[+]': [['$', '$']]},
 				processEscapes: true
+			},
+			output: {
+				scale: 1.00
+			},
+			options: {
+				menuOptions: {
+					settings: {
+						enrich: false
+					}
+				}
 			}
-		});
+		}
 	</script>
-	<link rel="stylesheet" type="text/css" href="../index.css">
-	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
-	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-	<script src="../function.js"></script>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="/assets/index.css">
+	<script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
+	<script src="/assets/function.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+	<meta content="width=device-width, initial-scale=1" name="viewport"/>
 </head>
 <body>
-
-<h1>Dynamic Programming</h1>
+	<h1>Dynamic Programming</h1>
 
 <ol>
 </ol>
@@ -67,3 +78,4 @@
 <p>A function f is quadrangle iff for all A <= B <= C <= D, f(A -> D) + f(B -> C) >= f(A -> C) + f(B -> D). For the sake of simplicity, we abbreviate a quadrangle function as QF. It is tempting to ask - what does this means? Essentially, by reordering the inequality, we have f(A -> D) - f(A -> C) >= f(B -> D) - f(B -> C): that means if D is better than C at A, it is also better than C at B, a later position. That looks kind of implying the optimal positions are monotonic!</p>
 
 <p>Obviously, given QF f and g and <b>nonnegative</b> c, we know that f + g and cf are QF as well, in accordance to the inequality. Also, for any function f where f(L -> R) only depends on L, f is QF as well (with inequality holds exactly). Therefore, for dp[i] = min{dp[j] + C(j -> i)}, if C is QF, dp is QF as well, and opt is monotonic increasing. How can we optimise given monotonicity of the optimal position? Since every two indices can be compared with binary search in O(log N) time, we can maintain it in a CHT manner.</p>
+

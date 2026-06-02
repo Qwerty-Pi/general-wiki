@@ -21,6 +21,10 @@
     color: var(--text-color);
 }
 
+pre {
+    tab-size: 4;
+}
+
 mjx-container * {
     /* user-select: none;
     -moz-user-select: none;

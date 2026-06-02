@@ -1,0 +1,11 @@
+---
+layout: none
+permalink: /files.json
+---
+[
+  {% for p in site.static_files %}
+    {% if true %}
+    {{ p | jsonify }}
+    {% endif %}
+  {% endfor %}
+]

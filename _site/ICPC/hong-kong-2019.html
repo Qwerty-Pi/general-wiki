@@ -1,23 +1,34 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<script src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
 	<script>
-		MathJax.Hub.Config({
-			tex2jax: {
-				inlineMath: [['$','$'], ['\\(','\\)']],
+		window.MathJax = {
+			tex: {
+				inlineMath: {'[+]': [['$', '$']]},
 				processEscapes: true
+			},
+			output: {
+				scale: 1.00
+			},
+			options: {
+				menuOptions: {
+					settings: {
+						enrich: false
+					}
+				}
 			}
-		});
+		}
 	</script>
-	<link rel="stylesheet" type="text/css" href="../index.css">
-	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
-	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-	<script src="../function.js"></script>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="/assets/index.css">
+	<script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
+	<script src="/assets/function.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+	<meta content="width=device-width, initial-scale=1" name="viewport"/>
 </head>
 <body>
-
-<h1>Hong Kong Regional 2019</h1>
+	<h1>Hong Kong Regional 2019</h1>
 <div>
 	<p>A. Given $N$ rectangles. Determine axes of symmetry.</p>
 	<p>B. Given a binary tree and can only remove perfect binary tree. Two player, remove all wins.</p>
@@ -31,3 +42,4 @@
 	<p>J. Define $f(x) = \sum_{1 \le i \lt j \le k} x_i \cdot x_j$. Count number of $x$ such that $x \equiv f(x) \pmod{M} (M \le 60)$ where $L \le x \le R \lt 10^{5000}$.</p>
 	<p>K. Given array $D$ of length $N$ ($\le 800$) and $M$ ($\le 50000$) $A$ and $B$ nodes with cost $C_i$. Find min-cost matching for each $1 \le K \le M$ matches. $O(NM)$ flow.</p>
 </div>
+

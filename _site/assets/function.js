@@ -1,7 +1,7 @@
 function loadFile(code) {
     $.ajax ({
         method: "GET",
-        url: window.location.origin + '/' + code.data("include"),
+        url: '' + '/' + code.data("include"),
         success: function(content) {
             content = content
                 .replaceAll("<", "&lt;")

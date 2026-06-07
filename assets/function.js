@@ -1,7 +1,10 @@
+---
+layout: none
+---
 function loadFile(code) {
     $.ajax ({
         method: "GET",
-        url: window.location.origin + '/' + code.data("include"),
+        url: '{{ site.baseurl }}' + '/' + code.data("include"),
         success: function(content) {
             content = content
                 .replaceAll("<", "&lt;")

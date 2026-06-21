@@ -61,7 +61,7 @@ for (year = 1980; year <= 2011; year++) {
     years.push(year)
 }
 years.push("2012-PP")
-years.push("2012-CP")
+years.push("2012-SP")
 for (year = 2012; year <= 2025; year++) {
     years.push(year)
 }

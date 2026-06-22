@@ -23,6 +23,9 @@ async function appendQuestion(container, label, identifier, data, answer = null)
         if (label == answer) {
             option.addClass("answer-hidden")
         }
+        if (option_content.includes("img")) {
+            option.addClass("option-image")
+        }
         options.append(option)
         option_id += 1
     }

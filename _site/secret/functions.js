@@ -39,7 +39,7 @@ async function appendQuestion(container, label, identifier, data, answer = null)
         questionLabel.append(questionReference)
     }
     container.append(questionLabel)
-    container.append(getQuestionContent(identifier, data, answer))
+    container.append(await getQuestionContent(identifier, data, answer))
 }
 
 

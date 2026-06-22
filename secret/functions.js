@@ -1,4 +1,4 @@
-async function getQuestionContent(identifier, data, answer = null) {
+function getQuestionContent(identifier, data, answer = null) {
     statement = $("<div class='question-statement'>")
                     .html(data.statement)
     options = $("<div class='option-container'>")
@@ -39,7 +39,8 @@ async function appendQuestion(container, label, identifier, data, answer = null)
         questionLabel.append(questionReference)
     }
     container.append(questionLabel)
-    container.append(await getQuestionContent(identifier, data, answer))
+    const content = getQuestionContent(identifier, data, answer)
+    container.append(content)
 }
 
 

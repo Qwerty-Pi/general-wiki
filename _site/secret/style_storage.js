@@ -47,7 +47,7 @@ class StyleStorage {
         } else if (this.fontFamily === 'times') {
             fontFamily = 'Times, Times New Roman, serif'
         } else if (this.fontFamily === 'sans') {
-            fontFamily = 'Gill Sans, sans-serif'
+            fontFamily = 'Source Sans Pro, sans-serif'
         } else if (this.fontFamily === 'lexend') {
             fontFamily = 'Lexend'
         }

@@ -91,6 +91,9 @@
 		}
 		cursor: pointer;
 	}
+	.cell.solved {
+		background-color: #00ff0080;
+	}
 	.cell.selected {
 		background-color: var(--text-color);
 		* {
@@ -3353,6 +3356,13 @@
 </div>
 
 <script>
+	function loadSolves() {
+		fetch("/PE_solved.json").then(res => res.json()).then(res => {
+			res.forEach((v) => {
+				$(`.cell[data-qid="${v}"]`).addClass('solved')
+			})
+		})
+	}
 	function loadQuestion() {
 		var qid = document.getElementById("qid").value
 		var container = document.getElementById("pe-question-container")
@@ -3360,6 +3370,7 @@
 		fetch(url).then(res => res.text()).then(res => { container.innerHTML = res.replaceAll("resources/", "https://projecteuler.net/resources/"); MathJax.typesetPromise()})
 	}
 
+	loadSolves()
 	$(".cell").on('click', function() {
 		$("#qid").val($(this).data('qid'))
 		loadQuestion()

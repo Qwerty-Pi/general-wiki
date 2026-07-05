@@ -98,9 +98,9 @@ class StyleStorage {
         if (this.fontFamily === 'code') {
             fontFamily = '"Cascadia Code", monospace'
         } else if (this.fontFamily === 'times') {
-            fontFamily = 'Times, Times New Roman, serif'
+            fontFamily = 'Times, "Times New Roman", serif'
         } else if (this.fontFamily === 'sans') {
-            fontFamily = 'Source Sans 3, sans-serif'
+            fontFamily = '"Source Sans 3", sans-serif'
         } else if (this.fontFamily === 'lexend') {
             fontFamily = 'Lexend'
         }

@@ -2,6 +2,8 @@
     --text-color: #cccccc;
     --background-color: #151515;
     --selection-color: #b02afd60;
+    --invert-light: 0.917;
+    --invert-dark: 0.2;
     --font-family: 'Cascadia Code';
 }
 
@@ -17,7 +19,7 @@
     font-family: var(--font-family);
     ::selection {
         color: var(--text-color);
-	    background-color: var(--selection-color);
+            background-color: var(--selection-color);
     }
     color: var(--text-color);
 }
@@ -28,6 +30,23 @@ pre {
 
 ol, ul {
     margin-top: 0.5em;
+}
+
+* {
+    outline-style: none;
+}
+
+optgroup {
+    background-color: var(--background-color);
+}
+
+select, button, option, input {
+    background-color: var(--background-color);
+}
+
+select, ::picker(select) {
+    appearance: base-select;
+    border-radius: 0;
 }
 
 body {
@@ -42,22 +61,23 @@ body {
 
 /* For cheatsheet */
 @media print {
-	p, h1, h2, h3, li, td, ol, ul, h4 {
-		margin: 2px 0px;
-	}
-	p, li, td {
-		font-size: 11px;
-	}
-	h1 {
-		font-size: 20px;
-	}
-	h2 {
-		font-size: 15px;
-	}
-	h3 {
-		font-size: 13px;
-	}
-	h4 {
-		font-size: 11px;
-	}
+        p, h1, h2, h3, li, td, ol, ul, h4 {
+                margin: 2px 0px;
+        }
+        p, li, td {
+                font-size: 11px;
+        }
+        h1 {
+                font-size: 20px;
+        }
+        h2 {
+                font-size: 15px;
+        }
+        h3 {
+                font-size: 13px;
+        }
+        h4 {
+                font-size: 11px;
+        }
 }
+

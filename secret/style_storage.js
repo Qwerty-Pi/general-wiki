@@ -51,6 +51,7 @@ class StyleStorage {
         } else if (this.fontFamily === 'lexend') {
             fontFamily = 'Lexend'
         }
+        $("#font-family").val(this.fontFamily)
         $(":root").css('--font-family', fontFamily)
     }
 

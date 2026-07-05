@@ -15,6 +15,11 @@
     }
 }
 
+img {
+    filter: invert(var(--invert-light));
+    max-width: 100%;
+}
+
 * :not(mjx-container *) {
     font-family: var(--font-family);
     ::selection {

@@ -101,8 +101,17 @@
 		-ms-user-select: none;
 		user-select: none;
 	}
-	.cell.solved {
+	.cell.done {
 		background-color: #00ff0080;
+	}
+	.cell.target {
+		background-color: #0000ff80;
+	}
+	.cell.read {
+		background-color: #ffff0080;
+	}
+	.cell.unread {
+		background-color: #ff000080;
 	}
 	.cell.selected {
 		background-color: var(--text-color);
@@ -171,6 +180,10 @@
 	
 </style>
 
+<div>
+	Progress <input id="progress-file" accept=".csv" type="file"> <button id="import-progress">Import</button>
+	<span>Note: Upload the CSV at <a href="https://projecteuler.net/history" target="_blank">History</a> (need to first login PE). Data stored in <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage" target="_blank">localStorage</a></span>
+</div>
 <div class="question-grid">
 
 	<div class="question-subgrid">
@@ -3419,25 +3432,72 @@
 
 <div>
 	Question <span id="qid">???</span>
+	<span>Status
+		<select id="question-status">
+			<option value="unread">Unread</option>
+			<option value="read">Read</option>
+			<option value="target">Target</option>
+			<option value="done">Done</option>
+		</select>
+	</span>
 </div>
 
 <div id="pe-question-container">
 </div>
 
 <script>
+	all_status = {}
 	function loadSolves() {
-		fetch("/PE_solved.json").then(res => res.json()).then(res => {
-			res.forEach((v) => {
-				$(`.cell[data-qid="${v}"]`).addClass('solved')
-			})
-		})
+		const question_limit = 1000
+		for (let i = 1; i <= question_limit; i++) {
+			let status = localStorage.getItem(`pe_status_${i}`) ?? "unread"
+			all_status[i] = status
+			$(`.cell[data-qid="${i}"]`).addClass(status)
+		}
 	}
 	function loadQuestion() {
 		var qid = $("#qid").html()
 		var container = document.getElementById("pe-question-container")
 		var url = `https://projecteuler.net/minimal=${qid}`
-		fetch(url).then(res => res.text()).then(res => { container.innerHTML = res.replaceAll("resources/", "https://projecteuler.net/resources/"); MathJax.typesetPromise()})
+		fetch(url).then(res => res.text()).then(res => {
+			container.innerHTML = res.replaceAll("resources/", "https://projecteuler.net/resources/");
+			MathJax.typesetPromise()
+			$("#question-status").val(all_status[qid])
+		})
 	}
+
+	$("#import-progress").on('click', function() {
+		let e = $("#progress-file")
+		let file = e.prop('files')[0];
+		if (!file) return;
+		let reader = new FileReader(); // built in API
+		reader.readAsText( file );
+		reader.onload = function(reader) {
+			let res = reader.target.result
+			res.split("\n").forEach((s) => {
+				let qid = s.split(",")[0]
+				localStorage.setItem(`pe_status_${qid}`, 'done')
+				$(`.cell[data-qid="${qid}"]`).removeClass(all_status[qid])
+				all_status[qid] = 'done'
+				$(`.cell[data-qid="${qid}"]`).addClass(all_status[qid])
+			})
+			loadSolves()
+		}
+	})
+
+	$("#question-status").on('change', function() {
+		let qid = $("#qid").html()
+		try {
+			qid = parseInt(qid)
+			status = $(this).val()
+			$(`.cell[data-qid="${qid}"]`).removeClass(all_status[qid])
+			all_status[qid] = status
+			$(`.cell[data-qid="${qid}"]`).addClass(all_status[qid])
+			localStorage.setItem(`pe_status_${qid}`, status)
+		} catch (e) {
+			console.log(e.message)
+		}
+	})
 
 	loadSolves()
 	$(".cell").on('click', function() {

@@ -54,6 +54,10 @@ select, ::picker(select) {
     border-radius: 0;
 }
 
+option:hover {
+    background: color-mix(in srgb, var(--background-color) 100%, var(--text-color) 20%) !important;
+}
+
 body {
     font-size: 15px;
     background-color: var(--background-color);

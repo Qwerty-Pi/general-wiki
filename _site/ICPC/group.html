@@ -25,9 +25,33 @@
 	<script src="/assets/function.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+	<link href='https://fonts.googleapis.com/css?family=Lexend' rel='stylesheet'>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=palette" />
 	<meta content="width=device-width, initial-scale=1" name="viewport"/>
 </head>
 <body>
+    <!-- it works...? -->
+    <div id="style-popover" popover>
+        <div>Colour Mode</div> <div>
+            <select id="mode">
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+                <option value="what">???</option>
+                <option value="custom">Custom</option>
+            </select>
+        </div>
+        <div>Text Colour</div> <div><input id="text-color" type="color" /></div>
+        <div>Background Colour</div> <div><input id="background-color" type="color" /></div>
+        <div>Font Family</div> <div>
+            <select id="font-family">
+                <option value="code">Cascadia Code</option>
+                <option value="times">Times New Roman</option>
+                <option value="sans">Source Sans Pro</option>
+                <option value="lexend">Lexend</option>
+            </select>
+        </div>
+    </div>
+
 	<h1>Group</h1>
 
 <ol>
@@ -144,3 +168,4 @@
 
 <p>A more magical fact is that, we can actually count the total number of orbits! Suppose the distinct orbits are $G \cdot x_1, \dots, G \cdot x_r$. Then we have, by the orbit-stabiliser theorem and double-counting the number pairs $(g, x)$ where $g \cdot x = x$: $$ r = \sum_{1 \le i \le r} \sum_{y \in G \cdot x_i} \frac{1}{|G \cdot x_i|} = \sum_{x \in X} \frac{|G_x|}{|G|} = \frac{1}{|G|} \sum_{x \in X} |G_x| = \frac{1}{|G|} \sum_{g \in G} |X_g| $$ Which is the well-known Burnside lemma!</p>
 
+</body>

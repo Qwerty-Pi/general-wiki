@@ -25,9 +25,33 @@
 	<script src="/assets/function.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+	<link href='https://fonts.googleapis.com/css?family=Lexend' rel='stylesheet'>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=palette" />
 	<meta content="width=device-width, initial-scale=1" name="viewport"/>
 </head>
 <body>
+    <!-- it works...? -->
+    <div id="style-popover" popover>
+        <div>Colour Mode</div> <div>
+            <select id="mode">
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+                <option value="what">???</option>
+                <option value="custom">Custom</option>
+            </select>
+        </div>
+        <div>Text Colour</div> <div><input id="text-color" type="color" /></div>
+        <div>Background Colour</div> <div><input id="background-color" type="color" /></div>
+        <div>Font Family</div> <div>
+            <select id="font-family">
+                <option value="code">Cascadia Code</option>
+                <option value="times">Times New Roman</option>
+                <option value="sans">Source Sans Pro</option>
+                <option value="lexend">Lexend</option>
+            </select>
+        </div>
+    </div>
+
 	<span style="display: none">
 \(
 	\def\O{\mathcal{O}}
@@ -159,3 +183,4 @@
 
 <p>What if a linear operator $\T : \V \rightarrow \V$ does not have a diagonalisation, that is, the direct sum of the eigenspaces is not as large as $\V$ itself? Turns out there is a workaround when the characteristic polynomial of $\T$ splits, called the <b>Jordan Canonical Form</b>. Instead of considering the eigenspaces $\mathcal{E}_\lambda = \{ v \in \V : (\T - \lambda I) v = 0 \}$, we consider the <b>generalised eigenspace</b> $\mathcal{K}_\lambda = \{ v \in \V : (\T - \lambda I)^p v = 0 \text{ for some } p \}$ instead. We can show that $\V = \bigoplus \mathcal{K}_{\lambda_i}$, where basis of $\mathcal{K}_\lambda$ can be written as a union of <b>cycles</b> $\gamma_j = \{ (\T - \lambda I)^{k - 1} v_j, (\T - \lambda I)^{k - 2} v_j, \dots, v_j \}$. That way, we can still represent $[\T]_\beta$ rather nicely.</p>
 
+</body>

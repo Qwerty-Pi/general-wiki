@@ -25,9 +25,33 @@
 	<script src="/assets/function.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+	<link href='https://fonts.googleapis.com/css?family=Lexend' rel='stylesheet'>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=palette" />
 	<meta content="width=device-width, initial-scale=1" name="viewport"/>
 </head>
 <body>
+    <!-- it works...? -->
+    <div id="style-popover" popover>
+        <div>Colour Mode</div> <div>
+            <select id="mode">
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+                <option value="what">???</option>
+                <option value="custom">Custom</option>
+            </select>
+        </div>
+        <div>Text Colour</div> <div><input id="text-color" type="color" /></div>
+        <div>Background Colour</div> <div><input id="background-color" type="color" /></div>
+        <div>Font Family</div> <div>
+            <select id="font-family">
+                <option value="code">Cascadia Code</option>
+                <option value="times">Times New Roman</option>
+                <option value="sans">Source Sans Pro</option>
+                <option value="lexend">Lexend</option>
+            </select>
+        </div>
+    </div>
+
 	<h1>MATH2070 Algebraic Structure</h1>
 
 <h2>Introduction</h2>
@@ -151,3 +175,4 @@
 <p>For any domain, we define the <b>characteristic</b> $\text{char}\, D = \min\{n \in \mathbb{Z}_{>0} : n \cdot 1 = 0 \}$. For example, $\text{char}\, \mathbb{Q} = 0$ and $\text{char} \, \mathbb{F}_p = p$. Note that whenever $D$ is integral domain, the characteristic must be prime.</p>
 
 <p>Now, how does all the finite field looks like? First of all, finite field $F$ must have a finite characteristic $p$, therefore $F$ contains a subfield isomorphic to $\mathbb{F}_p$. Since $F$ is a vector space over the subfield, we deduce that $|F| = p^n$ for some $n \in \mathbb{N}$. In fact, such field exists for each prime $p$ and positive integer $n$: Consider the polynomial $f = x^{p^n} - x \in \mathbb{Z}_p[x]$, which by kronecker there exists a field extension $K$ which $f$ splits over $K$. Since $f' = -1$ and so $\gcd(f, f') = 1$, $f$ has exactly $p^n$ roots, forming the field. This is called the Galois Field to honour Évariste Galois, which we write $\text{GF}(p^n)$ to represent the Galois Field of order $p^n$.</p>
+</body>

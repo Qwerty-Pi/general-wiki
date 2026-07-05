@@ -25,9 +25,33 @@
 	<script src="/assets/function.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+	<link href='https://fonts.googleapis.com/css?family=Lexend' rel='stylesheet'>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=palette" />
 	<meta content="width=device-width, initial-scale=1" name="viewport"/>
 </head>
 <body>
+    <!-- it works...? -->
+    <div id="style-popover" popover>
+        <div>Colour Mode</div> <div>
+            <select id="mode">
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+                <option value="what">???</option>
+                <option value="custom">Custom</option>
+            </select>
+        </div>
+        <div>Text Colour</div> <div><input id="text-color" type="color" /></div>
+        <div>Background Colour</div> <div><input id="background-color" type="color" /></div>
+        <div>Font Family</div> <div>
+            <select id="font-family">
+                <option value="code">Cascadia Code</option>
+                <option value="times">Times New Roman</option>
+                <option value="sans">Source Sans Pro</option>
+                <option value="lexend">Lexend</option>
+            </select>
+        </div>
+    </div>
+
 	<h1>Polynomial Computation</h1>
 
 <h2>Introduction</h2>
@@ -82,3 +106,4 @@
 <h2>Lagrange Inversion</h2>
 
 <p>How to compute out the polynomial if what we get is some sort of recursion? Given $ \mathcal{F}, \mathcal{G}, \mathcal{H} \in R[[X]]^n $ where $\mathcal{G} \circ \mathcal{F} = \mathcal{F} \circ \mathcal{G}$ are both identity, then $$ [X^n] \mathcal{H} \circ \mathcal{G} = \text{Res}_{X} \frac{\mathcal{H} \circ \mathcal{G}}{X^{n + 1}} = \text{Res}_{\mathcal{F}} \frac{\mathcal{H}}{\mathcal{F}^{n + 1}} = \text{Res}_{X} \frac{\mathcal{H}}{\mathcal{F}^{n + 1}} \mathcal{F}' $$ Where $\mathcal{F}' = \det D\mathcal{F}$ is the determinant of the Jacobian of $\mathcal{F}$ and $\text{Res}$ is the residue, or coefficient at $X^{-1}$. Equivalently, we have $$ [X^n] (\mathcal{H} \circ \mathcal{G})' = \text{Res}_X \frac{(\mathcal{H}' \circ \mathcal{G}) \cdot \mathcal{G}'}{X^{n + 1}} = \text{Res}_{\mathcal{F}} \frac{\mathcal{H}' \cdot (\mathcal{G}' \circ \mathcal{F})}{\mathcal{F}^{n + 1}} = \text{Res}_{\mathcal{F}} \frac{\mathcal{H}'}{\mathcal{F}^{n + 1} \mathcal{F}'} = \text{Res}_X \frac{\mathcal{H}'}{\mathcal{F}^{n + 1}}$$ Which works for multivariable case as well.</p>
+</body>

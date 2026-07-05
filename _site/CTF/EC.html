@@ -25,9 +25,33 @@
 	<script src="/assets/function.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+	<link href='https://fonts.googleapis.com/css?family=Lexend' rel='stylesheet'>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=palette" />
 	<meta content="width=device-width, initial-scale=1" name="viewport"/>
 </head>
 <body>
+    <!-- it works...? -->
+    <div id="style-popover" popover>
+        <div>Colour Mode</div> <div>
+            <select id="mode">
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+                <option value="what">???</option>
+                <option value="custom">Custom</option>
+            </select>
+        </div>
+        <div>Text Colour</div> <div><input id="text-color" type="color" /></div>
+        <div>Background Colour</div> <div><input id="background-color" type="color" /></div>
+        <div>Font Family</div> <div>
+            <select id="font-family">
+                <option value="code">Cascadia Code</option>
+                <option value="times">Times New Roman</option>
+                <option value="sans">Source Sans Pro</option>
+                <option value="lexend">Lexend</option>
+            </select>
+        </div>
+    </div>
+
 	<h1>Elliptic Curve</h1>
 
 <h2>Definition</h2>
@@ -45,3 +69,4 @@
 <p>Degree $d$: $\sum_{P \in C} C_P$. Elements with degree $0$ forms subgroup $\text{Div}^{0}(C)$.</p>
 <p>Divisor of function $f$: $C_P := $ degree of zeros minus degree of poles. Principal divisor in $\text{Div}^{P}(C)$ means a divisor of a function.
 <p>Jacobian $J(C)$: Quotient Group $\text{Div}^{0}(C) / \text{Div}^{P}(C)$. Mumfold representation. [<a href="https://en.wikipedia.org/wiki/Imaginary_hyperelliptic_curve#Reduced_divisors_and_their_Mumford_representation" target="_blank">source</a>]</p>
+</body>

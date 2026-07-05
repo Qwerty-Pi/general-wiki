@@ -25,9 +25,33 @@
 	<script src="/assets/function.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+	<link href='https://fonts.googleapis.com/css?family=Lexend' rel='stylesheet'>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=palette" />
 	<meta content="width=device-width, initial-scale=1" name="viewport"/>
 </head>
 <body>
+    <!-- it works...? -->
+    <div id="style-popover" popover>
+        <div>Colour Mode</div> <div>
+            <select id="mode">
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+                <option value="what">???</option>
+                <option value="custom">Custom</option>
+            </select>
+        </div>
+        <div>Text Colour</div> <div><input id="text-color" type="color" /></div>
+        <div>Background Colour</div> <div><input id="background-color" type="color" /></div>
+        <div>Font Family</div> <div>
+            <select id="font-family">
+                <option value="code">Cascadia Code</option>
+                <option value="times">Times New Roman</option>
+                <option value="sans">Source Sans Pro</option>
+                <option value="lexend">Lexend</option>
+            </select>
+        </div>
+    </div>
+
 	<style>
 @media print {
 	p {
@@ -109,3 +133,4 @@
 <p>We define $$\textbf{P} := \cup_{k \ge 1} {\text{DTIME(}n^k\text{)}}$$ and $$\textbf{NP} := \cup_{k \ge 1} {\text{NTIME(}n^k\text{)}}$$ As the two well-known complexity classes. Clearly $\textbf{P} \subset \textbf{NP}$, but it is unknown whether the subset relation is proper or not. Problems in $\textbf{P}$ are called tractable, i.e., sensible to be computed out, and intractable otherwise.</p>
 <p>Polynomial-time Reducible: Two languages $L_1$, $L_2$ are polynomial-time reducible iff there exists a deterministic Turing Machine to transform $w_1$ to $w_2$ in polynomial time where $w_1 \in L_1 \iff w_2 \in L_2$. A language $L$ is $\textbf{NP}$-hard iff every other $\textbf{NP}$ language can be reduced to $L$, whereas a language that is both $\textbf{NP}$ and $\textbf{NP}$-hard is called $\textbf{NP}$-complete.</p>
 
+</body>

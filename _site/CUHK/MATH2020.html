@@ -25,9 +25,33 @@
 	<script src="/assets/function.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+	<link href='https://fonts.googleapis.com/css?family=Lexend' rel='stylesheet'>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=palette" />
 	<meta content="width=device-width, initial-scale=1" name="viewport"/>
 </head>
 <body>
+    <!-- it works...? -->
+    <div id="style-popover" popover>
+        <div>Colour Mode</div> <div>
+            <select id="mode">
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+                <option value="what">???</option>
+                <option value="custom">Custom</option>
+            </select>
+        </div>
+        <div>Text Colour</div> <div><input id="text-color" type="color" /></div>
+        <div>Background Colour</div> <div><input id="background-color" type="color" /></div>
+        <div>Font Family</div> <div>
+            <select id="font-family">
+                <option value="code">Cascadia Code</option>
+                <option value="times">Times New Roman</option>
+                <option value="sans">Source Sans Pro</option>
+                <option value="lexend">Lexend</option>
+            </select>
+        </div>
+    </div>
+
 	<span style="display: none">
 \(
 	\def\R{\mathbb{R}}
@@ -212,3 +236,4 @@
 
 <p>When $\U$ is open in $\R^k$ or $\omega = 0$ on $\partial M$, then by picking rectangle $R$ containing $M$ we have by Fubini $$ \begin{align*} & \int_\U d(g^* \omega) \\ = & \sum_{i = 1}^k (-1)^{i - 1} \int_R \frac{\partial g_i}{\partial x_i} \bigwedge_{j = 1}^k dx_j \\ = & \sum_{i = 1}^{k} \int_{R_i} \int_{a_i}^{b_i} \frac{\partial g_i}{\partial x_i} dx_i \bigwedge_{j \ne i} dx_j = 0 \end{align*}$$ And for boundary $\U$ open in $\R^k_+$, we have again $$ \begin{align*} & \int_\U d(g^* \omega) \\ = & \sum_{i = 1}^{k} \int_{R_i} \int_{a_i}^{b_i} \frac{\partial g_i}{\partial x_i} dx_i \bigwedge_{j \ne i} dx_j \\ = & \int_{R_k} \int_0^{b_k} \frac{\partial g_k}{\partial x_k} dx_k \bigwedge_{j \ne k} dx_j \\ = & \int_{\U \cap \partial \R^k_+} g^* \omega \end{align*}$$ Hence by <b>partition of unity</b> we can piece everything together to get the <b>generalised Stokes</b> $$ \int_{\partial M} \omega = \int_M d \omega $$</p>
 
+</body>

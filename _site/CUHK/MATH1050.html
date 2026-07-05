@@ -25,9 +25,33 @@
 	<script src="/assets/function.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+	<link href='https://fonts.googleapis.com/css?family=Lexend' rel='stylesheet'>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=palette" />
 	<meta content="width=device-width, initial-scale=1" name="viewport"/>
 </head>
 <body>
+    <!-- it works...? -->
+    <div id="style-popover" popover>
+        <div>Colour Mode</div> <div>
+            <select id="mode">
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+                <option value="what">???</option>
+                <option value="custom">Custom</option>
+            </select>
+        </div>
+        <div>Text Colour</div> <div><input id="text-color" type="color" /></div>
+        <div>Background Colour</div> <div><input id="background-color" type="color" /></div>
+        <div>Font Family</div> <div>
+            <select id="font-family">
+                <option value="code">Cascadia Code</option>
+                <option value="times">Times New Roman</option>
+                <option value="sans">Source Sans Pro</option>
+                <option value="lexend">Lexend</option>
+            </select>
+        </div>
+    </div>
+
 	<span style="display: none">
 \(
 \)
@@ -111,3 +135,4 @@
 
 <p>On the other hand, to show AC implies ZL, it is necessarily to invote the <b>transfinite induction</b>. First let $A$ be a poset that every chain is bounded above and denote $\Phi: A \rightarrow \mathcal{P}(A)$ where $\Phi(a) = \{ x \in P : a \lt x \}$. If any $\Phi(a)$ is empty then we already find a maximal element; Otherwise consider any choose function $f$. Define $a_0 \in A$, $a_{\alpha + 1} = f(\Phi(a_{\alpha}))$ where $\alpha$ is over the set of <b>ordinals</b>. For <b>limit ordinal</b> $\alpha$, since $\{ a_\beta : \beta \lt \alpha \}$ forms a chain as well, so $\bigcap_{\beta \lt \alpha} \Phi(\beta) \ne \varnothing$ and we may pick $a_\beta = f\left(\bigcap_{\beta \lt \alpha} \Phi(\beta)\right)$. Thus, we have an injection from the <b>proper class of ordinals</b> to $A$, which is absurd. </p>
 
+</body>

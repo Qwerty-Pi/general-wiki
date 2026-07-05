@@ -2,6 +2,7 @@
     --text-color: #cccccc;
     --background-color: #151515;
     --selection-color: #b02afd60;
+    --font-family: 'Cascadia Code';
 }
 
 @media print {
@@ -13,7 +14,7 @@
 }
 
 * :not(mjx-container *) {
-    font-family: 'Cascadia Code';
+    font-family: var(--font-family);
     ::selection {
         color: var(--text-color);
 	    background-color: var(--selection-color);
@@ -23,14 +24,6 @@
 
 pre {
     tab-size: 4;
-}
-
-mjx-container * {
-    /* user-select: none;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -o-user-select: none; */
 }
 
 ol, ul {
@@ -48,8 +41,6 @@ body {
 }
 
 /* For cheatsheet */
-
-<style>
 @media print {
 	p, h1, h2, h3, li, td, ol, ul, h4 {
 		margin: 2px 0px;
@@ -70,4 +61,3 @@ body {
 		font-size: 11px;
 	}
 }
-</style>

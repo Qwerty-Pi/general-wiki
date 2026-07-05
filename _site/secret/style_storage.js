@@ -103,6 +103,8 @@ class StyleStorage {
             fontFamily = '"Source Sans 3", sans-serif'
         } else if (this.fontFamily === 'lexend') {
             fontFamily = 'Lexend'
+        } else if (this.fontFamily === 'consolas') {
+            fontFamily = 'consolas'
         }
         $("#font-family").val(this.fontFamily)
         $(":root").css('--font-family', fontFamily)

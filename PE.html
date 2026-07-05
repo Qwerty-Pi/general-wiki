@@ -108,6 +108,10 @@ layout: default
 	visibility: visible;
 	}
 
+	#qid {
+		width: 4em;
+		text-align: center;
+	}
 </style>
 
 <div class="question-grid">
@@ -126,7 +130,7 @@ layout: default
 <br>
 
 <div>
-	Question <input id="qid" style="width: 4em;" type="number" disabled>
+	Question <span id="qid">???</span>
 </div>
 
 <div id="pe-question-container">
@@ -141,7 +145,7 @@ layout: default
 		})
 	}
 	function loadQuestion() {
-		var qid = document.getElementById("qid").value
+		var qid = $("#qid").html()
 		var container = document.getElementById("pe-question-container")
 		var url = `https://projecteuler.net/minimal=${qid}`
 		fetch(url).then(res => res.text()).then(res => { container.innerHTML = res.replaceAll("resources/", "https://projecteuler.net/resources/"); MathJax.typesetPromise()})
@@ -149,7 +153,7 @@ layout: default
 
 	loadSolves()
 	$(".cell").on('click', function() {
-		$("#qid").val($(this).data('qid'))
+		$("#qid").html($(this).data('qid'))
 		loadQuestion()
 		$(".cell").removeClass("selected")
 		$(this).addClass("selected")

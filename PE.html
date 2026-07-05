@@ -1,11 +1,68 @@
 ---
 layout: default
 ---
-	
+<script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+
 <h1>Project Euler</h1>
 
-Question <input id="qid" style="width: 4em;" type="number">
-<button id="pe-load" onclick="loadQuestion()">Load</button>
+<style>
+	.question-grid {
+		display: flex;
+		flex-direction: row;
+		max-width: 100%;
+		overflow: auto;
+	}
+	.question-subgrid {
+		display: grid;
+		grid-template-columns: repeat(10, 1.5em);
+		grid-template-rows: repeat(10, 1.5em);
+		position: relative;
+		align-items: stretch;
+		margin: 1em;
+	}
+	.question-subgrid > .cell {
+		text-align: center;
+		border: 1px solid var(--text-color);
+		position: relative;
+		display: flex;
+	}
+	.question-subgrid > .cell > span {
+		margin: auto;
+		font-size: 0.75em;
+	}
+	.question-subgrid > .cell:hover {
+		background-color: var(--selection-color);
+		* {
+			color: var(--text-color);
+		}
+		cursor: pointer;
+	}
+	.cell.selected {
+		background-color: var(--text-color);
+		* {
+			color: var(--background-color);
+		}
+	}
+</style>
+
+<div class="question-grid">
+{% for x in (0..9) %}
+	<div class="question-subgrid">
+		{% for i in (0..9) %}
+			{% for j in (0..9) %}
+				{% assign cell = x | times: 10 | plus: i | times: 10 | plus: j | plus: 1 %}
+				<div data-qid="{{cell}}" class="cell"> <span>{{ cell }}</span> </div>
+			{% endfor %}
+		{% endfor %}
+	</div>
+{% endfor %}
+</div>
+
+<br>
+
+<div>
+	Question <input id="qid" style="width: 4em;" type="number" disabled>
+</div>
 
 <div id="pe-question-container">
 </div>
@@ -17,5 +74,12 @@ Question <input id="qid" style="width: 4em;" type="number">
 		var url = `https://projecteuler.net/minimal=${qid}`
 		fetch(url).then(res => res.text()).then(res => { container.innerHTML = res.replaceAll("resources/", "https://projecteuler.net/resources/"); MathJax.typesetPromise()})
 	}
+
+	$(".cell").on('click', function() {
+		$("#qid").val($(this).data('qid'))
+		loadQuestion()
+		$(".cell").removeClass("selected")
+		$(this).addClass("selected")
+	})	
 </script>
 

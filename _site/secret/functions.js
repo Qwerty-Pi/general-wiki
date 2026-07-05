@@ -25,6 +25,18 @@ function getQuestionContent(identifier, data, answer = null) {
     }
     content.append(statement)
     content.append(options)
+
+    /* modify images so that the colours match those of backgrounds and texts */
+    content.find("img").each(function (idx) {
+        let src = $(this).attr('src')
+        console.log(src)
+        let container = $("<div>").addClass("image-container")
+        .append($("<div>").addClass("image-mask").css("mask-image", `url(${src})`))
+        .append($("<div>").addClass("image-inset"))
+        .append($("<img>").attr('src', src).addClass("image-placeholder"))
+        console.log(container)
+        $(this).replaceWith(container)
+    })
     return content
 }
 

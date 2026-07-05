@@ -100,7 +100,7 @@ class StyleStorage {
         } else if (this.fontFamily === 'times') {
             fontFamily = 'Times, Times New Roman, serif'
         } else if (this.fontFamily === 'sans') {
-            fontFamily = 'Source Sans Pro, sans-serif'
+            fontFamily = 'Source Sans 3, sans-serif'
         } else if (this.fontFamily === 'lexend') {
             fontFamily = 'Lexend'
         }

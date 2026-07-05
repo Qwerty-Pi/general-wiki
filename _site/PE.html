@@ -68,7 +68,7 @@ Question <input id="qid" style="width: 4em;" type="number">
 		var qid = document.getElementById("qid").value
 		var container = document.getElementById("pe-question-container")
 		var url = `https://projecteuler.net/minimal=${qid}`
-		fetch(url).then(res => res.text()).then(res => { container.innerHTML = res.replace("resources/", "https://projecteuler.net/resources/"); MathJax.typesetPromise()})
+		fetch(url).then(res => res.text()).then(res => { container.innerHTML = res.replaceAll("resources/", "https://projecteuler.net/resources/"); MathJax.typesetPromise()})
 	}
 </script>
 

@@ -5,7 +5,7 @@ const style = {
     },
     light: {
         color: "#151515",
-        backgroundColor: "#cccccc"
+        backgroundColor: "#ffffff"
     },
     what: {
         color: "#af1aff",

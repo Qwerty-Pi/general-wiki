@@ -51,6 +51,15 @@ function rgbToHue(r, g, b) {
     return Math.round(h);
 }
 
+function rgbToInvert(color) {
+    let R = parseInt(color.substring(1, 3), 16)
+    let G = parseInt(color.substring(3, 5), 16)
+    let B = parseInt(color.substring(5, 7), 16)
+    let hue = rgbToHue(R, G, B)
+    let invert = 1.0 - (R + G + B) / 3 / 256
+    return invert
+}
+
 class StyleStorage {
     load() {
         this.mode = localStorage.getItem("mode") ?? 'dark'
@@ -82,13 +91,8 @@ class StyleStorage {
         // decide how to invert images...
         // only work for grayscale for now
         // well, at least it works for grayscale
-        let R = parseInt(this.backgroundColor.substring(1, 3), 16)
-        let G = parseInt(this.backgroundColor.substring(3, 5), 16)
-        let B = parseInt(this.backgroundColor.substring(5, 7), 16)
-
-        let hue = rgbToHue(R, G, B)
-        let invert = 1.0 - (R + G + B) / 3 / 256
-        $(":root").css("--invert", invert)
+        $(":root").css("--invert-light", rgbToInvert(this.backgroundColor))
+        $(":root").css("--invert-dark", rgbToInvert(this.color))
         
         let fontFamily = '"Cascadia Code", monospace';
         if (this.fontFamily === 'code') {

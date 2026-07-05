@@ -13,6 +13,44 @@ const style = {
     }
 }
 
+function rgbToHue(r, g, b) {
+    // convert rgb values to the range of 0-1
+    var h;
+    r /= 255, g /= 255, b /= 255;
+
+    // find min and max values out of r,g,b components
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+
+    // all greyscale colors have hue of 0deg
+    if(max-min == 0){
+        return 0;
+    }
+
+    if(max == r){
+        // if red is the predominent color
+        h = (g-b)/(max-min);
+    }
+    else if(max == g){
+        // if green is the predominent color
+        h = 2 +(b-r)/(max-min);
+    }
+    else if(max == b){
+        // if blue is the predominent color
+        h = 4 + (r-g)/(max-min);
+    }
+
+    h = h*60; // find the sector of 60 degrees to which the color belongs
+    // https://www.pathofexile.com/forum/view-thread/1246208/page/45 - hsl color wheel
+
+    // make sure h is a positive angle on the color wheel between 0 and 360
+    h %= 360;
+    if(h < 0){
+        h += 360;
+    }
+
+    return Math.round(h);
+}
+
 class StyleStorage {
     load() {
         this.mode = localStorage.getItem("mode") ?? 'dark'
@@ -41,6 +79,17 @@ class StyleStorage {
         $("#background-color").val(this.backgroundColor)
         $(":root").css("--background-color", this.backgroundColor)
 
+        // decide how to invert images...
+        // only work for grayscale for now
+        // well, at least it works for grayscale
+        let R = parseInt(this.backgroundColor.substring(1, 3), 16)
+        let G = parseInt(this.backgroundColor.substring(3, 5), 16)
+        let B = parseInt(this.backgroundColor.substring(5, 7), 16)
+
+        let hue = rgbToHue(R, G, B)
+        let invert = 1.0 - (R + G + B) / 3 / 256
+        $(":root").css("--invert", invert)
+        
         let fontFamily = '"Cascadia Code", monospace';
         if (this.fontFamily === 'code') {
             fontFamily = '"Cascadia Code", monospace'

@@ -177,7 +177,13 @@
 		width: 4em;
 		text-align: center;
 	}
-	
+	textarea {
+		background-color: var(--background-color);`
+	}
+	#pe-question-comment {
+		width: 100%;
+		min-height: 10em;
+	}
 </style>
 
 <div>
@@ -3445,6 +3451,9 @@
 <div id="pe-question-container">
 </div>
 
+<h2>Comments</h2>
+<textarea id="pe-question-comment"></textarea>
+
 <script>
 	all_status = {}
 	function loadSolves() {
@@ -3463,6 +3472,7 @@
 			container.innerHTML = res.replaceAll("resources/", "https://projecteuler.net/resources/");
 			MathJax.typesetPromise()
 			$("#question-status").val(all_status[qid])
+			$("#pe-question-comment").val(localStorage.getItem(`pe_comment_${qid}`) ?? "")
 		})
 	}
 
@@ -3494,6 +3504,18 @@
 			all_status[qid] = status
 			$(`.cell[data-qid="${qid}"]`).addClass(all_status[qid])
 			localStorage.setItem(`pe_status_${qid}`, status)
+		} catch (e) {
+			console.log(e.message)
+		}
+	})
+
+	$("#pe-question-comment").on('change', function() {
+		let qid = $("#qid").html()
+		try {
+			qid = parseInt(qid)
+			comment = $(this).val()
+			console.log(comment)
+			localStorage.setItem(`pe_comment_${qid}`, comment)
 		} catch (e) {
 			console.log(e.message)
 		}

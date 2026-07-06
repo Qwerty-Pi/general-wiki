@@ -3514,7 +3514,6 @@
 		try {
 			qid = parseInt(qid)
 			comment = $(this).val()
-			console.log(comment)
 			localStorage.setItem(`pe_comment_${qid}`, comment)
 		} catch (e) {
 			console.log(e.message)

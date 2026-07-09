@@ -91,10 +91,16 @@
 
 <p>One of the key concepts revolving conditional probability is the <b>Baye's Formula</b>: Let's say we already know for events \( E \) and \( F \) the probabilities \( P(E) \), \( P(F|E^c) \) and \( P(F|E) \), what would the conditional probability \( P(E | F) \) be? You may imagine \( E \) represents a <b>hypothesis</b> and \( F \) represents an <b>test</b>; then we would want to know what the probability that the hypothesis holds is, given that the test returns positive.</p>
 
-<p>The <b>Baye's Formula</b> or the <b>law of total probability</b> is simply \[ P(F) = \sum_i P(E_i) \cdot P(F|E_i) \] where \( \{ E_i \} \) partitions the sample space \( S \). With this, we can compute \( P(E | F) \) as \[ P(E | F) = \frac{P(F | E)P(E)}{P(F | E)P(E) + P(F | E^c)P(E^c)}\] Which is just simple manipulations.</p>
+<p>The <b>Baye's Formula</b> or the <b>law of total probability</b> is simply \[ P(F) = \sum_i P(E_i) \cdot P(F|E_i) \] where \( \{ E_i \} \) partitions the sample space \( S \). With this, we can compute \( P(E | F) \) as \[ P(E | F) = \frac{P(F | E)P(E)}{P(F | E)P(E) + P(F | E^c)P(E^c)}\] Which is just simple algebraic manipulations.</p>
 
 <h3>Independent Events</h3>
 
-<p>Intuitively, </p>
+<p>Intuitively, events are <b>independent</b> when they are "irrelevant" from each other. Unfortunately, "irrelevant" is more of a concept about the event itself, and we would like to define independence using probabilities alone. How can we do that?</p>
+
+<p>Formally speaking, we say a collection of events \( \{ E_i \}_{i \in \mathcal{A}} \) is <b>independent</b> iff for all finite \( \mathcal{J} \subset \mathcal{A}\), we have \[ P\left(\bigcap_{j \subset \mathcal{J}} E_j\right) = \prod_{j \in \mathcal{J}} P(E_j) \] Note that this also means that \( E_i \) and any event constructed from \( \{ E_j \}_{j \in \mathcal{A} \setminus \{ i \} } \) via union, intersection and complement is independent.</p>
+
+<p>When the events are identical and independent, we often call the events as <b>trials</b> as in experiement. Those are pretty interesting to analyse and deserve a topic on them own.</p>
+
+<h2>Random Variables</h2>
 
 </body>

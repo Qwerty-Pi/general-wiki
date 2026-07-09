@@ -83,6 +83,18 @@
 
 <p>With these alone, we may deduce interesting stuff like the <b>Inclusion-Exclusion Principle</b>, which states that \[ P\left(\bigcup E_i\right) = \sum_{S \subset [n]} (-1)^{|S|} \bigcap_{j \in S} E_j \] Which can be proven with induction (or fancier stuff).</p>
 
-<h3></h3>
+<p>There are some trivial facts: First, when the number of outcomes is finite and each outcome has the same probability, then the probability of an event can be computed via simply counting outcomes. Second, for monotone sequence of events \( \{ E_i \} \), we have \[ \lim_{n \to \infty} P(E_n) = P\left(\lim_{n \to \infty} E_n\right) \] </p>
+
+<h3>Conditional Probability</h3>
+
+<p><b>Conditional probability</b> is introduced when we try to consider stuff like "assume event \( F \) already happened, what is the probability of event \( E \) happens as well". We denote this conditional probability as \( P(E | F) \), and we trivially have \[ P(E | F) = \frac{P(E \cap F)}{P(F)} \] whenever \( P(F) \gt 0 \). We can chain conditional probability together in the form \[ P(A \cap B \cap C) = P(A) P(B | A) P(C | A \cap B)\]</p>
+
+<p>One of the key concepts revolving conditional probability is the <b>Baye's Formula</b>: Let's say we already know for events \( E \) and \( F \) the probabilities \( P(E) \), \( P(F|E^c) \) and \( P(F|E) \), what would the conditional probability \( P(E | F) \) be? You may imagine \( E \) represents a <b>hypothesis</b> and \( F \) represents an <b>test</b>; then we would want to know what the probability that the hypothesis holds is, given that the test returns positive.</p>
+
+<p>The <b>Baye's Formula</b> or the <b>law of total probability</b> is simply \[ P(F) = \sum_i P(E_i) \cdot P(F|E_i) \] where \( \{ E_i \} \) partitions the sample space \( S \). With this, we can compute \( P(E | F) \) as \[ P(E | F) = \frac{P(F | E)P(E)}{P(F | E)P(E) + P(F | E^c)P(E^c)}\] Which is just simple manipulations.</p>
+
+<h3>Independent Events</h3>
+
+<p>Intuitively, </p>
 
 </body>

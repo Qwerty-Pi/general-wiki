@@ -56,32 +56,33 @@
         </div>
     </div>
 
-	<h1>CUHK</h1>
+	<span style="display: none">
+\(
+\)
+</span>
 
-<h2>Notes</h2>
+<h1>MATH3280 Introductory Probability</h1>
 
-<h3>Computer Science</h3>
-<p>CSCI2720 Building Web Applications <a href="/CUHK/CSCI2720">Link</a></p>
-<p>CSCI3100 Software Engineering <a href="/CUHK/CSCI3100">Link</a></p>
-<p>CSCI3130 Formal Languages and Automata Theory <a href="/CUHK/CSCI3130">Link</a></p>
-<p>CSCI3170 Introduction to Database Systems <a href="/CUHK/CSCI3170">Link</a></p>
-<p>CSCI3180 Principles of Programming Languages <a href="/CUHK/CSCI3180">Link</a></p>
-<p>CSCI3350 Introduction to Quantum Computing <a href="/CUHK/CSCI3350">Link</a></p>
+<p>Probability is the art of dealing with uncertainty. We wish to handle probability gracefully using an axiomatic approach, so everything can be well-defined and computed at ease.</p>
 
-<h3>Mathematics</h3>
+<h2>Probability Space</h2>
 
-<p>MATH1010 University Mathematics <a href="/CUHK/MATH1010">Link</a></p>
-<p>MATH1030 Linear Algebra I <a href="/CUHK/MATH1030">Link</a></p>
-<p>MATH1050 Introduction to Modern Mathematics <a href="/CUHK/MATH1050">Link</a></p>
+<p>Consider any <b>experiment</b> where the <b>outcome</b> is uncertain. The <b>sample space</b> \( S \) is defined as the set of all possible <b>outcomes</b>, where any subset \( E \subset S \) is called as an <b>event</b>. With events, we may introduce notations such as \( E \cup F \) (union), \( E \cap F \) or equivalently \( EF \) (intersection), \( \bigcup_{n = 1}^{\infty} E_n \), \( \bigcap_{n = 1}^{\infty} E_n \), \( E \subset F \) (subset) and \( E^c \) (complement), which essentially just set notations.</p>
 
-<p>MATH2010 Advanced Calculus I <a href="/CUHK/MATH2010">Link</a></p>
-<p>MATH2020 Advanced Calculus II <a href="/CUHK/MATH2020">Link</a></p>
-<p>MATH2040 Linear Algbera II <a href="/CUHK/MATH2040">Link</a></p>
-<p>MATH2050 Mathematical Analysis I <a href="/CUHK/MATH2050">Link</a></p>
-<p>MATH2070 Algebraic Structure <a href="/CUHK/MATH2070">Link</a></p>
+<h3>Axioms of Probability</h3>
 
-<p>MATH3240 Numerical Methods for Differential Equations <a href="/CUHK/MATH3240">Link</a></p>
-<p>MATH3280 Introductory Probability <a href="/CUHK/MATH3280">Link</a></p>
-<p>MATH4250 Game Theory <a href="/CUHK/MATH4250">Link</a></p>
+<p>How can we define <b>probability</b> for events? One of the ways is perhaps just say we define \( n(E) \) be the number of times the event \( E \) occurs within \( n \) experiments, then take \( P(E) := \lim_{n \to \infty} \frac{n(E)}{n} \). However, this is not elementary enough, since we haven't prove the convergence yet! It would be obviously better if we may resort to simpler axioms.</p>
+
+<p>Axiomatically, probability is defined as a function $P$ that maps from <b>event space</b> to \( \mathbb{R} \), where
+<ol>
+<li>For every event \( E \), \( 0 \le P(E) \le 1 \),</li>
+<li>\( P(S) = 1 \) for sample space \( S \),</li>
+<li>For <b>countable</b> (possibly infinite) collection \( \{ E_i \} \) of mutually exclusive events, we have \( P(\bigcup E_i) = \sum P(E_i)\).</li>
+</ol>
+</p>
+
+<p>With these alone, we may deduce interesting stuff like the <b>Inclusion-Exclusion Principle</b>, which states that \[ P\left(\bigcup E_i\right) = \sum_{S \subset [n]} (-1)^{|S|} \bigcap_{j \in S} E_j \] Which can be proven with induction (or fancier stuff).</p>
+
+<h3></h3>
 
 </body>

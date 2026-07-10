@@ -12,6 +12,8 @@ layout: default
 
 <p>Probability is the art of dealing with uncertainty. We wish to handle probability gracefully using an axiomatic approach, so everything can be well-defined and computed at ease.</p>
 
+<p>Side Note: seems like most notations enlisted here are non-standard. Ingest with a pint of salt.</p>
+
 <h2>Probability Space</h2>
 
 <p>Consider any <b>experiment</b> where the <b>outcome</b> is uncertain. The <b>sample space</b> \( \Omega \) is defined as the set of all possible <b>outcomes</b>, where any subset \( E \subset \Omega \) is called as an <b>event</b>. With events, we may introduce notations such as \( E \cup F \) (union), \( E \cap F \) or equivalently \( EF \) (intersection), \( \bigcup_{n = 1}^{\infty} E_n \), \( \bigcap_{n = 1}^{\infty} E_n \), \( E \subset F \) (subset) and \( E^c \) (complement), which essentially just set notations.</p>
@@ -86,8 +88,14 @@ layout: default
 
 <h4>Expected Values and Variances</h4>
 
-<p>Naturally, we define the expected value for a continuous random variable \( X \) as \[ E[X] = \int_{-\infty}^{\infty} x f(x) \, dx \] Analogous to the discrete case, we may show \[ E[g(X)] = \int_{-\infty}^{\infty} g(x) f(x) \, dx \] Unfortunately, the proof is somewhat complicated and will be omitted here. One of the interesting identity is that for non-negative continuous \( Y \), we have \[ E[Y] = \int_0^\infty P\{Y \gt y\} \, dy \] Since \( \int_0^\infty P\{ Y \gt y \} \, dy = \int_0^\infty \int_y^\infty f_Y(x) \, dx \, dy = \int_0^\infty (\int_0^x 1 \, dy) \cdot f_Y(x) \, dx = \int_0^\infty x f_Y(x) \, dx \) by Fubini and the assumption that \( f_Y \) is integrable.</p>
+<p>Naturally, we define the expected value for a continuous random variable \( X \) as \[ E[X] = \int_{-\infty}^{\infty} x f(x) \, dx \] Analogous to the discrete case, we may show \[ E[g(X)] = \int_{-\infty}^{\infty} g(x) f(x) \, dx \] Unfortunately, the proof is somewhat complicated and will be omitted here. One of the interesting identity is that for non-negative continuous \( Y \), we have \[ E[Y] = \int_0^\infty P\{Y \gt y\} \, dy \] Since \( \int_0^\infty P\{ Y \gt y \} \, dy = \int_0^\infty \int_y^\infty f_Y(x) \, dx \, dy = \int_0^\infty (\int_0^x 1 \, dy) \cdot f_Y(x) \, dx = \int_0^\infty x f_Y(x) \, dx \) by Fubini (see MATH2020) and the assumption that \( f_Y \) is integrable. We also have \( \Var(X) = E[X^2] - E[X]^2 \) as similar to the discrete case.</p>
 
 <h4>Standard Examples</h4>
 
-<p></p>
+<p>First, the <b>uniform random variables</b>, where the PDF is \[ f(x) = \frac{1}{b - a} \text{ for } a \le x \le b \] where \( a \lt b \in \mathbb{R} \). Clearly we have \( E[X] = \frac{a + b}{2} \) and \( \Var(X) = \frac{(b - a)^2}{12} \) from simple computations. It is quite simple so not much to say about this, and we may denote this as \( X \sim \text{Uniform}(a, b) \).</p>
+
+<p>Second, the <b>normal random variable</b>. The PDF of \( X \sim \text{Normal}(\mu, \sigma^2) \) is \[ f_X(x) = \frac{1}{\sqrt{2\pi} \sigma} \exp \frac{-(x - \mu)^2}{2 \sigma^2}\] This often refers as the bell curve as well, where \( E[X] = \mu \) and \( \Var(X) = \sigma^2 \) just as intended. Clearly if we let \( Z = \frac{X - \mu}{\sigma} \), then \[ f_Z(z) = \sigma f_X(z \sigma + \mu) = \frac{1}{\sqrt{2 \pi}} \exp \frac{-z^2}{2}\] Note the scaling by \( \sigma \) to make sure the integration over \( (-\infty, \infty) \) stays one. We call \( Z \) the standard normal distribution. To show \( \int_{-\infty}^\infty f_Z(z) = 1 \), simply notice that \( \left( \int_{-\infty}^{\infty} \exp \frac{-z^2}{2} \, dz \right)^2 = \lim_{R \to \infty} \int_{0}^R 2\pi r \exp \frac{-r^2}{2} \, dr = 2 \pi \). The CDF of \( Z \) is often denoted as \( \Phi(z) := \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^z \exp \frac{-y^2}{2} \, dy \). Essentially, when something is distributed normally, then we may refer to the table of \( \Phi \) and get the probability base on how many standard deviations \( \sigma \) it is off from the mean \( \mu \). For instance, for \( X \sim \text{Normal}(\mu, \sigma^2) \), then \[ P\{ X \le a \} = \Phi \left( \frac{x - \mu}{\sigma} \right) \]</p>
+
+<p>The <b>DeMoivre-Laplace limit theorem</b> states that as \( n \to \infty \) and for \( X_n \sim \text{Binomial}(n, p) \), we have \[ \frac{X_n - np}{\sqrt{np(1 - p)}} \rightarrow \text{Normal}(0, 1) \] Noting \( E[X] = np \) and \( \Var(X) = np(1 - p) \). We write \( \{ Z_n \} \rightarrow Z \) when for all \( a \lt b \), we have \( P\{ a \le Z_n \le b \} \to P\{ a \le Z \le b \} \). That is, when the number of bernoulli trials becomes large, it starts to behave like a normal distribution. For example, for \( X \sim \text{Binomial}(n, p) \), we can approximate \( P\{ X = np \} \) as \( P \{ np - 0.5 \le X \lt np + 0.5 \} \) (<b>continuity correction</b>). With \( \mu = np \) and \( \sigma = \sqrt{np(1 - p)} \), this is \( \Phi\left(\frac{0.5}{\sqrt{np(1 - p)}}\right) - \Phi\left(\frac{-0.5}{\sqrt{np(1 - p)}}\right) \).</p>
+
+<p>Finally, we introduce the <b>exponential random variables</b></p>

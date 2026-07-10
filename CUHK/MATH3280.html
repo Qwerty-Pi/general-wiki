@@ -50,19 +50,19 @@ layout: default
 
 <p>When the events are identical and independent, we often call the events as <b>trials</b> as in experiement. Those are pretty interesting to analyse and deserve a topic on them own.</p>
 
-<h2>Random Variables</h2>
+<h3>Random Variables</h3>
 
 <p>Sometimes, we wish to assign values to each of the outcome, say sum of the dots on the dice. We may introduce the concept of <b>random variables</b> as \( X : \Omega \rightarrow \mathbb{R} \), a real-valued function with sample space as the domain. The image of \( X \) is denoted as \( \Omega_X \). When \( \Omega_X \) is at most countable, then we call \( X \) <b>discrete</b>, and <b>continuous</b> otherwise. Examples of random variables include the <b>indicator variable</b> \( 1_A \) of an event, which takes value \( 1 \) when event \( A \) occurs, and \( 0 \) otherwise.</p>
 
 <p>The treatment for discrete and continuous random variables are slightly different, due to say the summation of uncountable positive values is always unbounded. However, the main constructs like expected values and variance are the same concept, as demonstrated below.</p>
 
-<h3>Discrete Random Variables</h3>
+<h2>Discrete Random Variables</h2>
 
 <p>What if the random variable \( X \) is discrete? In such case, we may define the <b>probability mass function</b>, or <b>PMF</b>, as \[ p(a) = P\{ X = a \} \] for all \( a \in \Omega_X \). Obviously for \( S_X = \{ x_i \} \) countable, we have \( p(x_i) \ge 0 \) and \( \sum p(x_i) = 1 \) since the events \( \{ X = x_i \} \) form a partition of \( \Omega \). </p>
 
 <p>We may define the <b>cumulative distribution function</b>, or <b>CDF</b>, as simply \[ F(a) = \sum_{x \le a} p(x) \] Obviously \( F \) is a step function.</p>
 
-<h4>Expected Values and Variance</h4>
+<h3>Expected Values and Variance</h3>
 
 <p>What can we infer from the PMF \( p \)? First, the <b>expected value</b> or expectation, \( E[X] \) is defined as \[ E[X] = \sum_{x} x \cdot p(x) \] Which intuitively is the <b>weighted average</b> of the random variable \( X \). (Note: I believe the definition \( E[X] = \sum_{s \in \Omega} p(s) \cdot P(\{s\}) \) is wrong, since \( \Omega \) can be uncountable)</p>
 
@@ -70,7 +70,7 @@ layout: default
 
 <p>By denoting \( \mu = E[X] \), the <b>variance</b> of \( X \) is defined as \[ \Var(X) = E[(X - \mu)^2] = E[X^2] - \mu^2\] As an indicator of how \( X \) "spreads away" from the mean \( \mu \). We have \( \Var(aX + b) = a^2 \Var(X) \) via simple computations, and the <b>standard deviation</b> \( \sigma_X = \SD(X) \) is defined as \( \sqrt{\Var(X)} \), which is well-defined since \( \Var(X) \) is always positive.</p>
 
-<h4>Standard Examples</h4>
+<h3>Standard Examples</h3>
 
 <p>There are four examples of random variables that are frequently used: <b>Bernoulli</b>, <b>Binomial</b>, <b>Poisson</b> and <b>Geometric</b>.</p>
 
@@ -82,20 +82,46 @@ layout: default
 
 <p>Finally, Geometric. This random variable is essentially the number of trials needed if we repeat until succeed. If the success probability is \( p \), we clearly have \( P\{ X = r \} = p(1 - p)^{r - 1} \) for \( r \ge 1 \), and so the PMF is \[ p(r) = p(1 - p)^{r - 1} \text{ for } r \in \mathbb{Z}_{\ge 1}\] This is denoted as \( \text{Geometric}(p) \), where \( E[X] = \frac{1}{p} \) and \( \Var(X) = \frac{1 - p}{p^2} \). (Its gf is \( \frac{px}{1 - (1 - p) x}\).)</p>
 
-<h3>Continuous Random Variables</h3>
+<h2>Continuous Random Variables</h2>
 
 <p>A <b>continuous random variable</b> \( X: \Omega \rightarrow \mathbb{R} \) is such where for all measurable set \( B \), we have \[ P\{ X \in B \} = \int_B f(x) \, dx \] for some function \( f : \mathbb{R} \rightarrow \mathbb{R}_{\ge 0} \), which is called the <b>probability density function</b> or <b>PDF</b> (reference to physics). With such assumption, by taking \( B = [a, b] \) we have \[ P\{ a \le X \le b \} = \int_a^b f(x) \, dx \] and so \( P\{ X = a \} = 0 \) for any \( a \in \mathbb{R} \), which implies the closeness at the endpoints should not affect the probability. Of course, we require \[ 1 = P\{ -\infty \lt X \lt \infty \} = \int^{\infty}_{-\infty} f(x) \, dx \]</p>
 
-<h4>Expected Values and Variances</h4>
+<h3>Expected Values and Variances</h3>
 
 <p>Naturally, we define the expected value for a continuous random variable \( X \) as \[ E[X] = \int_{-\infty}^{\infty} x f(x) \, dx \] Analogous to the discrete case, we may show \[ E[g(X)] = \int_{-\infty}^{\infty} g(x) f(x) \, dx \] Unfortunately, the proof is somewhat complicated and will be omitted here. One of the interesting identity is that for non-negative continuous \( Y \), we have \[ E[Y] = \int_0^\infty P\{Y \gt y\} \, dy \] Since \( \int_0^\infty P\{ Y \gt y \} \, dy = \int_0^\infty \int_y^\infty f_Y(x) \, dx \, dy = \int_0^\infty (\int_0^x 1 \, dy) \cdot f_Y(x) \, dx = \int_0^\infty x f_Y(x) \, dx \) by Fubini (see MATH2020) and the assumption that \( f_Y \) is integrable. We also have \( \Var(X) = E[X^2] - E[X]^2 \) as similar to the discrete case.</p>
 
-<h4>Standard Examples</h4>
+<h3>Standard Examples</h3>
 
 <p>First, the <b>uniform random variables</b>, where the PDF is \[ f(x) = \frac{1}{b - a} \text{ for } a \le x \le b \] where \( a \lt b \in \mathbb{R} \). Clearly we have \( E[X] = \frac{a + b}{2} \) and \( \Var(X) = \frac{(b - a)^2}{12} \) from simple computations. It is quite simple so not much to say about this, and we may denote this as \( X \sim \text{Uniform}(a, b) \).</p>
 
-<p>Second, the <b>normal random variable</b>. The PDF of \( X \sim \text{Normal}(\mu, \sigma^2) \) is \[ f_X(x) = \frac{1}{\sqrt{2\pi} \sigma} \exp \frac{-(x - \mu)^2}{2 \sigma^2}\] This often refers as the bell curve as well, where \( E[X] = \mu \) and \( \Var(X) = \sigma^2 \) just as intended. Clearly if we let \( Z = \frac{X - \mu}{\sigma} \), then \[ f_Z(z) = \sigma f_X(z \sigma + \mu) = \frac{1}{\sqrt{2 \pi}} \exp \frac{-z^2}{2}\] Note the scaling by \( \sigma \) to make sure the integration over \( (-\infty, \infty) \) stays one. We call \( Z \) the standard normal distribution. To show \( \int_{-\infty}^\infty f_Z(z) = 1 \), simply notice that \( \left( \int_{-\infty}^{\infty} \exp \frac{-z^2}{2} \, dz \right)^2 = \lim_{R \to \infty} \int_{0}^R 2\pi r \exp \frac{-r^2}{2} \, dr = 2 \pi \). The CDF of \( Z \) is often denoted as \( \Phi(z) := \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^z \exp \frac{-y^2}{2} \, dy \). Essentially, when something is distributed normally, then we may refer to the table of \( \Phi \) and get the probability base on how many standard deviations \( \sigma \) it is off from the mean \( \mu \). For instance, for \( X \sim \text{Normal}(\mu, \sigma^2) \), then \[ P\{ X \le a \} = \Phi \left( \frac{x - \mu}{\sigma} \right) \]</p>
+<p>Second, the <b>normal random variable</b>. The PDF of \( X \sim \text{Normal}(\mu, \sigma^2) \) is \[ f_X(x) = \frac{1}{\sqrt{2\pi} \sigma} \exp \frac{-(x - \mu)^2}{2 \sigma^2}\] This often refers as the bell curve as well, where \( E[X] = \mu \) and \( \Var(X) = \sigma^2 \) just as intended. Clearly if we let \( Z = \frac{X - \mu}{\sigma} \), then \[ f_Z(z) = \sigma f_X(z \sigma + \mu) = \frac{1}{\sqrt{2 \pi}} \exp \frac{-z^2}{2}\] Note the scaling by \( \sigma \) to make sure the integration over \( (-\infty, \infty) \) stays one. We call \( Z \) the standard normal distribution. To show \( \int_{-\infty}^\infty f_Z(z) = 1 \), simply notice that \( \left( \int_{-\infty}^{\infty} \exp \frac{-z^2}{2} \, dz \right)^2 = \lim_{R \to \infty} \int_{0}^R 2\pi r \exp \frac{-r^2}{2} \, dr = 2 \pi \). The CDF of \( Z \) is often denoted as \( \Phi(z) := \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^z \exp \frac{-y^2}{2} \, dy \). Essentially, when something is distributed normally, then we may refer to the table of \( \Phi \) and get the probability base on how many standard deviations \( \sigma \) it is off from the mean \( \mu \). For instance, for \( X \sim \text{Normal}(\mu, \sigma^2) \), then \[ P\{ X \le a \} = \Phi \left( \frac{a - \mu}{\sigma} \right) \]</p>
 
 <p>The <b>DeMoivre-Laplace limit theorem</b> states that as \( n \to \infty \) and for \( X_n \sim \text{Binomial}(n, p) \), we have \[ \frac{X_n - np}{\sqrt{np(1 - p)}} \rightarrow \text{Normal}(0, 1) \] Noting \( E[X] = np \) and \( \Var(X) = np(1 - p) \). We write \( \{ Z_n \} \rightarrow Z \) when for all \( a \lt b \), we have \( P\{ a \le Z_n \le b \} \to P\{ a \le Z \le b \} \). That is, when the number of bernoulli trials becomes large, it starts to behave like a normal distribution. For example, for \( X \sim \text{Binomial}(n, p) \), we can approximate \( P\{ X = np \} \) as \( P \{ np - 0.5 \le X \lt np + 0.5 \} \) (<b>continuity correction</b>). With \( \mu = np \) and \( \sigma = \sqrt{np(1 - p)} \), this is \( \Phi\left(\frac{0.5}{\sqrt{np(1 - p)}}\right) - \Phi\left(\frac{-0.5}{\sqrt{np(1 - p)}}\right) \).</p>
 
-<p>Finally, we introduce the <b>exponential random variables</b></p>
+<p>Finally, we introduce the <b>exponential random variables</b> with PDF \[ f(x) = \lambda e^{-\lambda x} \text{ for } x \ge 0 \] Which more relevants to like particle decay. For \( X \sim \text{Exponential}(\lambda) \), we have \( E[X^n] = \int_0^\infty x^n \lambda e^{-\lambda x} \, dx = n \int_0^\infty x^{n - 1} e^{-\lambda x} \, dx = \frac{n}{\lambda} E[X^{n - 1}] = \frac{n!}{\lambda^n} \). Hence, \( E[X] = \frac{1}{\lambda} \) and \( \Var(X) = E[X^2] - E[X]^2 = \frac{1}{\lambda^2} \).</p>
+
+<h3>Deriving Density Function</h3>
+
+<p>Given the density function \( f \) of a continuous random variable \( X \) and some arbitrary \( h: \mathbb{R} \rightarrow \mathbb{R} \), how can we find the density function corresponds to \( h(X) \)?</p>
+
+<p>This sounds easy and is easy; the first way is to compute the CDF of \( X \), then compute the CDF of \( h(X) \), and compute back the PDF via differentiation, which is called <b>the method of distribution functions</b>.</p>
+
+<p>The second method is called the <b>method of transformations</b>, which is applicable when \( h \) is differentiable and strictly monotonic (and so invertible), which then \[ f_Y(y) = f_X(h^{-1}(y)) |(h^{-1})'(y)| \] For all \( y \in h(\Omega_X) \), and this is essentially some sort of change-of-variable theorem.</p>
+
+<h2>Joint Distribution Functions</h2>
+
+<p>Obviously, we can joint random variables together. For random variables \( X \) and \( Y \), we can always define the <b>joint CDF</b> as \( F(a, b) = P\{ X \le a, Y \le b \} \) for \( -\infty \lt a, b \lt \infty \), where \( \{ X \le a, Y \le b \} \) just means \( \{ X \le a \} \cap \{ Y \le b \} \). The <b>marginal CDF</b> for \( X \) and \( Y \) respectively can be computed as \( F_X(a) = F(a, \infty) \) and \( F_Y(b) = F(\infty, b) \). More technically, \( F_X(a) = P \{ X = a \} = P \left( \lim_{b \to \infty} \{ X \le a, Y \le b \} \right) = \lim_{b \rightarrow \infty} (P \{ X \le a, Y \le b \} ) = F (a, \infty) \), which we can pass the limit outside because \( P \) is continuous here (as it is a riemann integral). </p>
+
+<p>When both \( X \) and \( Y \) are discrete, we may define the <b>joint PMF</b> as \( p(x, y) = P \{ X = x, Y = y \} \). The <b>marginal PMF</b> can be obtained in a similar manner as above.</p>
+
+<p>How about <b>joint PDF</b>? Unfortunately, it does not always exists: For example, for \( X \sim \text{Uniform}(0, 1) \) and \( Y = X \), the joint PDF of \( X \) and \( Y \) does not exists, since the joint CDF is zero! We say \( X \) and \( Y \) are <b>jointly continuous</b> when there exists a function \( f(x, y) \) such that for any measurable set \( C \subset \mathbb{R}^2 \), we have \[ P\{ (X, Y) \in C \} = \iint_{C} f(x, y) \, dx \, dy \] Which then we may derive that \( f(a, b) = \frac{\partial^2}{\partial a \partial b} F(a, b) \) and the <b>marginal PDF</b> as \( f_X(x) = \int_{-\infty}^{\infty} f(x, y) \, dy \) and \( f_Y(y) = \int_{-\infty}^{\infty} f(x, y) \, dx \).</p>
+
+<h3>Independent Random Variables</h3>
+
+<p>Similar to the case for events (which essentially is binary random variables), we say two random variables \( X \) and \( Y \) are <b>independent</b> whenever for all \( A, B \subset \mathbb{R} \), we have \[ P\{ X \in A, Y \in B \} = P\{ X \in A \} P \{Y \in B \} \] Which is equivalent to \[ P\{ X \le a, Y \le b \} = P\{ X \le a \} P \{ Y \le b \} \] for all \( a, b \in \mathbb{R} \), or equivalently \( F(a, b) = F_X(a) F_Y(b) \). (The proof is non-trivial so is not covered.) In the case of both \( X \) and \( Y \) are discrete, clearly above is equivalent to \( p(x, y) = p_X(x) p_Y(y) \) for all \( x, y \), whereas for the case of jointly continuous the above is equivalent to \( f(x, y) = f_X(x) f_Y(y) \).</p>
+
+<h3>Sum of Independent Random Variables</h3>
+
+<p>For independent variables \( X \) and \( Y \), we have \( F_{X + Y}(a) = P\{ X + Y \le a \} = \int_{-\infty}^{\infty} F_X(a - y) f_Y(y) \, dy \), which \( F_{X + Y} \) is called the <b>convolution</b> of \( F_X \) and \( F_Y \). Differentiating \( F_{X + Y}(a) \) gives \( f_{X + Y}(a) = \int_{-\infty}^{\infty} f_X(a - y) f_Y(y) \, dy \) naturally. Using this, we may show that for \( X_i \sim \text{Uniform}(0, 1) \) independent and \( F_n(x) = P \{ \sum X_i \le x \} \), then \( F_n(x) = \frac{x^n}{n!} \) when \( 0 \le x \le 1 \).</p>
+
+<p>An interesting corollary is about normal random variables. Suppose \( X_i \sim \text{Normal}(\mu_i, \sigma_i^2) \) are independent, then turns out \( \sum X_i \sim \text{Normal}(\sum \mu_i, \sum \sigma_i^2) \). Why is that the case? It suffices to show for the case of two random variables, say \( X \sim \text{Normal}(0, \sigma_X^2) \) and \( Y \sim \text{Normal}(0, \sigma_Y^2) \). Then \( f_{X + Y}(a) = \int_{-\infty}^\infty f_X(a - y) f_Y(y) \, dy = \frac{1}{2 \pi} \int_{-\infty}^{\infty} \exp \frac{-(a - y)^2}{2 \sigma_X^2} \exp \frac{-y^2}{2 \sigma_Y^2} \, dy \) and it suffices to show that \[ \int_{-\infty}^\infty \exp \left( \frac{-(a-y)^2}{2 \sigma_X^2} + \frac{-y^2}{2 \sigma_Y^2}\right) = \sqrt{2 \pi} \exp \frac{a^2}{2(\sigma_X^2 + \sigma_Y^2)} \]</p>

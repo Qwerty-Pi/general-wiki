@@ -181,8 +181,12 @@
 
 <p>An interesting corollary is about normal random variables. Suppose \( X_i \sim \text{Normal}(\mu_i, \sigma_i^2) \) are independent, then turns out \( \sum X_i \sim \text{Normal}(\sum \mu_i, \sum \sigma_i^2) \). Why is that the case? It suffices to show for the case of two random variables, say \( X \sim \text{Normal}(0, \sigma_X^2) \) and \( Y \sim \text{Normal}(0, \sigma_Y^2) \). Then \( f_{X + Y}(a) = \int_{-\infty}^\infty f_X(a - y) f_Y(y) \, dy = \frac{1}{2 \pi} \int_{-\infty}^{\infty} \frac{1}{\sigma_X \sigma_Y} \exp \frac{-(a - y)^2}{2 \sigma_X^2} \exp \frac{-y^2}{2 \sigma_Y^2} \, dy \), which means it suffices to show \[ \frac{1}{2 \pi \sigma_X \sigma_Y} \int_{-\infty}^{\infty} \exp \frac{-(a - y)^2}{2 \sigma_X^2} \exp \frac{-y^2}{2 \sigma_Y^2} \, dy \] and \[ \frac{1}{\sqrt{2 \pi (\sigma_X^2 + \sigma_Y^2)} } \exp \frac{-a^2}{2(\sigma_X^2 + \sigma_Y^2)} \] are equivalent. This is obviously trivial; let \( \sigma_{X + Y} = \sqrt{\sigma_X^2 + \sigma_Y^2} \), then \( \dfrac{-(a - y)^2}{2\sigma_X^2} + \dfrac{-y^2}{2 \sigma_Y^2} = \dfrac{-(a - y)^2 \sigma_Y^2 - y^2 \sigma_X^2}{2 \sigma_X^2 \sigma_Y^2} = \dfrac{\dfrac{-a^2 \sigma_X^2 \sigma_Y^2}{\sigma_{X + Y}^2} - \left(\dfrac{a \sigma_Y^2}{\sigma_{X + Y}} - y \sigma_{X + Y}\right)^2}{2 \sigma_X^2 \sigma_Y^2} \), and so by offsetting \( y \), we are computing \[ \dfrac{1}{2 \pi \sigma_X \sigma_Y} \exp \frac{-a^2}{2 \sigma_{X + Y}^2} \int_{-\infty}^{\infty} \exp -\frac{\sigma_{X + Y}^2}{2 \sigma_X^2 \sigma_Y^2} y^2 \, dy \] which by <b>Guassian Integral</b> we are done.</p>
 
-<h2>Conditional Distribution Functions</h2>
+<h3>Conditional Distribution Functions</h3>
 
+<p>Previously we have discussed about conditional events. How about conditionals on random variables? In the discrete case the definition of <b>conditional PMF</b> is apparent - simply \[ p_{X|Y} (x|y) = P\{ X = x | Y = y\} = \frac{p(x, y)}{p_Y(y)} \] Where we require \( p_Y(y) \gt 0 \). Similarly, the <b>conditional CDF</b> is defined as \[ F_{X|Y}(a|y) = \sum_{x \le a} p_{X|Y}(x|y)\] How about the jointly continuous case? Analogously, we define the <b>conditional PDF</b> as \[ f_{X|Y}(x|y) = \frac{f(x, y)}{f_Y(y)} \] and the <b>conditional CDF</b> as \[ F_{X|Y}(a|y) = \int_{-\infty}^a f_{X|Y}(x|y)\, dx \] Requiring \( f_Y(y) \gt 0 \).</p>
 
+<h3>PDF of bivariate functions</h3>
+
+<p></p>
 
 </body>

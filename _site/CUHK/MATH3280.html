@@ -58,6 +58,8 @@
 
 	<span style="display: none">
 \(
+\def\Var{\text{Var}}
+\def\SD{\text{SD}}
 \)
 </span>
 
@@ -67,7 +69,7 @@
 
 <h2>Probability Space</h2>
 
-<p>Consider any <b>experiment</b> where the <b>outcome</b> is uncertain. The <b>sample space</b> \( S \) is defined as the set of all possible <b>outcomes</b>, where any subset \( E \subset S \) is called as an <b>event</b>. With events, we may introduce notations such as \( E \cup F \) (union), \( E \cap F \) or equivalently \( EF \) (intersection), \( \bigcup_{n = 1}^{\infty} E_n \), \( \bigcap_{n = 1}^{\infty} E_n \), \( E \subset F \) (subset) and \( E^c \) (complement), which essentially just set notations.</p>
+<p>Consider any <b>experiment</b> where the <b>outcome</b> is uncertain. The <b>sample space</b> \( \Omega \) is defined as the set of all possible <b>outcomes</b>, where any subset \( E \subset \Omega \) is called as an <b>event</b>. With events, we may introduce notations such as \( E \cup F \) (union), \( E \cap F \) or equivalently \( EF \) (intersection), \( \bigcup_{n = 1}^{\infty} E_n \), \( \bigcap_{n = 1}^{\infty} E_n \), \( E \subset F \) (subset) and \( E^c \) (complement), which essentially just set notations.</p>
 
 <h3>Axioms of Probability</h3>
 
@@ -76,7 +78,7 @@
 <p>Axiomatically, probability is defined as a function $P$ that maps from <b>event space</b> to \( \mathbb{R} \), where
 <ol>
 <li>For every event \( E \), \( 0 \le P(E) \le 1 \),</li>
-<li>\( P(S) = 1 \) for sample space \( S \),</li>
+<li>\( P(\Omega) = 1 \) for sample space \( \Omega \),</li>
 <li>For <b>countable</b> (possibly infinite) collection \( \{ E_i \} \) of mutually exclusive events, we have \( P(\bigcup E_i) = \sum P(E_i)\).</li>
 </ol>
 </p>
@@ -91,7 +93,7 @@
 
 <p>One of the key concepts revolving conditional probability is the <b>Baye's Formula</b>: Let's say we already know for events \( E \) and \( F \) the probabilities \( P(E) \), \( P(F|E^c) \) and \( P(F|E) \), what would the conditional probability \( P(E | F) \) be? You may imagine \( E \) represents a <b>hypothesis</b> and \( F \) represents an <b>test</b>; then we would want to know what the probability that the hypothesis holds is, given that the test returns positive.</p>
 
-<p>The <b>Baye's Formula</b> or the <b>law of total probability</b> is simply \[ P(F) = \sum_i P(E_i) \cdot P(F|E_i) \] where \( \{ E_i \} \) partitions the sample space \( S \). With this, we can compute \( P(E | F) \) as \[ P(E | F) = \frac{P(F | E)P(E)}{P(F | E)P(E) + P(F | E^c)P(E^c)}\] Which is just simple algebraic manipulations.</p>
+<p>The <b>Baye's Formula</b> or the <b>law of total probability</b> is simply \[ P(F) = \sum_i P(E_i) \cdot P(F|E_i) \] where \( \{ E_i \} \) partitions the sample space \( \Omega \). With this, we can compute \( P(E | F) \) as \[ P(E | F) = \frac{P(F | E)P(E)}{P(F | E)P(E) + P(F | E^c)P(E^c)}\] Which is just simple algebraic manipulations.</p>
 
 <h3>Independent Events</h3>
 
@@ -103,10 +105,46 @@
 
 <h2>Random Variables</h2>
 
-<p>Sometimes, we wish to assign values to each of the outcome, say sum of the dots on the dice. We may introduce the concept of <b>random variables</b> as \( X : S \rightarrow \mathbb{R} \), a real-valued function with sample space as the domain. The <b>image</b> of \( X \) is denoted as \( S_X \). When \( S_X \) is at most countable, then we call \( X \) <b>discrete</b>, and <b>continuous</b> otherwise.</p>
+<p>Sometimes, we wish to assign values to each of the outcome, say sum of the dots on the dice. We may introduce the concept of <b>random variables</b> as \( X : \Omega \rightarrow \mathbb{R} \), a real-valued function with sample space as the domain. The image of \( X \) is denoted as \( \Omega_X \). When \( \Omega_X \) is at most countable, then we call \( X \) <b>discrete</b>, and <b>continuous</b> otherwise. Examples of random variables include the <b>indicator variable</b> \( 1_A \) of an event, which takes value \( 1 \) when event \( A \) occurs, and \( 0 \) otherwise.</p>
+
+<p>The treatment for discrete and continuous random variables are slightly different, due to say the summation of uncountable positive values is always unbounded. However, the main constructs like expected values and variance are the same concept, as demonstrated below.</p>
 
 <h3>Discrete Random Variables</h3>
 
+<p>What if the random variable \( X \) is discrete? In such case, we may define the <b>probability mass function</b>, or <b>PMF</b>, as \[ p(a) = P\{ X = a \} \] for all \( a \in \Omega_X \). Obviously for \( S_X = \{ x_i \} \) countable, we have \( p(x_i) \ge 0 \) and \( \sum p(x_i) = 1 \) since the events \( \{ X = x_i \} \) form a partition of \( \Omega \). </p>
 
+<p>We may define the <b>cumulative distribution function</b>, or <b>CDF</b>, as simply \[ F(a) = \sum_{x \le a} p(x) \] Obviously \( F \) is a step function.</p>
+
+<h4>Expected Values and Variance</h4>
+
+<p>What can we infer from the PMF \( p \)? First, the <b>expected value</b> or expectation, \( E[X] \) is defined as \[ E[X] = \sum_{x} x \cdot p(x) \] Which intuitively is the <b>weighted average</b> of the random variable \( X \). (Note: I believe the definition \( E[X] = \sum_{s \in \Omega} p(s) \cdot P(\{s\}) \) is wrong, since \( \Omega \) can be uncountable)</p>
+
+<p>For any function \( g : \mathbb{R} \rightarrow \mathbb{R} \), obviously \( g(X) = g \circ X : S \rightarrow \mathbb{R} \) is a random variable as well. Clearly \[ E[g(X)] = \sum_{x} g(x) \cdot p(x) \] To formally prove this, one may introduce another random event \( Y = g(X) \) and manipulate summations. Clearly we have \( E[aX + b] = a E[X] + b \) and \( E[X + Y] = E[X] + E[Y] \), which the proofs are trivial (but rely on the countability of \( \Omega_X \) and \( \Omega_Y \)).</p>
+
+<p>By denoting \( \mu = E[X] \), the <b>variance</b> of \( X \) is defined as \[ \Var(X) = E[(X - \mu)^2] = E[X^2] - \mu^2\] As an indicator of how \( X \) "spreads away" from the mean \( \mu \). We have \( \Var(aX + b) = a^2 \Var(X) \) via simple computations, and the <b>standard deviation</b> \( \sigma_X = \SD(X) \) is defined as \( \sqrt{\Var(X)} \), which is well-defined since \( \Var(X) \) is always positive.</p>
+
+<h4>Standard Examples</h4>
+
+<p>There are four examples of random variables that are frequently used: <b>Bernoulli</b>, <b>Binomial</b>, <b>Poisson</b> and <b>Geometric</b>.</p>
+
+<p>First, Bernoulli. Suppose the outcome of an experiment is either success or failure, and consider the random variable \( X \) where \( X = 1 \) when success and \( X = 0 \) when failure. If the probability of success is \( p \), then we have the PMF of \( X \) as \[ p(x) = \begin{cases} p & \text{if } x = 1 \\ 1 - p & \text{if } x = 0 \end{cases} \] We denote this as \( X \sim \text{Bernoulli}(p) \). Obviously we have \( E[X] = p \) and \( \Var(X) = p(1 - p) \).</p>
+
+<p>Second, Binomial. What if we repeat the Bernoulli trial for \( n \) times, and let the random variable \( X \) refers to the number of successes? Obviously we have \( P\{ X = r \} = \binom{n}{r} p^r (1 - p)^{n - r} \), so the PMF of \( X \) is \[ p(r) = \binom{n}{r} p^r (1 - p)^{n - r} \text{ for } r = 0, \dots, n \] We denote this as \( X \sim \text{Binomial}(n, p) \). With linearity of expected value and variance (of independent events), we have \( E[X] = np \) and \( \Var(X) = np(1 - p) \).</p>
+
+<p>Third, Poisson. The binomial one is somewhat complicated to compute - turns out we can approximate it pretty well simply when \( n \) is large, \( p \) is small and \( \lambda = np \) moderate. We have \( P\{ X = r \} = \frac{n^{\underline{r}}}{r!} \left( \frac{\lambda}{n - \lambda}\right)^r \left( 1 - \frac{\lambda}{n} \right)^n \approx e^{-\lambda} \frac{\lambda^r}{r!} \), and so we may consider the PMF where \[ p(r) = e^{-\lambda} \frac{\lambda^r}{r!} \text{ for } r \in \mathbb{Z}_{\ge 0}\] as an approximation of \( \text{Binomial}(n, p) \), and denotes as \( \text{Poisson}(\lambda) \). Being a limiting case of binomial, we naturally have \( E[X] = \Var(X) = \lambda \), which can be shown via simple computations (or, well, generating functions; its gf is \( e^{\lambda(x - 1)} \)).</p>
+
+<p>Finally, Geometric. This random variable is essentially the number of trials needed if we repeat until succeed. If the success probability is \( p \), we clearly have \( P\{ X = r \} = p(1 - p)^{r - 1} \) for \( r \ge 1 \), and so the PMF is \[ p(r) = p(1 - p)^{r - 1} \text{ for } r \in \mathbb{Z}_{\ge 1}\] This is denoted as \( \text{Geometric}(p) \), where \( E[X] = \frac{1}{p} \) and \( \Var(X) = \frac{1 - p}{p^2} \). (Its gf is \( \frac{px}{1 - (1 - p) x}\).)</p>
+
+<h3>Continuous Random Variables</h3>
+
+<p>A <b>continuous random variable</b> \( X: \Omega \rightarrow \mathbb{R} \) is such where for all measurable set \( B \), we have \[ P\{ X \in B \} = \int_B f(x) \, dx \] for some function \( f : \mathbb{R} \rightarrow \mathbb{R}_{\ge 0} \), which is called the <b>probability density function</b> or <b>PDF</b> (reference to physics). With such assumption, by taking \( B = [a, b] \) we have \[ P\{ a \le X \le b \} = \int_a^b f(x) \, dx \] and so \( P\{ X = a \} = 0 \) for any \( a \in \mathbb{R} \), which implies the closeness at the endpoints should not affect the probability. Of course, we require \[ 1 = P\{ -\infty \lt X \lt \infty \} = \int^{\infty}_{-\infty} f(x) \, dx \]</p>
+
+<h4>Expected Values and Variances</h4>
+
+<p>Naturally, we define the expected value for a continuous random variable \( X \) as \[ E[X] = \int_{-\infty}^{\infty} x f(x) \, dx \] Analogous to the discrete case, we may show \[ E[g(X)] = \int_{-\infty}^{\infty} g(x) f(x) \, dx \] Unfortunately, the proof is somewhat complicated and will be omitted here. One of the interesting identity is that for non-negative continuous \( Y \), we have \[ E[Y] = \int_0^\infty P\{Y \gt y\} \, dy \] Since \( \int_0^\infty P\{ Y \gt y \} \, dy = \int_0^\infty \int_y^\infty f_Y(x) \, dx \, dy = \int_0^\infty (\int_0^x 1 \, dy) \cdot f_Y(x) \, dx = \int_0^\infty x f_Y(x) \, dx \) by Fubini and the assumption that \( f_Y \) is integrable.</p>
+
+<h4>Standard Examples</h4>
+
+<p></p>
 
 </body>

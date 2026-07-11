@@ -108,7 +108,7 @@
 
 <h3>Random Variables</h3>
 
-<p>Sometimes, we wish to assign values to each of the outcome, say sum of the dots on the dice. We may introduce the concept of <b>random variables</b> as \( X : \Omega \rightarrow \mathbb{R} \), a real-valued function with sample space as the domain. The image of \( X \) is denoted as \( \Omega_X \). When \( \Omega_X \) is at most countable, then we call \( X \) <b>discrete</b>, and <b>continuous</b> otherwise. Examples of random variables include the <b>indicator variable</b> \( 1_A \) of an event, which takes value \( 1 \) when event \( A \) occurs, and \( 0 \) otherwise.</p>
+<p>Sometimes, we wish to assign values to each of the outcome, say sum of the dots on the dice. We may introduce the concept of <b>random variables</b> as \( X : \Omega \rightarrow \mathbb{R} \), a real-valued function with sample space as the domain. The image of \( X \) is denoted as \( \Omega_X \). When \( \Omega_X \) is at most countable, then we call \( X \) <b>discrete</b>, and <b>continuous</b> otherwise. Examples of random variables include the <b>indicator variable</b> \( I(A) \) of an event, which takes value \( 1 \) when event \( A \) occurs, and \( 0 \) otherwise.</p>
 
 <p>The treatment for discrete and continuous random variables are slightly different, due to say the summation of uncountable positive values is always unbounded. However, the main constructs like expected values and variance are the same concept, as demonstrated below.</p>
 
@@ -204,6 +204,38 @@
 
 <p>With the notion of covariance, we may write \( \Var(\sum X_i) = \Cov(\sum X_i, \sum X_i) = \sum \Var(X_i) + 2 \sum_{i \lt j} \Cov(X_i, X_j) \), and so for <b>pairwise independent</b> random variables, we have \[ \Var\left(\sum X_i\right) = \sum \Var(X_i) \]</p>
 
+<p>With covariance, we may define the <b>correlation</b> between two random variables \( X \) and \( Y \) as \[ \rho(X, Y) = \frac{\Cov(X, Y)}{\sqrt{\Var(X) \Var(Y)}}\] One may observe that \( \Cov \) is an <b>inner product</b> over the space of random variables, quotient by constants (in order to make it positive-definite). So naturally, we have \( -1 \le \rho(X, Y) \le 1 \), and that \( \rho(X, Y) = \pm 1 \iff Y = \pm aX + b \) for \( a \in \mathbb{R}^+ \). We say \( X \) and \( Y \) are <b>positively correlated</b>, <b>negatively correlated</b> and <b>uncorrelated</b> when \( \rho(X, Y) \gt 0 \), \( \rho(X, Y) \lt 0 \) and \( \rho(X, Y) = 0 \) respectively.</p>
+
 <h3>Sampling</h3>
+
+<p>Suppose you sample \( X_1, \dots, X_n \) which are <b>independent</b> and <b>identically distributed</b> random variables, where \( E[X_i] = \mu \) and \( \Var(X_i) = \sigma^2 \). Turns out we can compute the <b>sample mean</b> \[ \overline{X} = \frac{1}{n} \sum_{i=1}^n X_i \] and <b>sample variance</b> \[ S^2 = \frac{1}{n - 1} \sum_{i = 1}^n (X_i - \overline{X})^2 \] and approximate the original: First, we have \( E[\overline{X}] = \mu \) and \( \Var(\overline{X}) = \frac{\sigma^2}{n} \), both by linearity. Next, \( (n - 1) S^2 = \sum [(X_i - \mu)^2 + (\overline{X} - \mu)^2 - 2 (X_i - \mu) (\overline{X} - \mu)] \), so \( E[(n - 1) S^2] = n \sigma^2 - n \Var(\overline{X}) = (n - 1) \sigma^2 \) and \( E[S^2] = \sigma^2 \).</p>
+
+<h3>Moment Generating Function</h3>
+
+<p>The <b>moment generating function</b> is defined as \[ M(t) = E[e^{tX}] \] As the name sounds, we may generate the moments of \( X \) noting \( M^{(k)}(t) = E[X^k e^{tX}] \) and so \( M^{(k)}(0) = E[X^k] \) computes the \( k \)-th moment. For instance, for \( X \sim \text{Binomial}(n, p) \), \( M(t) = E[e^{tX}] = (pe^t + (1 - p))^n \) which \( M'(0) = E[X] = np \) and \( M''(0) = E[X^2] = n(n - 1)p^2 - np^2 \). Similarly, for \( X \sim \text{Poisson}(\lambda) \) we have \( M(t) = \exp\{ \lambda (e^t - 1) \} \).</p>
+
+<p>Note that for <b>independent</b> \( X \) and \( Y \), we have \( M_{X + Y}(t) = M_X(t) M_Y(t) \). We may prove the sum of two independent normal distributions is again normal distribution via this trivially. First note that for \( Z \sim \text{Normal}(0, 1) \), we have \( M_Z(t) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} e^{tx} e^{-x^2/2} \, dx = \exp \frac{t^2}{2} \), and so for \( X = \mu + \sigma Z \) we have \[ M_X(t) = \exp \left\{ \frac{\sigma^2 t^2}{2} + \mu t \right\} \] Which the rest readily follows.</p>
+
+<h3>Conditional Expectations</h3>
+
+<p>Naturally, we may define the <b>conditional expectation</b> as \[ E[X | Y = y] = \int_{-\infty}^\infty x f_{X|Y} (x|y) \, dx \] In a sense, we may treat conditionals as a reduced sample space restricted to the event \( \{ Y = y \} \), and so formulae for say \( E[g(X) | Y = y] \) or linearity of expectations remains valid.</p>
+
+<p>Note that \( E[X|Y] \) is itself a random variable as well, which for each outcome \( s \), \( E[X|Y](s) = E[X|Y=Y(s)] \). Trivially, we have \( E[E[X|Y]] = E[X] \), which arguably is just a cooler way to write the expected value version of the Baye's formula. </p>
+
+<h3>Limit Theorems</h3>
+
+<p>Finally, we wish to show that if we repeat the same distribution enough times, the average converges to the mean, and the distribution tends to the normal distribution. We would introduce some estimates and use those to prove results.</p>
+
+<p>First of all, we have the <b>Markov's inequality</b>: For random variable \( X \) which only takes non-negative values, then for \( a \gt 0 \) we have \[ P\{ X \ge a \} \le \frac{E[X]}{a} \] Letting \( I = [X \ge a] \), then \( \frac{X}{a} \ge I \), and so \( \frac{E[X]}{a} \ge E[I] = P\{ X \ge a \} \).</p>
+
+<p>Next, we have <b>Chebyshev's inequality</b>: For random variable \( X \) where \( E[X] = \mu \) and \( \Var(X) = \sigma^2 \), then for all \( k \gt 0 \), we have \[ P\{ |X - \mu| \ge k \} \le \frac{\sigma^2}{k^2} \] Turns out the proof is very elegant: Note that \( P\{ |X - \mu| \ge k \} = P\{ (X - \mu)^2 \ge k^2 \} \) and that \( E[(X - \mu)^2] = \sigma^2 \), so ths immediately follows readily from the Markov's inequality. With Markov and Chebyshev, we may bound probabilities (weakly) simply base on the mean and variance. An interesting corollary of Chebyshev is that, if \( \Var(X) = 0 \), then \( X \) must be constant with Chebyshev's inequality.</p>
+
+<p>Now, let's introduce the <b>weak law of large numbers</b>: Let \( \{ X_i \} \) be a sequence of independent and identically distributed random variables where \( E[X_i] = \mu \) finite, then for any \( \varepsilon \gt 0 \), as \( n \to \infty \), \[ P \left\{ |\overline{X_n} - \mu| \ge \varepsilon \right\} \rightarrow 0 \] Noting \( E[\overline{X_n}] = \mu \) and \( \Var(\overline{X_n}) = \frac{\sigma^2}{n} \), and so by Chebyshev we have \[ P \left\{ |\overline{X_n} - \mu| \ge \varepsilon \right\} \le \frac{\sigma^2}{n \varepsilon^2}\]</p>
+
+<p>Finally, the <b>central limit theorem</b>. Again let \( \{ X_i \} \) be a sequence of independent and identically distributed random variables where \( E[X_i] = \mu \) and \( \Var(X_i) = \sigma^2 \). Then as \( n \rightarrow \infty \), \[ \frac{\sum X_i - n \mu}{\sqrt{n} \sigma} \rightarrow \text{Normal}(0, 1)\]</p>
+
+<p>How may we prove the CLT? We assume a lemma that \( M_{Z_n}(t) \rightarrow M_Z(t) \) for all \( t \), then \( F_{Z_t}(t) \rightarrow F_Z(t) \) for all \( t \) where \( F_Z(t) \) is continuous. Assume the moment generating function of \( X_i \) is \( M(t) \) finite, and first consider the case where \( \mu = 0 \) and \( \sigma^2 = 1 \). Then the gf of \( \frac{\sum X_i}{\sqrt{n}} \) is \( [M(t/\sqrt{n})]^n \). Taking \( L(t) = \log M(t) \), we have \( \lim_{n \to \infty} n L(t/\sqrt{n}) = \lim_{n \to \infty} \frac{\frac{-t}{2} L'(t/\sqrt{n})}{-n^{-2} \cdot n^{3/2}} = \lim_{n \to \infty} \frac{t L'(t/\sqrt{n})}{2 / \sqrt{n}} = \lim_{n \to \infty} \frac{t^2 L''(t/\sqrt{n})}{2} = \frac{t^2}{2} L''(0) = \frac{t^2}{2} \) And so \( [M(t/\sqrt{n})]^n \rightarrow \exp \frac{t^2}{2} \) as \( n \to \infty \). The general case follows readily by simply writing \( X_i = \sigma Z_i + \mu \), where \( E[Z_i] = 0 \) and \( \Var(Z_i) = 1 \).</p>
+
+<p>More generally, for any sequence of independent random variables where \( E[X_i] = \mu_i \) and \( \Var(X_i) = \sigma_i^2 \), \( X_i \) is uniformly bounded and \( \sum \sigma_i^2 \rightarrow \infty \), then we have as \( n \to \infty \), \[ P\left\{ \frac{\sum (X_i - \mu_i)}{\sqrt{\sum \sigma_i^2} } \le a \right\} \rightarrow \Phi(a) \]</p>
 
 </body>

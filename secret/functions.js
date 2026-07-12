@@ -29,9 +29,9 @@ function getQuestionContent(identifier, data, answer = null) {
     /* modify images so that the colours match those of backgrounds and texts */
     content.find("img").each(function (idx) {
         let src = $(this).attr('src')
-        let container = $("<div>").addClass("image-container")
+        let container = $("<div>").addClass("image-container").css("mask-image", `url(${src})`)
         .append($("<div>").addClass("image-mask").css("mask-image", `url(${src})`))
-        .append($("<div>").addClass("image-inset"))
+	.append($("<div>").addClass("image-inset"))
         .append($("<img>").attr('src', src).addClass("image-placeholder"))
         $(this).replaceWith(container)
     })

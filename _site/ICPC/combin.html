@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script>
+		window.MathJax = {
+			tex: {
+				inlineMath: {'[+]': [['$', '$']]},
+				processEscapes: true
+			},
+			output: {
+				scale: 1.00
+			},
+			options: {
+				menuOptions: {
+					settings: {
+						enrich: false
+					}
+				}
+			}
+		}
+	</script>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="/assets/index.css">
+	<script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
+	<script src="/assets/function.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Cascadia Code">
+	<link href='https://fonts.googleapis.com/css?family=Lexend' rel='stylesheet'>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=palette" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+	<meta content="width=device-width, initial-scale=1" name="viewport"/>
+</head>
+<body>
+    <!-- it works...? -->
+    <div id="style-popover" popover>
+        <div>Colour Mode</div> <div>
+            <select id="mode">
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+                <option value="what">???</option>
+                <option value="custom">Custom</option>
+            </select>
+        </div>
+        <div>Text Colour</div> <div><input id="text-color" type="color" /></div>
+        <div>Background Colour</div> <div><input id="background-color" type="color" /></div>
+        <div>Font Family</div> <div>
+            <select id="font-family">
+                <option value="code">Cascadia Code</option>
+                <option value="times">Times New Roman</option>
+                <option value="sans">Source Sans 3</option>
+                <option value="lexend">Lexend</option>
+                <option value="consolas">Consolas</option>
+            </select>
+        </div>
+    </div>
+
+	<h1>Combinoratics</h1>
+
+<h3>Bernoulli Number</h3>
+
+\[
+
+\begin{align*}
+
+ & 0^m + 1^m + 2^m + \dots + (n - 1)^m \\
+ = \quad & \left[ \frac{x^m}{m!} \right] \left\{ 1 + e^x + \cdots + e^{(n - 1)x} \right\} \\
+ = \quad & \left[ \frac{x^m}{m!} \right] \left\{ \frac{e^{nx} - 1}{e^x - 1} \right\} \\
+ = \quad & \frac{1}{m + 1} \left[ \frac{x^{m + 1}}{(m + 1)!} \right] \left( \frac{x}{e^x - 1} \right) (e^{nx} - 1) \\
+ = \quad & \frac{1}{m + 1} \left[ \frac{x^{m + 1}}{(m + 1)!} \right] B(x) (e^{nx} - 1) \\
+ = \quad & \frac{1}{m + 1} \sum_{r = 1}^{m + 1} B_{m + 1 - r} \cdot n^r \\
+\end{align*}
+\]
+
+</body>

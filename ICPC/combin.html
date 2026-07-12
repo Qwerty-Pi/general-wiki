@@ -1,0 +1,19 @@
+---
+layout: default
+---
+<h1>Combinoratics</h1>
+
+<h3>Bernoulli Number</h3>
+
+\[
+
+\begin{align*}
+
+ & 0^m + 1^m + 2^m + \dots + (n - 1)^m \\
+ = \quad & \left[ \frac{x^m}{m!} \right] \left\{ 1 + e^x + \cdots + e^{(n - 1)x} \right\} \\
+ = \quad & \left[ \frac{x^m}{m!} \right] \left\{ \frac{e^{nx} - 1}{e^x - 1} \right\} \\
+ = \quad & \frac{1}{m + 1} \left[ \frac{x^{m + 1}}{(m + 1)!} \right] \left( \frac{x}{e^x - 1} \right) (e^{nx} - 1) \\
+ = \quad & \frac{1}{m + 1} \left[ \frac{x^{m + 1}}{(m + 1)!} \right] B(x) (e^{nx} - 1) \\
+ = \quad & \frac{1}{m + 1} \sum_{r = 1}^{m + 1} B_{m + 1 - r} \cdot n^r \\
+\end{align*}
+\]

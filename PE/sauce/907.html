@@ -1,0 +1,28 @@
+<p>
+An infant's toy consists of $n$ cups, labelled $C_1,\dots,C_n$ in increasing order of size.
+</p>
+<img src="resources/images/0907_four_cups.png?1723769212" alt="0907_four_cups.png" height="162">
+<p>
+The cups may be stacked in various combinations and orientations to form towers. The cups are shaped such that the following means of stacking are possible:
+</p>
+<ul>
+<li>Nesting: $C_k$ may sit snugly inside $C_{k+1}$.<br>
+<img src="resources/images/0907_nesting.png?1723769266" alt="0907_nesting.png" height="150">
+</li>
+
+<li>Base-to-base: $C_{k+2}$ or $C_{k-2}$ may sit, right-way-up, on top of an up-side-down $C_k$, with their bottoms fitting together snugly.<br>
+<img src="resources/images/0907_base_to_base.png?1723769276" alt="0907_base_to_base.png" height="198">
+</li>
+<li>Rim-to-rim: $C_{k+2}$ or $C_{k-2}$ may sit, up-side-down, on top of a right-way-up $C_k$, with their tops fitting together snugly.<br>
+<img src="resources/images/0907_rim_to_rim.png?1723769283" alt="0907_rim_to_rim.png" height="198">
+</li>
+<li>For the purposes of this problem, it is <b>not</b> permitted to stack <b>both</b> $C_{k+2}$ and $C_{k-2}$ rim-to-rim on top of $C_k$, despite the schematic diagrams appearing to allow it:<br>
+<img src="resources/images/0907_rim_to_rim_counter_example.png?1740699245" alt="0907_rim_to_rim_counter_example.png" height="267"><br>
+</li></ul>
+<p>
+Define $S(n)$ to be the number of ways to build a single tower using all $n$ cups according to the above rules.<br>
+You are given $S(4)=12$, $S(8)=58$, and $S(20)=5560$.
+</p>
+<p>
+Find $S(10^7)$, giving your answer modulo $1\,000\,000\,007$.
+</p>

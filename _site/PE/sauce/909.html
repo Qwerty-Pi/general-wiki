@@ -1,0 +1,26 @@
+<p>
+An <dfn>L-expression</dfn> is defined as any one of the following:</p>
+<ul>
+<li>a natural number;</li>
+<li>the symbol $A$;</li>
+<li>the symbol $Z$;</li>
+<li>the symbol $S$;</li>
+<li>a pair of L-expressions $u, v$, which is written as $u(v)$.</li>
+</ul>
+
+<p>
+An L-expression can be transformed according to the following rules:</p>
+<ul>
+<li>$A(x) \to x + 1$ for any natural number $x$;</li>
+<li>$Z(u)(v) \to v$ for any L-expressions $u, v$;</li>
+<li>$S(u)(v)(w) \to v(u(v)(w))$ for any L-expressions $u, v, w$.</li>
+</ul>
+<p>
+For example, after applying all possible rules, the L-expression $S(Z)(A)(0)$ is transformed to the number $1$:
+$$S(Z)(A)(0) \to A(Z(A)(0)) \to A(0) \to 1.$$
+Similarly, the L-expression $S(S)(S(S))(S(Z))(A)(0)$ is transformed to the number $6$ after applying all possible rules.</p>
+
+<p>
+Find the result of the L-expression $S(S)(S(S))(S(S))(S(Z))(A)(0)$ after applying all possible rules. Give the last nine digits as your answer.</p>
+
+<p class="note"><b>Note:</b> it can be proved that the L-expression in question can only be transformed a finite number of times, and the final result does not depend on the order of the transformations.</p>

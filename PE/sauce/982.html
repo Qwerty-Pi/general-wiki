@@ -1,0 +1,34 @@
+<p>
+Alice and Bob play the following game with two six-sided dice (numbered $1$ to $6$):
+</p>
+<ol>
+<li>Alice rolls both dice; she can see the rolled values but Bob cannot</li>
+<li>Alice chooses one of the dice and reveals it to Bob</li>
+<li>Bob chooses one of the dice: either the one he can see, or the one he cannot</li>
+<li>Alice pays Bob the value shown on Bob's chosen dice</li>
+</ol>
+<p>
+Each player devises a (possibly non-deterministic) <b>strategy</b>. An example strategy for each player could be:
+</p>
+<ul>
+<li>Alice chooses to reveal the dice with value closest to $3.5$, or if both are equidistant she chooses randomly with equal probability</li>
+<li>Bob chooses the revealed dice if its value is at least $4$; otherwise he chooses the hidden dice</li>
+</ul>
+<p>
+In fact, these two strategies together form a <b>Nash equilibrium</b>. That is, given that Bob is using his strategy, Alice's strategy <b>minimises</b> the expected payment; and given that Alice is using her strategy, Bob's strategy <b>maximises</b> the expected payment.
+</p>
+<p>
+With these strategies the expected payment from Alice to Bob is $\frac{145}{36}\approx 4.027778$.
+</p>
+<p>
+To make the game more interesting, they introduce a third (six-sided) dice:
+</p>
+<ol>
+<li>Alice rolls <b>three</b> dice; she can see the rolled values but Bob cannot</li>
+<li>Alice chooses <b>two</b> of the dice and reveals both to Bob</li>
+<li>Bob chooses one of the three dice: either one of the two visible dice, or the one hidden dice</li>
+<li>Alice pays Bob the value shown on Bob's chosen dice</li>
+</ol>
+<p>
+Supposing they settle on a pair of strategies that form a Nash equilibrium, find the expected payment from Alice to Bob, and give your answer rounded to six digits after the decimal point.
+</p>

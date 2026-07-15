@@ -1,0 +1,32 @@
+<p>
+We use $x\oplus y$ for the bitwise XOR of $x$ and $y$.<br>
+Define the <dfn>XOR-product</dfn> of $x$ and $y$, denoted by $x \otimes y$, similar to a long multiplication in base $2$, except that the intermediate results are XORed instead of the usual integer addition.
+</p>
+<p>
+For example, $7 \otimes 3 = 9$, or in base $2$, $111_2 \otimes 11_2 = 1001_2$:
+</p><center>
+$$\begin{align*}
+\phantom{\otimes 111} 111_2 \\
+\otimes \phantom{1111} 11_2 \\
+\hline
+\phantom{\otimes 111} 111_2 \\
+\oplus \phantom{11} 111_2  \phantom{9} \\
+\hline
+\phantom{\otimes 11} 1001_2 \\
+\end{align*}$$
+</center>
+We consider the equation:
+<center>
+$$\begin{align}
+(a \otimes a) \oplus (2 \otimes a \otimes b) \oplus (b \otimes b) = 5
+\end{align}$$
+</center>
+
+For example, $(a, b) = (3, 6)$ is a solution.
+
+<p>
+Let $X(N)$ be the XOR of the $b$ values for all solutions to this equation satisfying $0 \le a \le b \le N$.<br> You are given $X(10)=5$.
+</p>
+<p>
+Find $X(10^{18})$.
+</p>

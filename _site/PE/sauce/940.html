@@ -1,0 +1,31 @@
+<p>
+The <b>Fibonacci sequence</b> $(f_i)$ is the unique sequence such that
+</p>
+<ul>
+<li>$f_0=0$</li>
+<li>$f_1=1$</li>
+<li>$f_{i+1}=f_i+f_{i-1}$</li>
+</ul>
+<p>
+Similarly, there is a unique function $A(m,n)$ such that
+</p>
+<ul>
+<li>$A(0,0)=0$</li>
+<li>$A(0,1)=1$</li>
+<li>$A(m+1,n)=A(m,n+1)+A(m,n)$</li>
+<li>$A(m+1,n+1)=2A(m+1,n)+A(m,n)$</li>
+</ul>
+<p>
+Define $S(k)=\displaystyle\sum_{i=2}^k\sum_{j=2}^k A(f_i,f_j)$. For example
+$$
+\begin{align}
+S(3)&amp;=A(1,1)+A(1,2)+A(2,1)+A(2,2)\\
+&amp;=2+5+7+16\\
+&amp;=30
+\end{align}
+$$You are also given $S(5)=10396$.
+</p>
+
+<p>
+Find $S(50)$, giving your answer modulo $1123581313$.
+</p>

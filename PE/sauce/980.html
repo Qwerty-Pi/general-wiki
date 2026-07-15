@@ -1,0 +1,21 @@
+<p>
+Starting from an empty string, we want to build a string with letters "x", "y", "z". At each step, one of the following operations is performed:</p>
+<ul>
+<li>insert two consecutive identical letters "xx", "yy" or "zz" anywhere into the string;</li>
+<li>replace one letter in the string with two consecutive letters, according to the rule: "x" $\to$ "yz", "y" $\to$ "zx", "z" $\to$ "xy";</li>
+<li>exchange two consecutive <b>different</b> letters in the string, e.g. "xy" $\to$ "yx", "zx" $\to$ "xz", etc.</li></ul>
+<p>
+A string is called <dfn>neutral</dfn> if it is possible to produce the string from the empty string after an <b>even</b> number of steps.</p>
+
+<p>
+We define a sequence $(a_n)_{n \ge 0}$: $a_0=88\,888\,888$ and $a_n=(8888\cdot a_{n-1})\bmod 888\,888\,883$ for $n \gt 0$.</p>
+
+<p>
+Let $b_n = a_n \bmod 3$. For each $i \ge 0$, a string $c(i)$ of length $50$ is defined by translating the finite sequence $b_{50i},b_{50i+1},\dots,b_{50i+49}$ via the rule: $0 \to$ "x", $1 \to$ "y", $2 \to$ "z".</p>
+
+<p>
+Let $F(N)$ be the number of ordered pairs $(i, j)$ with $0 \le i, j \lt N$ such that the concatenated string $c(i)c(j)$ is neutral.<br>
+For example, $F(10) = 13$ and $F(100) = 1224$.</p>
+
+<p>
+Find $F(10^6)$.</p>

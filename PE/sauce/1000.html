@@ -1,0 +1,81 @@
+<p>
+This problem contains three sub-problems and a meta-problem. Enter the answer to the meta-problem as final answer.</p>
+
+<hr>
+<p>
+<b>Sub-problem: Max And</b></p>
+
+<p>
+The numbers $1$ to $n$ are to be divided into two groups $A$ and $B$. Let $I(n)$ be the maximum possible value of $$\sum_{a\in A}\sum_{b\in B}a\wedge b$$
+where $\wedge$ is the bitwise AND operator.</p>
+
+<p>
+It can be verified that $I(10)=50$, if for example $A=\{1,4,7,10\}$ and $B=\{2,3,5,6,8,9\}$, although there are a number of other solutions as well.</p>
+
+<p>
+Find $I(1000)$.</p>
+
+<hr>
+<p>
+<b>Sub-problem: Max Xor Sum</b></p>
+
+<p>
+For two integers $x, y$, write $[x, y]$ for the bitwise XOR of $x^2$ and $y^2$.</p>
+
+<p>
+A finite sequence of integers $a_0, a_1, \dots, a_r$ satisfies the following properties:</p>
+
+<ul>
+<li>$1 \le a_i \le N$ for all $0 \le i \le r$;</li>
+<li>$[a_{i - 1}, a_i] \lt [a_i, a_{i + 1}]$ for all $0 \lt i \lt r$.</li></ul>
+
+<p>
+Let $X(N)$ be the maximal possible value of the sum $\sum_{i = 1}^r [a_{i - 1}, a_i]$.</p>
+
+<p>
+For example, $X(4) = 71$ can be achieved with the sequence $2,1,3,2,4,3$. Also $X(10) = 702$.</p>
+
+<p>
+Find $X(1000)$.</p>
+
+<hr>
+<p>
+<b>Sub-problem: Unreachable Nim</b></p>
+
+<p>
+Two players are playing a three-pile Nim game. The game status is an ordered triple $(a, b, c)$, representing the number of stones in each pile.</p>
+
+<p>
+A player will always make a winning move, if there is at least one; otherwise, any valid move can be made, unless there is no valid move left, at which point the game ends.</p>
+
+<p>
+A game status is called <dfn>unreachable</dfn> if it never appears during the game, unless when it is the initial position. For example, the game status $(1, 1, 1)$ is unreachable.</p>
+
+<p>
+Let $C(N)$ be the number of unreachable statuses with $0 \le a, b, c \lt N$.
+You are given $C(10) = 123$.</p>
+
+<p>
+Find $C(1000)$.</p>
+
+<hr>
+<p>
+<b>Meta-problem:</b></p>
+
+<p>
+A sequence $M$ is defined by</p>
+
+<ul>
+<li>$M(0) = I(1000)$;</li>
+<li>$M(1) = X(1000)$;</li>
+<li>$M(2) = C(1000)$;</li>
+<li>$M(k) = M(k - 1)M(k - 2)M(k - 3)$ for $k \ge 3$.</li></ul>
+
+<p>
+You are given $M(4) \equiv 457587170 \pmod{10^9 + 7}$.</p>
+
+<p>
+Find $M(1000) \bmod (10^9 + 7)$.</p>
+
+<p>
+Hint: one may assume that the given value of $M(4)$ is correct.</p>

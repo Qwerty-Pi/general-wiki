@@ -1,0 +1,31 @@
+<p>
+In this problem we consider a <b>random walk</b> on the integers $\mathbb{Z}$, in which our position at time $t$ is denoted as $X_t$.
+</p>
+<p>
+At time $0$ we start at position $0$. That is, $X_0=0$.<br>
+At time $1$ we jump to position $1$. That is, $X_1=1$.<br>
+Thereafter, at time $t=2,3,\dots$ we make a jump of size $|X_{t-2}|$ in either the positive or negative direction, with probability $1/2$ each way. If $X_{t-2}=0$ we stay put at time $t$.
+</p>
+<p>
+At $t=5$ we find our position $X_5$ has the following distribution:
+$$
+X_5=\begin{cases}
+-1\quad&amp;\text{with probability }3/8\\
+1\quad&amp;\text{with probability }3/8\\
+3\quad&amp;\text{with probability }1/8\\
+5\quad&amp;\text{with probability }1/8\\
+\end{cases}
+$$
+The <b>standard deviation</b> $\sigma$ of a <b>random variable</b> $X$ with <b>mean</b> $\mu$ is defined as
+$$
+\sigma=\sqrt{\mathbb{E}[X^2]-\mu^2}
+$$
+Furthermore the <b>skewness</b> of $X$ is defined as
+$$
+\text{Skew}(X)=\mathbb{E}\biggl[\Bigl(\frac{X-\mu}{\sigma}\Bigr)^3\biggr]
+$$
+For $X_5$, which has mean $1$ and standard deviation $2$, we find $\text{Skew}(X_5)=0.75$. You are also given $\text{Skew}(X_{10})\approx2.50997097$.
+</p>
+<p>
+Find $\text{Skew}(X_{50})$. Give your answer rounded to eight digits after the decimal point.
+</p>

@@ -1,0 +1,32 @@
+We use $x\oplus y$ for the bitwise XOR of $x$ and $y$.<br>
+Define the <dfn>XOR-product</dfn> of $x$ and $y$, denoted by $x \otimes y$, similar to a long multiplication in base $2$, except that the intermediate results are XORed instead of the usual integer addition.<br>
+
+For example, $7 \otimes 3 = 9$, or in base $2$, $111_2 \otimes 11_2 = 1001_2$:
+<center>
+$$\begin{align*}
+\phantom{\otimes 111} 111_2 \\
+\otimes \phantom{1111} 11_2 \\
+\hline
+\phantom{\otimes 111} 111_2 \\
+\oplus \phantom{11} 111_2  \phantom{9} \\
+\hline
+\phantom{\otimes 11} 1001_2 \\
+\end{align*}$$
+</center>
+
+We consider the equation:
+<center>
+$$\begin{align}
+(a \otimes a) \oplus (2 \otimes a \otimes b) \oplus (b \otimes b) = k.
+\end{align}$$
+</center>
+<p>
+For example, $(a, b) = (3, 6)$ is a solution to this equation for $k=5$.
+</p>
+<p>
+Let $G(N,m)$ be the number of solutions to those equations with $k \le m$ and $0 \le a \le b \le N$.</p>
+<p>
+You are given $G(1000,100)=398$.
+</p><p>
+Find $G(10^{17},1\,000\,000).$
+</p>

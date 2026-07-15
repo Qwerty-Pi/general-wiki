@@ -1,0 +1,27 @@
+<p>
+The Fibonacci sequence is defined by $F_0 = 0, F_1 = 1$ and $F_k = F_{k - 1} + F_{k - 2}$ for $k \geq 2$.</p>
+
+<p>
+Write down the numbers $F_0, F_1, \dots, F_n$ in a row and separate them with $n$ minus signs $-$.<br>
+We want to add $n$ pairs of parentheses $()$ to form a valid expression such that each pair of parentheses contains exactly one minus sign, not counting those contained in its subparentheses.</p>
+
+<p>
+For example, when $n = 3$, we can form five different expressions in this way:</p>
+
+$$\begin{alignat}{8}
+(((&amp;F_0 &amp;{}-{}&amp; &amp;&amp;F_1) &amp;{}-{}&amp; &amp;&amp;F_2) &amp;{}-{}&amp; &amp;&amp;F_3) &amp;&amp;= -4\\
+((&amp;F_0 &amp;{}-{}&amp; &amp;(&amp;F_1 &amp;{}-{}&amp; &amp;&amp;F_2)) &amp;{}-{}&amp; &amp;&amp;F_3) &amp;&amp;= -2\\
+((&amp;F_0 &amp;{}-{}&amp; &amp;&amp;F_1) &amp;{}-{}&amp; (&amp;&amp;F_2 &amp;{}-{}&amp; &amp;&amp;F_3)) &amp;&amp;= 0\\
+(&amp;F_0 &amp;{}-{}&amp; &amp;((&amp;F_1 &amp;{}-{}&amp; &amp;&amp;F_2) &amp;{}-{}&amp; &amp;&amp;F_3)) &amp;&amp;= 2\\
+(&amp;F_0 &amp;{}-{}&amp; &amp;(&amp;F_1 &amp;{}-{}&amp; (&amp;&amp;F_2 &amp;{}-{}&amp; &amp;&amp;F_3))) &amp;&amp;= -2
+\end{alignat}$$
+
+<p>
+The sum of the values of these expressions is equal to $-6$.</p>
+
+<p>
+Let $A(n)$ be the sum of the values of all different expressions that can be obtained in this way.<br>
+Thus $A(3) = -6$. Moreover, $A(10) = -177666$ and $A(100) \equiv 71792794 \bmod (10^9 + 9)$.</p>
+
+<p>
+Find $A(10^7) \bmod (10^9 + 9)$.</p>

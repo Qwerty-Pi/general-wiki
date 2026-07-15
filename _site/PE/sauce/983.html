@@ -1,0 +1,22 @@
+<p>We say two circles on the plane <i>harmonise</i> if the circles intersect at two <strong class="tooltip">grid points<span class="tooltiptext">A point with integer coordinates</span></strong>, in which case the two intersection points are called the <i>harmony points</i>.</p>
+
+<p>A set of circles on the plane is called <i>consonant</i> if it satisfies all the following requirements:<br></p>
+
+<ol>
+ <li>There are at least two circles in the set.</li>
+ <li>The center point of every circle is a grid point.</li>
+ <li>All circles have the same radius.</li>
+ <li>No circle is tangent to any other circle.</li>
+ <li>The circles are connected in the sense that a chain of circles can be formed between every pair of circles such that each circle harmonises with the next circle.</li>
+</ol>
+
+<p>It can be proven that the number of unique harmony points of a consonant set of circles cannot be smaller than the number of circles. If the number of unique harmony points equals the number of circles, we say the consonant set is <i>perfect</i>.</p>
+
+<p>For example, here are two perfect consonant sets of circles:</p>
+<img src="resources/images/0983_circles.png?1767563452" alt="0983_circles.png">
+
+
+<p>Let $R(n)$ be the minimal radius $r$ such that a perfect consonant set of $n$ or more circles with radius $r$ exists.<br>
+You are given $R(2) = 1$ and $R(4) = \sqrt{5}$.</p>
+
+<p>Find $R(500)^2$.</p>

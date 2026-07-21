@@ -152,7 +152,8 @@ layout: default
 <br>
 
 <div>
-	Question <span id="qid">???</span>
+	Question <span id="qid">?</span> <span id="name">?</span>
+	(Level <span id="level">?</span>/40)
 	<span>Status
 		<select id="question-status">
 			<option value="unread">Unread</option>
@@ -171,6 +172,7 @@ layout: default
 
 <script>
 	all_status = {}
+	metadata = {}
 	function loadSolves() {
 		const question_limit = 1000
 		for (let i = 1; i <= question_limit; i++) {
@@ -179,13 +181,21 @@ layout: default
 			$(`.cell[data-qid="${i}"]`).addClass(status)
 		}
 	}
+	function loadMetadata() {
+		var url = `{{site.baseurl}}/PE/metadata.json`
+		fetch(url).then(res => res.json()).then(res => {
+			metadata = res
+		})
+	}
 	function loadQuestion() {
 		var qid = $("#qid").html()
 		var container = document.getElementById("pe-question-container")
-		var url = `{{ site.baseurl}}/PE/sauce/${qid}.html`
+		var url = `{{site.baseurl}}/PE/sauce/${qid}.html`
 		fetch(url).then(res => res.text()).then(res => {
 			container.innerHTML = res.replaceAll("resources/", "https://projecteuler.net/resources/");
 			MathJax.typesetPromise()
+			$("#name").html(metadata[qid].name)
+			$("#level").html(metadata[qid].level)
 			$("#question-status").val(all_status[qid])
 			$("#pe-question-comment").val(localStorage.getItem(`pe_comment_${qid}`) ?? "")
 		})
@@ -234,7 +244,7 @@ layout: default
 			console.log(e.message)
 		}
 	})
-
+	loadMetadata()
 	loadSolves()
 	$(".cell").on('click', function() {
 		$("#qid").html($(this).data('qid'))

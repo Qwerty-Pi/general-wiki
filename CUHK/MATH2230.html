@@ -6,8 +6,11 @@ layout: default
 \[
 	\def\R{\mathbb{R}}
 	\def\C{\mathbb{C}}
+	\def\Z{\mathbb{Z}}
 	\def\Re{\operatorname{Re}}
 	\def\Im{\operatorname{Im}}
+	\def\arg{\operatorname{arg}}
+	\def\Arg{\operatorname{Arg}}
 	\newcommand{\conj}[1]{
 		\overline{#1}
 	}
@@ -30,5 +33,19 @@ layout: default
 <p>We call \( \rho = |z| = \sqrt{(\Re z)^2 + (\Im z)^2} \) the <b>modulus</b> of \( z \), and \( \theta \) an <b>argument</b> of \( z \). Clearly there are many choices of \( \theta \) off by multiples of \( 2 \pi \), and so we define \( \operatorname{arg} z \) the set of all arguments, and \( \operatorname{Arg} z \) the <b>principle argument</b> within the range \( (-\pi, \pi] \).</p>
 
 <p>As a final note, the <b>triangle inequality</b> \( |z_1| + |z_2| \ge |z_1 + z_2| \) and \( |z_1 - z_2| \ge ||z_1| - |z_2|| \) holds as usual. (What do you expect?) </p>
+
+<h3>Geometry in the Complex Plane</h3>
+
+<p>An interesting topic for us to explore is - essentially complex plane \( \C \) is the extension of the 2D euclidean plane \( \R^2 \). Can we represent geometric objects in \( \C \) as well?</p>
+
+<p>First of all, we can represent a circle centered at \( z_0 \) with radius \( r_0 \) as \[ \{ z \in \C : |z - z_0| = r_0 \} \] And an ellipse with foci \( z_1 \) and \( z_2 \) as \[ \{ z \in \C : |z - z_1| + |z - z_2| = d \} \] Another interesting represnetation of circle is as follows: For a circle passing through \( z_1, z_2 \) and \( z_3 \), we know the locus of the circle is \[ \{ z \in \C : \angle z_1 z_3 z_2 = \angle z_1 z z_2 \}\] What is \( \angle z_1 z z_2 \)? It is just \( \arg \frac{z_2 - z}{z_1 - z} \)! Hence, we have another (more complicated) circle representation \[ C = \left\{ z \in \C : \Im \left[\left(\frac{z_2 - z}{z_1 - z}\right) / \left(\frac{z_2 - z_3}{z_1 - z_3}\right)\right] = 0 \right\} \] Similarly, to represent a line passing through \( z_1 \) and \( z_2 \), we simply have \[ L = \left\{ z \in \C : \Im \left(\frac{z - z_1}{z_2 - z_1}\right) = 0 \right\} \] Clearly any line through \( z_1 \) and \( z_2 \) cuts the plane into two half-planes: and the sign of \[ \Im \left( \frac{z - z_1}{z_2 - z_1} \right) \] tells you which side of \( z \) is of with respect to \( \overrightarrow{z_1 z_2} \).</p>
+
+<p>In a sense, we can treat complex numbers not only a vector, but scaling and rotation operator as well - which makes representation of geometric stuff sometimes much easier.</p>
+
+<p>Using this point of view, \( z^n \) is equivalent to apply the same operator \( z \), repeat \( n \) times. Given \( z_0 \), can we find its \( n \)-th root such that \( z^n = z_0 \)? Clearly this is equivalent to \[ \rho^n e^{i n \theta} = \rho_0 e^{i \theta_0} \] Which means the scaling \( \rho \) should be \( \sqrt[n]{\rho_0} \), but the rotation \( \theta \) can be any of \( \frac{\theta_0}{n} + \frac{2 k \pi}{n} \) where \( k \in \Z \), since we can rotate any number of complete circles of \( 2 \pi \). Therefore, for any non-zero \( z_0 \in \C \), there are \( n \) distinct \( n \)-th root of \( z_0 \). Specially, we call the \( n \)-th root of \( 1 \) as the \( n \)-th <b>roots of unity</b>, which exactly is just \[ \left\{ \exp \frac{2k\pi i}{n} : 0 \le k \lt n \right\} \] We call \( \sqrt[n]{\rho_0} e^{\frac{i \theta_0}{n}} \) the <b>principal \( n \)-th root of \( z \)</b>, since we are using the principal argument here.</p>
+
+<h3>Basic Complex Calculus</h3>
+
+<p></p>
 
 <h2>Topic 2</h2>

@@ -1,0 +1,33 @@
+---
+layout: default
+---
+<h1>MATH2230 Complex Variable with Applications</h1>
+<span style="display: none">
+\[
+	\def\R{\mathbb{R}}
+	\def\C{\mathbb{C}}
+	\def\Re{\operatorname{Re}}
+	\def\Im{\operatorname{Im}}
+	\newcommand{\conj}[1]{
+		\overline{#1}
+	}
+\]
+</span>
+
+<h2>Complex Numbers</h2>
+
+<p>We put our focus on <b>complex numbers</b> \( \mathbb{C} \). What are them? In short, complex numbers is an extension of real numbers such that every real non-constant polynomial has root, "completing" the real numbers \( \R \). We introduce the purely imaginary number \( i \) where \( i^2 = -1 \) or \( i = \sqrt{-1} \), which we can write \( \C = \R[i] = \{ x + yi : x, y \in \R \} \).</p>
+
+<p>For \( z = x + yi \), we denote \( \Re z = x \) the <b>real part</b> of \( z \), and \( \Im z = y \) the <b>imaginary part</b> of \( z \). Clearly, \( z \) is <b>real</b> iff \( \Im z = 0 \), whereas \( z \) is called <b>purely imaginary</b> iff \( \Re z = 0 \). A way to visualise complex numbers is to draw it on a 2D (Argand) plane, which the x-axis is the real axis and the y-axis is the imaginary axis. For \( z = x + yi \), we define the <b>complex conjugate</b> \( \overline{z} = x - yi \) - essentially flipping the complex number across the x-axis.</p>
+
+<p>How about comparison? Given \( z_1, z_2 \in \C \), how could we compare them? We say \( z_1 = z_2 \) iff both \( \Re z_1 = \Re z_2 \) and \( \Im z_1 = \Im z_2 \) holds. However, comparison \( z_1 \lt z_2 \) is not well-defined. We can of course customarily define some sort of order (say distance to origin, tie-break by angle), but that is not going to be very useful generally.</p>
+
+<p>For \( z_1 = x_1 + y_1 i \) and \( z_2 = x_2 + y_2 i \), we may define \[ z_1 \pm z_2 := (x_1 \pm x_2) + (y_1 \pm y_2) i \] And \[ z_1 z_2 := (x_1 x_2 - y_1 y_2) + (x_1 y_2 + x_2 y_1) i \] How about division? We can write \[ (x + yi)^{-1} = \frac{x - yi}{(x + yi) (x - yi)} = \frac{x - yi}{x^2 + y^2}\]</p>
+
+<p>Interestingly, conjugation is "exchangable" with these operators: \[ \conj{z_1 \pm z_2} = \conj{z_1} \pm \conj{z_2} \] \[ \conj{z_1 \times z_2} = \conj{z_1} \times \conj{z_2} \] \[ \conj{z^{-1}} = \conj{z}^{-1}\] One may trivially verify them by computations. Alternatively, for the last two equality, we may use <b>polar coordinates</b> or <b>Euler's formula</b>: From power series expansion, we have \[ e^{i\theta} = \cos \theta + i \sin \theta \] In other words, \( \rho e^{i \theta} \) represents an anticlockwise of \( \theta \) of the "vector" \( \rho \). We can write \( z = x + yi = \rho e^{i \theta} \), which the conjugate \( \overline{z} \) is just \( \rho e^{-i \theta} \), and \( z^{-1} \) is just \( \rho^{-1} e^{-i \theta} \), whereas \( (\rho_1 e^{i \theta_1}) (\rho_2 e^{i \theta_2}) = (\rho_1 \rho_2) e^{i(\theta_1 + \theta_2)}\). The equalities trivially follow. As a side note, we also have the <b>de Moivre's formula</b> \[ (\cos \theta + i \sin \theta)^n = \cos n \theta + i \sin n \theta \] Which is an immediate consequence of the Euler's formula. Essentially - multiply by a complex number \( \rho e^{i \theta} \) is just scaling by \( \rho \) and rotate by angle \( \theta \).</p>
+
+<p>We call \( \rho = |z| = \sqrt{(\Re z)^2 + (\Im z)^2} \) the <b>modulus</b> of \( z \), and \( \theta \) an <b>argument</b> of \( z \). Clearly there are many choices of \( \theta \) off by multiples of \( 2 \pi \), and so we define \( \operatorname{arg} z \) the set of all arguments, and \( \operatorname{Arg} z \) the <b>principle argument</b> within the range \( (-\pi, \pi] \).</p>
+
+<p>As a final note, the <b>triangle inequality</b> \( |z_1| + |z_2| \ge |z_1| + |z_2| \) and \( |z_1 - z_2| \ge ||z_1| - |z_2|| \) holds as usual. (What do you expect?) </p>
+
+<h2>Topic 2</h2>

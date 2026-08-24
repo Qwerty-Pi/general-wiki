@@ -66,6 +66,8 @@
 	\def\Im{\operatorname{Im}}
 	\def\arg{\operatorname{arg}}
 	\def\Arg{\operatorname{Arg}}
+	\def\Int{\operatorname{Int}}
+	\def\Ext{\operatorname{Ext}}
 	\newcommand{\conj}[1]{
 		\overline{#1}
 	}
@@ -99,9 +101,26 @@
 
 <p>Using this point of view, \( z^n \) is equivalent to apply the same operator \( z \), repeat \( n \) times. Given \( z_0 \), can we find its \( n \)-th root such that \( z^n = z_0 \)? Clearly this is equivalent to \[ \rho^n e^{i n \theta} = \rho_0 e^{i \theta_0} \] Which means the scaling \( \rho \) should be \( \sqrt[n]{\rho_0} \), but the rotation \( \theta \) can be any of \( \frac{\theta_0}{n} + \frac{2 k \pi}{n} \) where \( k \in \Z \), since we can rotate any number of complete circles of \( 2 \pi \). Therefore, for any non-zero \( z_0 \in \C \), there are \( n \) distinct \( n \)-th root of \( z_0 \). Specially, we call the \( n \)-th root of \( 1 \) as the \( n \)-th <b>roots of unity</b>, which exactly is just \[ \left\{ \exp \frac{2k\pi i}{n} : 0 \le k \lt n \right\} \] We call \( \sqrt[n]{\rho_0} e^{\frac{i \theta_0}{n}} \) the <b>principal \( n \)-th root of \( z \)</b>, since we are using the principal argument here.</p>
 
-<h3>Basic Complex Calculus</h3>
+<h3>Simple Complex Analysis</h3>
 
-<p></p>
+<p>Topologically, we define an <b>open ball</b> of radius \( r_0 \) centered at \( z_0 \) as \[ B_{r_0}(z_0) = \{ z \in \C : |z - z_0| \lt r_0 \}\] Given any set \( S \) and any point \( z \), intuitively, we can classify \( z \) as one of the three cases: (1) \( z \) is completely inside \( S \), (2) \( z \) is completely outside \( S \), and (3) \( z \) is on the boundary of \( S \). How can we capture those intuition? With open balls.</p>
+
+<p>We say \( z \) is (1) <b>interior</b> of \( S \) or \( z \in \Int S \) if there exists \( r \gt 0 \) where \( B_r(z) \subset S \); (2) <b>exterior</b> of \( S \) or \( z \in \Ext S \) if there exists \( r \gt 0 \) where \( B_r(z) \subset S^{c} \); (3) <b>boundary</b> of \( S \) (limit point, accumulation point) or \( z \in \partial S \) if neither of the above cases happen. We call the <b>closure</b> of \( S \) as \( \overline{S} = S \cup \partial S \). We say \( S \) is <b>open</b> iff \( S = \Int S \), and is <b>closed</b> iff \( S = \Int S \cup \partial S \). In plain text, \( S \) is open whenever it doesn't contain any of the boundary point, and is closed whenever it contains all of the boundary point. Note that open and closed are related, but not opposite properties - for example, \( \varnothing \) and \( \C \) are both open and closed, and \( \{ z \in \C : 1 \lt |z| \le 2 \} \) is neither open nor closed. </p>
+
+<p>We say \( S \subset \C \) is <b>bounded</b> iff there exists an open ball \( B_r(0) \supset S \). For bounded \( S \), we can define its <b>diameter</b> as \[ \operatorname{diam} S = \sup \{ |z_1 - z_2| : z_1, z_2 \in S \}\] We also say \( S \) is <b>connected</b> iff we cannot partition \( S = S_1 \cup S_2 \) where \( S_1 \subset U \), \( S_2 \subset V \) for disjoint open sets \( U \) and \( V \). An <b>open cover</b> of \( S \) is defined as a family of open sets \( \{ O_\alpha \} \) where \( S \in \bigcup_{\alpha} O_\alpha \).</p>
+
+<p>We say a set \( S \) is <b>compact</b> iff any open cover of \( S \) admits a <b>finite</b> subcover. Turns out in \( \C \), this is equivalent to \( S \) is <b>closed and bounded</b>! (This is going to be explained somewhere else, so this will not be proven here.) Interestingly, given an infinite descending chain \( S_1 \supset S_2 \supset \cdots \supset S_n \supset \cdots \) with \( \operatorname{diam}(S_n) \rightarrow 0 \) of compact sets, there exists a unique \( z_0 \in \C \) such that \( z_0 \in \bigcap S_n \). Uniqueness is easy to prove, whereas existence is implied by picking a point \( z_n \in S_n \), then \( z = \lim z_n \) (well-defined by Cauchy). If \( z \not\in S_N \) for some \( N \), then there exists an open ball \( B_\varepsilon(z) \) that is disjoint with \( S_N \) (since \( S_n \) are compact), contradicting the fact that \( z \) is a limit point. </p>
+
+<h3>Complex Functions</h3>
+
+<p>Okay, enough open ball knowledge. We can define complex functions normally as \( f: S_1 \subset \C \rightarrow S_2 \subset \C \), whereas \( f \) can also be represented as \( f = f_1 + f_2 i \) with \( f_1, f_2 : S_1 \rightarrow \R \). One question maybe - what is the difference of this compare to \( f: \R^2 \rightarrow \R^2 \), then? We can replicate every operations done in \( \C \) to \( \R^2 \) anyways! For example, for \( f(z) = z^2 \), we have \( f(x + yi) = (x^2 - y^2) + 2xyi \). The discrepency will appear when we try to do integration and derivatives.</p>
+
+<p>Clearly we can define functions as \( z \mapsto z + z_0 \) (translation), \( z \mapsto z e^{i \theta} \) (rotation), \( z \mapsto r_0 z \) (scaling) and \( z \mapsto \conj{z} \) (reflection across real-axis). We can also define the exponential function \( z \mapsto e^{z} \) over \( \C \). We can define \[ \cos z := \frac{e^{iz} + e^{-iz}}{2} \qquad \sin z := \frac{e^{iz} - e^{-iz}}{2i}\] And \[ \cosh z := \frac{e^z + e^{-z}}{2} \qquad \sinh z := \frac{e^z - e^{-z}}{2} \] As the complex analogue of sine and cosine functions. Essentially those are just derived from their corresponding power series.</p>
+
+<p>How about complex logarithm? To solve \( e^z = \rho e^{i \theta} \), we clearly have \( z = \log \rho + i (\theta + 2k \pi) \) for any \( k \in \Z \). To make logarithm a single-valued function, we can pick any <b>branch</b> as \( \alpha \in \R \) and pick the \( \theta + 2k \pi \in ( \alpha, \alpha + 2\pi] \). For the <b>principal branch</b>, we pick \( \alpha = - \pi \), which means we pick the unique \( \theta \in ( - \pi, \pi] \). In other words, \( \log z := \log |z| + i \Arg z \), a continuous function defined on the open set \[ U = \{ z \in \C : |z| \gt 0, -\pi \lt \Arg z \lt \pi \} \] Given any branch of logarithm, we can define the complex power function \( z^c \) as well, as \( z^c = e^{c \log z} \). </p>
+
+<h3>Limit and Continuity</h3>
+
 
 <h2>Topic 2</h2>
 

@@ -46,7 +46,7 @@ layout: default
 
 <p>Using this point of view, \( z^n \) is equivalent to apply the same operator \( z \), repeat \( n \) times. Given \( z_0 \), can we find its \( n \)-th root such that \( z^n = z_0 \)? Clearly this is equivalent to \[ \rho^n e^{i n \theta} = \rho_0 e^{i \theta_0} \] Which means the scaling \( \rho \) should be \( \sqrt[n]{\rho_0} \), but the rotation \( \theta \) can be any of \( \frac{\theta_0}{n} + \frac{2 k \pi}{n} \) where \( k \in \Z \), since we can rotate any number of complete circles of \( 2 \pi \). Therefore, for any non-zero \( z_0 \in \C \), there are \( n \) distinct \( n \)-th root of \( z_0 \). Specially, we call the \( n \)-th root of \( 1 \) as the \( n \)-th <b>roots of unity</b>, which exactly is just \[ \left\{ \exp \frac{2k\pi i}{n} : 0 \le k \lt n \right\} \] We call \( \sqrt[n]{\rho_0} e^{\frac{i \theta_0}{n}} \) the <b>principal \( n \)-th root of \( z \)</b>, since we are using the principal argument here.</p>
 
-<h3>Simple Complex Analysis</h3>
+<h3>Topology of Complex Numbers</h3>
 
 <p>Topologically, we define an <b>open ball</b> of radius \( r_0 \) centered at \( z_0 \) as \[ B_{r_0}(z_0) = \{ z \in \C : |z - z_0| \lt r_0 \}\] Given any set \( S \) and any point \( z \), intuitively, we can classify \( z \) as one of the three cases: (1) \( z \) is completely inside \( S \), (2) \( z \) is completely outside \( S \), and (3) \( z \) is on the boundary of \( S \). How can we capture those intuition? With open balls.</p>
 
@@ -66,5 +66,44 @@ layout: default
 
 <h3>Limit and Continuity</h3>
 
+<p>Essentially, the concept of limit just follows that of multi-variable calculus: Given \( f : \Omega \to \C \) where \( \Omega \) open, if \( z_0 \) is accumulation point of \( \Omega \setminus \{ z_0 \} \), then we write \[ \lim_{z \to z_0} f(z) = w_0 \] If \( |f(z) - w_0| \lt \varepsilon \) for all \( z \in \Omega \) and \( 0 \lt |z - z_0| \lt \delta \). We say \( f \) is <b>continuous</b> at \( z_0 \in \Omega \) if \[ \lim_{z \to z_0} f(z) = f(z_0) \] If \( f \) is continuous at every \( z \in \Omega \), we say \( f \) is continuous on \( \Omega \). Clearly continuity is preserved under addition, multiplication, division and composition.</p>
 
-<h2>Topic 2</h2>
+<h3>Differentiability</h3>
+
+<p>How about differentiability? We say \( f \) is differentiable at \( z_0 \in \Omega \) if \[ \lim_{z \rightarrow z_0} \frac{f(z) - f(z_0)}{z - z_0} \] Exists, which is denoted as \( f'(z_0) \). Most things just repeat that of multivariable calculus, so just note that if we write \( f = u + i v \), even if both \( u \) and \( v \) are differentiable in \( \R^2 \), does not imply \( f \) is differentiable in \( \C \)!</p>
+
+<p>Intuitively, we require \( f_x = u_x + i v_x \) and \( i^{-1} f_y = -i (u_y + i v_y) \) to be equal - which implies \( u_x = v_y \) and \( u_y = -v_x \). This is the <b>Cauchy-Riemann Equations</b>. On the other hand, if both \( u \) and \( v \) are differentiable at \( z_0 \in \Omega \) and satisfy the Cauchy-Riemann Equations, then \( f'(z_0) = u_x(z_0) + i u_y(z_0) \). This is due to the linear approximations \( u(z) = u(z_0) + \nabla u (z_0) \cdot (z - z_0) + \varepsilon_u(z) \) where \( \lim_{z \to z_0} \frac{\varepsilon_u(z)}{|z - z_0|} = 0 \), which we can just expand trivially to show the linear approximation for \( f \) as well.</p>
+
+<p>For \( f : \Omega \subset \C \to \C \), we say \( f \) is <b>analytic</b> at \( z_0 \) if \( f \) is differentiable on \( B_{\varepsilon}(z_0) \subset \Omega \) for some \( \varepsilon \gt 0 \). If \( f \) is analytic at every point \( z \in \Omega \), we say \( f \) is analytic on \( \Omega \). Specially, if \( \Omega = \C \), we say \( f \) is an <b>entire</b> function.</p>
+
+<p>Now, there is a bunch of "random facts". First of all, an open set \( \Omega \) is connected iff it is <b>polygonally connected</b>: for any \( z_1, z_2 \in \Omega \), there exists a polygonal line of finitely many segments in \( \Omega \) connecting \( z_1 \) and \( z_2 \). Remember the original definition of connectedness is there doesn't exist an partition of \( \Omega \) that are included in two disjoint open sets. The proof is quite interesting - let \( S \) be the set of all \( z \in \Omega \) where \( z \) and \( z_0 \) are polygonally connected. Then \( \Omega \setminus S \) is also open, forcing \( S = \Omega \) since \( \Omega \) is connected.</p>
+
+<p>Now, if \( \Omega \) is connected and \( f' : \Omega \to \C \) is zero on \( \Omega \), then \( f \) is constant on \( \Omega \) since for any \( z_1, z_2 \in \Omega \), we can just use the polyline to show \( f \) is constant for each line segment. Interestingly, we may use this to prove if both \( f \) and \( \conj{f} \) are differentiable on open connected \( \Omega \), then \( f \) is a constant: since by Cauchy-Riemann we must have \( f' = 0 \) on \( \Omega \).</p>
+
+<p>Next, if \( f = u + iv \) is analytic on open set \( \Omega \), then both \( u \) and \( v \) are <b>harmonic</b> (\( u_{xx} + u_{yy} = 0\)). This is once again trivial by Cauchy-Riemann.</p>
+
+<h3>Complex Integral</h3>
+
+<p>To integrate \( w : [a, b] \to \C \) where \( w(t) = u(t) + i v(t) \), trivially we have \[ \int_a^b w(t) \, dt = \int_a^b u(t) \, dt + i \int_a^b v(t) \, dt \] A <b>parametrised curve</b> \( \gamma \) is a set \( \{ z = z(t) = x(t) + y(t) i : t \in [a, b] \} \) where \( x(t), y(t) \) are continuous. We say the curve is <b>smooth</b> if \( z \) is \( \mathcal{C}^1 \). We can then define the <b>line integral</b> of \( \gamma \) as \[ \int_\gamma f(z) \, dz = \int_a^b f(z(t)) z'(t) \, dt \] Which we can change accordingly if \( \gamma \) is only <b>piecewise smooth</b>. One inequality to note is \[ \left| \int_\gamma f(z) \, dz \right| \le \sup_{z \in \gamma} |f(z)| \cdot \operatorname{length}(\gamma) \] Which is trivial, but will be useful later.</p>
+
+<p>Now, let's move on to more interesting parts. First of all, consider an open connected set \( \Omega \). If \( f \) is continuous and \( F' = f \) on \( \Omega \), then for any piecewise smooth curve \( \gamma \) from \( z_1 \) to \( z_2 \) where \( z_1, z_2 \in \Omega \), we have \[ \int_\gamma f(z) \, dz = F(z_2) - F(z_1) \] In particular, integral of \( f \) along any piecewise-smooth <b>closed</b> curve is 0. In fact, the opposite implication holds as well! The third equivalent condition is that the integral is independent of paths.</p>
+
+<p>Okay, enough introduction - the above are just identical to those in euclidean space! What are the things that are specific to complex analysis?</p>
+
+<h2>Complex Analysis</h2>
+
+<h3>Cauchy-Goursat Theorem</h3>
+
+<p>The theorem is actually very simple: if \( f \) is <b>analytic</b> in all points interior and on a <b>simple closed curve</b> \( \gamma \), then \[ \int_\gamma f(z) \, dz = 0 \] Normally, we require \( f \) to have an anti-derivative. But here the condition is rather whether \( f \) is analytic - differentiable over an neighbourhood (open set) of each point. Also, we require \( \gamma \) to be <b>simple</b>, that is, no intersection is allowed. Why does this magically holds?</p>
+
+<p>We first consider the case where \( \gamma = \gamma_0 \) encloses a rectangle. By repeatedly cut \( \gamma_n \) into four identical smaller rectangles and pick the maximum integral rectangle, we have a descending chain of rectangles \[ R_0 \supset R_1 \supset \cdots \supset R_n \supset \cdots \] where \( \gamma_n \) encloses \( R_n \), and \[ \left| \int_\gamma f(z) \, dz \right| \le 4^n \left| \int_{\gamma_n} f(z) \, dz \right| \] Since \( f(z_0) \) and \( f'(z_0)(z - z_0) \) has anti-derivative, magically, we have \[ \begin{align*} & \int_{\gamma_n} f(z) \, dz \\ = & \int_{\gamma_n} [f(z) - f(z_0) - f'(z_0) (z - z_0)] \, dz \\ = & \int_{\gamma_n} \left[ \frac{f(z) - f(z_0)}{z - z_0} - f'(z_0) \right] (z - z_0) \, dz \end{align*} \] Which the proof trivially follows by the fact that \( f \) is analytic at \( z_0 \).</p>
+
+<p>Another special case - what if \( \Omega \) is a open disc, and \( f \) is analytic on \( \Omega \)? We can actually show \[ \int_\gamma f(z) \, dz = 0 \] for all <b>closed</b> curve \( \gamma \) in \( \Omega \) (no need to be simple). We may simply use Cauchy-Goursat for rectangles to obtain an anti-derivative, then the rest follows.</p>
+
+<p>Finally, the main theorem. The proof is remarkably simple: Simply repeatedly "shrink" the simple closed curves \( \{ \gamma_0, \gamma_1, \dots, \gamma_n, \dots \} \) such that \( \operatorname{length}(\gamma_n) \rightarrow 0 \) and \[ \int_{\gamma_n} f(z) \, dz = \int_{\gamma_{n + 1}} f(z) \, dz \] By cutting the "strip" between \( \gamma_n \) and \( \gamma_{n + 1} \) into pieces in small discs, then the proof trivially follows.</p>
+
+<p>For <b>simply connected</b> (opposite: <b>multiply connected</b>) \( \Omega \) where every simple closed curve enclose only points in \( \Omega \), we can prove a stronger result. If \( f \) is analytic on \( \Omega \), then for any <b>closed curve</b> \( \gamma \) we have \( \int_\gamma f(z) \, dz = 0 \). (I didn't find a simple proof to this? "Subtlities occur when the curve intersects with itself infinitely many times" - perhaps can prove with convergence) For <b>multiply connected</b> domain, we can "encircle" the holes with simple closed curves, then the theorem holds similarly.</p>
+
+<h3>Cauchy Integral Formula</h3>
+
+<p></p>

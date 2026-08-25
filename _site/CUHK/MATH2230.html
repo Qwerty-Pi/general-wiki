@@ -68,6 +68,7 @@
 	\def\Arg{\operatorname{Arg}}
 	\def\Int{\operatorname{Int}}
 	\def\Ext{\operatorname{Ext}}
+	\def\Res{\operatorname{Res}}
 	\newcommand{\conj}[1]{
 		\overline{#1}
 	}
@@ -210,6 +211,34 @@
 
 <p>Assume \( f \) is analytic on a <b>punctured disc</b> \( B_R(z_0) \setminus \{ z_0 \} \) for some \( R \). We can write its Laurent Series out as \[ f(z) = \sum_{n = -\infty}^\infty c_n (z - z_0)^n \] Obviously, we want to classify the type of the puncture: Consider \( m = \inf \{ n \in \Z : c_n \ne 0 \} \). If (1) \( m \ge 0 \), we say \( z_0 \) a <b>removable singularity</b>; If (2) \( -\infty \lt m \lt 0 \), we say \( z_0 \) a <b>pole of order</b> \( -m \); If (3) \( m = -\infty \), we say \( z_0 \) an <b>essential singularity</b>.</p>
 
-<p>The naming captures the nature of the singularities - which is, how hard is it for us to "complete" the function \( f \) at \( z_0 \). For removable singularity, we simply take \( f(z_0) = c_0 \), which makes it analytic over its disc of convergence. Interestingly, if \( f \) is bounded and analytic over \( B_R(z_0) \setminus \{ z_0 \} \), it has removable singularity at \( z_0 \) as well, </p>
+<p>The naming captures the nature of the singularities - which is, how hard is it for us to "complete" the function \( f \) at \( z_0 \).</p>
+
+<p>For removable singularity, we simply take \( f(z_0) = c_0 \), which makes it analytic over its disc of convergence. Interestingly, if \( f \) is bounded and analytic over \( B_R(z_0) \setminus \{ z_0 \} \), it has removable singularity at \( z_0 \) as well - which makes sense because \( |f| \) would be unbounded near \( z_0 \) otherwise. On the other hand, we can simply use \( \gamma = C_\rho(z_0) \) for some sufficiently small \( \rho \), and just compute \( c_n \) directly.</p>
+
+<p>For poles of order \( m \), we can show \( |f(z)| \to \infty \) as \( z \to z_0 \). The proof is rather trivial by simply "offset" the Laurent Series to make it of the form \( \frac{g(z)}{z^m} \), where \( g(z) \to c_{-m} \) and \( z^m \to 0 \) as \( z \to c_0 \).</p>
+
+<p>Finally, for essential singularity, we can show for any \( c \in \C \), there exists a sequence \( z_k \to z_0 \) such that \( |f(z_k) - c| \to 0 \) as \( k \to \infty \). Suppose otherwise that for some \( \delta \gt 0 \) we have \( |f(z) - c| \gt \varepsilon \) for all \( z \in B_\delta(z_0) \setminus \{ z_0 \} \). Then \( g(z) := \frac{1}{f(z) - c} \) is analytic and bounded over \( B_\delta(z_0) \setminus \{ z_0 \} \). Hence, \( z_0 \) is removable for \( g \). Consider the Laurent Series then, \( z_0 \) must not be essential singularity to \( f \) as well. The <b>Picard's Theorem</b> states something stronger - on any punctured neighbourhood of \( z_0 \), \( f \) takes every complex value with at most one exception and infinitely often.</p>
+
+<h3>Analytic Continuation</h3>
+
+<p>We start with a simple statement - Given a non-constant analytic \( f \) where \( f(z_0) = c \) for \( z_0 \in \Omega \), then there exists \( \varepsilon \gt 0 \) such that \( B_\varepsilon(z_0) \cap f^{-1}(c) = \{ z_0 \} \), which can be trivially proven by considering the Taylor Series of \( f \) near \( z_0 \). We have a trivial corollary - if \( \{ z_n \} \to z_0 \) where \( f(z_n) = 0 \) for all \( n \in \mathbb{N} \), then \( f \equiv 0 \) by isolation of point in preimage.</p>
+
+<p>Here comes another corollary - Suppose \( f \) and \( g \) are analytic on \( \Omega \). If \( \{ z_n \} \to z_0 \) where \( f(z_n) = g(z_n) \) for all \( n \in \mathbb{N} \), then \( f \equiv g \) on \( \Omega \). What is the importance of this? For analytic \( f \) and \( F \) and \( \Omega' \) and \( \Omega \) respectively and \( \Omega' \subset \Omega \), if \( f \equiv F \) on \( \Omega' \), then such \( F \) is unique! This \( F \) is called the <b>analytic continuation</b> of \( f \). We may "merge" two analytic functions when their intersection is non-empty as well.</p>
+
+<p>The <b>reflection principle</b> is an interesting application of the analytic continuation. Suppose \( \Omega \) is symmetric with respect to the real axis, or \( \Omega = \Omega^+ \cup I \cup \Omega^- \) where \( I = \Omega \cap \R \). For analytic \( f \), we have \( \conj{f(z)} = f(\conj{z}) \) for all \( z \in \Omega \) iff \( f \) is real-valued on \( I \). The forward direction is trivial - whereas for the backward direction, we might as well construct the function \( g \) which the value are actually reflected across \( I \), which then we can assert \( f \equiv g \) via the power of analytic continuation.</p>
+
+<h2>The Theory of Residue</h2>
+
+<h3>Residue</h3>
+
+<p>Given a Laurent Series \( f(z) = \sum_{n} c_n (z - z_0)^n \), we can define the <b>residue</b> of \( f \) at \( z_0 \) as \[ \Res(f; z_0) = c_{-1} \] Clearly we also have \[ \oint_\gamma f(z) \, dz = 2 \pi i \Res(f; z_0) \] Over a punctured disc. More generally, if \( f \) is analytic on \( \overline{\Omega} \setminus \{ z_1, \dots, z_n \} \), then \[ \oint_\gamma f(z) \, dz = 2 \pi i \sum_{k = 1}^{n} \Res(f; z_k) \] Which is just a simple application of the Cauchy-Goursat Theorem. We may also consider the residue at \( \infty \). In specific, we have \[ \Res(f; \infty) = \Res(z^{-2} f(z^{-1}); 0) \]</p>
+
+<p>Clearly if \( f \) is analytic at \( z_0 \), then \( \Res(f; z_0) = 0 \). If \( f \) has a pole of order not exceeding \( m \), then we also have \( \Res(f; z_0) = [z^{m - 1}] (z - z_0)^m f \), the coefficient of \( z^{m - 1} \) of \( (z - z_0)^m f \).</p>
+
+<p>Turns out residues are superbly useful - as illustrated as below.</p>
+
+<h3>Improper Integral</h3>
+
+
 
 </body>

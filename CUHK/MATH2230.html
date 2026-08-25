@@ -127,3 +127,32 @@ layout: default
 <p>Finally, we have the <b>Maximum Modulus Principle</b> - for non-constant \( f \) being analytic on open connected \( \Omega \), no \( z_0 \in \Omega \) has maximum modulus. We can first consider the disc case: Suppose \( |f(z)| \le |f(z_0)| \) for all \( z \in B_R(z_0) \). By Cauchy, we will need \( |f(z)| = |f(z_0)| \), and so the \( |f(z)| \) is constant in \( B_R(z_0) \). Since the domain is (polygonally) connected, \( |f| \) is constant on \( \Omega \), and so \( f \) is constant as well(!)</p>
 
 <p>By considering \( f^{-1} \) (non-zero on \( \Omega \)), \( e^{f(z)} \) and \( e^{-if(z)} \), we can extend the theorem to minimum of \( |f(z)| \), the real and imaginary parts of \( f \) as well.</p>
+
+<h2>Complex Power Series</h2>
+
+<h3>Series</h3>
+
+<p>A <b>series</b> is a partial sum of the form \[ \sum_{n = 0}^\infty z_n \] When is this well-defined? Of course, when the sum converges to some value. We say the series <b>absolutely converges</b> if \[ \sum_{n = 0}^\infty |z_n| \] exists as well. Trivially, we have absolutely convergence implies convergence (using, say, Cauchy's criteria).</p>
+
+<h3>Power Series</h3>
+
+<p>Given a power series \( \mathcal{F}(z) = \sum_{n = 0}^\infty a_n z^n \), for what \( z \) does \( \mathcal{F} \) converges? Turns out the condition is nice - consider the <b>radius of convergence</b> \[ R = \left( \operatorname{\overline{lim}}_{n \to \infty} \sqrt[n]{a_n} \right)^{-1} \] Then \( \mathcal{F} \) converges absolutely for \( |z| \lt R \), and diverges for \( |z| \gt R \), where \( B_R(0) \) is called the <b>disc of convergence</b>. The proof is just comparing against a geometric series - say for the case \( |z| \lt R \), simply note that there exists some \( N \) such that \( |a_n z^n| \le \rho^n \) for all \( n \ge N \) for some \( \rho \lt 1 \), and the case of \( |z| \gt R \) is analogous.</p>
+
+<p>Interestingly - if we differentiate a power series, it still has the same radius of convergence! For \( \mathcal{F}(z) = \sum_{n = 0}^\infty a_n z^n \), we actually intuitively have \[ \mathcal{F}'(z) = \sum_{n = 0}^\infty n a_n z^{n - 1} \] Simply note that \( \lim_{n \to \infty} \sqrt[n]{n} = 1 \) and we can cut the tails of \( \mathcal{F}' \) and \( \mathcal{F} \) such that the absolute value of the tails is sufficiently small, which the derivative of the head matches.</p>
+
+<h3>Taylor Series</h3>
+
+<p>Here comes the <b>Taylor Series</b> - suppose \( f \) is analytic on \( B_R(z_0) \), then \( f \) can be written as \[ f(z) = \sum_{n \ge 0} a_n (z - z_0)^n \] For all \( z \in B_R(z_0) \) where \[ a_n = \frac{f^{(n)}(z_0)}{n!} \] When \( z_0 = 0 \), we call this the <b>Maclaurin Series</b>. To prove this, without loss of generality, assume \( z_0 = 0 \). Let \( \gamma = C_{\frac{R + |z|}{2}} \), then by Cauchy, \[ f(z) = \oint_\gamma \frac{f(w)}{w - z} \, dw \] We want to make the pole at \( z_0 = 0 \) instead, that is, the numerator should be \( w^k \). Simply note that \[ \frac{1}{w - z} = \frac{1}{w} + \cdots + \frac{z^{n - 1}}{w^{n}} + \frac{z^n}{w^n (w - z)}\] And so the prefix becomes exactly the Taylor coefficients, again by generalised Cacuhy Integral Formula. The final term can be shown to be tends to \( 0 \) as \( n \to \infty \) trivially.</p>
+
+
+<h3>Laurent Series</h3>
+
+<p>Now we allow holes. Suppose \( f \) is analytic on an <b>annulus</b> \( \Omega := B_{R_2}(z_0) \setminus \overline{B_{R_1}(z_0)} \), then for any \( z \in \Omega \) we have \[ f(z) = \sum_{n = -\infty}^{\infty} c_n (z - z_0)^n \] With \[ c_n = \frac{1}{2\pi i} \oint_\gamma \frac{f(w)}{(w - z_0)^{n + 1}} \, dw \] This is obviously an interesting extension of the Taylor Series. Clearly if \( f \) is analytic in \( \overline{B_{R_1}(z_0)} \) as well, then \( c_n = 0 \) for any \( n \lt 0 \) via Cauchy-Goursat Theorem.</p>
+
+<p>We can show the coefficient of Laurent Series are unique - suppose \[ \sum_{n = -\infty}^\infty c_n (z - z_0)^n = \sum_{n = -\infty}^\infty \tilde{c_n} (z - z_0)^n \] Since both are absolutely convergent, by integrating \[ \oint_\gamma (z - z_0)^n \, dz \] We may filter the coefficients \( c_{-1} \). The proof for Laurent Series is just apply Cauchy-Goursat for multi-connected domains, then prove the same way as the proof for Taylor Series.</p>
+
+<h3>Singularities</h3>
+
+<p>Assume \( f \) is analytic on a <b>punctured disc</b> \( B_R(z_0) \setminus \{ z_0 \} \) for some \( R \). We can write its Laurent Series out as \[ f(z) = \sum_{n = -\infty}^\infty c_n (z - z_0)^n \] Obviously, we want to classify the type of the puncture: Consider \( m = \inf \{ n \in \Z : c_n \ne 0 \} \). If (1) \( m \ge 0 \), we say \( z_0 \) a <b>removable singularity</b>; If (2) \( -\infty \lt m \lt 0 \), we say \( z_0 \) a <b>pole of order</b> \( -m \); If (3) \( m = -\infty \), we say \( z_0 \) an <b>essential singularity</b>.</p>
+
+<p>The naming captures the nature of the singularities - which is, how hard is it for us to "complete" the function \( f \) at \( z_0 \). For removable singularity, we simply take \( f(z_0) = c_0 \), which makes it analytic over its disc of convergence. Interestingly, if \( f \) is bounded and analytic over \( B_R(z_0) \setminus \{ z_0 \} \), it has removable singularity at \( z_0 \) as well, </p>

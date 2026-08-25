@@ -233,12 +233,28 @@
 
 <p>Given a Laurent Series \( f(z) = \sum_{n} c_n (z - z_0)^n \), we can define the <b>residue</b> of \( f \) at \( z_0 \) as \[ \Res(f; z_0) = c_{-1} \] Clearly we also have \[ \oint_\gamma f(z) \, dz = 2 \pi i \Res(f; z_0) \] Over a punctured disc. More generally, if \( f \) is analytic on \( \overline{\Omega} \setminus \{ z_1, \dots, z_n \} \), then \[ \oint_\gamma f(z) \, dz = 2 \pi i \sum_{k = 1}^{n} \Res(f; z_k) \] Which is just a simple application of the Cauchy-Goursat Theorem. We may also consider the residue at \( \infty \). In specific, we have \[ \Res(f; \infty) = \Res(z^{-2} f(z^{-1}); 0) \]</p>
 
-<p>Clearly if \( f \) is analytic at \( z_0 \), then \( \Res(f; z_0) = 0 \). If \( f \) has a pole of order not exceeding \( m \), then we also have \( \Res(f; z_0) = [z^{m - 1}] (z - z_0)^m f \), the coefficient of \( z^{m - 1} \) of \( (z - z_0)^m f \).</p>
+<p>Clearly if \( f \) is analytic at \( z_0 \), then \( \Res(f; z_0) = 0 \). If \( f \) has a pole of order not exceeding \( m \), then we also have \( \Res(f; z_0) = [(z - z_0)^{m - 1}] (z - z_0)^m f \), the coefficient of \( (z - z_0)^{m - 1} \) of \( (z - z_0)^m f \).</p>
 
 <p>Turns out residues are superbly useful - as illustrated as below.</p>
 
 <h3>Improper Integral</h3>
 
+<p>An <b>improper integral</b> of a continuous function \( f: [0, \infty) \to \R \) is usually defined as \[ \int^\infty_0 f(x) \, dx = \lim_{R \to \infty} \int^R_0 f(x) \, dx \] And \[ \int^\infty_{-\infty} f(x) \, dx = \lim_{R_1 \to \infty} \int^0_{-R_1} f(x) \, dx + \lim_{R_2 \to \infty} \int^{R_2}_0 f(x) \, dx \] Here, we care about the <b>Cauchy Principal Value</b> as \[ \text{P.V.} \int^{\infty}_{-\infty} f(x) \, dx = \lim_{R \to \infty} \int_{-R}^R f(x) \, dx \] We can actually use residue theorem to find the P.V. of an improper integral, by simply draw a "half circle" onto the complex plane. </p>
 
+<p>Formally, we may define \( I_R \) the straight line from \( -R \) to \( R \) and \( C_R \) the arc parametised by \( \theta \mapsto R e^{i \theta} \) where \( \theta \in [0, \pi] \). Then, we can use residue theorem to compute the integration over \( \gamma_R = I_R \cup C_R \), then subtract the contribution of \( C_R \). If the function is not defined at \( 0 \), then we need to use two semi-circles instead.</p>
+
+<p><b>Jordan's Lemma</b> states that, suppose \( f \) is analytic on \( \{ z \in \C : \Im z \ge 0, |z| \ge R_0 \} \) for some \( R_0 \gt 0 \), while \( \max_{C_R} |f| \le M_R \) for all \( R \gt R_0 \) with \( M_R \to 0 \) as \( R \to \infty \), then for any \( a \gt 0 \), \[ \lim_{R \to \infty} \int_{C_R} f(z) e^{iaz} \, dz = 0 \] We can pull out the \( f(z) \) to \( M_R \), so we only need \[ \int_{C_R} e^{iaz} \, dz = Ri \int_0^{\pi} e^{-R a \sin \theta + i R a \cos \theta} \, d \theta \] To be bounded for whatever \( R \). Taking modulus, we need \[ R \int^\pi_0 e^{-Ra \sin \theta} \, d\theta \] To be bounded. The rest is pretty trivial. Jordan's lemma come into handy when we try to handle stuff related to convoluting with sine or cosine.</p>
+
+<p>One of the other thing that will come to handy is as follows: For function \( F(\sin \theta, \cos \theta) \) to be integrated in \( [0, 2 \pi] \), we can represent both using \( z(\theta) = e^{i \theta} \), then invoke the residue theorem.</p>
+
+<h3>Argument Principle</h3>
+
+<p>We say \( f : \Omega \to \C \) is <b>meromorphic</b> if it is analytic on \( \Omega \) except for poles. If \( f \) does not have zero on curve \( \gamma \) parametised by \( z : [a, b] \to \C \), then we may define \[ \Delta_\gamma \arg f(z) = \theta(b) - \theta(a) \] Where \( f(z(t)) = \rho(t) e^{i \theta(t)} \) for \( t \in [a, b] \) and continuous \( \rho \) and \( \theta \).</p>
+
+<p>Consider a meromorphic \( f \) on \( \Omega \) with simple closed curve \( \gamma \), where \( f \) has no pole nor zero on \( \gamma \). Then the <b>argument principle</b> states that the <b>winding number</b> \[ \frac{1}{2 \pi} \Delta_\gamma \arg f(z) = \frac{1}{2\pi i} \oint_\gamma \frac{f'(z)}{f(z)} \, dz = Z - P \] Where \( Z \) and \( P \) are the number of zeros and poles of \( f \) in \( \gamma \) respectively, count with multiplicities. This is a consequence of the residue theorem as well; If \( f(z) = g(z) (z - z_0)^m \) where \( g(z) \) has neither pole or zero at \( z_0 \), then \( f'(z) = g'(z) (z - z_0)^m +g(z) \cdot m (z - z_0)^{m - 1} \), and so \[ \frac{f'(z)}{f(z)} = \frac{g'(z)}{g(z)} + \frac{m}{z - z_0}\] Noting \( \frac{g'(z)}{g(z)} \) is analytic at \( z_0 \) gives the desired result.</p>
+
+<p>There is an interesting corollary as the <b>Rouche's Theorem</b> - Given simple closed curve \( \gamma \) and analytic \( f \) and \( g \) in closure enclosed by \( \gamma \). If additionally \( |f(z)| \gt |g(z)| \) for all \( z \in \gamma \), then \( f(z) \) and \( g(z) \) has same number of zeroes interior of \( \gamma \). The key idea is \[ \Delta_\gamma \arg (f(z) + g(z)) = \Delta_\gamma \arg f(z) + \Delta_\gamma \arg \left( 1 + \frac{g(z)}{f(z)} \right) \] And the result follows.</p>
+
+<p>Finally, we introduce the <b>open mapping theorem</b> - Given a non-constant analytic function \( f : \Omega \to \C \), \( f \) always maps open set to open sets, which \( f \) is called <b>open</b>. Suppose \( f(z_0) = w_0 \) for some \( z_0 \in \Omega \), define \( F(z) = f(z) - w_0 \) and \( G(z) = w_0 - w \) (just a constant). Then for sufficiently small \( \delta \), \( z_0 \) is the only root to \( F \) in \( B_\delta(z_0) \), while \( |F| \) is bounded below by some positive number on \( \partial B_\delta(z_0) \). Then for any sufficiently small \( |G| = |w_0 - w| \), a root is guaranteed by Rouche.</p>
 
 </body>

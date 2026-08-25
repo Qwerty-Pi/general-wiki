@@ -161,6 +161,24 @@
 
 <h3>Cauchy Integral Formula</h3>
 
-<p></p>
+<p>The <b>Cauchy Integral Formula</b> is related to the Cauchy-Goursat Theorem, but asks the question - if the function \( \frac{f(z)}{z - z_0} \) where \( f \) analytic has a "pole" at \( z_0 \), what is its line integral encircling the pole?</p>
+
+<p>Formally speaking, let \( \Omega \) open, enclosed by simple closed curve \( \gamma \) with <b>counterclockwise</b> orientation. Then if \( f \) is analytic on \( \overline{\Omega} \) (closure), then for any \( z_0 \in \Omega \), we have \[ f(z_0) = \frac{1}{2 \pi i} \oint_\gamma \frac{f(z)}{z - z_0} \, dz \] The proof is simple - By Cauchy-Goursat, we can pass \( \gamma \) to \( C_\rho \) without changing the integral for some \( \rho \gt 0 \) where \( C_\rho \) is the circle centered at \( z_0 \) with radius \( \rho \), since \( f \) is analytic on the closure of \( \gamma \cup -C_\rho \). How to, then, evaluate \[ \oint_{C_\rho} \frac{f(z)}{z - z_0} \, dz \] We may use a similar trick appear before - We rewrite it into the form \[ \oint_{C_\rho} \left[ \frac{f(z) - f(z_0)}{z - z_0} + \frac{f(z_0)}{z - z_0} \right] \, dz \] The first term is bounded on \( \Omega \setminus \{ z_0 \} \) (note: I think in order to prove this, we need to split into two cases, \( |z - z_0| \ge \delta \) and \( |z - z_0| \lt \delta \)), and so as \( \rho \rightarrow 0 \), this term tends to \( 0 \) as well. The second term is just \( 2 \pi i f(z_0) \), and the equality holds.</p>
+
+<p>We can, in fact, prove a more general statement. Under the same assumption, we can show \( f \) is differentiable of all orders, and for any \( n \ge 0 \), \[ \frac{f^{(n)}(z_0)}{n!} = \frac{1}{2 \pi i} \oint_\gamma \frac{f(z)}{(z - z_0)^{n + 1}} \, dz \] The left side is very Taylor, but we will ignore it for now. We can simply proceed by induction, and evaluate the value of \[ \lim_{h \to 0} \left[ \frac{f^{(n)}(z_0 + h) - f^{(n)}(z_0)}{n!} \right] \] by the first principles.</p>
+
+<p>We can indeed explain a bit on why it looks like this. Let's assume \( f \) can be written as the form of <b>power series</b> \[ f(z) = \sum_{k \ge 0} \frac{f^{(k)}(z_0)}{k!} (z - z_0)^k \] Which converges within some radius from \( z_0 \). Then \[ \frac{f(z)}{(z - z_0)^{n + 1}} = \sum_{k \ge 0} \frac{f^{(k)}(z_0)}{k!} (z - z_0)^{k - n - 1} \] But \[ \oint_\gamma (z - z_0)^n = \begin{cases} 2 \pi i & \text{ if } n = -1 \\ 0 & \text{ otherwise } \end{cases} \] Since except for \( n = -1 \), others all have anti-derivative on \( \Omega \setminus \{ z_0 \} \).</p>
+
+<p>Note that generalised Cauchy Integral Formula implies if \( f \) is analytic at \( z_0 \), then it is differentiable of all orders at \( z_0 \)! There is an interesting consequence to this - the <b>Morera's Theorem</b> states that for continuous \( f \) on open connected set \( \Omega \), if \( \oint_\gamma f(z) \, dz = 0 \) for all closed curves in \( \Omega \), then \( f \) is differentiable on \( \Omega \). The existence of anti-derivative \( F \) implies \( F \) is analytic, and so \( F \) has all order of derivatives, so as \( f = F' \).</p>
+
+<h3>Cauchy's Inequality</h3>
+
+<p><b>Cauchy's Inequality</b> is an immediate corollary of Cauchy Integral Formula - suppose \( f \) is differentiable on an open set containing \( \overline{B_R(z_0)} \) and \( \gamma = C_R(z_0) \), then we have \[ \left| \frac{f^{(n)} (z_0)}{n!} \right| \le \frac{\max_\gamma |f(z)|}{R^n} \]</p>
+
+<p>Turns out we can prove quite crazy result with Cauchy's Inequality! For example, when \( f \) is analytic on \( \C \) (in other words, <b>entire</b>) and <b>bounded</b>, then \[ |f'(z_0)| \le \frac{\max_{C_R} f(z)}{R} \le \frac{M}{R} \] Which is forced to be \( 0 \) as \( R \to \infty \). Hence, \( f \) must be constant. This is the <b>Liouville's Theorem</b>.</p>
+
+<p>In turns, we can prove the <b>Fundamental Theorem of Algebra</b> with this - suppose we have a non-constant polynomial \( P \in \C[z] \). If \( P(z) \) does not have any root, then \( \frac{1}{P(z)} \) is well-defined on \( \C \) and is <b>entire</b>. We can show \( \frac{1}{P(z)} \) is <b>bounded</b> by case-handling \( |z| \gt R \) or \( |z| \le R \) for some sufficiently large \( R \), and so by Liouville we have \( \frac{1}{P(z)} \) being constant, contradiction!</p>
+
+<p>Finally, we have the <b>Maximum Modulus Principle</b> - for non-constant \( f \) being analytic on open connected \( \Omega \), no \( z_0 \in \Omega \) has maximum modulus. We can first consider the disc case: Suppose \( |f(z)| \le |f(z_0)| \) for all \( z \in B_R(z_0) \). By Cauchy, we will need \( |f(z)| = |f(z_0)| \), and so the \( |f(z)| \) is constant in \( B_R(z_0) \). Since the domain is (polygonally) connected, \( |f| \) is constant on \( \Omega \), and so \( f \) is constant as well(!)</p>
 
 </body>

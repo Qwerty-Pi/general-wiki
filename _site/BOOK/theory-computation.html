@@ -56,28 +56,41 @@
         </div>
     </div>
 
-	<h1>Introduction to the Theory of Computation</h1>
-
-<!-- p>電腦能否思考？電腦能夠解決咩嘢？電腦能夠實際快速解決何種問題？以上皆是哲學思辨。只喺「電腦」一詞甚爲籠統：飲品機是否電腦？計數機呢？又或係打字機，甚至算盤？</p-->
+	<span style="display: none">
+\[
+	\def\P{\mathcal{P}}
+\]
+</span>
+<h1>Introduction to the Theory of Computation</h1>
 
 <p>Can a computer think? What can computer solve? What kind of problems can a computer solve efficiently and practically? All these questions are philosophical. But "computer" is a vague wordings - is a vending machine a computer? Or an electronic calculator? Or some sort of teletype printer? Or even abacus? As you can see - we need some sort of clear definition of "computer" and "problem" to reason about them.</p>
 
-<p>Following Aristotle, we use computational models, a model that supports a certain set of atomic operations, as an abstraction of computers.
+<p>Following Aristotle, we use <b>computational models</b>, a model that supports a certain set of primitive operations, as an abstraction of computers.
 
 <ul>
 	<li>Part One goes through weaker <b>automata</b>, such as the <b>Deterministic Finite Automaton (DFA)</b>, <b>Non-deterministic Finite Automaton (NFA)</b> and the <b>Pushdown Automaton (PDA)</b>.</li>
-	<li>In Part Two and Three, we focus on the strongest known model to human kind that can be implemented - the <b>Turing Machine (TM)</b>.
+	<li>In Part Two and Three, we focus on the strongest known implementable model to human kind - the <b>Turing Machine (TM)</b>.
 		<ul>
 			<li>Part Two focuses on <b>Computability Theory</b>, which asks the question - What class of problems can be solved by Turing Machine?</li>
-			<li>Part Three focuses on <b>Complexity Theory</b>, which asks a similar question - What class of problems can be solved efficiently, measured in time or space, by Turing Machine?</li>
+			<li>Part Three focuses on <b>Complexity Theory</b>, which raises a similar question - What class of problems can be solved efficiently, measured in time or space, by Turing Machine?</li>
 		</ul>
 	</li>
 </ul>
 </p>
 
-<p>All these questions can be somewhat answered via precise and elegant definitions and deductions.</p>
+<p>All these questions can be somewhat answered via precise and elegant set-theoric definitions and deductions.</p>
 
 <h2>Part One: Automata and Languages</h2>
+
+<h3>Formal Languages and Decision Problems</h3>
+
+<p>A <b>finite alphabet</b> \( \Sigma \) as any set of <b>symbols</b> such as \( \{ \texttt{0}, \texttt{1} \} \) or \( \{ \texttt{a}, \texttt{b}, \texttt{c} \} \). A <b>string over \( \Sigma \)</b> is any finite sequence of symbols of \( \Sigma \) such as \( \texttt{000101} \) or \( \texttt{ababc} \), where the <b>empty string</b> is denoted as \( \varepsilon \). The set of all strings over \( \Sigma \) is denoted as \( \Sigma^* \). Finally, a <b>language</b> \( L \) over \( \Sigma \) is any collection (set) of strings over \( \Sigma \). </p>
+
+<p>A large class of problems that we will deal with is the <b>decision problems</b> - That is, given a language \( L \) and any string \( w \), decide if \( w \in L \). For example, let \( L = \{ \texttt{a}^n \texttt{b}^n : n \in \mathbb{Z}_{\ge 0} \} \), then \( \texttt{aabb} \in L \) and \( \varepsilon \in L \), but \( \texttt{aab} \not\in L \). We want our machines to be able to decide that for us. When is it possible, and when not? Of course, that depends on the language given, and, our choice of <b>computational model</b>. The more complicated a language is, then more strength our model requires to solve the decision problem. </p>
+
+<p>Naturally, we want classify the languages according to how "complicated" they are, and the computational models according to their ability in recognizing languages. In Part One, we will go through <b>Regular Languages (RL)</b> and <b>Context-Free Languages (CFL)</b> as the simplest classes of languages.</p>
+
+<h3>Regular Languages</h3>
 
 <h2>Part Two: Computability Theory</h2>
 

@@ -10,7 +10,8 @@ layout: default
 
 <p>Can a computer think? What can computer solve? What kind of problems can a computer solve efficiently and practically? All these questions are philosophical. But "computer" is a vague wordings - is a vending machine a computer? Or an electronic calculator? Or some sort of teletype printer? Or even abacus? As you can see - we need some sort of clear definition of "computer" and "problem" to reason about them.</p>
 
-<p>Following Aristotle, we use <b>computational models</b>, a model that supports a certain set of primitive operations, as an abstraction of computers.
+<div>
+Following Aristotle, we use <b>computational models</b>, a model that supports a certain set of primitive operations, as an abstraction of computers.
 
 <ul>
 	<li>Part One goes through weaker <b>automata</b>, such as the <b>Deterministic Finite Automaton (DFA)</b>, <b>Non-deterministic Finite Automaton (NFA)</b> and the <b>Pushdown Automaton (PDA)</b>.</li>
@@ -21,7 +22,7 @@ layout: default
 		</ul>
 	</li>
 </ul>
-</p>
+</div>
 
 <p>All these questions can be somewhat answered via precise and elegant set-theoric definitions and deductions.</p>
 
@@ -31,11 +32,24 @@ layout: default
 
 <p>A <b>finite alphabet</b> \( \Sigma \) as any set of <b>symbols</b> such as \( \{ \texttt{0}, \texttt{1} \} \) or \( \{ \texttt{a}, \texttt{b}, \texttt{c} \} \). A <b>string over \( \Sigma \)</b> is any finite sequence of symbols of \( \Sigma \) such as \( \texttt{000101} \) or \( \texttt{ababc} \), where the <b>empty string</b> is denoted as \( \varepsilon \). The set of all strings over \( \Sigma \) is denoted as \( \Sigma^* \). Finally, a <b>language</b> \( L \) over \( \Sigma \) is any collection (set) of strings over \( \Sigma \). </p>
 
-<p>A large class of problems that we will deal with is the <b>decision problems</b> - That is, given a language \( L \) and any string \( w \), decide if \( w \in L \). For example, let \( L = \{ \texttt{a}^n \texttt{b}^n : n \in \mathbb{Z}_{\ge 0} \} \), then \( \texttt{aabb} \in L \) and \( \varepsilon \in L \), but \( \texttt{aab} \not\in L \). We want our machines to be able to decide that for us. When is it possible, and when not? Of course, that depends on the language given, and, our choice of <b>computational model</b>. The more complicated a language is, then more strength our model requires to solve the decision problem. </p>
+<p>A large class of problems that we will deal with is the <b>decision problems</b> - That is, given a language \( L \) and any string \( w \), decide if \( w \in L \). For example, let \( L = \{ \texttt{a}^n \texttt{b}^n : n \in \mathbb{Z}_{\ge 0} \} \), then \( \texttt{aabb} \in L \) and \( \varepsilon \in L \), but \( \texttt{aab} \not\in L \). We want our machines to be able to decide that for us. When is it possible, and when is it not? That depends on the language given. And, our particular choice of <b>computational model</b>. The more complicated a language is, then more strength our model requires to solve the decision problem. </p>
 
 <p>Naturally, we want classify the languages according to how "complicated" they are, and the computational models according to their ability in recognizing languages. In Part One, we will go through <b>Regular Languages (RL)</b> and <b>Context-Free Languages (CFL)</b> as the simplest classes of languages.</p>
 
 <h3>Regular Languages</h3>
+
+<p>Informally, every machine requires some "memory" to store the intermediate computational results. First, we assume the memory is finite, that is, the number of <b>states</b> of the machine is finite - <b>Finite Automata</b>. What can such a machine do? Let's say the characters of the input is read one-by-one. Then, the <b>transition</b> to the next state should <u>only</u> depends on the previous state and the current character. We should <b>accept</b> or <b>reject</b> a string base on the final state only.</p>
+
+<div>
+The machine described above is called the <b>Deterministic Finite Automaton (DFA)</b>. To formally capture the intuition, we can define a DFA as a 5-tuple \( (Q, \Sigma, \delta, q_0, F) \), where
+<ol>
+	<li>\( Q \) is a finite set called <b>states</b>, </li>
+	<li>\( \Sigma \) is a finite set called <b>alphabet</b>, </li>
+	<li>\( \delta: Q \times \Sigma \to Q \) is the <b>transition function</b>, </li>
+	<li>\( q_0 \in Q \) is the <b>start state</b> (or <b>initial state</b>), and</li>
+	<li></li>
+</ol>
+</div>
 
 <h2>Part Two: Computability Theory</h2>
 

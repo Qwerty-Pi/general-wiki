@@ -34,7 +34,7 @@ pre {
 }
 
 ol, ul {
-    margin-top: 0.5em;
+    margin-top: 0em; /* probably looks better? */
 }
 
 * {
@@ -75,6 +75,10 @@ img, br {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+mjx-container {
+    font-size: 117.1% !important; /* hard-coded scaling (race condition of somesort happened?) */
 }
 
 /* For cheatsheet */

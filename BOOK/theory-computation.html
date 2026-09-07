@@ -4,6 +4,7 @@ layout: default
 <span style="display: none">
 \[
 	\def\P{\mathcal{P}}
+	\def\sep{\, \vert \,}
 \]
 </span>
 <h1>Introduction to the Theory of Computation</h1>
@@ -38,18 +39,50 @@ Following Aristotle, we use <b>computational models</b>, a model that supports a
 
 <h3>Regular Languages</h3>
 
-<p>Informally, every machine requires some "memory" to store the intermediate computational results. First, we assume the memory is finite, that is, the number of <b>states</b> of the machine is finite - <b>Finite Automata</b>. What can such a machine do? Let's say the characters of the input is read one-by-one. Then, the <b>transition</b> to the next state should <u>only</u> depends on the previous state and the current character. We should <b>accept</b> or <b>reject</b> a string base on the final state only.</p>
+<p>Informally, every machine requires some "memory" to store the intermediate computational results. First, we assume the memory is finite, that is, the number of <b>states</b> of the machine is finite - <b>Finite Automata</b>. What can such a machine do? Let's say the characters of the input is read one-by-one. Then, the <b>transition</b> to the next state should <u>only</u> depends on the previous state and the current character. Finally, we should <b>accept</b> or <b>reject</b> a string base on the final state <u>only</u>.</p>
 
 <div>
-The machine described above is called the <b>Deterministic Finite Automaton (DFA)</b>. To formally capture the intuition, we can define a DFA as a 5-tuple \( (Q, \Sigma, \delta, q_0, F) \), where
+The machine described above is called the <b>Deterministic Finite Automaton (DFA)</b>. To formally capture the intuition, we can define a DFA as a 5-tuple \( M = (Q, \Sigma, \delta, q_0, F) \), where
 <ol>
-	<li>\( Q \) is a finite set called <b>states</b>, </li>
-	<li>\( \Sigma \) is a finite set called <b>alphabet</b>, </li>
+	<li>\( Q \) is a <u>finite</u> set called <b>states</b>, </li>
+	<li>\( \Sigma \) is a <u>finite</u> set called <b>alphabet</b>, </li>
 	<li>\( \delta: Q \times \Sigma \to Q \) is the <b>transition function</b>, </li>
 	<li>\( q_0 \in Q \) is the <b>start state</b> (or <b>initial state</b>), and</li>
-	<li></li>
+	<li>\( F \subseteq Q \) is the <b>set of accept states</b>.</li>
 </ol>
 </div>
+
+<p>One may specify the DFA by drawing out the <b>state diagram</b> (directed graph with arrow represents \( \delta \)), or alternatively use a table to represent transition \( \delta \). The input string \( w = w_1 w_2 \cdots w_n \) is in \( \Sigma^* \). The start state is \( r_0 = q_0 \), where we let \( r_k = \delta(r_{k - 1}, w_k) \) for \( 1 \le k \le n \). We accept \( w \) if and only if the final state \( r_n \in F \). We say the DFA \( M \) <b>recognizes language</b> \( A \) iff \( A = L(M) = \{ w \in \Sigma^* \, \vert \, M \text{ accepts } w \} \). We say a language is <b>regular</b> iff it can be <b>recognized by some DFA</b>.</p>
+
+<div>Can we make our machine more powerful under the restriction of finite states? Let's say we allow <b>non-determinism</b> and <b>\( \varepsilon \)-transition</b>:
+
+<ul>
+	<li><b>Non-determinism</b>: We can <b>choose</b> non-deterministically one of multiple (or none) states to go to, upon receiving a character.</li>
+	<li><b>\( \varepsilon \)-transitions</b>: We can transit on \( \varepsilon \)-transitions freely, without consuming any character.</li>
+</ul>
+
+We accept a string \( w \) iff there <b>exists</b> a walk that <b>consumes all of \( w \)</b>, and ends up at any accept state. This is called <b>Non-deterministic Finite Automaton (NFA)</b>, and the only difference from DFA is that we define \( \delta: Q \times \Sigma_{\varepsilon} := \Sigma \cup \{ \varepsilon \} \to \mathcal{P}(Q) \) instead, where \( \mathcal{P}(Q) \) is the <b>power set</b> of \( Q \). 
+</div>
+
+<p>Turns out the computational power of DFA and NFA are equivalent! That is, if a language \( L \) can be recognized by a DFA, then there exists a NFA that can recognize \( L \) as well, and vice versa. Clearly NFA is more powerful than DFA, while the reduction from NFA to DFA can be done by a clever trick - simply treat the NFA with states \( Q \) as a DFA on the states \( \mathcal{P}(Q) \). Although it takes exponentially more resources, we don't care (for now) since we just care whether it is computable using a certain computational model.</p>
+
+<p>Both DFA and NFA can be used to <b>recognize</b> regular languages. There is another way to attack this - can we specify a way to express all the strings in a regular language? For example, we can use \( \texttt{(01)}^* \) to represent \( \{ \texttt{(01)}^{n} \, \vert \, n \in \mathbb{Z}_{\ge 0} \} \). We want to have a set of "regular" operations on languages such that it can generates all regular language, but none the others. How can we achieve that?</p>
+
+<div>
+Turns out the set of <b>regular operations</b> we need is <b>union</b> (\( A \cup B \)), <b>concatenation</b> (\( A \circ B \)) and <b>star</b> (\( A^* \)). More formally, we define 
+<ol>
+	<li><b>Union</b>: \( A \cup B = \{ x \sep x \in A \text{ or } x \in B \} \)</li>
+	<li><b>Concatenation</b>: \( A \circ B = \{ xy \sep x \in A \text{ and } x \in B \} \)</li>
+	<li><b>Star</b>: \( A^* = \{ x_1x_2 \dots x_k \sep k \ge 0 \text{ and each } x_i \in A \} \)</li>
+</ol>
+Then <b>regular expression</b> is all the we can made up with character \( a \in \Sigma \) (represents \( \{ a \}\)), empty string \( \varepsilon \) (represents \( \{ \varepsilon \} \)), empty set \( \varnothing \) and these three regular operations. Each such regular expression represents a language. For simplicity, we usually write \( A^+ = AA^* \) and \( A^k \) as \( k \) copies of \( A \) concatenate together.
+</div>
+
+<p>Turns out NFA and regular expression has the same computational power as well! That is, each regular expression represents a regular language, and we can represent all regular languages this way. How shall we prove this? First, let's consider the easier direction - given a regular expression \( R \), construct a NFA that recgonize \( L(R) \). Note that \( R \) is defined inductively by merging smaller expressions together, we only have to show that for regular <u>expressions</u> \( R_1 \) and \( R_2 \), \( L(R_1) \cup L(R_2) \), \( L(R_1) \circ L(R_2) \) and \( L(R_1)^* \) are all regular <u>languages</u>. Simply consider the NFAs that recognize \( L(R_1) \) and \( L(R_2) \) respectively, then we can use them as components to build NFA that recognize the combined language. This also shows regular languages is <b>closed under union, concatenation and star</b>. For the other direction, we can convert NFA to <b>Generalised Non-deterministic Finite Automaton (GNFA)</b> - a state digram where each edge is a regular expression, <u>with one accept state only</u>. We can then simply remove the nodes one-by-one to obtain the regular expression between the start state and accept state.</p>
+
+<p>Since DFA, NFA and regular expression are equivalent in their computational power, when we work with proofs on regular languages, we may pick the easiest one to work with. For example, one may use DFA to show regular languages are <b>closed under complement and intersection</b>, which is hard (if not impossible) to prove with NFA, while for regular operations it is much easier to work with NFA.</p>
+
+<p>Finally, how can we show some language, say \( L = \{ \texttt{a}^{n} \texttt{b}^n \sep n \in \mathbb{Z}_{\ge 0} \} \), is not regular? We have the <b>pumping lemma for regular languages</b>: Consider a DFA \( M \) which recognizes language \( L = L(M) \). By running it on any sufficiently long string \( w \), \( M \) must eventually reach some state that previously reached. Hence, for any sufficiently large \( p \) with \( |w| \ge p \), there exists a decomposition \( w = xyz \) where \( |xy| \le p \), \( |y| \ge 1 \) and \( xy^nz \in L(M) \) for all \( n \in \mathbb{Z}_{\ge 0} \). We can "pump" the middle part of the string indefinitely, hence the name of <b>pumping lemma</b>. We may use this lemma to induce contradictions from the regularity assumption of languages.</p>
 
 <h2>Part Two: Computability Theory</h2>
 

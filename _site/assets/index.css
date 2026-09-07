@@ -34,7 +34,7 @@ pre {
 }
 
 ol, ul {
-    margin-top: 0em; /* probably looks better? */
+    margin: 0em; /* probably looks better? */
 }
 
 * {

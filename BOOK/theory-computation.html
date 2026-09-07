@@ -84,6 +84,22 @@ Then <b>regular expression</b> is all the we can made up with character \( a \in
 
 <p>Finally, how can we show some language, say \( L = \{ \texttt{a}^{n} \texttt{b}^n \sep n \in \mathbb{Z}_{\ge 0} \} \), is not regular? We have the <b>pumping lemma for regular languages</b>: Consider a DFA \( M \) which recognizes language \( L = L(M) \). By running it on any sufficiently long string \( w \), \( M \) must eventually reach some state that previously reached. Hence, for any sufficiently large \( p \) with \( |w| \ge p \), there exists a decomposition \( w = xyz \) where \( |xy| \le p \), \( |y| \ge 1 \) and \( xy^nz \in L(M) \) for all \( n \in \mathbb{Z}_{\ge 0} \). We can "pump" the middle part of the string indefinitely, hence the name of <b>pumping lemma</b>. We may use this lemma to induce contradictions from the regularity assumption of languages.</p>
 
+<h3>Context-Free Languages</h3>
+
+<p><b>Context-Free Languages (CFL)</b> forms a broader class of languages. Its naming is based on <b>Context-Free Grammar (CFG)</b>: In essence, in CFG we can substutitue <b>variables</b> to other strings <u>without context</u>. For example, for the grammar with three <b>production rules</b> \[ \begin{align*} A &\to \texttt{0}A\texttt{1} \\ A &\to B \\ B &\to \texttt{\#} \end{align*} \] We can substitute variables whenever we want, and do not have to care about what is next to it. The symbols appear on the left of the production rules are called <b>variables</b>, while other symbols are called <b>terminals</b>. We assign one of the variables as <b>start variable</b>. Take \( A \) as the start variable in the above example, then we can <b>derive</b> \( \texttt{000\#111} \) as \[ A \Rightarrow \texttt{0}A\texttt{1} \Rightarrow \texttt{00}A\texttt{11} \Rightarrow \texttt{000}A\texttt{111} \Rightarrow \texttt{000}B\texttt{111} \Rightarrow \texttt{000\#111} \]</p>
+
+<div>
+Formally, a CFG is a 4-tuple \( G = (V, \Sigma, R, S) \), where
+<ol>                                                                                                                                         <li>\( V \) is a <u>finite</u> set called the <b>variables</b>, </li>
+	<li>\( \Sigma \) is a <u>finite</u> set where \( \Sigma \cap V = \varnothing \) called the <b>terminals</b>, </li>
+	<li>\( R \) is a <u>finite</u> set of <b>production rules</b>, where each rule is of the form \( V \to (V \cup \Sigma)^* \), and</li>
+	<li>\( S \) is the <b>start variable</b>.</li>
+</ol>
+We say \( u \) <b>yields</b> \( v \) if \( u \Rightarrow v \), and \( u \) <b>derives</b> \( v \) if \( u \Rightarrow^* v \) (transitive closure). Naturally, we say \( G \) <b>recognizes</b> \( L(G) = \{ w \in \Sigma^* \sep S \Rightarrow^* w \} \).
+</div>
+
+<p></p>
+
 <h2>Part Two: Computability Theory</h2>
 
 <h2>Part Three: Complexity Theory</h2>

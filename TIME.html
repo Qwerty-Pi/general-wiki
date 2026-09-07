@@ -4,6 +4,10 @@ layout: default
 
 <style>
 
+:root {
+	--orange: #e07338;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -41,20 +45,48 @@ body {
         &:not(.left){
             border-left: none;
         }
+        
+        -moz-user-select: -moz-none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
+}
+
+.course {
+    &[data-course="csci4120"] {
+        background-color: #f03e1680;
+    }
+    &[data-course="csci4180"] {
+        background-color: #56cf3880;
+    }
+    &[data-course="csci3260"] {
+        background-color: #1858b880;
+    }
+    &[data-course="phys3021"] {
+        background-color: #fcba0380;
+    }
+    &[data-course="gena1000"] {
+        background-color: #8a16f080;
+    }
+}
+
+.weekday {
+    font-size: 1.3em;
 }
 
 </style>
 
 <div class="timetable-container">
-	<div class="left"></div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div>
+	<div class="left"></div><div class="weekday">Mon</div><div class="weekday">Tue</div><div class="weekday">Wed</div><div class="weekday">Thu</div><div class="weekday">Fri</div>
 	<div class="left">0830-0915</div><div></div><div></div><div></div><div></div><div></div>
-	<div class="left">0930-1015</div><div></div><div></div><div></div><div>CSCI3260 [LEC]<br/> ICS LT1</div><div style="grid-row: span 2">CSCI3260 [LEC]<br/> SC LT2</div>
-	<div class="left">1030-1115</div><div></div><div>CSCI4120 [LEC]<br/> SC LT1</div><div></div><div></div>
-	<div class="left">1130-1215</div><div></div><div>CSCI4120 [TUT]<br/> SC LT1</div><div></div><div></div><div style="grid-row: span 2">GENA1000 [ASB]<br/> RRS</div>
-	<div class="left">1230-1315</div><div style="grid-row: span 2">CSCI4180 [LEC]<br/> LSK LT1</div><div style="grid-row: span 2">PHYS3021 [LEC]<br/> LHC 103</div><div></div><div></div>
-	<div class="left">1330-1415</div><div>CSCI4180 [TUT]<br/> LSK LT1</div><div>PHYS3021 [LEC]<br/> LSB LT5</div><div></div>
-	<div class="left">1430-1515</div><div style="grid-row: span 2">CSCI4120 [LEC]<br/> LSB LT5</div><div></div><div></div><div>PHYS3021 [TUT]<br/> LSB LT5</div><div></div>
-	<div class="left">1530-1615</div><div></div><div>CSCI4180 [TUT]<br/> TYW</div><div></div><div></div>
-	<div class="left">1630-1715</div><div></div><div></div><div></div><div>CSCI3260 [TUT]<br/> LHC 104</div><div></div>
+	<div class="left">0930-1015</div><div></div><div></div><div></div><div class="course" data-course="csci3260">CSCI3260 [LEC]<br/> ICS LT1</div><div style="grid-row: span 2" class="course" data-course="csci3260">CSCI3260 [LEC]<br/> SC LT2</div>
+	<div class="left">1030-1115</div><div></div><div class="course" data-course="csci4120">CSCI4120 [LEC]<br/> SC LT1</div><div></div><div></div>
+	<div class="left">1130-1215</div><div></div><div class="course" data-course="csci4120">CSCI4120 [TUT]<br/> SC LT1</div><div></div><div></div><div style="grid-row: span 2" class="course" data-course="gena1000">GENA1000 [ASB]<br/> RRS</div>
+	<div class="left">1230-1315</div><div style="grid-row: span 2" class="course" data-course="csci4180">CSCI4180 [LEC]<br/> LSK LT1</div><div style="grid-row: span 2" class="course" data-course="phys3021">PHYS3021 [LEC]<br/> LHC 103</div><div></div><div></div>
+	<div class="left">1330-1415</div><div class="course" data-course="csci4180">CSCI4180 [TUT]<br/> LSK LT1</div><div class="course" data-course="phys3021">PHYS3021 [LEC]<br/> LSB LT5</div><div></div>
+	<div class="left">1430-1515</div><div style="grid-row: span 2" class="course" data-course="csci4120">CSCI4120 [LEC]<br/> LSB LT5</div><div></div><div></div><div class="course" data-course="phys3021">PHYS3021 [TUT]<br/> LSB LT5</div><div></div>
+	<div class="left">1530-1615</div><div></div><div class="course" data-course="csci4180">CSCI4180 [TUT]<br/> TYW</div><div></div><div></div>
+	<div class="left">1630-1715</div><div></div><div></div><div></div><div class="course" data-course="csci3260">CSCI3260 [TUT]<br/> LHC 104</div><div></div>
 </div>

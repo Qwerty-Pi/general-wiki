@@ -63,7 +63,7 @@
 }
 
 body {
-    height: calc(100vh - 32px);
+    height: 100vh;
     display: flex;
     flex-direction: column;
     margin: 0;
@@ -71,6 +71,7 @@ body {
 }
 
 .timetable-container {
+    height: 100%;
     flex: 1;
 	display: grid;
 	grid-template-columns: repeat(6, 1fr);
@@ -94,8 +95,6 @@ body {
 }
 
 </style>
-
-<h1>Timetable</h1>
 
 <div class="timetable-container">
 	<div class="left"></div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div>

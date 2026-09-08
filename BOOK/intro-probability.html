@@ -1,5 +1,42 @@
 ---
 layout: default
 ---
+<span style="display: none">
+\[
+	\def\F{\mathcal{F}}
+	\def\P{\mathbb{P}}
+	\def\sep{\, | \,}
+\]
+</span>
 
 <h1>Introduction to Probability</h1>
+
+<p><b>Probability</b> is the art of computing the likelihood of something that will happens. We want to accurately compute and represent probabilities using a systematic way. As such, we wish to have concrete axiomatic definitions on our probabilistic model.</p>
+
+<h2>Sample Space and Probability</h2>
+
+<h3>Probability Space</h3>
+
+<p>A <b>probability space</b> \( (\Omega, \F, \P) \) is a space where \( \Omega \) is the <b>sample space</b>, \( \F \subseteq \mathcal{P}(\Omega) \) (power set of \( \Omega \)) is the <b>event space</b> and \( \P: \F \to [0, 1]\) is the <b>probability function</b>. In common language, the sample space \( \Omega \) is the set of all possible results, the event space \( \mathcal{F} \) is a collection of <b>events</b> which is subsets of \( \Omega \), and the probability function \( \P \) assigns a probability to each of the events.</p>
+
+<p>A philosophical question is - why do we not assign probability to the sample space directly? The issue being when \( \Omega \) is uncountable say \( [0, 1] \) and \( \P \) is the uniform distribution, then for any \( x \in [0, 1] \), the probability of getting \( x \) is always zero! It doesn't make sense nor useful, and so we assign probabilities to events instead.</p>
+
+<div>Next, what are the axioms that the probability function \( \P \) must satisfy? Turns out there are only three axioms that it must satisfy:
+<ol>
+	<li>(<b>Nonnegativity</b>) \( \P(A) \ge 0 \) for all event \( A \in \F \).</li>
+	<li>(<b>\( \sigma \)-additivity</b>) For sequence of <u>disjoint</u> events \( \{ A_i \}_{i \in I} \subseteq \F \) of cardinality <u>at most countable</u>, we have \[ \sum_{i \in I} \P(A_i) = \P\left(\bigcup_{i \in I} A_i\right)\]</li>
+	<li>(<b>Normalisation</b>) \( \P(\Omega) = 1 \).</li>
+</ol>
+</div>
+
+<p>
+Formally, we require \( \F \subseteq \mathcal{P}(\Omega) \) to be a \( \sigma \)-algebra, which means \( \Omega \in \F \) and \( \F \) is <b>closed under complement and countable union</b>, so that if \( A \) is an event, then \( A^c \) is also an event; and if \( A_i \) for \( i \in I \) are events, then \( \cup_{i \in I} A_i \) is also an event whenever \( I \) is at most countable.
+</p>
+
+<p>In the following, we take these three probability axioms as granted, and make deductions base on them. By assuming these probability axioms alone, we may deduce laws such as for events \( A \) and \( B \), \( A \subseteq B \implies \P(A) \le \P(B) \) and \( \P(A \cup B) = \P(A) + \P(B) - \P(A \cap B) \).</p>
+
+<h3>Conditional Probability</h3>
+
+<p>Given an event \( B \) occurs, what is the <b>conditional probability</b> that event \( A \) occurs? Clearly if \( \P(B) = 0 \), then the conditional probability is meaningless, so we might as well assume \( \P(B) \gt 0 \). Clearly we have \[ \P(A \sep B) = \frac{\P(A \cap B)}{\P(B)}\] Indeed, we may treat \( \P(\cdot \sep B)\) as a probability function on sample space \( B \) as well.</p>
+
+<p>Clearly, from definition we have the <b>multiplication rule</b> \[ \P\left( \cap_{i = 1}^n A_i \right) = \P(A_1) \cdot \P(A_2 \sep A_1) \cdots \P(A_n \sep \cap_{i = 1}^{n - 1} A_i)\]</p>

@@ -6,6 +6,8 @@ layout: default
 	\def\F{\mathcal{F}}
 	\def\P{\mathbb{P}}
 	\def\sep{\, | \,}
+	\def\N{\mathbb{N}}
+	\def\R{\mathbb{R}}
 \]
 </span>
 
@@ -40,3 +42,25 @@ Formally, we require \( \F \subseteq \mathcal{P}(\Omega) \) to be a \( \sigma \)
 <p>Given an event \( B \) occurs, what is the <b>conditional probability</b> that event \( A \) occurs? Clearly if \( \P(B) = 0 \), then the conditional probability is meaningless, so we might as well assume \( \P(B) \gt 0 \). Clearly we have \[ \P(A \sep B) = \frac{\P(A \cap B)}{\P(B)}\] Indeed, we may treat \( \P(\cdot \sep B)\) as a probability function on sample space \( B \) as well.</p>
 
 <p>Clearly, from definition we have the <b>multiplication rule</b> \[ \P\left( \cap_{i = 1}^n A_i \right) = \P(A_1) \cdot \P(A_2 \sep A_1) \cdots \P(A_n \sep \cap_{i = 1}^{n - 1} A_i)\]</p>
+
+<p>Suppose \( \Omega = A_1 \uplus A_2 \uplus \cdots \uplus A_n \) is a partition where \( \P(A_i) \gt 0 \). For an event \( B \), we can write out the <b>Total Probability Theorem</b> \[ \P(B) = \sum_{i = 1}^n \P(A_i) \cdot \P(B \sep A_i) \] And naturally, we have the <b>Bayes' Rule</b> \[ \P(A_k \sep B) = \frac{\P(A_k) \cdot P(B \sep A_k) }{\sum_{i = 1}^n \P(A_i) \cdot \P(B \sep A_i)} \] One of the interpretation for this is that \( A_i \) is actual possibilities (such as positive / negative for a disease) while \( B \) is some observations (such as test for the disease). We can then use the Bayes' Rule to compute the probability of some events happening upon some observations.</p>
+
+<h3>Independent Events</h3>
+
+<p>A key notion revolving probability is <b>independent events</b>. In layman's term, we say \( A \) and \( B \) are independent when when \( A \) and \( B \) are "irrelevant". How shall we define independence using probabilities?</p>
+
+<p>Using conditional probabilities, we say events \( A \) and \( B \) are independent when \[ \P(A) = \P(A \sep B) \] Which effectively means knowing whether \( B \) happens doesn't help you determine whether \( A \) happens. An equivalent way of saying the condition for independence is \[ \P(A) \cdot \P(B) = \P(A \cap B) \] We may readily generalise this definition to collection of events \( \{ A_i \}_{i \in I} \), which we say \( \{ A_i \} \) is independent iff \[ \P\left( \bigcap_{i \in S} A_i \right) = \prod_{i \in S} \P(A_i) \] For all \( S \) being <u>finite</u> subset of \( I \).</p>
+
+<p>We may also define <b>conditional independence</b> over the probability space with probability function \( \P(\cdot \sep C) \) for event \( C \) with \( \P(C) \gt 0 \), while the definition readily follows.</p>
+
+<h2>Discrete Random Variables</h2>
+
+<p>Many of the time, we try to assign a numerical value to each of the outcomes, for example, number of pips on dice. We may formally represent them via <b>random variables</b>. A random variable is a <u>real-valued</u> function \( X : \Omega \to \R \), where we define the range \( \Omega_X = X(\Omega) \).</p>
+
+<p>Unfortunately, we need to handle the case where \( \Omega_X \) is <b>at most countably infinite</b> (say \( \N \)) and <b>uncountably infinite</b> (say \( \R \)) separately, since summation over countable sets is (more) well-defined, but we need to use integration for summation for uncountable range of \( X \). We refer the first case as <b>discrete random variable</b>, and the second case as <b>continuous random variable</b>. We will use the same set of notations for both case. However, their actual computation would be slightly different due to above limitations.</p>
+
+<p>In this section, we focus on the case of discrete random variables, that is, when \( \Omega_X \) is at most countably infinite.</p>
+
+<h3>Probability Mass Function</h3>
+
+<p>To represent a discrete random variable \( X : \Omega \to \R \), we may use the <b>Probability Mass Function (PMF)</b>.</p>

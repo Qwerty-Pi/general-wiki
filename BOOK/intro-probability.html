@@ -8,6 +8,9 @@ layout: default
 	\def\sep{\, | \,}
 	\def\N{\mathbb{N}}
 	\def\R{\mathbb{R}}
+	\def\Z{\mathbb{Z}}
+	\def\E{\mathbb{E}}
+	\def\Var{\text{Var}}
 \]
 </span>
 
@@ -61,6 +64,42 @@ Formally, we require \( \F \subseteq \mathcal{P}(\Omega) \) to be a \( \sigma \)
 
 <p>In this section, we focus on the case of discrete random variables, that is, when \( \Omega_X \) is at most countably infinite.</p>
 
-<h3>Probability Mass Function</h3>
+<h3>Probability Mass Functions</h3>
 
-<p>To represent a discrete random variable \( X : \Omega \to \R \), we may use the <b>Probability Mass Function (PMF)</b>.</p>
+<p>To represent a discrete random variable \( X : \Omega \to \R \), we may use the <b>Probability Mass Function (PMF)</b>. The PMF \( p_X : \R \to [0, 1] \) is defined intuitively: \[ p_X(x) = \P(\{ X = x \})\] Which \( \{ X = x \} \) is the event where \( X \) takes the value \( x \), while \( p_X(x) \) is called the <b>probability mass</b> of \( x \).</p>
+
+<p>To aid following discussion, we will introduce some simple discrete random variables and their respective PMFs, namely <b>Bernoulli</b>, <b>Binomial</b>, <b>Geometric</b> and <b>Poisson</b>. Actually, all these are related to the flipping coins, which is the simplest randomised stuff we can have.</p>
+
+<p>Assume now you have a <u>biased</u> coin, where it shows head with probability \( p \) and shows tail with probability \( 1 - p \). The simplest is the <b>Bernoulli Random Variable</b>: \[ X = \begin{cases} 1 & \text{ if head} \\ 0 & \text{ if tail}\end{cases} \] Where its PMF is \[ p_X(x) = \begin{cases} p & \text{if } x = 1 \\ 1 - p & \text{if } x = 0 \end{cases}\]</p>
+
+<p>What if we tosses the coin for \( n \) times, and record the number of times it shows head? This leads to the <b>Binomial Random Variable with parameters \( n \) and \( p \)</b>, which associates with the PMF \[ p_X(k) = \binom{n}{k} p^k (1 - p)^{n - k} \quad \forall k \in [0, n] \]</p>
+
+<p>Next, suppose we throw the coin until a head comes up, and record the number of tosses we have. We have the <b>Geometric Random Variable</b> with the PMF \[ p_X(k) = (1 - p)^{k - 1} p \quad \forall k \in \Z_{\ge 1} \] </p>
+
+<p>Finally, we have the <b>Poisson Random Variable</b> with PMF \[ p_X(k) = e^{- \lambda} \frac{\lambda^k}{k!} \quad \forall k \in \Z_{\ge 0} \] In fact, Poisson is the limit case for Binomial - for large \( n \), small \( p \) and moderate \( \lambda = np \), we have \[ \binom{n}{k} p^k \approx \frac{n^k p^k}{k!} = \frac{\lambda^k}{k!} \] and \[ (1 - p)^{n - k} \approx (1 - p)^{\frac{\lambda}{p}} \approx e^{-\lambda} \]</p>
+
+<p>We can create new random variables base on given random variables. By writing \( Y = g(X) \) where \( g : \R \to \R \), syntactically it refers to the function compositions \( Y = g \circ X : \Omega \to \R \). Its PMF is simply \[ p_Y(y) = \P(\{Y = y\}) = \P(\{X \in g^{-1}(y)\})\]</p>
+
+<h3>Expectation and Variance</h3>
+
+<p>Given a random variable, we want to compute some useful statistics for us to know "how does it behave". For example, what do I expect to get "on average"? How likely the result deviate from what I get? <b>Expectation</b> and <b>Variance</b> deals with those things.</p>
+
+<p>Expectation is a pretty intuitive concept. We simply compute the "average": For <u>discrete</u> random variable \( X \), we define its <b>expectation</b> (or <b>expected value</b>) as \[ \E[X] = \sum_{x} x \cdot p_X(x) \] Which is the weighted averages of the value \( X \) takes. Specifically, we say \( \E[X^n] \) is the <b>\( n \)-th moment</b> of \( X \), so \( \E[X] \) is the first moment of \( X \). Note that \( \E[X] \) is not always well-defined: it only does so when the summation <u>converges absolutely</u>.</p>
+
+<p>Variance is a bit more complicated. We want to measure the weighted average of \( (X - \E[X])^2 \), the "deviation from the expectation". Hence, we define \[ \Var(X) = \E[(X - \E[X])^2] \] Note that \( \Var(X) \ge 0 \) and so we can define the <b>standard deviation</b> \( \sigma_X = \sqrt{\Var(X)} \).</p>
+
+<p>Finally, we wish to deduce some properties about expectation and variance. First of all, given \( Y = aX + b \), we have \( \E[Y] = a\E[X] + b \) and \( \Var(Y) = a^2 \Var(X) \). In fact, we can write variance <u>in terms of moments</u> as well: \[ \Var(X) = \E[X^2] - (\E[X])^2 \] All of them can be derived from first principles.</p>
+
+<h3>Joint PMFs</h3>
+
+<p>Given two discrete random variables \( X \) and \( Y \), we can define their <b>Joint PMF</b> via \[ p_{X, Y}(x, y) = \P(X = x, Y = y)\] Effectively, we are creating a "table" of values, where each cell has a probability mass. This is always well-defined, since \( \Omega_X \times \Omega_Y \) is <u>countable</u>. We call \( p_X(x) = \P(X = x) \) and \( p_Y(y) = \P(Y = y) \) the <b>Marginal PMFs</b>, which can be derived from the Joint PMF via summations. With the notion of Joint PMFs, we can prove the <b>linearity of expectations</b> \[ \E\left[ \sum_{i = 1}^{n} X_i \right] = \sum_{i = 1}^{n} \E[X_i] \]</p>
+
+<h3>Conditional PMFs</h3>
+
+<p>Naturally, for any event \( A \subseteq \Omega \) where \( \P(A) \gt 0 \), we can introduce the <b>conditional PMF</b> as \[ p_{X | A}(x) = \P(X = x \sep A) \] We can condition on random variables as well: \[ p_{X|Y}(x \sep y) = \P(X = x \sep Y = y) \] With these in mind, we may define the <b>conditional expectation</b> for event \( A \) with \( \P(A) \gt 0 \) as \[ \E[X \sep A] = \sum_{x} x \cdot p_{X|A}(x \sep A) \] How about condition on random variables? We can define \[ \E[X \sep Y = y] = \sum_{x} x \cdot p_{X|Y}(x \sep y)\] Note that \( \E[X \sep Y] \) is a function from \( \Omega_Y \) to \( \R \) where \( \E[X \sep Y](y) = \E[X \sep Y = y] \). By abusing notations, we have the elegant <b>total expectation theorem</b> \[ \E[ \E[X \sep Y] ] = \E[X] \]</p>
+
+<h3>Independent Random Variables</h3>
+
+<p>Similar to the event case, we say two random variables \( X \) and \( Y \) are <b>independent</b> when \( p_{X, Y}(x, y) = p_X(x) \cdot p_Y(y) \). For \( X \) and \( Y \) independent, we obviously have \( g(X) \) and \( h(Y) \) independent, and \[ \E[g(X) h(Y)] = \E[g(X)] \cdot \E[h(Y)] \] And so \[ \Var(X + Y) = \Var(X) + \Var(Y) \] We can generalise this to multiple random variables readily.</p>
+
+<h2>Continuous Random Variables</h2>

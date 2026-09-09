@@ -57,6 +57,107 @@
         </div>
     </div>
 
-	<h1>Introduction to Probability</h1>
+	<span style="display: none">
+\[
+	\def\F{\mathcal{F}}
+	\def\P{\mathbb{P}}
+	\def\sep{\, | \,}
+	\def\N{\mathbb{N}}
+	\def\R{\mathbb{R}}
+	\def\Z{\mathbb{Z}}
+	\def\E{\mathbb{E}}
+	\def\Var{\text{Var}}
+\]
+</span>
+
+<h1>Introduction to Probability</h1>
+
+<p><b>Probability</b> is the art of computing the likelihood of something that will happens. We want to accurately compute and represent probabilities using a systematic way. As such, we wish to have concrete axiomatic definitions on our probabilistic model.</p>
+
+<h2>Sample Space and Probability</h2>
+
+<h3>Probability Space</h3>
+
+<p>A <b>probability space</b> \( (\Omega, \F, \P) \) is a space where \( \Omega \) is the <b>sample space</b>, \( \F \subseteq \mathcal{P}(\Omega) \) (power set of \( \Omega \)) is the <b>event space</b> and \( \P: \F \to [0, 1]\) is the <b>probability function</b>. In common language, the sample space \( \Omega \) is the set of all possible results, the event space \( \mathcal{F} \) is a collection of <b>events</b> which is subsets of \( \Omega \), and the probability function \( \P \) assigns a probability to each of the events.</p>
+
+<p>A philosophical question is - why do we not assign probability to the sample space directly? The issue being when \( \Omega \) is uncountable say \( [0, 1] \) and \( \P \) is the uniform distribution, then for any \( x \in [0, 1] \), the probability of getting \( x \) is always zero! It doesn't make sense nor useful, and so we assign probabilities to events instead.</p>
+
+<div>Next, what are the axioms that the probability function \( \P \) must satisfy? Turns out there are only three axioms that it must satisfy:
+<ol>
+	<li>(<b>Nonnegativity</b>) \( \P(A) \ge 0 \) for all event \( A \in \F \).</li>
+	<li>(<b>\( \sigma \)-additivity</b>) For sequence of <u>disjoint</u> events \( \{ A_i \}_{i \in I} \subseteq \F \) of cardinality <u>at most countable</u>, we have \[ \sum_{i \in I} \P(A_i) = \P\left(\bigcup_{i \in I} A_i\right)\]</li>
+	<li>(<b>Normalisation</b>) \( \P(\Omega) = 1 \).</li>
+</ol>
+</div>
+
+<p>
+Formally, we require \( \F \subseteq \mathcal{P}(\Omega) \) to be a \( \sigma \)-algebra, which means \( \Omega \in \F \) and \( \F \) is <b>closed under complement and countable union</b>, so that if \( A \) is an event, then \( A^c \) is also an event; and if \( A_i \) for \( i \in I \) are events, then \( \cup_{i \in I} A_i \) is also an event whenever \( I \) is at most countable.
+</p>
+
+<p>In the following, we take these three probability axioms as granted, and make deductions base on them. By assuming these probability axioms alone, we may deduce laws such as for events \( A \) and \( B \), \( A \subseteq B \implies \P(A) \le \P(B) \) and \( \P(A \cup B) = \P(A) + \P(B) - \P(A \cap B) \).</p>
+
+<h3>Conditional Probability</h3>
+
+<p>Given an event \( B \) occurs, what is the <b>conditional probability</b> that event \( A \) occurs? Clearly if \( \P(B) = 0 \), then the conditional probability is meaningless, so we might as well assume \( \P(B) \gt 0 \). Clearly we have \[ \P(A \sep B) = \frac{\P(A \cap B)}{\P(B)}\] Indeed, we may treat \( \P(\cdot \sep B)\) as a probability function on sample space \( B \) as well.</p>
+
+<p>Clearly, from definition we have the <b>multiplication rule</b> \[ \P\left( \cap_{i = 1}^n A_i \right) = \P(A_1) \cdot \P(A_2 \sep A_1) \cdots \P(A_n \sep \cap_{i = 1}^{n - 1} A_i)\]</p>
+
+<p>Suppose \( \Omega = A_1 \uplus A_2 \uplus \cdots \uplus A_n \) is a partition where \( \P(A_i) \gt 0 \). For an event \( B \), we can write out the <b>Total Probability Theorem</b> \[ \P(B) = \sum_{i = 1}^n \P(A_i) \cdot \P(B \sep A_i) \] And naturally, we have the <b>Bayes' Rule</b> \[ \P(A_k \sep B) = \frac{\P(A_k) \cdot P(B \sep A_k) }{\sum_{i = 1}^n \P(A_i) \cdot \P(B \sep A_i)} \] One of the interpretation for this is that \( A_i \) is actual possibilities (such as positive / negative for a disease) while \( B \) is some observations (such as test for the disease). We can then use the Bayes' Rule to compute the probability of some events happening upon some observations.</p>
+
+<h3>Independent Events</h3>
+
+<p>A key notion revolving probability is <b>independent events</b>. In layman's term, we say \( A \) and \( B \) are independent when when \( A \) and \( B \) are "irrelevant". How shall we define independence using probabilities?</p>
+
+<p>Using conditional probabilities, we say events \( A \) and \( B \) are independent when \[ \P(A) = \P(A \sep B) \] Which effectively means knowing whether \( B \) happens doesn't help you determine whether \( A \) happens. An equivalent way of saying the condition for independence is \[ \P(A) \cdot \P(B) = \P(A \cap B) \] We may readily generalise this definition to collection of events \( \{ A_i \}_{i \in I} \), which we say \( \{ A_i \} \) is independent iff \[ \P\left( \bigcap_{i \in S} A_i \right) = \prod_{i \in S} \P(A_i) \] For all \( S \) being <u>finite</u> subset of \( I \).</p>
+
+<p>We may also define <b>conditional independence</b> over the probability space with probability function \( \P(\cdot \sep C) \) for event \( C \) with \( \P(C) \gt 0 \), while the definition readily follows.</p>
+
+<h2>Discrete Random Variables</h2>
+
+<p>Many of the time, we try to assign a numerical value to each of the outcomes, for example, number of pips on dice. We may formally represent them via <b>random variables</b>. A random variable is a <u>real-valued</u> function \( X : \Omega \to \R \), where we define the range \( \Omega_X = X(\Omega) \).</p>
+
+<p>Unfortunately, we need to handle the case where \( \Omega_X \) is <b>at most countably infinite</b> (say \( \N \)) and <b>uncountably infinite</b> (say \( \R \)) separately, since summation over countable sets is (more) well-defined, but we need to use integration for summation for uncountable range of \( X \). We refer the first case as <b>discrete random variable</b>, and the second case as <b>continuous random variable</b>. We will use the same set of notations for both case. However, their actual computation would be slightly different due to above limitations.</p>
+
+<p>In this section, we focus on the case of discrete random variables, that is, when \( \Omega_X \) is at most countably infinite.</p>
+
+<h3>Probability Mass Functions</h3>
+
+<p>To represent a discrete random variable \( X : \Omega \to \R \), we may use the <b>Probability Mass Function (PMF)</b>. The PMF \( p_X : \R \to [0, 1] \) is defined intuitively: \[ p_X(x) = \P(\{ X = x \})\] Which \( \{ X = x \} \) is the event where \( X \) takes the value \( x \), while \( p_X(x) \) is called the <b>probability mass</b> of \( x \).</p>
+
+<p>To aid following discussion, we will introduce some simple discrete random variables and their respective PMFs, namely <b>Bernoulli</b>, <b>Binomial</b>, <b>Geometric</b> and <b>Poisson</b>. Actually, all these are related to the flipping coins, which is the simplest randomised stuff we can have.</p>
+
+<p>Assume now you have a <u>biased</u> coin, where it shows head with probability \( p \) and shows tail with probability \( 1 - p \). The simplest is the <b>Bernoulli Random Variable</b>: \[ X = \begin{cases} 1 & \text{ if head} \\ 0 & \text{ if tail}\end{cases} \] Where its PMF is \[ p_X(x) = \begin{cases} p & \text{if } x = 1 \\ 1 - p & \text{if } x = 0 \end{cases}\]</p>
+
+<p>What if we tosses the coin for \( n \) times, and record the number of times it shows head? This leads to the <b>Binomial Random Variable with parameters \( n \) and \( p \)</b>, which associates with the PMF \[ p_X(k) = \binom{n}{k} p^k (1 - p)^{n - k} \quad \forall k \in [0, n] \]</p>
+
+<p>Next, suppose we throw the coin until a head comes up, and record the number of tosses we have. We have the <b>Geometric Random Variable</b> with the PMF \[ p_X(k) = (1 - p)^{k - 1} p \quad \forall k \in \Z_{\ge 1} \] </p>
+
+<p>Finally, we have the <b>Poisson Random Variable</b> with PMF \[ p_X(k) = e^{- \lambda} \frac{\lambda^k}{k!} \quad \forall k \in \Z_{\ge 0} \] In fact, Poisson is the limit case for Binomial - for large \( n \), small \( p \) and moderate \( \lambda = np \), we have \[ \binom{n}{k} p^k \approx \frac{n^k p^k}{k!} = \frac{\lambda^k}{k!} \] and \[ (1 - p)^{n - k} \approx (1 - p)^{\frac{\lambda}{p}} \approx e^{-\lambda} \]</p>
+
+<p>We can create new random variables base on given random variables. By writing \( Y = g(X) \) where \( g : \R \to \R \), syntactically it refers to the function compositions \( Y = g \circ X : \Omega \to \R \). Its PMF is simply \[ p_Y(y) = \P(\{Y = y\}) = \P(\{X \in g^{-1}(y)\})\]</p>
+
+<h3>Expectation and Variance</h3>
+
+<p>Given a random variable, we want to compute some useful statistics for us to know "how does it behave". For example, what do I expect to get "on average"? How likely the result deviate from what I get? <b>Expectation</b> and <b>Variance</b> deals with those things.</p>
+
+<p>Expectation is a pretty intuitive concept. We simply compute the "average": For <u>discrete</u> random variable \( X \), we define its <b>expectation</b> (or <b>expected value</b>) as \[ \E[X] = \sum_{x} x \cdot p_X(x) \] Which is the weighted averages of the value \( X \) takes. Specifically, we say \( \E[X^n] \) is the <b>\( n \)-th moment</b> of \( X \), so \( \E[X] \) is the first moment of \( X \). Note that \( \E[X] \) is not always well-defined: it only does so when the summation <u>converges absolutely</u>.</p>
+
+<p>Variance is a bit more complicated. We want to measure the weighted average of \( (X - \E[X])^2 \), the "deviation from the expectation". Hence, we define \[ \Var(X) = \E[(X - \E[X])^2] \] Note that \( \Var(X) \ge 0 \) and so we can define the <b>standard deviation</b> \( \sigma_X = \sqrt{\Var(X)} \).</p>
+
+<p>Finally, we wish to deduce some properties about expectation and variance. First of all, given \( Y = aX + b \), we have \( \E[Y] = a\E[X] + b \) and \( \Var(Y) = a^2 \Var(X) \). In fact, we can write variance <u>in terms of moments</u> as well: \[ \Var(X) = \E[X^2] - (\E[X])^2 \] All of them can be derived from first principles.</p>
+
+<h3>Joint PMFs</h3>
+
+<p>Given two discrete random variables \( X \) and \( Y \), we can define their <b>Joint PMF</b> via \[ p_{X, Y}(x, y) = \P(X = x, Y = y)\] Effectively, we are creating a "table" of values, where each cell has a probability mass. This is always well-defined, since \( \Omega_X \times \Omega_Y \) is <u>countable</u>. We call \( p_X(x) = \P(X = x) \) and \( p_Y(y) = \P(Y = y) \) the <b>Marginal PMFs</b>, which can be derived from the Joint PMF via summations. With the notion of Joint PMFs, we can prove the <b>linearity of expectations</b> \[ \E\left[ \sum_{i = 1}^{n} X_i \right] = \sum_{i = 1}^{n} \E[X_i] \]</p>
+
+<h3>Conditional PMFs</h3>
+
+<p>Naturally, for any event \( A \subseteq \Omega \) where \( \P(A) \gt 0 \), we can introduce the <b>conditional PMF</b> as \[ p_{X | A}(x) = \P(X = x \sep A) \] We can condition on random variables as well: \[ p_{X|Y}(x \sep y) = \P(X = x \sep Y = y) \] With these in mind, we may define the <b>conditional expectation</b> for event \( A \) with \( \P(A) \gt 0 \) as \[ \E[X \sep A] = \sum_{x} x \cdot p_{X|A}(x \sep A) \] How about condition on random variables? We can define \[ \E[X \sep Y = y] = \sum_{x} x \cdot p_{X|Y}(x \sep y)\] Note that \( \E[X \sep Y] \) is a function from \( \Omega_Y \) to \( \R \) where \( \E[X \sep Y](y) = \E[X \sep Y = y] \). By abusing notations, we have the elegant <b>total expectation theorem</b> \[ \E[ \E[X \sep Y] ] = \E[X] \]</p>
+
+<h3>Independent Random Variables</h3>
+
+<p>Similar to the event case, we say two random variables \( X \) and \( Y \) are <b>independent</b> when \( p_{X, Y}(x, y) = p_X(x) \cdot p_Y(y) \). For \( X \) and \( Y \) independent, we obviously have \( g(X) \) and \( h(Y) \) independent, and \[ \E[g(X) h(Y)] = \E[g(X)] \cdot \E[h(Y)] \] And so \[ \Var(X + Y) = \Var(X) + \Var(Y) \] We can generalise this to multiple random variables readily.</p>
+
+<h2>Continuous Random Variables</h2>
 
 </body>

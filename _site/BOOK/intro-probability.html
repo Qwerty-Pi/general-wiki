@@ -160,4 +160,72 @@ Formally, we require \( \F \subseteq \mathcal{P}(\Omega) \) to be a \( \sigma \)
 
 <h2>Continuous Random Variables</h2>
 
+<p>Now, we change our focus towards <b>continuous random variables</b> - random variables with their range <u>uncountable</u>. We can no longer use the discrete definitions, since summation over uncountable sets is not really well-defined. For instance, consider an uncountable sequence \( x = \{ x_i \}_{i \in I} \) where \( x_i \gt 0 \), then \( x = \cup_{n = 1}^{\infty} \{ x_i \sep x_i \ge n^{-1} \land i \in I \} \), which then the set must be uncountable for some \( n \) and hence the sum diverges. Instead, we attempt to use <b>integration</b> to tackle the definition.</p>
+
+<p>Formally, we say \( X \) is <u>continuous</u> random variable iff there exists a <b>Probability Density Function (PDF)</b> \( f_X \ge 0 \) such that for all <u>events</u> \( B \in \F \), we have \[ \P(X \in B) = \int_B f_X(x) \, dx \] Analogous to the discrete case, since \( f_X \) is a measurement on probability, we require \[ \P(X \in \R) = \int^{\infty}_{-\infty} f_X(x) \, dx = 1 \]</p>
+
+<p>We may define the expectation of continuous \( X \) as \[ \E[X] = \int_{-\infty}^{\infty} x \cdot f_X(x) \, dx \] And for variance it is still \( \Var(X) = \E[X^2] - (\E[X])^2 \), since the definitions are analogous.</p>
+
+<p>What are some examples for continuous random variables? The <b>Uniform Random Variable</b> is the simplest case. The uniform PDF over \( [a, b] \) is defined as \[ f_X(x) = \frac{1}{b - a} \quad \forall x \in [a, b] \] Which is just, well, the uniform distribution.</p>
+
+<p>A slightly more complicated example is the <b>Exponential Random Variable</b>. Consider the case of particle decay, which each particle independently has a fixed probability of decay "at each moment". We can model the PDF of time taken to decay as \[ f_X(x) = \lambda e^{-\lambda x} \quad \forall x \ge 0 \] Naturally, we have \[ \P(X \ge a) = \int_a^{\infty} \lambda e^{-\lambda x} \, dx = e^{-\lambda a} \]</p>
+
+<h3>Cumulative Distribution Function</h3>
+
+<p>Every random variable, <u>regardless of discrete, continuous, or other</u>, has a <b>Cumulative Distribution Function (CDF)</b> \[ F_X(x) = \P(X \le x) \] Which is just computing the "cumulative distribution". Clearly \( F_X \) is <u>monotonic increasing</u> and as \( x \to -\infty \), \( F_X \to 0 \); as \( x \to \infty \), \( F_X \to 1 \).</p>
+
+<p>Notably, for discrete \( X \) that takes integer values, we have \( p_X(k) = F_X(k) - F_k(k - 1) \), and for continuous \( X \), we have \( f_X(x) = F_X'(x) \). </p>
+
+<h3>Normal Random Variable</h3>
+
+<p>The <b>Normal Random Variable</b> looks monstrous on the first sight. A continuous random variable \( X \) is called <b>Gaussian</b> or <b>normal</b> if \[ f_X(x) = \frac{1}{\sqrt{2 \pi} \sigma} e^{-(x - \mu)^2 / 2 \sigma^2}\] With parameters \( \mu \) and \( \sigma \). In fact, we have \( \E[X] = \mu \) and \( \Var(X) = \sigma^2 \), so the parameters \( \mu \) and \( \sigma \) do indeed refers to <u>mean</u> and <u>standard deviation</u>. Consider the CDF \[ F_X(a) = \frac{1}{\sqrt{2 \pi} \sigma}\int_{-\infty}^a e^{-(x - \mu)^2/(2\sigma^2)}\, dx \] Substitute \( y = \frac{x - \mu}{\sigma} \), we have \[ F_X\left( a \right) = \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{(a - \mu) / \sigma} e^{-y^2/2}\, dy \] We define the <b>standard normal</b> \( Z \) as the normal random variable with \( \mu = 0 \) and \( \sigma = 1 \), then the above identity means \[ F_X(a) = F_Z\left(\frac{a - \mu}{\sigma}\right)\]Which means \( X = \sigma Z + \mu \). In other words, linear functions of normal distributions stay normal. Now, to actually show that \( \E[X] = \mu \) and \( \Var(X) = \sigma^2 \), note the identity \( \E[aX + b] = a \E[X] + b \) and \( \Var(aX + b) = a^2 \Var(X) \), and so it suffices to show \( \E[Z] = 0 \) and \( \Var(Z) = 1 \). Re-stating the PDF of the standard normal \[ f_Z(z) = \frac{1}{\sqrt{2 \pi}} e^{-z^2/2}\] We have, using integration by parts \[ \begin{align*} & \int_{-\infty}^{\infty} z^2 e^{-z^2/2} \, dz \\ = & \int_{-\infty}^{\infty} -z (e^{-z^2/2})' \, dz \\ = & \int_{-\infty}^{\infty} e^{-z^2/2} \, dz = \sqrt{2 \pi} \end{align*} \] The last step is a result from complex analysis.</p>
+
+<p>Specifically, we denote the CDF of the <u>standard normal</u> as \( \Phi(z) \). For random variable distributed normally, we can simply refer to the table of values of \( \Phi \) to compute the probability of the form \( \P(a \le X \lt b) \).</p>
+
+<h3>Conditional and Joint PDF</h3>
+
+<p>Once again, for continuous random variables we can condition on events. For event \( A \) with \( \P(A) \gt 0 \), we write the <b>conditional PDF</b> as \[ \P(X \in B \sep A) = \int_B f_{X|A} (x) \, dx \] Similarly, \[ \E[X \sep A] = \int_{-\infty}^{\infty} x \cdot f_{X | A}(x) \, dx \] We can derive most of the theorems analogous to the discrete case.</p>
+
+<p>We can <b>joint</b> two continuous random variables \( X \) and \( Y \) together if there exists \( f_{X, Y} \ge 0 \) such that for all events \( B \), \[ \P((X, Y) \in B) = \iint_{(x, y) \in B} f_{X,Y}(x, y) \, dx \, dy \] <b>Marginal PDF</b> is defined analogous to the discrete case.</p>
+
+<p>Independence for continuous random variable are defined analogously, and we may define the <b>Joint CDFs</b> as \[ F_{X, Y} (x, y) = \P(X \le x, Y \le y) \] Note that due to integration relation, we have \[ f_{X, Y}(x, y) = \frac{\partial^2 F_{X, Y}}{\partial x \partial y}(x, y) \]</p>
+
+<h3>Derived Distribution</h3>
+
+<p>How can we compute the PDF \( f_Y \) of a <b>derived distribution</b> \( Y = g(X) \) given the PDF of \( f_X \)? It might be tempting to define it directly with summation, but now \( f_* \) refers to the <u>density</u>, which we cannot directly add them up. </p>
+
+<p>One of the way to handle this is to translate to CDF. We compute using the pathway \( f_X \Rightarrow F_X \Rightarrow F_Y \Rightarrow f_Y \). For example, suppose \( X \) is the uniform distribution over \( [0, 1] \) and \( Y = X^3 \). Then \( F_X(x) = x \) for \( x \in [0, 1] \) and \( F_Y(y) = \P(Y \le y) = \P(X^3 \le y) = F_X(\sqrt[3]{y}) = \sqrt[3]{y} \). Hence, \( f_Y(y) = F_Y'(y) = \frac{1}{3y^{2/3}} \).</p>
+
+<p>Alternatively, when \( g \) is <u>monotonic</u> and <u>differentiable</u> (\( \mathcal{C}^1 \)), then \[ f_Y(y) = \frac{1}{g'(y)} f_X(g^{-1}(y))\] It can be thought from the derivative of the CDFs.</p>
+
+<p>The basic discussion on probability space and random variables end here. One thing to note is we tend to use the same notations for both discrete and continuous case whenever possible, and most of the cases we can generalise the theorems and definitions as we wish.</p>
+
+<h2>More Random Variables and Expectations</h2>
+
+<h3>Moment Generating Function</h3>
+
+<p>I believe this is the most elegant thing in this book. For any random variable \( X \), we define the <b>Moment Generating Function (MGF)</b> as \( M_X : \R \to \R \) where \[ M_X(s) = \E\left[e^{sX}\right] \] And that's it! In specific, it <b>generates moments</b>, where \( M_X^{(k)}(0) = \E[X^k] \) is the \( k \)-th moment. In other words, \( e^{sX} \) is an <u>exponential generating function</u> (EGF) of the form \[ e^{sX} = 1 + Xs + X^2 \frac{s^2}{2!} + X^3 \frac{s^3}{3!} + \cdots \] And so we can symbolically capture the moments of the random variables. All the common distributions has simple MGFs, and so by <strike>memorising</strike> deriving all of them, you can compute mean and variance in split seconds.</p>
+
+<p>Let's first go through the discrete cases. For Bernoulli with parameter \( p \), the MGF is simply \[ M(s) = (1 - p) + pe^s \] Therefore, geometric with parameters \( n \) and \( p \) has the MGF \[ M(s) = [(1 - p) + pe^s]^n \] in the sense that adding two <u>independent</u> random variables leads to multiplication of their MGFs. For geometric, we have MGF \[ M(s) = \frac{pe^s}{1 - (1 - p)e^s} \] Finally, for Poisson we have \[ M(s) = \sum_{k \ge 0} e^{-\lambda} \frac{\lambda^k}{k!} e^{sk} = e^{\lambda (e^s - 1)} \]</p>
+
+<p>How about continuous cases? For uniform over \( [a, b] \), we have \[ M(s) = \int_a^b \frac{1}{b - a} e^{ts} \, dt = \frac{e^{bs} - e^{as}}{b - a} \] For exponential with paramter \( \lambda \), we have \[ M(s) = \int_0^{\infty} \lambda e^{-\lambda t} e^{ts} \, dt = \frac{\lambda}{\lambda - s} \] Which is only well-defined when \( s \in (0, \lambda) \). Now note that for \( Y = aX + b \), we have \[ M_Y(s) = \E[e^{sY}] = e^{sb} M_X(sa) \] For the standard normal, we have \[ M(s) = \frac{1}{\sqrt{2 \pi}}\int_{-\infty}^{\infty} e^{-t^2/2} e^{st} \, dt = e^{s^2/2} \] And so for arbitrary normal distribution with paramters \( \mu \) and \( \sigma^2 \) we have \[ M(s) = e^{\sigma^2 s^2 / 2 + \mu s} \] The derivation of moments become GF instead of summation / integration exercise, which is much simpler.</p>
+
+<p>In fact, as expected, \( M_X(s) = M_Y(s) \) for all \( s \in \R \) (or \( [a, b] \)) implies \( X = Y \) - just as the sense of interpolation of polynomials. With that being said, we can use MGF to identify distributions (which is, well, one of intention of GF).</p>
+
+<h3>Convolutions</h3>
+
+<p>Let \( W = X + Y \) where \( X \) and \( Y \) are independent, we say \( W \) the <b>convolution</b> of \( X \) and \( Y \). We of course have \( M_W(s) = \E[e^{s(X + Y)}] = \E[e^{sX}] \cdot \E[e^{sY}] = M_X(s) \cdot M_Y(s) \). Trivially, we have \[ p_W(w) = \sum_{x} p_X(x) \cdot p_Y(w - x) \] for discrete, and \[ f_W(w) = \int_{-\infty}^{\infty} f_X(x) f_Y(w - x) \, dx \] for continuous.</p>
+
+<h3>Conditional Expectations</h3>
+
+<p>Recall \( \E[X \sep Y] : \Omega_Y \to \R \) is the <b>conditional expectation</b>, in which we have the <b>law of iterated expectations</b> \[ \E[\E[X \sep Y]] = \E[X] \]</p>
+
+<p>How about <b>conditional variance</b>? Clearly we have \[ \Var(X \sep Y) = \E[X^2 \sep Y] - \E[X \sep Y]^2 \] Therefore \[ \E[\Var(X \sep Y)] = \E[X^2] - \E[\E[X \sep Y]^2]\] On the other hand, \[ \Var(\E[X \sep Y]) = \E[\E[X \sep Y]^2] - \E[X]^2 \] And so we have the <b>law of conditional variance</b> \[ \Var(X) = \E[\Var(X \sep Y)] + \Var(\E[X \sep Y])\]</p>
+
+<h3>Sum of Random Number of Independent Variables</h3>
+
+<p>Suppose \( N : \Omega \to \N \) is a random variable, and \( X_i \) are all <u>independent</u> and <u>identically distributed</u> with \[ Y = X_1 + X_2 + \cdots + X_N \] Naturally, we ask the two questions: (1) What is \( \E[Y] \)? (2) What is \( \Var(Y) \)? Suppose \( \E[X_i] = \mu \) and \( \Var(X_i) = \sigma^2 \). First, we have \( \E[Y \sep N = n] = n \mu \), and so \( \E[Y] = \E[N] \cdot \mu \). Next, \( \Var(Y \sep N = n) = n \sigma^2 \), and so \( \Var(Y) = \Var(N) \cdot \mu + \E[N] \cdot \sigma^2 \). Indeed, we have the MGF \[ M_Y = \E[M_X(s)^N] \]</p>
+
+<h3>Covariance and Correlation</h3>
+
 </body>

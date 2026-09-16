@@ -242,12 +242,56 @@ Formally, we require \( \F \subseteq \mathcal{P}(\Omega) \) to be a \( \sigma \)
 
 <p>Notice that a node is <b>recurrent</b> iff we start the markov chain at that node, then we will visit that node <u>infinitely many times</u>. For a recurrent class \( S \), we say it is <b>periodic</b> if we can partition \( S = S_1 \uplus S_2 \uplus \cdots \uplus S_d \) with \( d \ge 2 \), such that for all \( i \in S_k \) and \( p_{ij} \gt 0 \) then \( j \in S_{k + 1} \), and <b>aperiodic</b> otherwise.</p>
 
+<h3>Hitting and Absorption</h3>
+
+<p>As a passage talking about probability, there is two natural questions: (1) If you start at state \( i \), what is the probability of <b>hitting</b> state \( s \)? (2) If you do hit state \( s \), what is the <b>hitting time</b>, that is, the expected time required for the hit?</p>
+
+<p>To answer the first question, we may write down equations that must be correct. Let \( a_i \) be the probability of hitting \( s \) if you start at state \( i \), then \( a_s = 1 \). Next, we have \( a_i = \sum_j p_{ij} a_j \) by considering all the ways to transit from state \( i \) for all \( i \ne s \). Naturally, we can solve the linear system and find the <b>minimal nonnegative</b> solution. </p>
+
+<p>The second question is harder to answer. If we define \( \tau_i \) as the expected time to hit state \( s \) if we start at state \( i \), then \( \tau_i = \infty \) when \( s \) is not accessible from \( i \)! Here, we restrict to the case where \( s \) is a recurrent state and there is only one recurrent class, which then all \( \tau_i \) are finite. Similar to the hitting probability, we have simply \( \tau_s = 0 \) and \( \tau_i = 1 + \sum_j p_{ij} \tau_j \) for \( i \ne s \), which we can solve the linear system and find the <b>minimal</b> nonnegative solution.</p>
+
+<p>The general case probably deserves more complete treatment, but the book doesn't cover it, so we will just leave it to another text.</p>
+
 <h3>Stationary Probability</h3>
 
 <p>Consider a single <u>aperiodic</u> <u>recurrent</u> class. If we start the markov chain at some state, what is the probability of time visiting some states? Turns out the probability eventually intuitively <b>converges</b>, that is, as \( n \to \infty \), \[ r_{ij}(n) \to \pi_j \quad \forall i, j \in \mathcal{S} \] The proof of this theorem is outside the scope of this book. Given the stationary probability \( \{ \pi_i \}_{i \in \mathcal{S}} \), we can naturally deduce the <b>balance equations</b> as \[ \pi_j = \sum_{k} \pi_k \cdot p_{kj} \] With \( \pi \), we can compute the expected portion of time we stay at certain states, or transition in some ways as well.</p>
 
 <p>A very interesting fact is that we can more or less treat this as flow. Therefore, for any partition of set \( \mathcal{S} = U \uplus V \), the probability "flows" from \( U \) to \( V \) and from \( V \) to \( U \) should be equivalent in amount. For instance, for a line graph markov chain, we can partition to left and right at an gap between states, which makes computation easier.</p>
 
-<h3>Absorption Probability</h3>
+<p>A special case is when the graph is <u>connected</u>, <u>undirected</u>, <u>aperiodic</u>, where the probability to transit via each edge are the same. In such case, the stationary distribution \( \pi \) is simply proportional to the degree, since the "flow" in each direction for each edge are the same.</p>
 
-<p></p>
+<h3>Generalised Markov Chains</h3>
+
+<p>Above we assume the markov chains are of finite state, and each transition takes unit time. What if we consider the markov chain on the integers? Or the transition time follows a certain distribution instead? Since a formal treatment is too hard, only key ideas are listed here.</p>
+
+<p>First of all, consider markov chain on <b>countable</b> number of states. If the chain is a <u>single recurrent class</u> and <u>aperiodic</u>, then the convergence theorem states that either (1) \( r_{ij}(n) \to \pi_j \) as \( n \to \infty \) for all \( j \in \mathcal{S} \), or (2) \( r_{ij}(n) \to 0 \) for all \( j \in \mathcal{S} \).</p>
+
+<p>Next, consider the <u>continuous-time</u> markov chain. To mimic reality, we consider only exponential distributions - time between transit to state \( i \) and next transition is \( \Delta_i \), exponentially distributed with paramter \( \nu_i \). We might as well consider this as the internet, where each computer can send packets to other computers with certain delay. We call \( q_{ij} = \nu_i p_{ij} \) as the <b>transition rate</b> from state \( i \) to state \( j \). Consider the stationary distribution \( \pi \), we have the <b>balance equation</b> \( \sum_j \pi_i q_{ij} = \sum_j \pi_j q_{ji} \). We may denote markov chain as \( X(t) \) where \( t \ge 0 \). Note that \( X \) has the <b>memoryless</b> property thanks to \( \Delta_i \) being exponential.</p>
+
+<h2>Limit Theorems</h2>
+
+<p>Consider \( \{ X_n \}_{n \in \mathbb{N}} \) where \( X_n \) are all <b>independent</b> and <b>identically distributed</b>, where \( \E[X_i] = \mu \) and \( \Var(X_i) = \sigma^2 \). By defining \[ S_n = X_1 + X_2 + \cdots + X_n \] clearly we have \( \E[S_n] = n \mu \) and \( \Var(S_n) = n \sigma^2 \) due to independence. Consider the <b>sample mean</b> \( M_n = \frac{S_n}{n} \), then \( \E[M_n] = \mu \) and \( \Var(M_n) = \frac{\sigma^2}{n} \). Note that the variance tends to zero as \( n \to \infty \): Heuristically, this means \( M_n \) converges to \( \mu \), as we expected. Another interesting phenomenon when we write \[ Z_n = \frac{S_n - n \mu}{\sigma \sqrt{n}} \] Where \( \E[Z_n] = 0 \) and \( \Var(Z_n) = 1 \). The <b>central limit theorem</b> asserts that \( Z_n \) tends to the standard normal distribution.</p>
+
+<p>Before we start our proving journey, let's first introduce some inequalities and convergence notations.</p>
+
+<h3>Inequalities and Convergence</h3>
+
+<p>First, we have the <b>Markov Inequality</b>. Consider any <u>nonnegative</u> random variable \( X \), then for all positive \( a \in \R \), \[ \P(X \ge a) \le \frac{\E[X]}{a} \] Next, we may use the definition \( \sigma^2 = \E[(X - \mu)^2] \) and Markov to prove the <b>Chebyshev Inequality</b>, where for all positive \( c \in \R \), \[ \P(|X - \mu| \ge c) \le \frac{\sigma^2}{c^2} \]</p>
+
+<p>Now, how shall we define <b>convergence</b> over the random variables? Let's say we have a sequence of random variables \( \{ Y_n \}_{n \in \N} \). We say \( Y_n \) <b>converges to </b> \( a \in \R \) <b>in probability</b> if \[ \lim_{n \to \infty} \P(|Y_n - a| \ge \varepsilon) = 0 \quad \forall \varepsilon \gt 0 \] And <b>converges to \( a \in \R \) with probability \( 1 \)</b> if \[ \P \left(\lim_{n \to \infty} Y_n = a \right) = 1 \] Note that the second condition is notably stronger: For instance, if \( Y_n \) takes \( 1 \) with probability \( \frac{1}{n} \) and \( 0 \) with probability \( 1 - \frac{1}{n} \), then it would converges to \( 0 \) <u>in probability</u>, but \( \lim_{n \to \infty} Y_n \) <u>diverges almost surely</u> (with probability \( 1 \)). In other words, the first condition concerns the convergence of the <u>probability</u>, whereas the second condition concerns the convergence of the <u>random variable sequence</u>.</p>
+
+<h3>Weak Law of Large Numbers</h3>
+
+<p>The <b>Weak Law of Large Numbers (WLLN)</b> states that, for \( \{X_n\} \) being <b>iid (independent and identically distributed)</b>, then for all \( \varepsilon \gt 0 \) we have \[ \P(|M_n - \mu| \ge \varepsilon) \to 0 \] As \( n \to \infty \). The form looks very similar to Chebyshev - indeed, we may just prove the WLLN via Chebyshev by picking \( c = \varepsilon \) and note \( \Var(M_n) = \frac{\sigma^2}{n} \). In common language, the WLLN states that the sample mean \( M_n \) has a high chance to fall in the range \( [\mu - \varepsilon, \mu + \varepsilon] \) for any \( \varepsilon \gt 0 \), which the probability tends to \( 1 \) as \( n \to \infty \). In other words, \( M_n \) converges to \( \mu \) <u>in probability</u>.</p>
+
+<h3>Strong Law of Large Numbers</h3>
+
+<p>The <b>Strong Law of Large Numbers (SLLN)</b> states similarly for \( \{X_n\} \) being <b>iid</b>, then \[ \P \left(\lim_{n \to \infty} M_n = \mu \right) = 1 \] The SLLN concerns the convergence of \( \{ M_n \} \), the sequence of random variables itself. Here, we provide a brief account by the proof for the case where finite moments are assumed.</p>
+
+<p>Rewriting the equality, we have \[ \P(|M_n - \mu| \ge \varepsilon \text{ infinitely often}) = 0 \] Clearly if we can show \( \sum_{n} \P(|M_n - \mu| \ge \varepsilon) \lt \infty \), then we are done. Therefore, if we bound \( \E[(M_n - \mu)^4] \le cn^{-2} \) with \( c \) constant, then by Markov we have \[ \P(|M_n - \mu| \ge \varepsilon) \le \frac{c}{n^2 \varepsilon^4} \] And so the summation is still finite. Note that the reason we pick \( 4 \) as the power is that harmonic series diverges, and even power is easier to handle since absolute values are naturally handled. We have \( \E[(M_n - \mu)^4] = n^{-4} \cdot \E[(S_n - n \mu)^4] \) and so it suffices that \( \E[(S_n - n \mu)^4] \le cn^2 \) for some constant \( c \). For the sake of simplicity, we set \( \mu = 0 \). Now computing \( \E[S_n^4] \) is a simple problem: It is simply \( n \cdot \E[X^4] + 3 n (n - 1) \cdot \E[X^2]^2 \), and so proving the SLLN.</p>
+
+<h3>Central Limit Theorem</h3>
+
+<p>Finally, we discuss the <b>Central Limit Theorem (CLT)</b>. Given \( \{ X_n \}_{n \in \N} \) <u>iid</u> with mean \( \mu \) and variance \( \sigma^2 \), then \[ \lim_{n \to \infty} \frac{S_n - n \mu}{\sigma \sqrt{n}} = \mathcal{N}(0, 1)\] where \( \mathcal{N}(0, 1) \) is the <b>standard normal</b>. For instance, we may use CLT to approximate a binomial random variables.</p>
+
+<p>Here we again illustrate an informal proof for the CLT. Consider the <b>cumulant generating function</b> defined as \[ K_X(s) = \log M_X(s) \] Noting \[ M_X(s) = 1 + \E[X] \cdot s + \E[X^2] \cdot \frac{s^2}{2} + \cdots \] And so \[ K_X(s) = \E[X] \cdot s + (\E[X^2] - \E[X]^2) \cdot \frac{s^2}{2} \] Specially, note that \( [s^2] K_X(s) = \Var(X) \). Now, clearly \( K_X(s) + K_Y(s) = K_{X + Y}(s) \) for independent \( X \) and \( Y \), while \( K_{cX}(s) = K_X(cs) \) for constant \( c \). Now, letting \( Z_n = \frac{S_n - n\mu}{\sigma \sqrt{n}} \), we have \[ K_{Z_n}(s) = n \cdot K_X \left(\frac{s}{\sigma \sqrt{n}}\right) - \frac{\sqrt{n} \mu}{\sigma} s \] Easy to check \( \E[Z_n] = 0 \) and \( \Var(Z_n) = 1 \) (not necessarily via gf). For higher order cumulants with \( m \ge 3 \), we have \[ [s^m] K_{Z_n}(s) = \frac{n}{\sigma^m n^{m / 2}} [s^m] K_X(s) \] And so as long as \( K_X \) is well-defined, \( [s^m] K_{Z_n}(s) \to 0 \) as \( n \to \infty \). Therefore, \( K_{Z_n}(s) \to \dfrac{s^2}{2} \) as \( n \to \infty \), and our proof concludes by noting the uniqueness of gf.</p>

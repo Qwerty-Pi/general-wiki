@@ -194,3 +194,60 @@ Formally, we require \( \F \subseteq \mathcal{P}(\Omega) \) to be a \( \sigma \)
 <p>Suppose \( X \) and \( Y \) are uncorrelated. Then, in fact we can show they are independent as well. How to do that? We can consider the <b>bivariate transform (MGF)</b> \[ M_{X, Y}(s_1, s_2) = \E\left[e^{s_1 X + s_2 Y}\right] \] Since they are uncorrelated, \( \Var(s_1 X + s_2 Y) = s_1^2 \cdot \Var(X) + s_2^2 \cdot \Var(Y) \), and since \( s_1 X + s_2 Y \) is normal, by <u>uniqueness</u> property of MGF we can show that \( X \) and \( Y \) are independent.</p>
 
 <p>How about estimators? Consider the best linear estimator \( \hat X = \frac{\E[XY]}{E[Y^2]} Y \) and \( \tilde X = X - \hat X \) (note that we assume \( \E[X] = \E[Y] = 0 \)), then \( \Cov(\hat X, Y) = \E[XY] = \Cov(X, Y) \) and so \( \Cov(\tilde X, Y) = 0 \). As such, \( \tilde X \) and \( Y \) are independent(!) as well. Hence, for all \( y \) we have \( \E[\tilde X \sep Y = y] = \E[\tilde X] = 0 \) and so \( \E[X \sep Y] = \E[\tilde X \sep Y] = \tilde X \). That means \( \hat X \) is the optimal estimator as well.</p>
+
+<h2>Stochastic Processes</h2>
+
+<p>What we discussed above mostly concerns "one-time" stuff. What if we have a sequence of random variables, and each random variables depends on previous terms? Formally, we say <b>stochastic process</b> as an indexed random variables \( \{ X_t \} _{t \in I} \), where each \( X_t \) depends on \( \{ X_{t'} \sep t' \lt t \} \) only. For instance, \( X_t \) can be the position of a particle, or the money you currently own.</p>
+
+<p>We can classify stochastic processes into <u>discrete</u> and <u>continuous</u> similar to what we do for random variables, which corresponds to when say \( I = \mathbb{N} \) and \( I = \mathbb{R} \) respectively. Here, we will introduce the discrete <b>Bernoulli Process</b> and the continuous <b>Poisson Process</b>.</p>
+
+<h3>Bernoulli Process</h3>
+
+<p>Simply speaking, <b>Bernoulli Process</b> is the stochastic process where you flip a unfair coin indefinitely. Formally, the we define it as a sequence \( \{ X_t \}_{t \in \mathbb{N}} \), where each \( X_t \) are independent <u>Bernoulli</u> trials with the same parameter \( p \).</p>
+
+<p>A key concept is the <b>memoryless</b> property: Future Bernoulli trials \( X_{n + 1}, \dots \) are not affected by previous trials \( X_1, \dots, X_n \), since they are independent. Hence, if we define \( T \) as the time till first success, then \[ \P(T - n = t \sep T \gt n) = \P(T = t) \]</p>
+
+<p>Now, define \( Y_k \) as the time taken for the \( k \)-th success. Define \( T_1 = Y_1 \) and \( T_k = Y_k - Y_{k - 1} \) for \( k \ge 2 \), then all the \( T \) actually follows the same geometric distribution with parameter \( p \) due to its memoryless. We can directly compute the PMF of \( Y_k \) as \[ p_{Y_k}(t) = \binom{t - 1}{k - 1} p^k (1 - p)^{t - k} \] Which is called the <b>Pascal PMF</b> of order \( k \).</p>
+
+<h3>Poisson Process</h3>
+
+<p><b>Poisson Process</b> can be treated as a continuous version of the Bernoulli Process. Suppose some events occur "randomly", e.g., broken light blubs, with equal probabilities at all times. How shall we model this stochastic process?</p>
+
+<div>Let's say we define \( P(k, \tau) \) as the probability that there are \( k \) arrivals within interval of length \( \tau \). Axiomatically, for a Poisson Process with paramter \( \lambda \) we require
+
+<ol>
+	<li><b>(Time-homogeneity)</b> \( P(k, \tau) \) is independent of time;</li>
+	<li><b>(Independence)</b> probability inside the interval is independent of what happens outside;</li>
+	<li><b>(Small Intervals)</b> \( P(0, \tau) = 1 - \lambda \tau + o(\tau) \) and \( P(1, \tau) = \lambda \tau + o(\tau) \) as \( \tau \to 0 \).</li>
+</ol>
+</div>
+
+<p>Note that the axiom does not specify the value of \( P(k, \tau) \) directly. However, we can infer that from the axioms alone. We cut the interval of length \( \tau \) into \( n \) pieces each of length \( \delta \), that is, \( \tau = n \delta \).</p>
+
+<p>For any \( \varepsilon \gt 0 \), for sufficiently large \( n \) we have \( | P(0, \delta) - (1 - \lambda \delta) | \lt \varepsilon \delta \) and \( | P(1, \delta) - \lambda \delta | \lt \varepsilon \delta \), which also implies \( P(k, \delta) \lt 2 \varepsilon \delta \) for all \( k \ge 2 \). Clearly, we have \[ P(k, \tau) = \sum_{\sum c_i = n \\ \sum i c_i = k} \frac{n!}{\prod (c_i!)} \prod_i P(i, \delta)^{c_i} \] Note that \( P(k, \delta) \lt (\lambda + \varepsilon) \delta \) for all \( k \ge 1 \), and so \( n P(k, \delta) \lt (\lambda + \varepsilon) \tau \). Therefore if \( c_i \gt 0 \) for some \( i \ge 2 \), we can bound the sum of those with \( M(n) \varepsilon \) for some bounded \( M \). Hence, we only need to consider those with only \( c_0 \) or \( c_1 \) positive, namely the case \( c_0 = n - k \) and \( c_1 = k \). Now we have \[ P(k, \tau) = \binom{n}{k} P(0, \delta)^{n - k} P(1, \delta)^{k} + M(n) \varepsilon \] After some computations, you can bound the first term by \( \frac{1}{k!} e^{(-\lambda \pm \varepsilon) \tau} (\lambda \pm \varepsilon)^k \delta^k \), which by squeezing \( \varepsilon \to 0 \) we have \[ P(k, \tau) = \frac{1}{k!} e^{- \lambda \tau} (\lambda \delta)^k\]</p>
+
+<p>With the theoretical basis, we can start talking about arrival times. Let \( X \) the first arrival time, then \[ \P(X \ge t) = P(0, t) = e^{-\lambda t} \] So our immediate conclusion is that \( X \) is distributed <b>exponentially</b> with paramter \( \lambda \). Similar to the case of Bernoulli Process, Poisson Process also satisfy the independence and memoryless properties. Also define \( Y_k \) the time taken for the \( k \)-th arrival, then we are convoluting \( k \) exponential distribution of parameter \( \lambda \) together. We have \[ f_{Y_k}(y) = \frac{\lambda^k y^{k - 1} e^{- \lambda y}}{(k - 1)!} = \lambda P(k - 1, y)\] Which can be justified by considering the event where \( k - 1 \) arrivals occurs in \( [0, y) \) and the \( k \)-th arrival occurs in \( [y, y + dy) \). This is called the <b>Erlang PDF</b> of order \( k \).</p>
+
+<p>Finally, let's introduce the <u>Random Incidence Paradox</u>. Suppose there is a Poisson bus arrive with rate \( \lambda \). Suppose you arrive at the station at a random time, where \( X \) is the gap between the bus arrive before and after you. It might be tempting to think \( X \) is exponential; However, in fact, \( X \) is distributed as Erlang PDF of order \( 2 \). Suppose \( t \in [U, V] \) the interarrival interval, then both \( |U - t| \) and \( |t - V| \) are exponential with paramter \( \lambda \), so we get \( X \) being the Erlang of order \( 2 \) instead.</p>
+
+<h2>Markov Chains</h2>
+
+<p>Now, let introduce another stochastic process - the <b>Markov Chain</b>. Essentially, markov chain is a process where you "walk randomly" on a directed graph. We wish to model the process for us to rigourously prove and compute things about markov chains.</p>
+
+<h3>Discrete-Time Markov Chains</h3>
+
+<p>The simplest model for markov chains is the <u>discrete-time</u> markov chains. The markov chain is defined with a set of states \( \mathcal{S} \), a sequence of random variables of states \( \{ X_n \}_{n \in \mathbb{N}} \), along with fixed <b>transition probabilities</b> between states \[ p_{ij} = \P(X_{n + 1} = j \sep X_n = i) \quad \forall i, j \in \mathcal{S} \] We can obviously encode \( p \) in terms of matrix, say \( P \). Clearly \( P^n \) encodes \( r_{ij}(n) \), the \( n \)-step transition probability.</p>
+
+<p>There are some terminologies regarding markov chains, but they can be understood by treating the markov chain as a directed graph. We say state \( j \) is <b>accessible</b> from state \( i \) iff we can visit state \( j \) from state \( i \). We say a state \( i \) is <b>recurrent</b> iff for every state \( j \) accessible from state \( i \), state \( i \) is also accessible from state \( j \) (in other words, its <u>strongly connected component</u> has <u>zero out-degree</u>), and <b>transient</b> otherwise. For recurrent state, we call their SCC as a <b>recurrent class</b>.</p>
+
+<p>Notice that a node is <b>recurrent</b> iff we start the markov chain at that node, then we will visit that node <u>infinitely many times</u>. For a recurrent class \( S \), we say it is <b>periodic</b> if we can partition \( S = S_1 \uplus S_2 \uplus \cdots \uplus S_d \) with \( d \ge 2 \), such that for all \( i \in S_k \) and \( p_{ij} \gt 0 \) then \( j \in S_{k + 1} \), and <b>aperiodic</b> otherwise.</p>
+
+<h3>Stationary Probability</h3>
+
+<p>Consider a single <u>aperiodic</u> <u>recurrent</u> class. If we start the markov chain at some state, what is the probability of time visiting some states? Turns out the probability eventually intuitively <b>converges</b>, that is, as \( n \to \infty \), \[ r_{ij}(n) \to \pi_j \quad \forall i, j \in \mathcal{S} \] The proof of this theorem is outside the scope of this book. Given the stationary probability \( \{ \pi_i \}_{i \in \mathcal{S}} \), we can naturally deduce the <b>balance equations</b> as \[ \pi_j = \sum_{k} \pi_k \cdot p_{kj} \] With \( \pi \), we can compute the expected portion of time we stay at certain states, or transition in some ways as well.</p>
+
+<p>A very interesting fact is that we can more or less treat this as flow. Therefore, for any partition of set \( \mathcal{S} = U \uplus V \), the probability "flows" from \( U \) to \( V \) and from \( V \) to \( U \) should be equivalent in amount. For instance, for a line graph markov chain, we can partition to left and right at an gap between states, which makes computation easier.</p>
+
+<h3>Absorption Probability</h3>
+
+<p></p>

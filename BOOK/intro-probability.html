@@ -11,6 +11,7 @@ layout: default
 	\def\Z{\mathbb{Z}}
 	\def\E{\mathbb{E}}
 	\def\Var{\text{Var}}
+	\def\Cov{\text{Cov}}
 \]
 </span>
 
@@ -171,3 +172,25 @@ Formally, we require \( \F \subseteq \mathcal{P}(\Omega) \) to be a \( \sigma \)
 <p>Suppose \( N : \Omega \to \N \) is a random variable, and \( X_i \) are all <u>independent</u> and <u>identically distributed</u> with \[ Y = X_1 + X_2 + \cdots + X_N \] Naturally, we ask the two questions: (1) What is \( \E[Y] \)? (2) What is \( \Var(Y) \)? Suppose \( \E[X_i] = \mu \) and \( \Var(X_i) = \sigma^2 \). First, we have \( \E[Y \sep N = n] = n \mu \), and so \( \E[Y] = \E[N] \cdot \mu \). Next, \( \Var(Y \sep N = n) = n \sigma^2 \), and so \( \Var(Y) = \Var(N) \cdot \mu + \E[N] \cdot \sigma^2 \). Indeed, we have the MGF \[ M_Y = \E[M_X(s)^N] \]</p>
 
 <h3>Covariance and Correlation</h3>
+
+<p>Given two random variables \( X \) and \( Y \), we often want to know how <b>correlated</b> they are. For example, if \( X \) corresponds to the sum of pips on three dice and \( Y \) corresponds to the number of evens on those dice, how "relevant" are them? To measure this, we introduce the concept of <b>covariance</b>: \[ \Cov(X, Y) = \E[(X - \E[X])(Y - \E[Y])] \] We are effectively measuring how do they "go the same sign as the other". A nice way of thinking is actually, we can treat \( \Cov \) as an <b>inner product</b> over all random variables with <u>zero expectation</u> and <u>finite variance</u>! Note that \( \Var(X) = \Cov(X, X) \), so \( \Var \) is just the <b>norm</b>, really.</p>
+
+<p>We can normalise the covariance to a value in \( [-1, 1] \) (just like for euclidean vectors): the <b>correlation coefficient</b> \( \rho \) is defined as \[ \rho = \frac{\Cov(X, Y)}{\sqrt{\Var(X) \Var(Y)}} \] When \( \rho \gt 0 \), \( \rho \lt 0 \) and \( \rho = 0 \), we say \( X \) and \( Y \) are <u>positively correlated</u>, <u>negatively correlated</u> and <u>uncorrelated</u> respectively.</p>
+
+<h3>Least Squares Estimation</h3>
+
+<p>Suppose we want to have an <b>estimate</b> (value) of random variable \( X \), given the value of another random variable \( Y \). In other words, we want to craft an <b>estimator</b> (function) of \( X \) as a function of \( Y \). How shall we guess, so that we are "as accurate as possible" on our estimation?</p>
+
+<p>We first introduce a notation: Given a random variable \( X \) and an estimator \( g(Y) \), then the <b>mean squared error</b> is defined as \[ \E[(X - g(Y))^2] \] What is the theoretical best we can achieve? Supposing we fix \( Y = y \), and let our estimate as \( c \). Then we wish to minimise the value of \( \E[(X - c)^2 \sep Y = y ] \). Now, by taking derivative over \( c \), we can see that our best estimate is simply \( \E[X \sep Y = y] \), which is fairly make sense. We see the least square estimator of \( X \) given \( Y \) is, gracefully \[ g(Y) = \E[X \sep Y] \]</p>
+
+<p>Denote \( \hat X = \E[X \sep Y] \) as the estimator and \( \tilde X = X - \hat X \), then \[ \E[\hat X] = \E[\E[X \sep Y]] = \E[X] \] while \[ \Var(\hat X) = \Var(X) - \E[\Var(X \sep Y)] = \Var(X) - \Var(\tilde X) \] Which means \( \hat X \) and \( \tilde X \) are uncorrelated. </p>
+
+<p>How about we restrict to the case of <b>linear estimator</b> \( aY + b \)? That is, we want to minimise \( \E[(X - aY - b)^2] \) over all choices of \( a \) and \( b \). By choosing \( b = \E[X] - a\E[Y] \), we can rewrite the mean squares error as \[ \Var(X) - 2a \cdot \Cov(X, Y) + a^2 \cdot \Var(Y) \] Which can be minimised by picking \( a = \frac{\Cov(X, Y)}{\Var(Y)} = \rho \frac{\sigma_X}{\sigma_Y} \), and the resulting variance is \( (1 - \rho^2) \cdot \sigma_X^2 \).</p>
+
+<h3>Bivariate Normal Distribution</h3>
+
+<p>We say \( X \) and \( Y \) have <b>bivariate normal distribution</b> whenever there are two independent normal \( U \) and \( V \) such that \( X = aU + bV \) and \( Y = cU + dV \) for some \( a, b, c, d \in \R \). Without loss of generality, assume \( \E[U] = \E[V] = 0 \).</p>
+
+<p>Suppose \( X \) and \( Y \) are uncorrelated. Then, in fact we can show they are independent as well. How to do that? We can consider the <b>bivariate transform (MGF)</b> \[ M_{X, Y}(s_1, s_2) = \E\left[e^{s_1 X + s_2 Y}\right] \] Since they are uncorrelated, \( \Var(s_1 X + s_2 Y) = s_1^2 \cdot \Var(X) + s_2^2 \cdot \Var(Y) \), and since \( s_1 X + s_2 Y \) is normal, by <u>uniqueness</u> property of MGF we can show that \( X \) and \( Y \) are independent.</p>
+
+<p>How about estimators? Consider the best linear estimator \( \hat X = \frac{\E[XY]}{E[Y^2]} Y \) and \( \tilde X = X - \hat X \) (note that we assume \( \E[X] = \E[Y] = 0 \)), then \( \Cov(\hat X, Y) = \E[XY] = \Cov(X, Y) \) and so \( \Cov(\tilde X, Y) = 0 \). As such, \( \tilde X \) and \( Y \) are independent(!) as well. Hence, for all \( y \) we have \( \E[\tilde X \sep Y = y] = \E[\tilde X] = 0 \) and so \( \E[X \sep Y] = \E[\tilde X \sep Y] = \tilde X \). That means \( \hat X \) is the optimal estimator as well.</p>

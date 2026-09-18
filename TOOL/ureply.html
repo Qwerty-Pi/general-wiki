@@ -1,0 +1,29 @@
+---
+layout: default
+---
+
+<style>
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#iframe {
+	height: 100%;
+	width: 100%;
+}
+</style>
+
+<div>
+	Session ID <input id="session-id" type="text" value="LC"/>
+	<button id="load-button">Load</button>
+</div>
+
+<script>
+	$("#load-button").on('click', function() {
+		var sessionID = $("#session-id").val()
+		var site = `https://server3.ureply.mobi/v7/student/mobile_index.php?join=${sessionID}`
+		window.open(site, '_newtab');
+	})
+</script>

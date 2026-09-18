@@ -57,14 +57,30 @@
         </div>
     </div>
 
-	<h1>BOOK</h1>
+	<style>
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
 
-<p>Introduction to the Theory of Computation (Second Edition) <a href="/BOOK/theory-computation">Link</a> <a href="/BOOK/pdf/theory-computation.pdf" target="_blank">PDF</a></p>
+#iframe {
+	height: 100%;
+	width: 100%;
+}
+</style>
 
-<p>Abstract Algebra (Third Edition) <a href="/BOOK/abstract-algebra">Link</a> <a href="/BOOK/pdf/abstract-algebra.pdf" target="_blank">PDF</a></p>
+<div>
+	Session ID <input id="session-id" type="text" value="LC"/>
+	<button id="load-button">Load</button>
+</div>
 
-<p>Introduction to Probability <a href="/BOOK/intro-probability">Link</a> <a href="/BOOK/pdf/intro-probability.pdf" target="_blank">PDF</a></p>
-
-<p>Satistics and Data Analysis <a href="/BOOK/stats-data-analysis">Link</a> <a href="https://courses.maths.ox.ac.uk/course/view.php?id=6033" target="_blank">WEB</a></p>
+<script>
+	$("#load-button").on('click', function() {
+		var sessionID = $("#session-id").val()
+		var site = `https://server3.ureply.mobi/v7/student/mobile_index.php?join=${sessionID}`
+		window.open(site, '_newtab');
+	})
+</script>
 
 </body>

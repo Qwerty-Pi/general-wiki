@@ -59,7 +59,7 @@ Formally, we require \( \F \subseteq \mathcal{P}(\Omega) \) to be a \( \sigma \)
 
 <h2>Discrete Random Variables</h2>
 
-<p>Many of the time, we try to assign a numerical value to each of the outcomes, for example, number of pips on dice. We may formally represent them via <b>random variables</b>. A random variable is a <u>real-valued</u> function \( X : \Omega \to \R \), where we define the range \( \Omega_X = X(\Omega) \).</p>
+<p>Many of the time, we try to assign a numerical value to each of the outcomes. For example, we may want to represent the number of pips on dice, or the number of butterflies you see in an hour. How can we formally write this randomised value down? This can be done via <b>random variable</b> \( X : \Omega \to \R \) where we denote the range as \( \Omega_X = X(\Omega) \). </p>
 
 <p>Unfortunately, we need to handle the case where \( \Omega_X \) is <b>at most countably infinite</b> (say \( \N \)) and <b>uncountably infinite</b> (say \( \R \)) separately, since summation over countable sets is (more) well-defined, but we need to use integration for summation for uncountable range of \( X \). We refer the first case as <b>discrete random variable</b>, and the second case as <b>continuous random variable</b>. We will use the same set of notations for both case. However, their actual computation would be slightly different due to above limitations.</p>
 
@@ -67,7 +67,7 @@ Formally, we require \( \F \subseteq \mathcal{P}(\Omega) \) to be a \( \sigma \)
 
 <h3>Probability Mass Functions</h3>
 
-<p>To represent a discrete random variable \( X : \Omega \to \R \), we may use the <b>Probability Mass Function (PMF)</b>. The PMF \( p_X : \R \to [0, 1] \) is defined intuitively: \[ p_X(x) = \P(\{ X = x \})\] Which \( \{ X = x \} \) is the event where \( X \) takes the value \( x \), while \( p_X(x) \) is called the <b>probability mass</b> of \( x \).</p>
+<p>To represent a discrete random variable \( X : \Omega \to \R \), we may use the <b>Probability Mass Function (PMF)</b>. The PMF \( p_X : \R \to [0, 1] \) is defined intuitively: \[ p_X(x) = \P(\{ X = x \})\] Which \( \{ X = x \} \) is the event where \( X \) takes the value \( x \), while \( p_X(x) \) is called the <b>probability mass</b> of \( x \). Note that we implicitly require that \( \{ X = x \} \in \F \) so that the probability masses are well-defined.</p>
 
 <p>To aid following discussion, we will introduce some simple discrete random variables and their respective PMFs, namely <b>Bernoulli</b>, <b>Binomial</b>, <b>Geometric</b> and <b>Poisson</b>. Actually, all these are related to the flipping coins, which is the simplest randomised stuff we can have.</p>
 

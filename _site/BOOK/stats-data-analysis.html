@@ -77,9 +77,9 @@
 
 <h3>Summary Statistics</h3>
 
-<p>Suppose \( X \) is a <u>random sample</u> of size \( n \). What useful information can we extract from \( X \) <u>without any extra assumptions</u>? We call a function that only depends on the values of \( X \) a <b>statistic</b>, and so what we interest in those statistics that summarises the random sample. </p>
+<p>Given \( X \) is a <u>random sample</u> of size \( n \). What useful information can we extract from the observations \( (x_i) \) without extra assumptions? We call a function \( T \) that only depends on the values of \( (x_i) \) a <b>statistic</b>, in which we are interested in those statistics that can "summarise" \( X \). </p>
 
-<p>Recall that we define the <b>expected value</b> \( \E[X] = \mu \) and the <b>variance</b> \( \Var(X) = \E[(X - \mu)^2] = \sigma^2 \) as the summary of the <u>distribution</u>. How about the <b>sample mean</b> and <b>sample variance</b>? We define <b>sample mean</b> as \[ \overline{X} = \frac{1}{n} \sum_{i = 1}^{n} X_i \] and <b>sample variance</b> as \[ S^2 = \frac{1}{n - 1} \sum_{i = 1}^{n} (X_i - \overline{X})^2 \] The sample mean is defined fairly intuitively, while note the \( n - 1 \) for sample variance is due to the fact that we want \( \E[S^2] = \sigma^2 \) - note that \( \mu \) and \( \overline{X} \) is not identical.</p>
+<p>Recall that we define the <b>expected value</b> \( \E[X] = \mu \) and the <b>variance</b> \( \Var(X) = \E[(X - \mu)^2] = \sigma^2 \) for the <u>distribution</u> \( X \). Can we infer those values from our random sample? That is, how shall we define the <b>sample mean</b> and <b>sample variance</b>? We define <b>sample mean</b> as \[ \overline{X} = \frac{1}{n} \sum_{i = 1}^{n} X_i \] and <b>sample variance</b> as \[ S^2 = \frac{1}{n - 1} \sum_{i = 1}^{n} (X_i - \overline{X})^2 \] The sample mean is defined fairly intuitively, while note the \( n - 1 \) for sample variance is due to the fact that we want \( \E[S^2] = \sigma^2 \) - note that \( \mu \) and \( \overline{X} \) is not identical.</p>
 
 <h3>Maximum Likelihood Estimation</h3>
 

@@ -22,4 +22,4 @@ layout: default
 
 <h3>Order Statistics</h3>
 
-<p>The <b>order statistics</b> of a random sample \( (X_i) \) is the sorted <b>permutation</b> \[ X_{(1)} \le X_{(2)} \le \cdots \le X_{(n)} \] How can we represent the PDF of \( X_{(r)} \)? Heuristically, we have \[ \P( x \le X_{(r)} \lt x + \delta x) = \frac{n!}{(r - 1)! (n - r)!} F(x)^{r - 1} f(x) \delta x [1 - F(x)]^{n - r} \] And so as \( \delta x \to 0 \), we have \[ f_{(r)}(x) = f(x) F(x)^{r - 1} [1 - F(x)]^{n - r} \]</p>
+<p>The <b>order statistics</b> of a random sample \( (X_i) \) is the sorted <b>permutation</b> \[ X_{(1)} \le X_{(2)} \le \cdots \le X_{(n)} \] How can we compute the PDF of \( X_{(r)} \)? Heuristically, for \( \delta x \to 0 \), we have \( \P( x \le X_{(r)} \lt x + \delta x) \) being \[ \frac{n!}{(r - 1)! (n - r)!} F(x)^{r - 1} f(x) \delta x [1 - F(x)]^{n - r} \] And so we have \[ f_{(r)}(x) = \frac{n!}{(r - 1)! (n - r)!} f(x) F(x)^{r - 1} [1 - F(x)]^{n - r} \]</p>

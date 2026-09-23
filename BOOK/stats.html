@@ -23,3 +23,33 @@ layout: default
 <h3>Order Statistics</h3>
 
 <p>The <b>order statistics</b> of a random sample \( (X_i) \) is the sorted <b>permutation</b> \[ X_{(1)} \le X_{(2)} \le \cdots \le X_{(n)} \] How can we compute the PDF of \( X_{(r)} \)? Heuristically, for \( \delta x \to 0 \), we have \( \P( x \le X_{(r)} \lt x + \delta x) \) being \[ \frac{n!}{(r - 1)! (n - r)!} F(x)^{r - 1} f(x) \delta x [1 - F(x)]^{n - r} \] And so we have \[ f_{(r)}(x) = \frac{n!}{(r - 1)! (n - r)!} f(x) F(x)^{r - 1} [1 - F(x)]^{n - r} \]</p>
+
+<p>The simplest case to consider is \( (X_i) \iid U(0, 1) \). With some computations, we can show that \[ \E[X_{(r)}] = \frac{r}{n + 1} \] \[ \Var(X_{(r)}) = \frac{1}{n + 2} \cdot \frac{r}{n + 1} \left(1 - \frac{r}{n + 1}\right) \]</p>
+
+<h3>Q-Q Plots</h3>
+
+<p>In fact, order statistics have non-trivial use. Given a <u>continuous</u> random variable \( X \) and its <u>strictly-increasing</u> CDF \( F_X \), we have \( F_X(X) \sim U(0, 1) \), and so \( X \sim F_X^{-1}(U(0, 1)) \). Hence, by <b>delta method</b>, we have \( \E[X_{(r)}] = \E[F_X^{-1}(U(0, 1)_{(r)})] \approx F_X^{-1}(\E[U(0, 1)_{(r)}]) = F_X^{-1}(\frac{r}{n + 1}) \), whereas the variance of \( X_{(r)} \) is \( O(n^{-1}) \). That means for \( 1 \le r \le n \), we have \( F_X(x_{(r)}) \approx \frac{r}{n + 1} \).</p>
+
+<p>We can then plot the <b>Quantile-Quantile Plot (Q-Q Plot)</b> to check for <b>linear</b> relationships. For example, for the <b>Pareto Distribution</b>, we have \[ 1 - \left( \frac{\alpha}{x_{(r)}} \right)^\theta \approx \frac{r}{n + 1} \] Therefore, \( \theta (\log \alpha - \log x_{(r)}) \approx 1 - \frac{r}{n + 1} \) and \[ \log x_{(r)} \approx \log \alpha - \frac{1}{\theta} \log \left(1 - \frac{r}{n + 1}\right)\] By plotting \( \log x_{(r)} \) against \( -\log \left( 1 - \frac{r}{n + 1} \right) \), if \( (X_i) \) is really Pareto, we expect a straight line with slope \( \theta^{-1} \) and y-intercept \( \log \alpha \).</p>
+
+<h3>Information</h3>
+
+<p>Now we really do calculus on (open) \( \Theta \subset \R^p \). From now on, we let \( \hat \theta \) be the <b>MLE</b> of \( \theta \in \Theta \), and \( \ell(\theta) = \log L(\theta) = \log f(x; \theta) \) be the <b>log-likelihood</b> function. We also assume \( f \) satisfies some <b>regularity conditions</b>. Our question is simple - can we find out the distribution of \( \hat \theta \) via some variant of CLT? </p>
+
+<p>First, let \( U = \nabla_\theta \ell: \Theta \to \R^p \) be the <b>score function</b>, and \( J = -H_\theta \ell: \Theta \to \R^{p \times p} \) be the <b>observed information</b>. For the MLE \( \hat \theta \), we have \( U(\hat \theta) = 0 \) under regularity conditions. By Taylor, we have \[ \ell(\theta) \approx \ell(\hat \theta) + U(\hat \theta) (\theta - \hat \theta) - \frac{1}{2} (\theta - \hat \theta)^T J(\hat \theta) (\theta - \hat \theta) \] So \( J(\hat \theta) \) is a measurement of how quick \( \ell \) drops when we go away from \( \hat \theta \). Since we can only compute \( U \) and \( J \) given the data \( (x_i) \), we define the <b>expected (Fisher) information</b> \( I : \Theta \to \R^{p \times p} \) as \[ I(\theta) = \E[J \sep \theta] = \E[U U^T \sep \theta]\]</p>
+
+<p>The last equality is not apparent. Note that \( U = \nabla_{\theta} \ell = \nabla_{\theta} f \cdot f^{-1} \), we have \( U f = \nabla_{\theta} f \) and so \( \E[U] = \int \nabla_{\theta} f \, dx = \nabla_{\theta} \int f \, dx = 0 \). Now, we have \( J_{\theta} (U f) = - J f + U U^T f \), and so \( I = \E[J] = \E[U U^T] \).</p>
+
+<p>With these calculus magics, we back to the original problem. Given that the MLE \( \hat \theta \) satisfies \( U(\hat \theta) = 0 \), can we CLT it? First note for random samples, \( \ell \) is additive, and so \( U, J \) and \( I \) are all additive. First, since \( I = \E[J] \), we have \( J \overset{P}{\to} I \) as \( n \to \infty \). Second, we also have \( I = \E[U U^T] = \Cov[U] \). Hence by <b>multivariate CLT</b>, \[ U \overset{D}{\to} \Norm(0, I) \] Now, we have \( U(\hat \theta) = 0 \approx U(\theta) - J(\theta) (\hat \theta - \theta) \) by Taylor, and so \[ \hat \theta - \theta \overset{D}{\approx} J^{-1}(\theta) U(\theta)\] By <b>Slutsky's theorem</b> (convergence behaviour is "normal"), we have \[ \hat \theta - \theta \overset{D}{\to} \Norm(0, I(\theta)^{-1}) \] We cannot directly compute \( I(\theta) \).</p>
+
+<h2>Confidence Intervals</h2>
+
+<p>Assume \( \dim \Theta = 1 \) (since I don't know how it works otherwise). With the <b>asymptotic distribution</b> of MLE \[ \hat \theta - \theta \overset{D}{\to} \Norm(0, I(\theta)^{-1}) \] We naturally have the \( (1 - \alpha) \) CI for \( \theta \) as \[ (\hat \theta \pm z_{\alpha / 2} I(\theta)^{-1/2}) \] Which we can approximate \( I(\theta) \) by either \( I(\hat \theta) \) or \( J(\hat \theta) \).</p>
+
+<h3>t-distributions</h3>
+
+<p>For \( Z_1, \dots, Z_r \iid \Norm(0, 1) \), we say \[ \chi_r^2 = Z_1^2 + \cdots + Z_r^2 \] is the <b>chi-squared distribution with \( r \) degrees of freedom</b>. Note that \( \chi_r^2 \) has the MGF \[ M_{\chi_r^2}(s) = (1 - 2s)^{-r/2} \] And so \( \chi_2 \sim \Exp\left(\frac{1}{2}\right) \), and \( \E[\chi_r^2] = r \) while \( \Var(\chi_r^2) = 2r \) by independence of \( Z_i \). A natural application of \( \chi_r^2 \) is when we try to find CI for \( \sigma^2 \).</p>
+
+<p>We define the <b>t-distribution with \( r \) degrees of freedom</b> as \[ t_r \sim \frac{\Norm(0, 1)}{\sqrt{\chi_r^2 / r}} \] We may treat \( t_r \) as standard normal with fatter tails; As \( r \to \infty \), we have \( \E[\chi_r^2 / r] = 1 \) and \( \Var(\chi_r^2 / r) = 2 / r \to 0 \). Now you ask - what is the use for t-distributions?</p>
+
+<p>Suppose we have \( (X_i) \iid \Norm(\mu, \sigma^2) \), and we normalise them via \( Z_i = \frac{X_i - \mu}{\sigma} \) so that \( (Z_i) \iid \Norm(0, 1) \). We have the <b>sample mean</b> \[ \overline{Z} = \frac{1}{n} \sum_{i = 1}^{n} Z_i\] and the <b>sample variance</b> \[ S^2 = \frac{1}{n - 1} \left(\sum_{i = 1}^{n} Z_i^2 - n \overline{Z}^2 \right) \] Consider any <b>orthgonal</b> \( A \) where \( A_{1j} = \frac{1}{\sqrt{n}} \) and take \( Y = AZ \). Then, \( Y \) is <b>standard MVN</b> as well with \( Y_1 = \sqrt{n} \overline{Z} \) and \( \sum Y_i^2 = \sum Z_i^2 \) since \( A \) is orthogonal. Hence, \( \overline{X} \) and \( S^2 \) are independent and \[ S^2 = \frac{\chi_{n - 1}^2}{n - 1} \] That means when we try to approximate the variance via sample, we actually get the t-distribution instead of normal - where \[ \frac{\overline{X} - \mu}{S / \sqrt{n}} \sim \frac{\Norm(0, \frac{\sigma^2}{n})}{S / \sqrt{n}} \sim \frac{\Norm(0, 1)}{S / \sigma} \sim t_{n - 1} \]</p>

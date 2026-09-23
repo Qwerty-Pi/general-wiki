@@ -1,0 +1,121 @@
+---
+layout: default
+---
+
+<style>
+
+div {
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.score-container {
+	margin-top: 0.25em;
+	display: grid;
+	width: 100%;
+
+	> div {
+		border: solid var(--text-color) 1px;
+		display: flex;
+        align-items: center;
+        justify-content: center;
+		min-height: 3em;
+
+        &:not(:first-child) {
+            border-left: none;
+        }
+	}
+}
+
+.course-container {
+	margin-top: 1em;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+
+.course-title {
+    font-weight: bold;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+[data-type="final"] {
+    background-color: #f03e1680;
+}
+[data-type="quiz"] {
+    background-color: #56cf3880;
+}
+[data-type="project"] {
+    background-color: #1858b880;
+}
+[data-type="assignment"] {
+    background-color: #fcba0380;
+}
+[data-type="class"] {
+    background-color: #38c3f580;
+}
+[data-type="midterm"] {
+    background-color: #8a16f080;
+}
+</style>
+
+<div>
+	<div class="course-container" data-course="csci4120">
+		<div class="course-title">CSCI4120 Principles of Computer Game Software</div>
+		<div class="score-container" style="grid-template-columns: 10fr 15fr 30fr 45fr;">
+			<div data-type="assignment">Assignment <br/> (10%)</div>
+			<div data-type="quiz">Quiz <br/> (15%)</div>
+			<div data-type="project">Project <br/> (30%)</div>
+			<div data-type="final">Final <br/> (45%)</div>
+		</div>
+	</div>
+    
+	<div class="course-container" data-course="csci4180">
+		<div class="course-title">CSCI4180 Introduction to Cloud Computing and Storage</div>
+		<div class="score-container" style="grid-template-columns: 40fr 60fr;">
+			<div data-type="assignment">Assignment <br/> (40%)</div>
+			<div data-type="final">Final <br/> (60%)</div>
+		</div>
+	</div>
+
+	<div class="course-container" data-course="csci3260">
+		<div class="course-title">CSCI3260 Principles of Computer Graphics</div>
+		<div class="score-container" style="grid-template-columns: 4fr 24fr 12fr 25fr 35fr;">
+			<div data-type="class">Class <br/> (4%)</div>
+			<div data-type="assignment">Assignment <br/> (24%)</div>
+			<div data-type="project">Project <br/> (12%)</div>
+			<div data-type="midterm">Midterm <br/> (35%)</div>
+			<div data-type="final">Final <br/> (35%)</div>
+		</div>
+	</div>
+    
+	<div class="course-container" data-course="phys3021">
+		<div class="course-title">PHYS3021 Quantum Mechanics I</div>
+		<div class="score-container" style="grid-template-columns: 25fr 30fr 45fr;">
+			<div data-type="assignment">Assignment <br/> (25%)</div>
+			<div data-type="midterm">Midterm <br/> (30%)</div>
+			<div data-type="final">Final <br/> (45%)</div>
+		</div>
+	</div>
+
+    <div class="course-container" data-course="math3280">
+        <div class="course-title">MATH3280 Introductory Probability</div>
+		<div class="score-container" style="grid-template-columns: 10fr 40fr 50fr;">
+			<div data-type="assignment">Assignment <br/> (10%)</div>
+			<div data-type="midterm">Midterm <br/> (40%)</div>
+			<div data-type="final">Final <br/> (50%)</div>
+		</div>
+    </div>
+</div>
+
+<script>
+$(".course-title").on('click', function() {
+    var courseID = $(this).parent().data('course').toUpperCase()
+    window.location.href = `{{ site.baseurl }}/CUHK/${courseID}`
+})
+</script>

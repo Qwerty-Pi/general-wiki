@@ -1,8 +1,25 @@
 ---
 layout: default
 ---
-
+<span style="display: none">                                    \[                                                                      \def\F{\mathcal{F}}                                             \def\P{\mathbb{P}}                                              \def\sep{\, | \,}                                               \def\N{\mathbb{N}}                                              \def\R{\mathbb{R}}                                              \def\Z{\mathbb{Z}}                                              \def\E{\mathbb{E}}                                              \def\Var{\text{Var}}                                            \def\Cov{\text{Cov}}
+        \def\Exp{\text{Exp}}
+        \def\Norm{\mathcal{N}}
+	\def\iid{\overset{\text{iid}}{\sim}}
+\]
+</span>
 
 <h1>Statistics</h1>
 
+<p>Prerequisite: <a href="{{ site.baseurl }}/BOOK/stats-data-analysis">Statistics and Data Analysis</a></p>
 
+<h2>Estimation</h2>
+
+<p>Concisely, an <b>estimator</b> \( T \) is a <b>statistic</b> that estimates the <b>parameter</b> \( \theta \) in the <b>parametric space</b> \( \Theta \). For instance, if we consider <b>random sample</b> \( \{ X_i \} \iid \Norm(\mu, \sigma^2) \), then \( \Theta = \R \times [0, \infty) \). Previously, we focus on finding estimators that <b>maximises the likelihood</b> \( L(\theta) \), or is <b>unbiased</b> such that \( \E[T] = \theta \). Here, we have some more questions to ask: (1) How can we determine <b>which distribution</b> generates the random sample? (2) Can we somehow generalise the <b>central limit theorem</b> for <b>estimators</b>? Before discussing these, we need the ability to do some analysis.</p>
+
+<h3>Delta Method</h3>
+
+<p>Let's say we have an <b>estimator</b> \( T \) with \( \E[T] = \mu_T \) and \( \Var(T) = \sigma_T^2 \). Given a function \( g: \R \to \R \), then what distribution \( g(T) \) has? Assume \( T \overset{P}{\to} \mu_T \), that is, \( T \) converges to \( \mu_T \) <b>in probability</b> as \( n \to \infty \), we can approximate \[ g(T) \approx g(\mu_T) + g'(\mu_T) (T - \mu_T) \] Which means \( \E[g(T)] \approx g(\mu_T) \) and \( \Var(g(T)) \approx [g'(\mu_T)]^2 \sigma_T^2 \). Specifically, if \( T = \overline{X} \), then we have \( \overline{X} \overset{P}{\to} \mu \) by the <b>Weak Law of Large Numbers</b>, and \( \overline{X} \approx \Norm(\mu, \frac{\sigma^2}{n}) \) by the <b>Central Limit Theorem</b>. Therefore, \[ g(\overline{X}) \approx \Norm\left(g(\mu), \frac{g'(\mu)^2 \sigma^2}{n}\right)\] Note that \( E[g(T)] \approx g(\mu_T) = g(\E[T]) \) means \( g \) and \( \E \) commutes approximately as \( n \to \infty \).</p>
+
+<h3>Order Statistics</h3>
+
+<p>The <b>order statistics</b> of a random sample \( (X_i) \) is the sorted <b>permutation</b> \[ X_{(1)} \le X_{(2)} \le \cdots \le X_{(n)} \] How can we represent the PDF of \( X_{(r)} \)? Heuristically, we have \[ \P( x \le X_{(r)} \lt x + \delta x) = \frac{n!}{(r - 1)! (n - r)!} F(x)^{r - 1} f(x) \delta x [1 - F(x)]^{n - r} \] And so as \( \delta x \to 0 \), we have \[ f_{(r)}(x) = f(x) F(x)^{r - 1} [1 - F(x)]^{n - r} \]</p>

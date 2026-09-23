@@ -82,7 +82,7 @@
 
 <p>The simplest case to consider is \( (X_i) \iid U(0, 1) \). With some computations, we can show that \[ \E[X_{(r)}] = \frac{r}{n + 1} \] \[ \Var(X_{(r)}) = \frac{1}{n + 2} \cdot \frac{r}{n + 1} \left(1 - \frac{r}{n + 1}\right) \]</p>
 
-<h3>Q-Q Plots</h3>
+<h3>Quantile-Quantile Plots</h3>
 
 <p>In fact, order statistics have non-trivial use. Given a <u>continuous</u> random variable \( X \) and its <u>strictly-increasing</u> CDF \( F_X \), we have \( F_X(X) \sim U(0, 1) \), and so \( X \sim F_X^{-1}(U(0, 1)) \). Hence, by <b>delta method</b>, we have \( \E[X_{(r)}] = \E[F_X^{-1}(U(0, 1)_{(r)})] \approx F_X^{-1}(\E[U(0, 1)_{(r)}]) = F_X^{-1}(\frac{r}{n + 1}) \), whereas the variance of \( X_{(r)} \) is \( O(n^{-1}) \). That means for \( 1 \le r \le n \), we have \( F_X(x_{(r)}) \approx \frac{r}{n + 1} \).</p>
 

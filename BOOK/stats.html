@@ -86,7 +86,7 @@ layout: default
 
 <h2>Bayesian Inference</h2>
 
-<p>Previously, we treat the parameters \( \theta \in \Theta \) as constants, and try to estimate its value with estimators. How about we treat the parameter \( \theta \) as a random variable as well, and "update" \( \theta \) upon new observations? This is called the <b>Bayesian Inference</b> method, and is described below. Before that, let's first introduce two distributions - the <b>Gamma Distribution</b> and the <b>Beta Distribution</b>.</p>
+<p>Previously, we treat the parameters \( \theta \in \Theta \) as constants, and try to estimate its value with estimators. How about we treat the parameter \( \theta \) as a random variable as well, and "update" \( \theta \) upon new observations? Before talking about that, let's first introduce two distributions - the <b>Gamma Distribution</b> and the <b>Beta Distribution</b>.</p>
 
 <h3>The Gamma and Beta Distribution</h3>
 
@@ -101,3 +101,9 @@ layout: default
 <p>We reiterate that only the shape matters; once we deduce that \( f_X(x) \propto x^{\alpha - 1} (1 - x)^{\beta - 1} \) for \( x \in [0, 1] \), we immediately know that \( X \sim \text{Beta}(\alpha, \beta) \), without ever computing the constants.</p>
 
 <h3>Bayes' Formula</h3>
+
+<p>As we said before, we want to consider the parameter \( \theta \) as a random variable over \( \Theta \). Formally, we denote \( \pi : \Theta \to \R_{\ge 0} \) as the PDF (or PMF) of \( \theta \). We know that \( f(x, \theta) = f(x \sep \theta) \cdot \pi(\theta) \), and so \[ \pi(\theta \sep x) = \frac{f(x \sep \theta) \cdot \pi(\theta)}{f(x)} \propto f(x \sep \theta) \cdot \pi(\theta) \] noting that \( f(x) \) is constant. We call \( \pi(\theta) \) the <b>prior density</b> and \( \pi(\theta \sep x) \) the <b>posterior density</b>.</p>
+
+<p>If we take \( \pi \) as Beta or Gamma Distributions initially, they can somehow "absorb" many PDFs \( f \) due to their special forms where \( \pi(x) \propto x^{\alpha - 1} (1 - x)^{\beta - 1} \) and \( \pi(x) \propto x^{\alpha - 1} e^{-\beta x} \) respectively. For example, Beta can absorb Bernoulli and Gamma can absorb Poisson and Exponentials.</p>
+
+<h3>Predictions</h3>

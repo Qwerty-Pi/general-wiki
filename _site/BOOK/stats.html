@@ -134,4 +134,12 @@
 
 <h3>Hypothesis Testing on Categories</h3>
 
+<p>Suppose we have a <b>categorial distribution</b> \( Z \) where \( \P(Z = i) = \pi_i \) for \( 1 \le i \le k \) where \( \sum \pi_i = 1 \). How shall we test for <b>null hypothesis</b> \( H_0 : \theta \in \Theta \) where \( \pi = \pi(\theta) \) against the <b>general alternative</b> \( H_1 \) where only restriction is \( \sum \pi_i = 1 \)? Note that \[ \ell(\pi) = \sum_{i = 1}^{k} n_i \log \pi_i + C\] for some constant \( C \), so \[ \Lambda = 2 \sum_{i = 1}^{k} n_i \log \left( \frac{n_i}{n \pi_i(\hat \theta)} \right) \] Note \( \Lambda \overset{D}{\to} \chi_{k - 1 - \dim \Theta} \) and so we are done.</p>
+
+<p>Alternatively, by writing \( O_i = n_i \) and \( E_i = n \pi_i(\hat \theta) \), we have \[ \Lambda = 2 \sum O_i \log\left( \frac{O_i}{E_i} \right) \approx \sum \frac{(O_i - E_i)^2}{E_i} \] which is the <b>Pearson's chi-squared statistic</b>.</p>
+
+<p>How about we want to test whether there is "correlation" between two categories? The idea is the same: the null hypothesis is \( \pi_{ij} = \alpha_i \beta_j \) for some \( \alpha \) and \( \beta \), while the general alternative is just any \( \pi \) such that \( \sum \pi_{ij} = 1 \). We can similarly use <b>Pearson's chi-squared statistics</b> to get approximate value of \( \Lambda \sim \chi_{r} \) for some \( r \).</p>
+
+<h2>Bayesian Inference</h2>
+
 </body>

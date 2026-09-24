@@ -85,3 +85,19 @@ layout: default
 <p>How about we want to test whether there is "correlation" between two categories? The idea is the same: the null hypothesis is \( \pi_{ij} = \alpha_i \beta_j \) for some \( \alpha \) and \( \beta \), while the general alternative is just any \( \pi \) such that \( \sum \pi_{ij} = 1 \). We can similarly use <b>Pearson's chi-squared statistics</b> to get approximate value of \( \Lambda \sim \chi_{r} \) for some \( r \).</p>
 
 <h2>Bayesian Inference</h2>
+
+<p>Previously, we treat the parameters \( \theta \in \Theta \) as constants, and try to estimate its value with estimators. How about we treat the parameter \( \theta \) as a random variable as well, and "update" \( \theta \) upon new observations? This is called the <b>Bayesian Inference</b> method, and is described below. Before that, let's first introduce two distributions - the <b>Gamma Distribution</b> and the <b>Beta Distribution</b>.</p>
+
+<h3>The Gamma and Beta Distribution</h3>
+
+<p>For both of the distributions, our definition is simple: create distribution of a certain "shape", then <b>normalise</b> so that the integrated PDF evaluates to \( 1 \). The constant multiplier is less important, since we can always infer from the normality anyways.</p>
+
+<p>For <b>Gamma Distribution</b> \( \text{Gamma}(\alpha, \beta) \), we want \( f(x; \alpha, \beta) \propto x^{\alpha - 1} e^{-\beta x} \) over \( x \in [0, \infty) \). Note that \[ \int_0^{\infty} x^{\alpha - 1} e^{-\beta x} \, dx = \beta^{-\alpha} \int_0^{\infty} y^{\alpha - 1} e^{-y} \, dy \] By letting <b>Gamma Function</b> \( \Gamma(\alpha) = \int_0^{\infty} y^{\alpha - 1} e^{-y} \, dy \), we have the normalised \[ f(x; \alpha, \beta) = \frac{\beta^{\alpha}}{\Gamma(\alpha)} x^{\alpha - 1} e^{-x} \] For Gamma Function \( \Gamma(\alpha) \), notice that \( \Gamma(1) = 1 \) and \( \Gamma(\alpha + 1) = \alpha \Gamma(\alpha) \), and so for \( n \in \N \) we have \( \Gamma(n + 1) = n! \). We also have the MGF of \( \text{Gamma}(\alpha, \beta) \) being \[ M(s) = \left( \frac{\beta}{\beta - s} \right)^\alpha \] Which \( \text{Gamma}(1, \beta) \sim \Exp(\beta) \).</p>
+
+<p>For <b>Beta Distribution</b> \( \text{Beta}(\alpha, \beta) \), we have \( f(x; \alpha, \beta) \propto x^{\alpha - 1} (1 - x)^{\beta - 1} \) over \( x \in [0, 1] \). To normalise this, we just lazily define the <b>Beta Function</b> as \( B(\alpha, \beta) = \int^1_0 x^{\alpha - 1} (1 - x)^{\beta - 1} \, dx \), and so \[ f(x; \alpha, \beta) = \frac{1}{B(\alpha, \beta)} x^{\alpha - 1} (1 - x)^{\beta - 1} \]</p>
+
+<p>As an interesting fact, we have \[ B(\alpha, \beta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha) \cdot \Gamma(\beta)} \] Which can be proven via some magic transformation. The MGF of Beta Distribution is not particularly nice, so it is not included here.</p>
+
+<p>We reiterate that only the shape matters; once we deduce that \( f_X(x) \propto x^{\alpha - 1} (1 - x)^{\beta - 1} \) for \( x \in [0, 1] \), we immediately know that \( X \sim \text{Beta}(\alpha, \beta) \), without ever computing the constants.</p>
+
+<h3>Bayes' Formula</h3>

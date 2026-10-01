@@ -109,3 +109,27 @@ layout: default
 <h3>Estimations</h3>
 
 <p>How can we do estimation with Bayes' Inference? First, for point estimations, we have \[ f(x_{n + 1} \sep \theta, x) = f(x_{n + 1} \sep \theta) = \int f(x_{n + 1} \sep \theta) \pi(\theta \sep x) \, d \theta \]</p>
+
+<p>How about interval estimations? By picking some \( C \subset \Theta \), we say it is a \( 100 (1 - \alpha) \% \) <b>credible set</b> (analog for confidence interval) for which \[ \int_C \pi (\theta \sep x) \, d\theta = 1 - \alpha \] We say \( C \) is a <b>highest posterior density (HPD)</b> credible set if \( \pi(\theta \sep x) \ge \pi (\theta' \sep x) \) for all \( \theta \in C \) and \( \theta' \not\in C \), and <b>equal tailed</b> for \( \Theta \subset \R \), \( C = (\theta_1, \theta_2) \) and \( \P(\theta \le \theta_1 \sep x) = \P(\theta \ge \theta_2) = \frac{\alpha}{2} \).</p>
+
+<h3>Picking the Prior</h3>
+
+<p>How shall we pick the prior? We may "consult professionals", but of course we don't care about that. We may try to pick <b>conjugate priors</b> so that the likelihood and the priors has the same form, which make the computation (by hand) easier. Another thing to keep in mind is the prior should most likely be <b>proper</b>, that is, the prior should be able to be normalised.</p>
+
+<p>What if we have no prior information? How shall we demonstrate our <b>ignorance</b>? Consider a simple case where \( \theta \in \Theta = (0, 1) \). Clearly, a ignorant prior for \( \theta \) is \( U(0, 1) \), or \( \pi(\theta) \propto 1 \). One of the priors that we can pick by default is the <b>Jeffreys prior</b> - effectively, our prior should be the same regardless of what parametisation we pick.</p>
+
+<p>Consider \( \psi: \Omega \to \Omega \) where \( \phi = \psi(\theta) \), assuming \( \psi \) is <u>diffeomorphism</u> (1-1 and continuously differentiable). Then we have \[ p(\phi) = \pi(\theta) \cdot \vert J_{\psi} \vert^{-1} \] Hence, \[ U_\phi = \nabla_\phi \ell = (J_{\psi}^{-1} \nabla_\theta) \ell \] and so \[ \vert I(\phi) \vert = \vert I(\theta) \vert \cdot \vert J_{\psi}^{-1} \vert^2 \] That means we can use the prior of \[ \pi(\theta) = \vert I(\theta) \vert^{1/2} \] which survives under change of parametisations.</p>
+
+<p>Let's have some examples: Suppose we have a PDF \( g \). If we take \( f ( x \sep \theta ) = g(x - \theta) \), then \( \theta \) is called a <b>location parameter</b>, which we have \( \pi(\theta) \propto 1 \); whereas for \( f(x \sep \sigma) = \frac{1}{\sigma} g\left(\frac{x}{\sigma}\right) \), then \( \pi(\sigma) \propto \frac{1}{\sigma} \), where \( \sigma \) is called the <b>scale parameter</b>.</p>
+
+<h3>Hypothesis Testing with Bayes Factor</h3>
+
+<p>We define the <b>odds</b> of an event \( A \) as \( \frac{\P(A)}{1 - \P(A)} \). Now, suppose we have two hypotheses \( H_0 \) and \( H_1 \) which exactly one of them is true, that is, \( \P(H_0) + \P(H_1) \). Then by Bayes, we have \[ \frac{\P(H_0 \sep x)}{\P(H_1 \sep x)} = \frac{\P(x \sep H_0)}{\P(x \sep H_1)} \times \frac{\P(H_0)}{\P(H_1)} \] Which we multiplies the middle <b>Bayes factor</b> to the <b>prior odds</b> to obtain the <b>posterior odds</b>. We may denote the Bayes factor as \[ B_{01} = \frac{\P(x \sep H_0)} {\P(x \sep H_1)}\] </p>
+
+<p>We may generalise the concept of Bayes Factor to a general parametric space \( \Theta \): We can simply introduce priors for each of \( H_i \) separately (or merge them togther), where \[ \P(x \sep H_i) = \int_{\Theta_i} f(x \sep \theta_i, H_i) \pi(\theta_i \sep H_i) \, d \theta_i \] Which is then called the <b>marginal likelihood</b> of \( H_i \). We can use a high number of \( 2 \log B_{01} \) to support \( H_0 \) over \( H_1 \) (analogous to the definition of likelihood).</p>
+
+<h3>Asympototic Normality</h3>
+
+<p>Once again, we want to show the <b>asymptotic normality</b> of posterior distribution. Denote \( \tilde \ell (\theta) = \log \pi(\theta \sep x) \), then \( \tilde \ell (\theta) = \log \pi(\theta) + \ell(\theta) + C \), which is dominated by \( \ell(\theta) \) as \( n \to \infty \). Pick the posterior mode \( \tilde \theta \), then by Taylor, \[ \pi(\theta \sep x) \propto \exp\left(-\frac{1}{2} (\theta - \tilde \theta)^2 J(\tilde \theta)\right)\] Which means \[ \theta \sep x \approx \Norm(\tilde \theta, J(\tilde \theta)^{-1}) \]</p>
+
+<p>Finally, we remark on the subtle difference between the Bayesian approach and the above "frequentist" approach - Bayesian treats the parameters as random variables and approximation as constants; where the frequentist treats the parameters as constants and approximations as random variables.</p>

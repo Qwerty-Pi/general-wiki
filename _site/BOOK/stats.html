@@ -152,7 +152,7 @@
 
 <p>For <b>Beta Distribution</b> \( \text{Beta}(\alpha, \beta) \), we have \( f(x; \alpha, \beta) \propto x^{\alpha - 1} (1 - x)^{\beta - 1} \) over \( x \in [0, 1] \). To normalise this, we just lazily define the <b>Beta Function</b> as \( B(\alpha, \beta) = \int^1_0 x^{\alpha - 1} (1 - x)^{\beta - 1} \, dx \), and so \[ f(x; \alpha, \beta) = \frac{1}{B(\alpha, \beta)} x^{\alpha - 1} (1 - x)^{\beta - 1} \]</p>
 
-<p>As an interesting fact, we have \[ B(\alpha, \beta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha) \cdot \Gamma(\beta)} \] Which can be proven via some magic transformation. The MGF of Beta Distribution is not particularly nice, so it is not included here.</p>
+<p>As an interesting fact, we have \[ B(\alpha, \beta) = \frac{\Gamma(\alpha) \cdot \Gamma(\beta)}{\Gamma(\alpha + \beta)} \] Which can be proven via some magic transformation. The MGF of Beta Distribution is not particularly nice, so it is not included here.</p>
 
 <p>We reiterate that only the shape matters; once we deduce that \( f_X(x) \propto x^{\alpha - 1} (1 - x)^{\beta - 1} \) for \( x \in [0, 1] \), we immediately know that \( X \sim \text{Beta}(\alpha, \beta) \), without ever computing the constants.</p>
 

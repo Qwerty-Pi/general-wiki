@@ -3,3 +3,40 @@ layout: default
 ---
 <h1>Computer Networking</h1>
 
+<p>What <i>is</i> <b>computer network</b>? For example, how does one able to see this webpage? In essense, computer network is the art of <b>communication</b>, despite maybe very far away from each other. More than often, we also have expectations on the network. For example, we want the message is guaranteed to be delivered, or the message is delivered fast enough, say 100s of milliseconds, or the message sent is secure and no one can temper or forge messages. Our ultimate question is: how does the modern network able to achieve all these fancy stuff? </p>
+
+<p>To answer this question, we must be clear about architecture of the computer network, which the rest will be built upon. In the first part, we shall introduce the basic structure of the internet. For the second part, we will dig deep into the protocol stack of the internet in a top-down approach. Finally, in the third part we shall introduce some more applications built upon the fundamentals.</p>
+
+<h2>Computer Networks and the Internet</h2>
+
+<h3>What is the Internet?</h3>
+
+<p>Although coined <i>computer</i> network, nowadays it is not just computers: We have mobile phones, laptops, game consoles, or even smart refrigerators - Everything can be linked to the internet! Therefore, we call these network-capable devices as <b>host</b> or <b>end system</b>, both carry the same meaning. In the modern internet, end systems are connected together via <b>communication links</b> and <b>packet switches</b>.</p>
+
+<p><b>Communication links</b> can be of different physical media, such as <u>coaxial cable</u>, <u>copper wire</u>, <u>optical fibre</u> or <u>radio spectrum</u>, which each has slightly different physical properties (of course). Messages are usually segmented into small <b>packets</b> with additional <b>header bytes</b> at the <u>source</u>, sent via the communication links, and is then reassembles at the <u>destination</u>.</p>
+
+<p><b>Packet switches</b> receive and <b>forward</b> packets to elsewhere. The most prominent types are <b>routers</b> and <b>link-layer switches</b>. <b>Routers</b> are more used in <b>network cores</b> (deep inside the network), while <b>link-layer switches</b> are more used in <b>access networks</b> (connect end system to the internet).</p>
+
+<p>How does an user <i>becomes</i> part of the internet? We have the <b>Internet Service Providers (ISPs)</b>, including local cable or telephone companies, or ISPs for WiFi accesses in public spaces, which provides network access to end systems. Of course, ISPs need to be inter-connected, so lower-tier ISPs are connected to national or international ISPs, forming a <b>hierachical</b> structure.</p>
+
+<p>Finally, <b>protocols</b> are introduced to transfer information on the internet. Since messages are ultimately bitstrings of 0s and 1s, how can we ensure different machines "speak the same language", that is, communicate using the same format? Therefore, <b>internet standards</b> are developed by the <b>Internet Engineering Task Force (IETF)</b>, where the IETF release documents as <b>requests for comments (RFCs)</b>. Some of the well-known protocols are defined in the RFCs, such as the <b>Transmission Control Protocol (TCP)</b> [<a href="https://www.rfc-editor.org/info/rfc793/" target="_blank">RFC 793</a>], <b>Internet Protocol (IP)</b> [<a href="https://www.rfc-editor.org/info/rfc791/" target="_blank">RFC 791</a>] and <b>Hypertext Transfer Protocol (HTTP)</b> [<a href="https://www.rfc-editor.org/info/rfc2616/" target="_blank">RFC 2616</a>].</p>
+
+<p>We may consider the internet is an infrastructure that provides <b>services</b> to various <b>applications</b>, such as web surfing, peer-to-peer (P2P) file sharing, remote login, and many more. It would be stupid if we need to reinvent how to send message to each other for every <b>distributed</b> application we made! Therefore, the end systems of the internet provides <b>Application Programming Interface (API)</b> for delivering data, which we can rely on to develop new applications easily. </p>
+
+<h3>The Network Edge</h3>
+
+<p>Applications and end systems run at the "edge of the network" (in the spherical sense). What forms the <b>access network</b>, which physically connects the end system to the first (edge) router? We split into three types of access networks - <u>home</u>, <u>enterprise</u> and <u>wide-are mobile wireless</u>.</p>
+
+<h4>Access in Home</h4>
+
+<p>There are <b>telephone</b> and <b>cable</b> televison companies out there, both are going to be killed by the internet. How can they make more money? As the saying goes, "if you can't beat them, join them", of course by becoming <b>Internet Service Providers (ISPs)</b>! They are the two most prominent home access solutions these days.</p>
+
+<p>First, we have the <b>digital subscriber line (DSL)</b> provided by the local telephone company (telco). Since the ordinary telephone channel only uses 0 to 4 kHz band of the phone line to transmit human voice, it can carry data from 4 kHz to 1 MHz band at the same time. A <b>DSL modem</b> (Modulator-Demodulator, digital to analogue and analogue to digital) is used to convert digital data to analogue high-frequency signals, which is then converted back to digital signals at the <b>Digital Subscriber Line Access Multiplexer (DSLAM)</b> at the central office (CO) of the telco. With DSL, we can reach 24 Mbps downstream and 2.5 Mbps upstream (in 2003). An older technique is <b>dial-up</b>, where we use the ordinary telephone channel to access the internet. Its speed is capped by <a href="https://www.youtube.com/watch?v=0qdHMZdPVqE" target="_blank">56 Kbps</a>, and we cannot call with traditional telephone and access internet at the same time.</p>
+
+<p>How about <b>cables</b>? Similar to DSL, we can reuse the infrastructure of the (analogue) cable television. Fibre (optic) cables is used for fast transmittion to neighbourhood-level junction (for 500 ~ 5000 homes), then coaxial (copper) cables is used to connected to each home. Therefore, it is also referred as <b>hybrid fibre coax (HFC)</b>. We need a <b>cable modem</b> to convert between digital and analogue, which is connected to the computer via an <b>Ethernet</b> port. This is somewhat faster than DSL, and can reach 42.8 Mbps downstream and 30.7 Mbps upstream. Note that by the nature of cable television, the bandwidth is shared among the homes! Therefore, a newer technology is the <b>fibre to the home (FTTH)</b>, directly connecting the optic fibre to the home, which can achieve an even higher speed.</p>
+
+<p>As a final remark, <b>satellite links</b> can be used as well, such as Starlink.</p>
+
+<h4>Access in Enterprise</h4>
+
+<p><b>Local area networks (LAN)</b> can be used to connect an end system to the edge router.</p>

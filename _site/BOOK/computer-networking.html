@@ -16,6 +16,9 @@
 						enrich: false
 					}
 				}
+			},
+			svg: {
+				fontCache: "global"
 			}
 		}
 	</script>
@@ -77,11 +80,11 @@
 
 <p>Finally, <b>protocols</b> are introduced to transfer information on the internet. Since messages are ultimately bitstrings of 0s and 1s, how can we ensure different machines "speak the same language", that is, communicate using the same format? Therefore, <b>internet standards</b> are developed by the <b>Internet Engineering Task Force (IETF)</b>, where the IETF release documents as <b>requests for comments (RFCs)</b>. Some of the well-known protocols are defined in the RFCs, such as the <b>Transmission Control Protocol (TCP)</b> [<a href="https://www.rfc-editor.org/info/rfc793/" target="_blank">RFC 793</a>], <b>Internet Protocol (IP)</b> [<a href="https://www.rfc-editor.org/info/rfc791/" target="_blank">RFC 791</a>] and <b>Hypertext Transfer Protocol (HTTP)</b> [<a href="https://www.rfc-editor.org/info/rfc2616/" target="_blank">RFC 2616</a>].</p>
 
-<p>We may consider the internet is an infrastructure that provides <b>services</b> to various <b>applications</b>, such as web surfing, peer-to-peer (P2P) file sharing, remote login, and many more. It would be stupid if we need to reinvent how to send message to each other for every <b>distributed</b> application we made! Therefore, the end systems of the internet provides <b>Application Programming Interface (API)</b> for delivering data, which we can rely on to develop new applications easily. </p>
+<p>We may consider the internet as an infrastructure that provides <b>services</b> to various <b> distributed applications</b>, such as web surfing, peer-to-peer (P2P) file sharing, remote login, and many more. It would be stupid if we need to reinvent how to send message to each other for every distributed application we made! Therefore, the end systems of the internet provides <b>Application Programming Interface (API)</b> for delivering data, which we can rely on this encapsulation to develop new applications easily. </p>
 
 <h3>The Network Edge</h3>
 
-<p>Applications and end systems run at the "edge of the network" (in the spherical sense). What forms the <b>access network</b>, which physically connects the end system to the first (edge) router? We split into three types of access networks - <u>home</u>, <u>enterprise</u> and <u>wide-are mobile wireless</u>.</p>
+<p>Applications and end systems run at the "edge of the network" (in the spherical sense). What forms the <b>access network</b>, which physically connects the end system to the first (edge) router? We split into three types of access networks - <u>home</u>, <u>enterprise</u> and <u>wide-area mobile wireless</u>.</p>
 
 <h4>Access in Home</h4>
 
@@ -95,6 +98,36 @@
 
 <h4>Access in Enterprise</h4>
 
-<p><b>Local area networks (LAN)</b> can be used to connect an end system to the edge router.</p>
+<p><b>Local area networks (LAN)</b> can be used to connect end systems to their edge router (access point). Why do we need LAN when we have DSL and cable already? Let's consider an example: Let's say there is a computer laboratory with 100 computers - It make no sense to have 100 cables from the laboratory to the ISP! Therefore, what we will do is to aggregate the traffic via the LAN, then connect to the edge router. There are two kinds of prevalent access technologies - The <b>Ethernet</b> and the <b>WiFi</b>. </p>
+
+<p>For <b>Ethernet</b>, the hosts are connected to the <b>Ethernet switch</b> by physical wires (coaxial / twisted-pair / fibre optics), where nowadays the access speed can be up to several Gbps. On the other hand, <b>WiFi</b>, or more formally <b>wireless LAN access</b> or <b>IEEE 802.11</b>, offers a wireless access point for mobile devices within few tens of metres.</p>
+
+<h4>Wide-area Mobile Wireless Access</h4>
+
+<p>In the modern days, we also have <b>3G / 4G / 5G</b> (Generation) networks, which can reach up to several kilometres of radius. You may ask: What is the main difference between this and WiFi? The signals are transmitted in a licensed portion of the spectrum, and so it may carry a high-power and so pass a large distance. This is not the case for WiFi.</p>
+
+<h3>The Network Core</h3>
+
+<p>Alright, now you have access to the Internet. How shall the message be transferred between you and others? We can take inspiration from postal services and traditional telephones. For postal services, we do not care about what stations the mail has passed through, as long as the mail can arrive at its destination; while for traditional telephones, the pathway is created at the beginning of the telephone call. These two ways of switching are called the <b>packet-switched</b> and <b>circuit-switched</b> respectively.</p>
+
+<h4>Packet-Switching</h4>
+
+<p>The modern Internet uses <b>packets</b>. Most <b>packet switches</b> use the <b>Store-and-Forward Transmission</b>, which only starts forwarding after it receives the entire packet. For each of the outgoing link, we have an <b>output buffer</b> to store the packets to be sent. If many packets arrive in a shortburst, the packets would have to wait, and so this induces <b>queueing delays</b>; or even if the buffer is completely full, then <b>packet loss</b> would occur, which packets would be dropped and lost forever. The packet switches use <b>forwarding tables</b> to decide which outgoing link to forward the packet to, and <b>routing protocols</b> are used to set forwarding tables automatically to route the packets.</p>
+
+<h4>Circuit-Switching</h4>
+
+<p>For <b>circuit-switching</b>, the <b>bandwidth</b> (transmittion rate) on each of the used communication link is reserved for the <b>end-to-end connection</b>, which the connection is referred as a circuit. Like traditional telephone, we can expect to have a <i>guaranteed</i> constant rate throughout the connection, which cannot be achieved by packet-switching. A question is: how can we allocate a communication link for <u>multiple</u> circuits? We can do this via the means of <b>multiplexing</b>. In <b>frequency-division multiplexing (FDM)</b>, we subdivide the band into smaller <u>frequency bands</u>, and for <b>time-division multiplexing (TDM)</b> we segment the time domain into periodic <u>time slots</u>. </p>
+
+<p>The reason why the current day Internet prefers packet-switching rather than circuit-switching is simple: We do not want to waste idle resources. Let's say you are using the Internet where you only download rarely (say 10% of the time), then the other 90% of time the bandwidth will go to waste for circuit-switching! The efficiency of packet-switching is simply much better in terms of the bandwidth usage.</p>
+
+<h4>Network Hierachy</h4>
+
+<p>Now, we will briefly mention the hierachy of networks - namely how the ISPs (and others) are inter-connected together. In fact, this is more of a social construct and driven by economy. Imagine there is only one global transit ISP, and each access ISP connects to it. The access ISP is the <b>customer</b> and the global ISP is the <b>provider</b>, which the access ISP pays to keep its service up. Naturally, companies want to build their own global transit ISPs to earn money. In practice, the global transit ISPs are called <b>tier-1 ISPs</b>, while there are also <b>regional ISPs</b> which connects ISPs in a region.</p>
+
+<p>There are many more things in the network of network. The <b>Point of Presenses (PoP)</b> is a group of routers where the customer ISPs can connect to the provider ISP; A customer ISP can <b>multi-home</b> and connect to multiple provider ISPs; Nearby ISPs at the same level can <b>peer</b> by connecting their network together; while <b>Internet Exchange Points (IXP)</b> are set up for multiple ISPs to peer together. Finally, we have <b>content provider networks</b>, which large companies such as Google attempts to bypass the fee for traffic through tier-1 ISPs by setting a network on its own, and peering IXPs and lower-tier ISPs.</p>
+
+<h3>Delay, Loss and Throughput for Packets</h3>
+
+<p></p>
 
 </body>

@@ -92,3 +92,35 @@ layout: default
 <p>The network is a delicate matter. If done wrong, it can be attacked as easily as talk to a person in real life. Here, we wish to briefly classify different types of network attacks. First, the Internet contains <b>malwares</b> which can infect our devices, which may delete files, install spyware or mine bitcoins. These malwares are often <b>self-replicating</b>, which it can replicate themselves and attempt to infect other hosts. We say a malware is <b>virus</b> when it requires some form of user interaction, and <b>worm</b> otherwise. These network attacks can also be targeting servers for <b>denial-of-service (DoS) attacks</b>. <b>Payloads</b> maybe crafted to trigger vulnerabilities, or attempt to <b>flood</b> the bandwidth of the access link or TCP connection pool of the server. The more common form of DoS is <b>DDoS</b>, meaning it is <b>distributed</b>, since it is easier to generate huge amount of traffic that way.</p>
 
 <p>Other than active attacks, hackers can also <b>sniff packets</b> when other users connecting to WiFi or Ethernet whenever packets are broadcasted or the hacker gained access to the access router. When the packets themselves are unencrypted, then the hacker can peek at the message you receive or sent. On the other hand, hackers can also do <b>IP spoofing</b>, pretending to be other hosts by faking the source IP address and sent malicious commands. Hence, <b>end-point authentication</b> can be used to check the origins of the messages.</p>
+
+<h2>Application Layer</h2>
+
+<h3>Principles of Network Applications</h3>
+
+<p>What <i>are</i> network applications? Simply speaking, those are programs that is <b>distributed</b> onto different end systems, which communicate using the Internet. These applications usually adopts either the <b>client-server architecture</b> or the <b>peer-to-peer (P2P) architecture</b>, which decides whom the end systems should be communicating with.</p>
+
+<h4>Application Architecture</h4>
+
+<p>For the <b>client-server architecture</b>, the application provider uses a dedicated server (or a group of servers) to respond to the requests of the users. We usually refer to who makes requests as <b>client</b> and whoever responds as <b>server</b>. Meanwhile, for a <b>P2P architecture</b>, the content is sent from anyone to anyone. We can see that a benefit of P2P is its <b>self-scalability</b>: if many people joins, then its upload bandwidth also increases proportionally.</p>
+
+<h4>Sockets and Ports</h4>
+
+<p>From the point of view of the application, the <b>network transport services</b> provides a <b>logical end-to-end transport</b> between processes on different hosts. How does a running program, a <b>process</b>, use the transport services provided by the operating system? The kernel allows processes to create <b>socket</b>, an <b>interface</b> between the process and the kernel, which can then be used to send and receive data across the Internet. The process can only specify a small set of parameters to the transport layer, but not interfere with the network functionality of the hardware directly.</p>
+
+<p>Since multiple processes can be running on the same host, <b>ports</b> are introduced for identification of the processes. The ports are identified with a 16-bit number, which 0 ~ 1023 are <b>reserved</b> ports (requires sudo perm on unix) for well-known applications (21: FTP, 25: SMTP, 53: DNS, 80: HTTP, 443: HTTPS), while 1024 ~ 65535 are <b>ephemeral</b> (temporary) ports. A way of thinking is that the usage of ports is a way to <b>multiplexing</b> upon network layer, since the network layer by design only deals with sending packets between hosts.</p>
+
+<h4>Transport Services</h4>
+
+<p>Suppose there are several transport-layer protocols to choose from. Which should you pick for the application? Of course, we shall consider the <b>services</b> that these protocols have promised. Perhaps the most important thing is <b>reliable data transfer (rdt)</b> (opposite: <b>loss-tolerant</b>), which both hosts are assured that the packet has been sent. We also care about the <b>bandwidth</b> when the application is <b>bandwidth-sensitive</b> (opposite: <b>elastic</b>), for instance real-time gaming or trading. There are also other promises on <b>timing</b> or <b>security</b>.</p>
+
+<p>In reality, the applications always use either the <b>Transmittion Control Protocol (TCP)</b> or the <b>User Datagram Protocol (UDP)</b>. TCP offers <b>reliable data transfer</b> and <b>congestion control</b>, while UDP offers nothing(!) Note that there is no any guarantees on timing or bandwidth - the Internet only do its <b>best effort</b>. One may ask - if UDP offers nothing, why do we use UDP? The reason is that since UDP is simpler, it provides more control to the application layer, which is sometimes needed when you need ultra-low latency or you expect it to work even under congestion. The <b>Secure Sockets Layer (SSL)</b> is an extension upon TCP, which an extra layer of encryption / decryption is done before and after sending packets via TCP.</p>
+
+<h4>Application Protocols</h4>
+
+<p>The <b>application protocol</b> specifies the <b>syntax</b> and the <b>semantics</b> of the messages. The current Internet is built upon many simple but elegant protocols, such as <b>Hypertext Transfer Protocol (HTTP)</b> for website, <b>File Transfer Protocol (FTP)</b> for file transfer, <b>Simple Mail Transfer Protocol (SMTP)</b> for electronic mail transfer, <b>Post-Office Protocol - Version 3 (POP3)</b> or <b>Internet Mail Access Protocol (IMAP)</b> for electronic mail access, <b>Domain Name System (DNS)</b> for resolving domain name, and many more.</p>
+
+<p>Interestingly, all of them uses TCP, except that the DNS uses UDP. The reason why we use UDP for DNS is that if the network is congested, you cannot use the Internet anyways, and it is better not to congest it even more. We will go through these well-known application protocols one-by-one, and most importantly, gain some insights over their protocol designs.</p>
+
+<h3>The Web and HTTP</h3>
+
+

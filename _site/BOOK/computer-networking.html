@@ -172,7 +172,7 @@
 
 <p>Suppose there are several transport-layer protocols to choose from. Which should you pick for the application? Of course, we shall consider the <b>services</b> that these protocols have promised. Perhaps the most important thing is <b>reliable data transfer (rdt)</b> (opposite: <b>loss-tolerant</b>), which both hosts are assured that the packet has been sent. We also care about the <b>bandwidth</b> when the application is <b>bandwidth-sensitive</b> (opposite: <b>elastic</b>), for instance real-time gaming or trading. There are also other promises on <b>timing</b> or <b>security</b>.</p>
 
-<p>In reality, the applications always use either the <b>Transmittion Control Protocol (TCP)</b> or the <b>User Datagram Protocol (UDP)</b>. TCP offers <b>reliable data transfer</b> and <b>congestion control</b>, while UDP offers nothing(!) Note that there is no any guarantees on timing or bandwidth - the Internet only do its <b>best effort</b>. One may ask - if UDP offers nothing, why do we use UDP? The reason is that since UDP is simpler, it provides more control to the application layer, which is sometimes needed when you need ultra-low latency or you expect it to work even under congestion. The <b>Secure Sockets Layer (SSL)</b> is an extension upon TCP, which an extra layer of encryption / decryption is done before and after sending packets via TCP.</p>
+<p>In reality, the applications always use either the <b>Transmittion Control Protocol (TCP)</b> or the <b>User Datagram Protocol (UDP)</b>. TCP offers <b>reliable data transfer</b> and <b>congestion control</b>, while UDP offers nothing(!) Note that there is no any guarantees on timing or bandwidth - the Internet only do its <b>best effort</b>. One may ask - if UDP offers nothing, why do we use UDP? The reason is that since UDP is simpler, it provides more control to the application layer, which is sometimes needed when you need ultra-low latency or you expect it to work even under congestion. The <b>Secure Sockets Layer (SSL)</b> is an extension upon TCP, which added an extra layer of encryption / decryption before and after sending packets via TCP.</p>
 
 <h4>Application Protocols</h4>
 
@@ -182,6 +182,8 @@
 
 <h3>The Web and HTTP</h3>
 
+<p>A <b>web page</b>, or a <b>document</b>, is a collection of <b>objects</b>. A web page usually consists of a <b>base HTML file</b> with a bunch of <b>referenced objects</b>. Upon receiving the request from the web <b>client</b> or <b>browser</b> at a <b>uniform resource locator (URL)</b>, the web <b>server</b> respond with the base HTML file. Then, the browser will help you to <u>request each of the referenced object separately</u> (therefore, if you curl the webpage manually, it won't automatically request the referenced objects!)</p>
 
+<p>By nature, the raw HTTP is a <b>stateless protocol</b>, that is, the web server does not maintain connection information of its client. This doesn't mean about no states can be maintained: it can be done by <b>cookies</b> and <b>sessions</b>. The connection can also be maintained in TCP. When the same TCP connection is used to transfer multiple files, it is called a <b>persistent connection</b>, and <b>non-persistent</b> otherwise. <i>Why</i> we want persistent connection? To justify this, we have to dig into TCP. Since the TCP requires a <b>TCP handshake</b> to initialise the connection, it takes one <b>round-trip time (RTT)</b> to </p>
 
 </body>

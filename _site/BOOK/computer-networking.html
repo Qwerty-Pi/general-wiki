@@ -35,6 +35,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
 	<meta content="width=device-width, initial-scale=1" name="viewport"/>
+	<!-- base target="_blank"--> <!-- set the default of links to target="_blank" -->
 </head>
 <body>
     <!-- it works...? -->
@@ -182,8 +183,96 @@
 
 <h3>The Web and HTTP</h3>
 
+<h4>What is a web page?</h4>
 <p>A <b>web page</b>, or a <b>document</b>, is a collection of <b>objects</b>. A web page usually consists of a <b>base HTML file</b> with a bunch of <b>referenced objects</b>. Upon receiving the request from the web <b>client</b> or <b>browser</b> at a <b>uniform resource locator (URL)</b>, the web <b>server</b> respond with the base HTML file. Then, the browser will help you to <u>request each of the referenced object separately</u> (therefore, if you curl the webpage manually, it won't automatically request the referenced objects!)</p>
 
-<p>By nature, the raw HTTP is a <b>stateless protocol</b>, that is, the web server does not maintain connection information of its client. This doesn't mean about no states can be maintained: it can be done by <b>cookies</b> and <b>sessions</b>. The connection can also be maintained in TCP. When the same TCP connection is used to transfer multiple files, it is called a <b>persistent connection</b>, and <b>non-persistent</b> otherwise. <i>Why</i> we want persistent connection? To justify this, we have to dig into TCP. Since the TCP requires a <b>TCP handshake</b> to initialise the connection, it takes one <b>round-trip time (RTT)</b> to </p>
+<h4>Transfer Time of HTTP</h4>
+
+<p>By nature, the raw HTTP is a <b>stateless protocol</b>, which the web server does not maintain information of its clients. This doesn't mean about no states can be maintained: it can be done by <b>cookies</b> and <b>sessions</b>. The connection can also be maintained in TCP. When the same TCP connection is used to transfer multiple objects, it is called a <b>persistent connection</b>, and <b>non-persistent</b> otherwise. How does persistent connection works? Since the TCP requires a <b>three-way handshake</b> to initialise the connection, it takes one <b>round-trip time (RTT)</b> for the two hosts to <b>synchronise</b> and <b>acknowledge</b> each other. Hence, the transfer of each object requires <u>two RTTs</u> plus the transfer time of the objects. With persistent connection and <b>pipelining</b> by sending multiple objects <u>asynchronously</u>, the transfer tim for the whole webpage can be much faster.</p>
+
+<h4>HTTP Message Format</h4>
+
+<p>Typically, a <b>HTTP request</b> sent from a web browser looks like the follows: </p>
+<pre>
+GET /hello HTTP/1.1
+Host: www.example.com
+User-agent: Mozilla/5.0
+Connection: Keep-Alive
+Accept-language: en
+</pre>
+<p>The first line is the <b>request line</b>, and <b>header lines</b> follows. The request line consists of the <b>request method</b> (GET, POST, HEAD, PUT, DELETE), the <b>uniform resource locator (URL)</b> and the <b>HTTP version</b> (HTTP/1.0, HTTP/1.1, HTTP/2, HTTP/3). The header lines essentially negociates with the web server, so the web server can send different versions depending on the header. </p>
+
+<p>The <b>HTTP response</b> from the web server looks like the follows:</p>
+<pre>
+HTTP/1.1 200 OK
+Connection: Keep-Alive
+Date: Tue, 09 Aug 2011 15:44:04 GMT
+Server: Apache/2.2.3 (CentOS)
+Last-Modified: Tue, 09 Aug 2011 15:11:03 GMT
+Content-Length: 6821
+Content-Type: text/html
+
+(blah blah blah blah)
+</pre>
+
+<p>The response start withs the <b>status line</b>, which consists of the <b>HTTP version</b>, the <b>status code</b> and the corresponding <b>status message</b>. Common status includes <u>200 OK</u>, <u>301 Moved Permanently</u>, <u>304 Not Modified</u>, <u>400 Bad Request</u>, <u>404 Not Found</u>, and many more. The <b>header lines</b> follow, describing the returned object, and finally the <b>entity body</b> is there after an empty line (CR LF).</p>
+
+<h4>Cookies and Sessions</h4>
+
+<p>Since HTTP is <b>stateless</b>, we may use <b>cookies</b> or <b>sessions</b> in the HTTP header to store and retrieve data based on user. To use <b>cookies</b>, we may include the headers (server to client) Set-cookie: fruit=apple and (client to server) Cookie: fruit=apple, which some <b>state data</b> can be communicated between the client and server. <b>Sessions</b> refer to the case where data is stored on server, which is identified with a unique session ID and communicated usually via cookies.</p>
+
+<h4>Caching and Conditional GET</h4>
+
+<p>A natural engineering question is - how can we satisfy the HTTP requests from the users as efficient as possible? One of the approach is <b>caching</b>. By installing a <b>proxy server</b> between the client and the <b>origin server</b> (where the actual server locates), the proxy server first checks whether the object requested is in its storage, and respond to the request immediately if so, where <b>hit rate</b> refers to the portion of traffic that can be immediately satisfied. By installing proxy server in the ISP or a campus network, the traffic on the access link can be massively reduced. <b>Content Distribution Networks (CDNs)</b> do a similar thing by putting copies on servers on different continents, so the traffic is more localised.</p>
+
+<p>To verify the object we get is up-to-date, we can use the <b>conditional GET</b> mechanism in HTTP. With the header <b>If-modified-since</b>, we can query the origin server whether the origin has changed the object since then. Only when the object is not changed, the proxy forwards the object directly to the client.</p>
+
+<h3>Remote File Transfer: FTP</h3>
+
+<p>The <b>file transfer protocol (FTP)</b> allow one to transfer file from and to a remote server. In contrast of HTTP, FTP uses two connections: a <b>control connection</b> (port 21) and a <b>data connection</b> (port 20), which we say the control information is sent <b>out-of-band</b>. The control connection is persistent to maintain the session while the data connection is non-persistent, and a new data connection is formed for each file sent. <p>
+
+<p>Just to illustrate how it works, the requests looks like the following:</p>
+
+<pre>
+USER username
+PASS password
+LIST
+RETR filename
+STOR filename
+</pre>
+
+<p>The responses look like the following:</p>
+
+<pre>
+331 Username OK, password required
+125 Data connection already open; transfer starting
+425 Can't open data connection
+452 Error writing file
+</pre>
+
+<h3>Electronic Mail: Transfer and Access</h3>
+
+<p>How about <b>electronic mails</b>? How do they work in practice? In fact, it is splitted into two parts: the mail <u>transfer</u> part and the mail <u>access</u> part. Let's say Alice wants to send an email to Bob, then Alice's agent would send the message to Alice's mail server (port 25), which the message would enter a message queue. Then, the message is sent to Bob's mail server via the <b>Simple Mail Transfer Protocol (SMTP)</b>, and Bob's agent would invoke mail access protocols such as <b>Post-Office Protocol - Version 3 (POP3)</b>, <b>Internet Mail Access Protocol (IMAP)</b>, or HTTP to read the email.</p>
+
+<p>One of the key distinction between HTTP and SMTP is that HTTP is a <b>pull protocol</b> while SMTP is a <b>push protocol</b> - simply denoting the direction of the information flow. The client side of SMTP uses commands like HELO, MAIL FROM, RCPT TO, DATA, and QUIT to interact with the mail server, which is similar in nature with that of FTP. Since POP3 and IMAP is pretty old, we may as well simply consider them as ways to view the emails directly from terminal, while obviously modern day Internet relies on HTTP-based ways to access emails.</p>
+
+<h3>Domain Name System</h3>
+
+<p>The <b>Domain Name System (DNS)</b> [<a href="https://www.rfc-editor.org/info/rfc1034/" target="_blank">RFC 1034</a>] is arguably the most important piece of the Internet. As human, we want easy-to-remember <b>hostnames</b> to refer to hosts, such as google.com or github.io. However, to make them easier processed by routers, we want to convert them to numeric <b>IP addresses</b> such as 192.168.0.1. The DNS acts a <b>hierachical distributed database</b> for translation between different things.</p>
+
+<p>The Internet classifies the hostnames into <b>domains</b>, analogous to that of biological species. <b>Top-level domains (TLDs)</b> such as .com, .org, .edu or .hk exists, and <b>sub-domains</b> further inherit from them by adding prefixes such as .edu.hk or .gov.hk. Naturally, each domain would have DNS servers for handling requests regarding that domain. The hierachy of DNS servers mainly consist of three levels: <b>root DNS servers</b>, <b>TLD DNS servers</b> and <b>authoritative DNS servers</b> for a specific domain.</p>
+
+<p>How does DNS servers communicate with each other? The <b>DNS servers</b> store <b>resource records (RRs)</b>, where each <b>DNS query</b> and <b>DNS response</b> contains one or more of resource records. A resource record is a four-tuple (Name, Value, Type, TTL), where TTL refers to <u>time-to-live</u>. Examples:
+<ul>
+	<li>(relay1.bar.foo.com, 145.37.93.126, A): The <b>hostname</b> relay1.bar.foo.com translate to the <b>IPv4 address</b> 145.37.93.126.</li>
+	<li>(foo.com, dns.foo.com, NS): The <b>authoritative nameserver</b> dns.foo.com knows the hostnames in the <b>domain</b> foo.com.</li>
+	<li>(foo.com, relay1.bar.foo.com, CNAME): The <b>hostname</b> foo.com is an <b>alias</b> for the <b>canonical hostame</b> relay1.bar.foo.com.</li>
+	<li>(foo.com, mail.bar.foo.com, MX): The <b>hostname</b> foo.com is an <b>alias</b> for the <b>canonical name of mail server</b> mail.bar.foo.com.</li>
+</ul>
+</p>
+
+<p>To request for the IP address of a host, one connects to the <b>local DNS server</b> (or <b>default name server</b>) in the access ISP. Then, the local DNS server will query the root DNS server first, followed by TLD and authoritative DNS servers <b>iteratively</b>; or simply ask the root DNS server to give the IP address directly in a <b>recursive</b> manner. Of course, <b>DNS caching</b> can be done to improve the efficiency of DNS queries.</p>
+
+<p>Finally, to request for a domain name, one can do this via commerical <b>registrars</b> such as Cloudflare. These registrars verifies the uniqueness of domain names and sell them to you, and also help you to insert the A records to their DNS servers.</p>
 
 </body>

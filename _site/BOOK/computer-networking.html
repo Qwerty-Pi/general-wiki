@@ -157,11 +157,9 @@
 
 <h3>Principles of Network Applications</h3>
 
-<p>What <i>are</i> network applications? Simply speaking, those are programs that is <b>distributed</b> onto different end systems, which communicate using the Internet. These applications usually adopts either the <b>client-server architecture</b> or the <b>peer-to-peer (P2P) architecture</b>, which decides whom the end systems should be communicating with.</p>
+<p>What <i>are</i> network applications? Simply speaking, those are programs that is <b>distributed</b> onto different end systems and communicate via the Internet. These applications usually adopts either the <b>client-server architecture</b> or the <b>peer-to-peer (P2P) architecture</b>, which decides the mechanisms of the communication between the hosts.</p>
 
-<h4>Application Architecture</h4>
-
-<p>For the <b>client-server architecture</b>, the application provider uses a dedicated server (or a group of servers) to respond to the requests of the users. We usually refer to who makes requests as <b>client</b> and whoever responds as <b>server</b>. Meanwhile, for a <b>P2P architecture</b>, the content is sent from anyone to anyone. We can see that a benefit of P2P is its <b>self-scalability</b>: if many people joins, then its upload bandwidth also increases proportionally.</p>
+<p>In the <b>client-server architecture</b>, the application provider uses a dedicated server (or a cluster of servers) to handle the user requests. We usually refer to who makes requests as <b>client</b> and whoever responds as <b>server</b>. Meanwhile, for a <b>P2P architecture</b>, the content is sent from anyone to anyone. We can see that a benefit of P2P is its <b>self-scalability</b>: if many people joins, then its upload bandwidth also increases proportionally.</p>
 
 <h4>Sockets and Ports</h4>
 
@@ -227,7 +225,7 @@ Content-Type: text/html
 
 <p>To verify the object we get is up-to-date, we can use the <b>conditional GET</b> mechanism in HTTP. With the header <b>If-modified-since</b>, we can query the origin server whether the origin has changed the object since then. Only when the object is not changed, the proxy forwards the object directly to the client.</p>
 
-<h3>Remote File Transfer: FTP</h3>
+<h3>File Transfer</h3>
 
 <p>The <b>file transfer protocol (FTP)</b> allow one to transfer file from and to a remote server. In contrast of HTTP, FTP uses two connections: a <b>control connection</b> (port 21) and a <b>data connection</b> (port 20), which we say the control information is sent <b>out-of-band</b>. The control connection is persistent to maintain the session while the data connection is non-persistent, and a new data connection is formed for each file sent. <p>
 
@@ -250,19 +248,19 @@ STOR filename
 452 Error writing file
 </pre>
 
-<h3>Electronic Mail: Transfer and Access</h3>
+<h3>Electronic Mail</h3>
 
-<p>How about <b>electronic mails</b>? How do they work in practice? In fact, it is splitted into two parts: the mail <u>transfer</u> part and the mail <u>access</u> part. Let's say Alice wants to send an email to Bob, then Alice's agent would send the message to Alice's mail server (port 25), which the message would enter a message queue. Then, the message is sent to Bob's mail server via the <b>Simple Mail Transfer Protocol (SMTP)</b>, and Bob's agent would invoke mail access protocols such as <b>Post-Office Protocol - Version 3 (POP3)</b>, <b>Internet Mail Access Protocol (IMAP)</b>, or HTTP to read the email.</p>
+<p><b>Electronic mail</b> is another consequence of the Internet. How does sending emails work in practice? First, emails are transfered by the <b>Simple Mail Transfer Protocol (SMTP)</b> [<a href="https://www.rfc-editor.org/info/rfc5321/" target="_blank">RFC 5321</a>]. The sender first connect to the mail server on port 25 and push the message to the end of the message queue. The email is then sent to recipient's mail server via SMTP. The recipient would then use mail access protocols such as <b>Post-Office Protocol - Version 3 (POP3)</b> [<a href="https://www.rfc-editor.org/info/rfc1939/" target="_blank">RFC 1939</a>] or <b>Internet Message Access Protocol (IMAP)</b> [<a href="https://www.rfc-editor.org/info/rfc3501/" target="_blank">RFC 3501</a>] to read the email.</p>
 
-<p>One of the key distinction between HTTP and SMTP is that HTTP is a <b>pull protocol</b> while SMTP is a <b>push protocol</b> - simply denoting the direction of the information flow. The client side of SMTP uses commands like HELO, MAIL FROM, RCPT TO, DATA, and QUIT to interact with the mail server, which is similar in nature with that of FTP. Since POP3 and IMAP is pretty old, we may as well simply consider them as ways to view the emails directly from terminal, while obviously modern day Internet relies on HTTP-based ways to access emails.</p>
+<p>A key distinction between HTTP and SMTP is that HTTP is a <b>pull protocol</b> while SMTP is a <b>push protocol</b> - the direction of message flow is flipped. The client side of SMTP uses commands like HELO, MAIL FROM, RCPT TO, DATA, and QUIT to interact with the mail server, which is similar in nature with that of FTP. Protocols like POP3 and IMAP allow emails to be downloaded from the mail server to the host, and mark emails as deleted. IMAP supports much more features than POP3, which allows creating folders for grouping emails.</p>
 
 <h3>Domain Name System</h3>
 
-<p>The <b>Domain Name System (DNS)</b> [<a href="https://www.rfc-editor.org/info/rfc1034/" target="_blank">RFC 1034</a>] is arguably the most important piece of the Internet. As human, we want easy-to-remember <b>hostnames</b> to refer to hosts, such as google.com or github.io. However, to make them easier processed by routers, we want to convert them to numeric <b>IP addresses</b> such as 192.168.0.1. The DNS acts a <b>hierachical distributed database</b> for translation between different things.</p>
+<p>The <b>Domain Name System (DNS)</b> [<a href="https://www.rfc-editor.org/info/rfc1034/" target="_blank">RFC 1034</a>] is arguably the most important piece of the Internet. As human, we want easy-to-remember <b>hostnames</b> to refer to hosts, such as google.com or github.io. However, to make them easier processed by routers, we want to convert them to numeric <b>IP addresses</b> such as 192.168.0.1. The DNS acts a <b>hierachical and distributed database</b> to glue the Internet together.</p>
 
-<p>The Internet classifies the hostnames into <b>domains</b>, analogous to that of biological species. <b>Top-level domains (TLDs)</b> such as .com, .org, .edu or .hk exists, and <b>sub-domains</b> further inherit from them by adding prefixes such as .edu.hk or .gov.hk. Naturally, each domain would have DNS servers for handling requests regarding that domain. The hierachy of DNS servers mainly consist of three levels: <b>root DNS servers</b>, <b>TLD DNS servers</b> and <b>authoritative DNS servers</b> for a specific domain.</p>
+<p>The Internet classifies the hostnames into <b>domains</b>, analogous to that of biological species. <b>Top-level domains (TLDs)</b> such as .com, .org, .edu or .hk are assigned, and <b>sub-domains</b> further inherit from them by prepanding labels such as .edu.hk or .gov.hk. Naturally, each domain would have DNS servers for handling requests regarding that domain. The hierachy of DNS servers mainly consist of three levels: <b>root DNS servers</b>, <b>TLD DNS servers</b> and <b>authoritative DNS servers</b> for a specific domain.</p>
 
-<p>How does DNS servers communicate with each other? The <b>DNS servers</b> store <b>resource records (RRs)</b>, where each <b>DNS query</b> and <b>DNS response</b> contains one or more of resource records. A resource record is a four-tuple (Name, Value, Type, TTL), where TTL refers to <u>time-to-live</u>. Examples:
+<p>The <b>DNS servers</b> store <b>resource records (RRs)</b>, where each <b>DNS query</b> and <b>DNS response</b> contains one or more of resource records. A resource record is a four-tuple (Name, Value, Type, TTL), where TTL refers to <u>time-to-live</u>. Examples:
 <ul>
 	<li>(relay1.bar.foo.com, 145.37.93.126, A): The <b>hostname</b> relay1.bar.foo.com translate to the <b>IPv4 address</b> 145.37.93.126.</li>
 	<li>(foo.com, dns.foo.com, NS): The <b>authoritative nameserver</b> dns.foo.com knows the hostnames in the <b>domain</b> foo.com.</li>
@@ -271,8 +269,8 @@ STOR filename
 </ul>
 </p>
 
-<p>To request for the IP address of a host, one connects to the <b>local DNS server</b> (or <b>default name server</b>) in the access ISP. Then, the local DNS server will query the root DNS server first, followed by TLD and authoritative DNS servers <b>iteratively</b>; or simply ask the root DNS server to give the IP address directly in a <b>recursive</b> manner. Of course, <b>DNS caching</b> can be done to improve the efficiency of DNS queries.</p>
+<p>To request for the IP address of a host, one connects to the <b>local DNS server</b> (or <b>default name server</b>) in the access ISP. Then, the local DNS server will query the root DNS server first, followed by TLD and authoritative DNS servers <b>iteratively</b>, or simply ask the root DNS server to give the IP address directly in a <b>recursive</b> manner. <b>DNS caching</b> can be done to improve the efficiency.</p>
 
-<p>Finally, to request for a domain name, one can do this via commerical <b>registrars</b> such as Cloudflare. These registrars verifies the uniqueness of domain names and sell them to you, and also help you to insert the A records to their DNS servers.</p>
+<p>Finally, to register a domain name for personal use, one may approach commerical <b>registrars</b> such as Cloudflare. These registrars verify the uniqueness of domain names and help you to insert A records to their DNS servers.</p>
 
 </body>

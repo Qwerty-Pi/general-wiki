@@ -221,9 +221,9 @@ Content-Type: text/html
 
 <h4>Caching and Conditional GET</h4>
 
-<p>A natural engineering question is - how can we satisfy the HTTP requests from the users as efficient as possible? One of the approach is <b>caching</b>. By installing a <b>proxy server</b> between the client and the <b>origin server</b> (where the actual server locates), the proxy server first checks whether the object requested is in its storage, and respond to the request immediately if so, where <b>hit rate</b> refers to the portion of traffic that can be immediately satisfied. By installing proxy server in the ISP or a campus network, the traffic on the access link can be massively reduced. <b>Content Distribution Networks (CDNs)</b> do a similar thing by putting copies on servers on different continents, so the traffic is more localised.</p>
+<p>A natural engineering question is - how can we satisfy the HTTP requests from the users as efficient as possible? One of the approach is <b>caching</b>. By installing a <b>proxy server</b> between the client and the <b>origin server</b> (where the actual server locates), the proxy server first checks whether the object requested is in its storage, and respond to the request immediately if so, where <b>hit rate</b> refers to the portion of traffic that can be immediately satisfied. By installing proxy server on a campus network, the traffic on the access link can be massively reduced. <b>Content Distribution Networks (CDNs)</b> similarly put copies on geographically distributed servers, making the traffic more localised.</p>
 
-<p>To verify the object we get is up-to-date, we can use the <b>conditional GET</b> mechanism in HTTP. With the header <b>If-modified-since</b>, we can query the origin server whether the origin has changed the object since then. Only when the object is not changed, the proxy forwards the object directly to the client.</p>
+<p>To verify the object we get is up-to-date, we can use the <b>conditional GET</b> mechanism in HTTP. With the header <b>If-modified-since</b>, we can query the origin server whether the origin has changed the object since then. When the object is unmodified, the proxy server forwards the cached object immediately to the client.</p>
 
 <h3>File Transfer</h3>
 
@@ -272,5 +272,23 @@ STOR filename
 <p>To request for the IP address of a host, one connects to the <b>local DNS server</b> (or <b>default name server</b>) in the access ISP. Then, the local DNS server will query the root DNS server first, followed by TLD and authoritative DNS servers <b>iteratively</b>, or simply ask the root DNS server to give the IP address directly in a <b>recursive</b> manner. <b>DNS caching</b> can be done to improve the efficiency.</p>
 
 <p>Finally, to register a domain name for personal use, one may approach commerical <b>registrars</b> such as Cloudflare. These registrars verify the uniqueness of domain names and help you to insert A records to their DNS servers.</p>
+
+<h3>Peer-to-Peer Applications</h3>
+
+<p><b>Peer-to-Peer (P2P)</b> [<a href="https://www.rfc-editor.org/info/rfc5694/" target="_blank">RFC 5694</a>] is another application architecture out there. In P2P architecture, the joining hosts do not just <b>request</b> services, but also <b>provide</b> services to others that does not necessarily benefit itself. Since the architecture is <b>decentralisation</b>, P2P applications are much more <b>scalable</b> as when the number of users increase, the capacity of the application also increases.</p>
+
+<p>For instance, consider a file distribution system. With the client-server paradigm, the distribution is bottlenecked by the upstream speed of the server and the downstream speed of the clients. With the P2P paradigm, the upstream speed is boosted to the sum of upstream speeds over all joining hosts. It can be a massive speed up when the number of hosts grow, while also make it much more <b>reliable</b>.</p>
+
+<h4>BitTorrent</h4>
+
+<p>One of the well-known P2P file distribution protocol is <b>BitTorrent</b>. The group of peers sharing a particular file is called a <b>torrent</b>. In a torrent, the peers exchange the content of the files in <b>chunks</b> of typically 256 KB. When a peer joins the torrent, it registered via the infrastructure node <b>tracker</b>, which the peer would receive a random list of IP addresses as its "neighbour". A peer would establish TCP connections with all its neighbours, and exchange the <b>rarest</b> chunks among its neighbours.</p>
+
+<p>How does a peer decides which neighbour shall it send chunk to? Basically, priorities are given to neighbours that supplying data at the highest rate. Every 10 seconds, the receiving speed is computed, which chunks are send to the top four peers. These highest rate peers are called <b>unchoked</b>. Every 30 seconds, chunks are also sent to a random peer, since at the beginning the peer doesn't have any chunks to share with others! In this case, that lucky peer is <b>optimistically unchoked</b>. This is one kind of <b>incentive functions</b> to avoid free riders.</p>
+
+<h4>Distributed Hash Table</h4>
+
+<p>Another interesting P2P application is the <b>Distributed Hash Table (DHT)</b>. In a hash table, we have a bunch of <b>keys</b> and each <b>key</b> is mapped to a <b>value</b>. With the client-server architecture, we can just store every (key, value) pair in the central server. We want to make the hash table <b>distributed</b>, where each peer would just hold a small subset of (key, value) pairs, while every peer can update and query on the DHT.</p>
+
+
 
 </body>

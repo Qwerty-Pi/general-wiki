@@ -1,0 +1,23 @@
+{
+    "name": "Test Contest",
+    "tasks": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"],
+    "duration": 18000,
+    "freeze": 3600,
+    "submissions": [
+        {
+            "university": "1234",
+            "team": "5678",
+            "task": "M",
+            "verdict": "rejected",
+            "time": 3660
+        },
+        {
+            "university": "1234",
+            "team": "5678",
+            "task": "M",
+            "verdict": "accepted",
+            "time": 3680
+        }
+    ]
+}
+

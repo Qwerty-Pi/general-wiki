@@ -22,11 +22,12 @@ img {
 
 * :not(mjx-container *) {
     font-family: var(--font-family);
-    ::selection {
-        color: var(--text-color);
-            background-color: var(--selection-color);
-    }
     color: var(--text-color);
+}
+
+* :not(mjx-container *) ::selection {
+    color: var(--text-color);
+    background-color: var(--selection-color);
 }
 
 pre {

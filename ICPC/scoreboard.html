@@ -54,7 +54,11 @@ layout: default
     })
     
     var now = new Date();
-    $("#start-time").val(new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().substring(0, 19));
+    var datetime = now.getTime() - now.getTimezoneOffset() * 60000;
+    const five_minutes = 5 * 60 * 1000;
+    // round up to next five minutes
+    datetime = Math.ceil((datetime + five_minutes) / five_minutes) * five_minutes;
+    $("#start-time").val(new Date(datetime).toISOString().substring(0, 19));
     
     var name, tasks;
     var duration, freeze; // in seconds for consistency
@@ -82,7 +86,6 @@ layout: default
         // suppose to be sort in JSON, but just in case
         submissions.sort((a, b) => a.time - b.time);
         // compute teams dynamically from submissions
-        // 
         useTeamName = typeof submissions[0].team !== 'undefined';
         teams = submissions.map((e) => getTeamIdentifier(e))
             .filter((value, index, array) => array.indexOf(value) === index);

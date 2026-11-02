@@ -3,3 +3,52 @@ layout: default
 ---
 <h1>CSCI4120 Principles of Computer Game Software</h1>
 
+<p>Properties: <b>immersion</b> via image and sound, <b>bidrectional interaction</b> and allow <b>variety in endings</b></p>
+
+<p>Market: E-Sports, Streaming, Mobile Gaming, Body Motion (AR / VR)</p>
+
+<p>Genres: <b>Action</b>, <b>Adventure</b>, <b>Fighting</b>, <b>Platform</b>, <b>Racing</b>, <b>Role-Playing</b>, <b>Shooter</b>, <b>Simulation</b>, <b>Sports</b>, <b>Strategy</b>, Sandbox, Rogue-Like (permadeath and meta-progression), MOBA (Multipler Online Battlefield Arena), Battle Royale, Survivors-Like (waves of enemy)</p>
+
+<h2>Rendering and Display</h2>
+
+<p>A <b>raster graphics</b> is a 2D rectangular grid of <b>pixels</b> in some <i>colour spaces</i>. The screen is <b>rendered</b> in a <b>raster pattern</b>, each row from left to right and from top to bottom, where <b>VBLANK</b> is time from bottom right to top left. <b>Refresh rate</b> is the max number redrawn of the <b>screen</b> per seconds, where <b>frame rate</b> refers to the actual number of frames drawn of the <b>game</b> per second.</p>
+
+<p>We use a <b>framebuffer</b> in the RAM to store the computed image. If done incorrectly, we may have <b>screen tearing</b> (partly old frame and partly new frame) or <b>screen flickering</b> (objects suddenly appear and disappear) since a frame can be <u>partially</u> drawn. We may utilise multiple buffers (<b>double / triple buffering</b>) and <b>V-sync</b> (force <b>buffer swap</b> in VBLANK) to resolve the issues. <b>Variable refresh rate (VRR)</b> let monitor to dynamically refresh, allow a lower input latency.</p>
+
+<h2>Game Engines</h2>
+
+<p><b>Game libraries</b> are low-level toolkit for specific domains, <b>game frameworks</b> provide reusable components and patterns, whereas <b>game engines</b> are complete suite for all core systems of a game. Game engines allow <b>efficient work division</b>, <b>rapid development</b>, <b>asset reusability</b> and <b>cross-platform support</b>. However, it also leads to <b>homogenisation of games</b>, <b>creativity constraints</b>, <b>performance overhead</b> and <b>licensing cost</b>.</p>
+
+<p>All real-time game based on a <b>game loop</b>, where the input is continuously processed, update the game and render the frame. <b>HUD (heads-up display)</b> refers to the information directly shown such as health bars. Sometimes we want <b>fixed timestamp</b> so that it is <b>deterministic</b>, but it might also lead to <b>visual stutter</b> and <b>performance bottlenecks</b>. We may also use a <b>variable timestamp</b> and use <b>time delta</b> instead. We have <b>smoother visuals</b> but the physics might be <b>inconsistent</b> or <b>missing collision</b>. The modern game engine usually adapt a <b>hybrid approach</b> and supports both.</p>
+
+<h2>2D Graphics</h2>
+
+<p>A <b>sprite</b> is a 2D image or animation for a visual object. We convert them from standard image formats to <b>GPU-native formats</b> such as BC7 and ASTC, which uses hardware texture compression to <b>reduce VRAM usage</b> and <b>communication overhead</b>. A <b>sprite sheet (teture atlas)</b> is a image file containing many smaller sprites in a grid, which reduce number of I/O calls and enable better caching and animation. A similar concept is the <b>tilemap</b> where each <b>tile</b> is a small reusable image.</p>
+
+<p>A <b>texture</b> is an image we <b>map</b> to objects with <b>UV coordinates</b>. We can <b>wrap</b> the texture (repeat, mirror, clamp-to-edge, clamp-to-border) when UV coordinates go out of 0.0 to 1.0. Meanwhile, in 2D games, we often support different kind of <b>scrolling</b>, including <b>horizontal</b>, <b>vertical</b>, <b>omnidirectional</b> and <b>parallax</b>.</p>
+
+<p>To render 2D objects, we may use <b>painter's algorithm</b> which we render background then foreground elements. The <b>dirty rectangle</b> method optimises this by only redrawing the changed area. <b>Anti-aliasing</b> might be necessarily to prevent jagged lines, which includes <b>supersample (SSAA)</b>, <b>multisample (MSAA)</b>, <b>fast approximate (FXAA)</b> and <b>subpixel morphological (SMAA)</b>.</p>
+
+<h2>3D Graphics</h2>
+
+<p>In game, we have the <b>graphics primitives</b> including points, lines and polygons, where a <b>mesh</b> represents the surface of a 3D object. We usually use <b>triangle meshes</b> via <b>triangulation</b>, which is stored with <b>vertex data</b> and <b>index data</b>.</p>
+
+<p>For coordinate systems, we have <b>model coordinates</b>, <b>world coordinates</b>, <b>view coordinates</b> (camera), <b>clip coordinates</b> (after projection), <b>normalised device coordinates (NDC)</b> (3D, -1 to +1) and <b>viewport coordiantes</b> (2D). Two main kinds of projections include <b>perspective projection</b> and <b>orthographic projection</b>. <b>Rasterisation</b> involves the <b>top-left rule</b>, where <b>fragments</b> are produced. <b>Depth test and stencil test</b> are done before writting to framebuffer. For depth test, we use <b>Z-buffer</b> nowadays, where forward-Z (uniform) and reverse-Z (reversed floating-point) to avoid clustering at near plane.</p>
+
+<h3>Lighting</h3>
+
+<p>To produce <b>lighting</b>, we consider different <b>light sources</b> such as point light, directional light, spotlight and ambient light. Different <b>lighting and reflection models</b> are used to simulate physical lighting. The simplest model is the <b>Phong Illumination Model</b>, which includes <b>ambient</b>, <b>diffuse</b> and <b>specular</b> components.</p>
+
+<p><b>Physical-Based Rendering (PBR)</b> is a more advanced technique to approximate light-surface interactions, which attempts to <b>conserve energy</b> and use <b>physically meaningful parameters</b>. At core, we use the <b>bidrectional reflectance distribution function (BRDF)</b>, which includes diffuse and specular components. In PBR, we can use texture to affect the lighting. In the <b>metallic-roughness workflow</b>, parameters include albedo (base colour), normal, roughness, ambient occlusion (visibility), metallic, height (bump), alpha and emissive maps. Another PBR workflow is the <b>specular-glossiness workflow</b>, where one can change the diffuse, specular and glossiness map directly.</p>
+
+<h3>Shadow</h3>
+
+<p>We need shadow. How to create shadow? The simplest way is via <b>shadow volume</b>, which we cast light rays from the light sources to the objects to create <b>hard shadows</b> by marking them to <b>stencil buffer</b>. A better way is via <b>shadow mapping</b>, which we carry out a two-pass rendering by rendering at the light source first to produce the shadow (depth) map, then re-render at camera.</p>
+
+<p>To create <b>soft shadows</b> (<b>umbra / penumbra</b>), one may use <b>Percentage Closer Filtering (PCF)</b> which averages the shadow over a small kernel (3x3). The <b>Percentage Closer Soft Shadows</b> estimate the <i>penumbra width</i> and use that as parameter for PCF. Aritfacts of shadow mapping include <b>shadow acne</b> (shading itself), <b>peter-panning</b> (shadow detach from object), <b>perspective aliasing</b> (resolved via <b>Cascaded Shadow Maps, CSM</b>).</p>
+
+<p>Finally, we can also cast <b>rays</b> from surface towards the light source. After hitting a surface, secondary rays (shadow, reflection, refraction, indirect-lighting) may be casted, where <b>path tracing</b> samples different directions and take averages.</p>
+
+<h3>Rendering</h3>
+
+<p>In <b>forward rendering</b>, lighting and shading are computed for all fragments, while in <b>deferred rendering</b> the geometry of the scene is stored and the surface data is stored in the <b>G-buffer (geometry buffer)</b> in the geometry pass, then in the lighting pass the G-buffer data is used to compute lighting. With G-buffer, many <b>post-processing effects</b> can be used, for instance <b>depth of field</b>, <b>bloom</b> (blur of bright pixels), <b>Sceen Space Reflections (SSR)</b>(approximate reflections) and <b>Screen Space Ambient Occlusion (SSAO)</b> (sample nearby depth for occlusion). To avoid a full deferred rendering, we have <b>forward+ rendering</b> which we do <b>light culling per tile</b> (16 x 16 pixels). Finally, <b>environment mapping</b> and <b>lightmapping</b> can be used.</p>

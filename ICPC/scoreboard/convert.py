@@ -1,5 +1,6 @@
 import json
 import re
+import sys
 
 def parse_icpc_dat(dat_content: str) -> dict:
     contest_name = "Contest"
@@ -103,4 +104,8 @@ def dat_to_json_file(input_path: str, output_path: str):
 
 
 if __name__ == "__main__":
-    dat_to_json_file("contest.dat", "chengdu-2026.json")
+    if len(sys.argv) < 2:
+        print("Usage: convert.py <contest_name>")
+        exit(0)
+    contest_name = sys.argv[1]
+    dat_to_json_file("contest.dat", f"{contest_name}.json")

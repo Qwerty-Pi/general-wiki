@@ -113,7 +113,8 @@ layout: default
         return timeStr;
     }
 
-    // load the scoreboard at time seconds
+    // load the scoreboard
+    let prevEffectiveTime = -1;
     function loadScoreboard() {
         const currentTime = new Date().getTime();
         const startTime = new Date($("#start-time").val()).getTime();
@@ -134,11 +135,16 @@ layout: default
                 'penalty': 0
             }
         });
+
+        // actual last submission processed
+        let effectiveTime = 0;
+
         // assume submissions are sorted chronologically
         for (const submission of submissions) {
             if (submission.time > time) {
                 break;
             }
+            effectiveTime = Math.max(effectiveTime, submission.time);
             // the submission is freezed if the contest has not ended,
             // and the submission is submitted after the scoreboard freeze.
             const isFreezed = time < duration && submission.time >= duration - freeze;
@@ -171,7 +177,12 @@ layout: default
             }
             return status[a].penalty - status[b].penalty;
         })
-
+        // only re-render if the scoreboard changes
+        if (prevEffectiveTime == effectiveTime) {
+            setTimeout(loadScoreboard, 1000);
+            return;
+        }
+        prevEffectiveTime = effectiveTime;
         // actually generating the scoreboard
         const columnCount = 3 + tasks.length;
         const scoreboard = $("#contest-scoreboard");
@@ -217,6 +228,6 @@ layout: default
             }
         }
         if (time >= duration) return;
-        setTimeout(loadScoreboard, 100, time + 60);
+        setTimeout(loadScoreboard, 1000);
     }
 </script>

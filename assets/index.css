@@ -2,6 +2,10 @@
     --text-color: #cccccc;
     --background-color: #151515;
     --selection-color: #b02afd60;
+    --light-green: #56cf38;
+    --dark-green: #17773e;
+    --yellow: #fcba03;
+    --red: #f03e16;
     --invert-light: 0.917;
     --invert-dark: 0.2;
     --font-family: 'Cascadia Code';

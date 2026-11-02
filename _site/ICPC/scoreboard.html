@@ -61,7 +61,7 @@
         </div>
     </div>
 
-		<style>
+	<style>
 #contest-scoreboard {
     display: grid;
     grid-template-columns: 1fr 6fr repeat(15, 1fr);
@@ -78,16 +78,20 @@
     min-width: 4em;
 }
 
+.first-solved {
+    background-color: color-mix(in srgb, var(--background-color) 50%, var(--dark-green) 50%);
+}
+
 .accepted {
-    background-color: #56cf3880;
+    background-color: color-mix(in srgb, var(--background-color) 50%, var(--light-green) 50%);
 }
 
 .freezed {
-    background-color: #fcba0380;
+    background-color: color-mix(in srgb, var(--background-color) 50%, var(--yellow) 50%);
 }
 
 .rejected {
-    background-color: #f03e1680;
+    background-color: color-mix(in srgb, var(--background-color) 50%, var(--red) 50%);
 }
 </style>
 
@@ -185,6 +189,7 @@
         const time = (currentTime - startTime) / 1000;
         $("#current-time").html(getTimeStr(time, precision=3));
         const status = {};
+        const firstSolves = {};
         teams.forEach(function(teamId) {
             const attempts = {};
             const attemptsFreezed = {};
@@ -228,6 +233,9 @@
                     // we do not increment attempts here if it is accepted
                     teamStatus.solves[task] = submission.time;
                     teamStatus.penalty += Math.floor(submission.time / 60) + teamStatus.attempts[task] * 20;
+                    if (!(task in firstSolves)) { // first solved
+                        firstSolves[task] = teamId;
+                    }
                 } else { // rejected
                     teamStatus.attempts[task] += 1;
                 }
@@ -280,8 +288,10 @@
                 const attempt = status[team].attempts[task];
                 const freezedAttempt = status[team].attemptsFreezed[task];
                 if (task in status[team].solves) {
+                    const isFirstSolved = firstSolves[task] == team;
                     const timeStr = getTimeStr(status[team].solves[task]);
-                    scoreboard.append(`<div class="accepted">+${attempt > 0 ? attempt : ""}<br/>${timeStr}</div>`);
+                    const divClass = isFirstSolved ? "first-solved" : "accepted";
+                    scoreboard.append(`<div class="${divClass}">+${attempt > 0 ? attempt : ""}<br/>${timeStr}</div>`);
                 } else if (freezedAttempt > 0) {
                     scoreboard.append(`<div class="freezed">?${freezedAttempt + attempt}</div>`);
                 } else if (attempt > 0) {

@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-<style>
+	<style>
 #contest-scoreboard {
     display: grid;
     grid-template-columns: 1fr 6fr repeat(15, 1fr);
@@ -32,19 +32,30 @@ layout: default
 </style>
 
 <div id="control-bar">
+    <div><input id="contest-id" value="chengdu-2026"/> <button id="fetch-contest">Fetch</button></div>
     <div><span id="contest-name"></span></div>
+    <div>Start: <input id="start-time" type="datetime-local"/></div>
     <div>Time: <span id="current-time"></span></div>
 </div>
-<div id="contest-scoreboard">
 
+<div id="contest-scoreboard">
 </div>
 
 <script>
-    const contestId = "chengdu-2026";
-    fetch(`{{site.baseurl}}/ICPC/scoreboard/${contestId}.json`)
-        .then((res) => res.json())
-        .then((json) => loadContest(json))
+    function fetchContest(contestId) {
+        fetch(`{{site.baseurl}}/ICPC/scoreboard/${contestId}.json`)
+            .then((res) => res.json())
+            .then((json) => loadContest(json))
+    }
 
+    $("#fetch-contest").on('click', function() {
+        const contestId = $("#contest-id").val();
+        fetchContest(contestId);
+    })
+    
+    var now = new Date();
+    $("#start-time").val(new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().substring(0, 19));
+    
     var name, tasks;
     var duration, freeze; // in seconds for consistency
     var teams;
@@ -80,6 +91,9 @@ layout: default
     }
     
     function getTimeStr(time, precision=2) {
+        if (time < 0) {
+            return getTimeStr(-time, precision) + " till start";
+        }
         const hours = Math.floor(time / 3600);
         const minutes = Math.floor(time % 3600 / 60);
         const seconds = Math.floor(time % 60);
@@ -97,7 +111,10 @@ layout: default
     }
 
     // load the scoreboard at time seconds
-    function loadScoreboard(time) {
+    function loadScoreboard() {
+        const currentTime = new Date().getTime();
+        const startTime = new Date($("#start-time").val()).getTime();
+        const time = (currentTime - startTime) / 1000;
         $("#current-time").html(getTimeStr(time, precision=3));
         const status = {};
         teams.forEach(function(teamId) {
@@ -183,12 +200,12 @@ layout: default
             scoreboard.append(`<div>${penalty}</div>`);
             for (const task of tasks) {
                 const attempt = status[team].attempts[task];
-                const attemptFreezed = status[team].attemptsFreezed[task];
+                const freezedAttempt = status[team].attemptsFreezed[task];
                 if (task in status[team].solves) {
                     const timeStr = getTimeStr(status[team].solves[task]);
                     scoreboard.append(`<div class="accepted">+${attempt > 0 ? attempt : ""}<br/>${timeStr}</div>`);
-                } else if (attemptFreezed > 0) {
-                    scoreboard.append(`<div class="freezed">?${attemptFreezed + attempt}</div>`);
+                } else if (freezedAttempt > 0) {
+                    scoreboard.append(`<div class="freezed">?${freezedAttempt + attempt}</div>`);
                 } else if (attempt > 0) {
                     scoreboard.append(`<div class="rejected">-${attempt}</div>`);
                 } else {

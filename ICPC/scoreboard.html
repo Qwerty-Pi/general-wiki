@@ -49,6 +49,10 @@ layout: default
     justify-content: space-between;
     align-items: center;
 }
+
+.task-stats {
+    min-height: 1.5em !important;
+}
 </style>
 
 <script src="{{ site.baseurl }}/ICPC/scoreboard/scoreboard-converter.js"></script>
@@ -70,8 +74,7 @@ layout: default
     <span id="current-time"></span>
 </div>
 
-<div id="contest-scoreboard">
-</div>
+<div id="contest-scoreboard"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/opencc-js@1.5.0-beta.0/dist/umd/full.js">
 </script>
@@ -84,7 +87,7 @@ layout: default
             fetch(`{{site.baseurl}}/ICPC/scoreboard/${contestId}.json`)
                 .then((res) => res.json())
                 .then((json) => loadContest(json))
-                .then(() => { if ($("#contest-scoreboard").html() !== "") $("#control-bar").css("display", "none") });
+                .then(() => { if ($("#contest-scoreboard").html().strip() !== "") $("#control-bar").css("display", "none") });
         } else if (source === 'xcpc') {
             fetchXCPCData(contestId)
                 .then((json) => loadContest(json))
@@ -174,7 +177,7 @@ layout: default
 
     // load the scoreboard
     function loadScoreboard() {
-        if (name === null) {
+        if (tasks === undefined) {
             return;
         }
         $("#contest-metadata").css('display', 'flex');
@@ -318,12 +321,15 @@ layout: default
         }
 
         // footer
-        scoreboard.append(`<div style="grid-column: span 4"> Summary </div>`)
+        scoreboard.append(`<div style="grid-column: span 4; grid-row: span 2"> Summary </div>`);
         tasks.forEach((task) => {
             const solveCount = problemStats[task].solveCount;
+            scoreboard.append(`<div class="accepted task-stats">+ ${solveCount}</div>`);
+        });
+        tasks.forEach((task) => {
             const attemptCount = problemStats[task].attemptCount;
-            scoreboard.append(`<div>AC ${solveCount}<br/>RJ ${attemptCount}</div>`);
-        })
+            scoreboard.append(`<div class="rejected task-stats">- ${attemptCount}</div>`);
+        });
         if (time >= duration) return;
         clearTimeout(timeout);
         timeout = setTimeout(loadScoreboard, 1000);

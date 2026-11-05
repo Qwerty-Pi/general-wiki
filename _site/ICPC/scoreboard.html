@@ -104,8 +104,16 @@
 }
 </style>
 
+<script src="/ICPC/scoreboard/scoreboard-converter.js"></script>
+
 <div id="control-bar">
-    <div>Contest: <input id="contest-id" value="chengdu-2026"/></div>
+    <div>
+        <select id="contest-source">
+            <option value="local">Local</option>
+            <option value="xcpc" selected>XCPC</option>
+        </select>
+    </div>
+    <div><input id="contest-id" value="icpc/51st/wuhan" placeholder="icpc/51st/wuhan"/></div>
     <div>Start: <input id="start-time" type="datetime-local"/></div>
     <button id="fetch-contest">Fetch</button>
 </div>
@@ -119,15 +127,21 @@
 </div>
 
 <script>
-    function fetchContest(contestId) {
-        fetch(`/ICPC/scoreboard/${contestId}.json`)
-            .then((res) => res.json())
-            .then((json) => loadContest(json))
+    function fetchContest(source, contestId) {
+        if (source === 'local') {
+            fetch(`/ICPC/scoreboard/${contestId}.json`)
+                .then((res) => res.json())
+                .then((json) => loadContest(json));
+        } else if (source === 'xcpc') {
+            fetchXCPCData(contestId)
+                .then((json) => loadContest(json));
+        }
     }
 
     $("#fetch-contest").on('click', function() {
+        const source = $("#contest-source").val();
         const contestId = $("#contest-id").val();
-        fetchContest(contestId);
+        fetchContest(source, contestId);
     })
 
     $("#start-time").on("input", function() {
@@ -146,6 +160,8 @@
     var teams;
     var submissions;
     var useTeamName;
+    var timeout = null; // stop previous timeout when we call another one
+    let prevEffectiveTime = -1;
 
     // get the team identifier from the submission
     // supposingly we concatenate the university
@@ -171,6 +187,7 @@
         teams = submissions.map((e) => getTeamIdentifier(e))
             .filter((value, index, array) => array.indexOf(value) === index);
         $("#contest-name").html(name);
+        prevEffectiveTime = -1; // forced reload of the scoreboard
         loadScoreboard(0);
     }
     
@@ -195,7 +212,6 @@
     }
 
     // load the scoreboard
-    let prevEffectiveTime = -1;
     function loadScoreboard() {
         const currentTime = new Date().getTime();
         const startTime = new Date($("#start-time").val()).getTime();
@@ -278,7 +294,8 @@
         })
         // only re-render if the scoreboard changes
         if (prevEffectiveTime == effectiveTime) {
-            setTimeout(loadScoreboard, 1000);
+            clearTimeout(timeout); // clear any other existing timeout
+            timeout = setTimeout(loadScoreboard, 1000);
             return;
         }
         prevEffectiveTime = effectiveTime;
@@ -337,7 +354,8 @@
             scoreboard.append(`<div>AC ${solveCount}<br/>RJ ${attemptCount}</div>`);
         })
         if (time >= duration) return;
-        setTimeout(loadScoreboard, 1000);
+        clearTimeout(timeout);
+        timeout = setTimeout(loadScoreboard, 1000);
     }
 </script>
 </body>

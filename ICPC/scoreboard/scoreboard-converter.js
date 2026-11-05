@@ -146,11 +146,14 @@ async function fetchXCPCData(contestId) {
         contestName = contestName.texts[contestName.fallback_lang];
     }
     let tasks = [];
-    if (Array.isArray(configData.problems)) {
-        tasks = configData.problems.map(p => typeof p === 'string' ? p : (p.label || p.id || p.name));
-    } else if (typeof configData.problem_quantity === 'number') {
-        tasks = Array.from({ length: configData.problem_quantity }, (_, i) => String.fromCharCode(65 + i));
-    }
+    tasks = configData.problems.map(p => typeof p === 'string' ? p : (p.label || p.id || p.name));
+
+    let balloons = {};
+    configData.problems.forEach(function (data) {
+        console.log(data);
+        balloons[data.label] = data.balloon_color;
+    })
+    console.log(balloons);
 
     const duration = configData.duration || configData.contest_duration || 18000;
     const freeze = configData.freeze_time || configData.freeze_duration || 3600;
@@ -187,6 +190,7 @@ async function fetchXCPCData(contestId) {
     return {
         name: contestName,
         tasks: tasks,
+        balloons: balloons,
         duration: duration,
         freeze: freeze,
         submissions: submissions

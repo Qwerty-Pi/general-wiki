@@ -125,6 +125,7 @@ layout: default
         duration = contest.duration;
         freeze = contest.freeze;
         submissions = contest.submissions;
+        balloons = contest.balloons ?? {};
         name = languageConverter(name);
         submissions.forEach((submission) => {
             submission.university = languageConverter(submission.university);
@@ -261,7 +262,17 @@ layout: default
         scoreboard.append("<div>Solves</div>");
         scoreboard.append("<div>Penalty</div>");
         tasks.forEach((task) => {
-            scoreboard.append(`<div>${task}</div>`);
+            const div = $(`<div>${task}</div>`);
+            console.log(balloons);
+            if (balloons[task]) {
+                const background_color = balloons[task].background_color;
+                console.log(background_color);
+                console.log(`color-mix(in srgb, var(--background-color) 50%, ${background_color} 50%`);
+                div.css('background-color', `color-mix(in srgb, var(--background-color) 50%, ${background_color} 50%)`)
+                // div.css('background-color', );
+                // div.css('color', balloons[task].color);
+            }
+            scoreboard.append(div);
         })
         
         // only increment rank when either solve count or penalty differs

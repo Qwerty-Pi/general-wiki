@@ -150,10 +150,8 @@ async function fetchXCPCData(contestId) {
 
     let balloons = {};
     configData.problems.forEach(function (data) {
-        console.log(data);
         balloons[data.label] = data.balloon_color;
     })
-    console.log(balloons);
 
     const duration = configData.duration || configData.contest_duration || 18000;
     const freeze = configData.freeze_time || configData.freeze_duration || 3600;

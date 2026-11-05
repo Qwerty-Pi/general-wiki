@@ -64,6 +64,7 @@
 	<style>
 #contest-scoreboard {
     display: grid;
+     /* solves + penalty + 13 tasks; dynamically adjusted */
     grid-template-columns: 1fr 6fr repeat(15, 1fr);
     text-align: center;
 }
@@ -72,8 +73,7 @@
     display: flex;
     justify-content: center;    
     align-items: center;
-
-    border: solid var(--text-color) 1px;
+    border: solid color-mix(in srgb, var(--background-color) 95%, var(--text-color) 5%) 1px;
     min-height: 3em;
     min-width: 4em;
 }
@@ -102,6 +102,13 @@
 #control-bar > * {
     margin-right: 0.5em;
 }
+
+#contest-metadata {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
 </style>
 
 <script src="/ICPC/scoreboard/scoreboard-converter.js"></script>
@@ -119,8 +126,8 @@
 </div>
 
 <div id="contest-metadata" style="display: none">
-    <div><span id="contest-name"></span></div>
-    <div>Time: <span id="current-time"></span></div>
+    <span id="contest-name"></span>
+    <span id="current-time"></span>
 </div>
 
 <div id="contest-scoreboard">
@@ -136,11 +143,14 @@
         if (source === 'local') {
             fetch(`/ICPC/scoreboard/${contestId}.json`)
                 .then((res) => res.json())
-                .then((json) => loadContest(json));
+                .then((json) => loadContest(json))
+                .then(() => { if ($("#contest-scoreboard").html() !== "") $("#control-bar").css("display", "none") });
         } else if (source === 'xcpc') {
             fetchXCPCData(contestId)
-                .then((json) => loadContest(json));
+                .then((json) => loadContest(json))
+                .then(() => { if ($("#contest-scoreboard").html() !== "") $("#control-bar").css("display", "none") });
         }
+        // remove the control bar if success
     }
 
     $("#fetch-contest").on('click', function() {
@@ -227,7 +237,7 @@
         if (name === null) {
             return;
         }
-        $("#contest-metadata").css('display', 'block');
+        $("#contest-metadata").css('display', 'flex');
         const currentTime = new Date().getTime();
         const startTime = new Date($("#start-time").val()).getTime();
         let time = (currentTime - startTime) / 1000; // in ms

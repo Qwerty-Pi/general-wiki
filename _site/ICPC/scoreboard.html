@@ -126,7 +126,12 @@
 <div id="contest-scoreboard">
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/opencc-js@1.5.0-beta.0/dist/umd/full.js">
+</script>
+
 <script>
+    const languageConverter = OpenCC.Converter({ from: 'cn', to: 'hk' });
+
     function fetchContest(source, contestId) {
         if (source === 'local') {
             fetch(`/ICPC/scoreboard/${contestId}.json`)
@@ -180,6 +185,12 @@
         duration = contest.duration;
         freeze = contest.freeze;
         submissions = contest.submissions;
+        submissions.forEach((submission) => {
+            console.log(submission.university);
+            submission.university = languageConverter(submission.university);
+            console.log(submission.university);
+            submission.team = languageConverter(submission.team);
+        })
         // suppose to be sort in JSON, but just in case
         submissions.sort((a, b) => a.time - b.time);
         // compute teams dynamically from submissions

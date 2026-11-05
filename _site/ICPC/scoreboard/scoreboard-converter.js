@@ -95,6 +95,7 @@ function parseIcpcDat(datContent) {
     };
 }
 
+
 async function fetchXCPCData(contestId) {
     // sus website, but temporarily use this first
     const corsproxyurl = "https://corsproxy.io/?key=eb06d979";

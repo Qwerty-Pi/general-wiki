@@ -118,7 +118,7 @@
     <button id="fetch-contest">Fetch</button>
 </div>
 
-<div>
+<div id="contest-metadata" style="display: none">
     <div><span id="contest-name"></span></div>
     <div>Time: <span id="current-time"></span></div>
 </div>
@@ -224,6 +224,10 @@
 
     // load the scoreboard
     function loadScoreboard() {
+        if (name === null) {
+            return;
+        }
+        $("#contest-metadata").css('display', 'block');
         const currentTime = new Date().getTime();
         const startTime = new Date($("#start-time").val()).getTime();
         let time = (currentTime - startTime) / 1000; // in ms
@@ -323,14 +327,9 @@
         scoreboard.append("<div>Penalty</div>");
         tasks.forEach((task) => {
             const div = $(`<div>${task}</div>`);
-            console.log(balloons);
             if (balloons[task]) {
                 const background_color = balloons[task].background_color;
-                console.log(background_color);
-                console.log(`color-mix(in srgb, var(--background-color) 50%, ${background_color} 50%`);
                 div.css('background-color', `color-mix(in srgb, var(--background-color) 50%, ${background_color} 50%)`)
-                // div.css('background-color', );
-                // div.css('color', balloons[task].color);
             }
             scoreboard.append(div);
         })

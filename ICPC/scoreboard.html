@@ -126,9 +126,7 @@ layout: default
         freeze = contest.freeze;
         submissions = contest.submissions;
         submissions.forEach((submission) => {
-            console.log(submission.university);
             submission.university = languageConverter(submission.university);
-            console.log(submission.university);
             submission.team = languageConverter(submission.team);
         })
         // suppose to be sort in JSON, but just in case

@@ -185,6 +185,7 @@
         duration = contest.duration;
         freeze = contest.freeze;
         submissions = contest.submissions;
+        name = languageConverter(name);
         submissions.forEach((submission) => {
             submission.university = languageConverter(submission.university);
             submission.team = languageConverter(submission.team);
@@ -309,8 +310,9 @@
         }
         prevEffectiveTime = effectiveTime;
         // actually generating the scoreboard
-        const columnCount = 3 + tasks.length;
+        const columnCount = 2 + tasks.length;
         const scoreboard = $("#contest-scoreboard");
+        scoreboard.css("grid-template-columns", `1fr 6fr repeat(${columnCount}, 1fr)`);
     	scoreboard.html("");
         
         // header

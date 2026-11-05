@@ -113,7 +113,7 @@ async function fetchXCPCData(contestId) {
         fetch(urls.team).then(res => res.json()),
         fetch(urls.config).then(res => res.json()),
         fetch(urls.run).then(res => res.json()),
-        fetch(urls.orgs).then(res => res.json())
+        fetch(urls.orgs).then(res => res.ok ? res.json() : {})
     ]);
 
     // 2. Map Organizations (org_id -> Name)
@@ -131,14 +131,20 @@ async function fetchXCPCData(contestId) {
         const tId = String(t.team_id !== undefined ? t.team_id : t.id);
         const orgId = t.organization_id || t.organization || t.school;
         const univ = orgMap[orgId] || orgId || tId;
-        const teamName = t.name || t.team_name || tId;
+        let teamName = t.name || t.team_name || tId;
+
+        if (typeof teamName === 'object') {
+            teamName = teamName.texts[teamName.fallback_lang];
+        }
         
         teamMap[tId] = { univ, teamName };
     });
 
     // 4. Extract Config Metadata
-    const contestName = configData.contest_name || configData.title || configData.name || "Contest";
-    
+    let contestName = configData.contest_name || configData.title || configData.name || "Contest";
+    if (typeof contestName === 'object') {
+        contestName = contestName.texts[contestName.fallback_lang];
+    }
     let tasks = [];
     if (Array.isArray(configData.problems)) {
         tasks = configData.problems.map(p => typeof p === 'string' ? p : (p.label || p.id || p.name));
@@ -179,7 +185,7 @@ async function fetchXCPCData(contestId) {
     });
 
     return {
-        name: contestName.texts.en,
+        name: contestName,
         tasks: tasks,
         duration: duration,
         freeze: freeze,

@@ -113,9 +113,32 @@
 .task-stats {
     min-height: 1.5em !important;
 }
+
+.task-label:hover {
+    cursor: pointer;
+}
+
+.popover {
+    background-color: var(--background-color);
+}
 </style>
 
 <script src="/ICPC/scoreboard/scoreboard-converter.js"></script>
+
+
+<div id="add-submission-popover" class="popover" popover="auto">
+    <div style="text-align: center;"><span id="task-id" style="font-size: 3em;"></span></div>
+    <div>
+        <button
+            onclick="addSubmission($('#task-id').html(), 'accepted'); $(this).parent().parent().hide();"
+            class="accepted"    
+        >Accepted</button>
+        <button
+            onclick="addSubmission($('#task-id').html(), 'rejected'); $(this).parent().parent().hide();"
+            class="rejected"
+        >Rejected</button>
+    </div>
+</div>
 
 <div id="control-bar">
     <div>
@@ -177,7 +200,6 @@
     var duration, freeze; // in seconds for consistency
     var teams;
     var submissions;
-    var useTeamName;
     var timeout = null; // stop previous timeout when we call another one
     let prevEffectiveTime = -1;
 
@@ -186,7 +208,7 @@
     // and the team name together with "-"
     function getTeamIdentifier(submission) {
         let result = submission.university;
-        if (typeof submission.team !== 'undefined')
+        if (submission.team)
             result += ' - ' + submission.team;
         return result;
     }
@@ -207,12 +229,32 @@
         // suppose to be sort in JSON, but just in case
         submissions.sort((a, b) => a.time - b.time);
         // compute teams dynamically from submissions
-        useTeamName = typeof submissions[0].team !== 'undefined';
         teams = submissions.map((e) => getTeamIdentifier(e))
             .filter((value, index, array) => array.indexOf(value) === index);
+        teams.push("你");
         $("#contest-name").html(name);
         prevEffectiveTime = -1; // forced reload of the scoreboard
         loadScoreboard(0);
+    }
+
+    function getTimeInSeconds() {
+        const currentTime = new Date().getTime();
+        const startTime = new Date($("#start-time").val()).getTime();
+        let time = (currentTime - startTime) / 1000;
+        time = Math.min(time, duration); // bounded by duration
+        return time;
+    }
+
+    function addSubmission(task, verdict) {
+        const submission = {
+            "university": "你",
+            "team": "",
+            "task": task,
+            "verdict": verdict,
+            "time": getTimeInSeconds()
+        };
+        submissions.push(submission);
+        submissions.sort((a, b) => a.time - b.time); // I am lazy
     }
     
     function getTimeStr(time, precision=2) {
@@ -241,10 +283,7 @@
             return;
         }
         $("#contest-metadata").css('display', 'flex');
-        const currentTime = new Date().getTime();
-        const startTime = new Date($("#start-time").val()).getTime();
-        let time = (currentTime - startTime) / 1000; // in ms
-        time = Math.min(time, duration); // time should be bounded by duration
+        let time = getTimeInSeconds();
         $("#current-time").html(getTimeStr(time, precision=3));
         const status = {};
         const problemStats = {};
@@ -339,13 +378,31 @@
         scoreboard.append("<div>Solves</div>");
         scoreboard.append("<div>Penalty</div>");
         tasks.forEach((task) => {
-            const div = $(`<div>${task}</div>`);
+            const div = $(`<div class="task-label">${task}</div>`);
             if (balloons[task]) {
                 const background_color = balloons[task].background_color;
                 div.css('background-color', `color-mix(in srgb, var(--background-color) 50%, ${background_color} 50%)`)
             }
+            div.on('click', function() {
+                $("#task-id").html(task);
+                $("#add-submission-popover").show();
+            });
             scoreboard.append(div);
         })
+
+        // for popovers mouse leave event.
+        // sounds not optimal way to write this?
+        $(document).click(function() {
+            $("#add-submission-popover").hide();
+        });
+        $(".task-label").on('click', function(e) {
+            e.stopPropagation();
+            return false;
+        })
+        $("#add-submission-popover").click(function(e) {
+            e.stopPropagation(); 
+            return false;
+        });
         
         // only increment rank when either solve count or penalty differs
         let rank = 0, order = 0;

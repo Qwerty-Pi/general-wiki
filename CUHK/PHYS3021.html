@@ -5,6 +5,7 @@ layout: default
 \[
 	\def\R{\mathbb{R}}
 	\def\C{\mathbb{C}}
+	\def\N{\mathbb{N}}
 \]
 </span>
 <h1>PHYS3021 Quantum Mechnics I</h1>
@@ -15,12 +16,18 @@ layout: default
 
 <h3>Electromagnetic Waves</h3>
 
-<p>In a region without electric charges or currents, the electric or magnetic field ($E, B : \R^3 \times \R \to \C$) satisfies the <b>Maxwell equation</b> where \( \Psi = E \) or \( B \) as \[ \frac{1}{c^2} \dfrac{\partial^2 \Psi}{\partial t^2} - \nabla^2 \Psi = 0 \] Assuming \( F \) is <b>separable</b>, i.e., we can write \( \Psi(r, t) = \psi(r) \times f(t) \), then \[ \frac{1}{c^2} \dfrac{\partial_t^2 f}{f} = \frac{\nabla^2 \psi}{\psi} \] with each sides being constants. Naturally, we have \( f(t) = \exp i (\omega t) \) and \( \psi(r) = \exp i (k \cdot r) \) for some constants \( \omega \) and \( k \). Combine together, we have the <b>wave equation</b> \[ \Psi(r, t) = A e^{i (k \cdot r - \omega t)}\]</p>
+<p>In a region without electric charges or currents, the electric or magnetic field ($E, B : \R^3 \times \R \to \C$) satisfies the <b>Maxwell equation</b> where \( \Psi = E \) or \( B \) as \[ \frac{1}{c^2} \dfrac{\partial^2 \Psi}{\partial t^2} - \nabla^2 \Psi = 0 \] Assuming \( F \) is <b>separable</b>, i.e., we can write \( \Psi(r, t) = \psi(r) \times f(t) \), then \[ \frac{1}{c^2} \dfrac{\partial_t^2 f}{f} = \frac{\nabla^2 \psi}{\psi} \] with each sides being constants. Naturally, we have \( f(t) = \exp i (\omega t) \) and \( \psi(r) = \exp i (k \cdot r) \) for some constants \( \omega \) and \( k \). Combine together, we have the <b>wave equation</b> \[ \Psi(r, t) = A \exp i (k \cdot r - \omega t)\]</p>
 
-<p>In words, \( \Psi \) is a <b>sinusodial propagating wave</b> with <b>wave vector</b> \( k \), the change in phase due to <i>position</i>; and <b>angular frequency</b> \( \omega \), the change in phase due to <i>time</i>. For EM waves, the <b>dispersion relation</b> is \( \omega = c \cdot |k| \), since EM waves travel at light speed \( c \). In practice, we assume that wave of any (valid) shape can be written as a <b>superposition</b> (sum) of multiple seperable <b>plane waves</b>, which kinda solves the general case.</p>
+<p>In words, \( \Psi \) is a <b>sinusodial propagating wave</b> with <b>wave vector</b> \( k \), the change in phase due to <i>position</i>, or the <b>propagation direction</b> of the wave; and <b>angular frequency</b> \( \omega \), the change in phase due to <i>time</i>. For EM waves, the <b>dispersion relation</b> is \( \omega = c \cdot |k| \), since EM waves travel at light speed \( c \). In practice, we assume that wave of any (valid) shape can be written as a <b>superposition</b> (sum) of multiple seperable <b>plane waves</b>, which kinda solves the general case.</p>
 
 <p>We recall other concepts in waves. The <b>frequency</b> is \( f = \frac{\omega}{2 \pi} \), the number of complete phase revolutions per unit time. The <b>wavelength</b> is defined as \( \lambda = \frac{2 \pi}{|k|} \), the length of a complete phase. For EM waves, we have \( c = f \cdot \lambda \). Finally, the <b>wavenumber</b> (more in chemsitry) is defined as \( \tilde \nu = \frac{1}{\lambda} \), the reciprocal of wavelength.</p>
 
-<h3>Black-body Radiation</h3>
+<h3>Blackbody Radiation and Quantised Energy</h3>
 
-<p>Suppose we have a physical object. </p>
+<p>Suppose we have a physical object, which can <b>absorbs</b> and <b>emits radiations</b>. We idealise a <b>blackbody</b> as a <b>perfect absorber</b> that absorbs all incoming light (EM waves) and reflect nothing from its surface, then the <b>radiant energy</b> we measured from the blackbody only come from itself. Turns out that for a blackbody, the <b>radiant energy desnity</b> over wavelengths only depends on the <b>temperature</b>.</p>
+
+<p>Classically, we would expect an <b>infrared catastrophe</b>, which the energy density grows uncontrollably as wavelength decreases, which doesn't match the experimental results. Max Planck proposes the idea which we should <b>quantise</b> the energy \( E = nhf \) where \( n \in \N \) and \( h \) is the Planck's constant, which derives the more-accurate Planck's formula for radiant energy density for blackbody as \[ u(f) \, df = 2 \times \frac{4 \pi f^2 \, df}{c^3} \times \frac{hf}{\exp\left(\frac{hf}{k_B T} \right) - 1}\] where the first two terms correspond to the number of <b>modes</b> with frequency within \( [f, f + df] \), and the last term correspond to the average energy per mode.</p>
+
+<h3>Photon and Matter Waves</h3>
+
+<p>Einstein proposes that light exists in <b>photons</b>, as particles.</p>

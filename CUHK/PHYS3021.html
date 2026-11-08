@@ -10,7 +10,7 @@ layout: default
 </span>
 <h1>PHYS3021 Quantum Mechnics I</h1>
 
-<h2>Preliminaries</h2>
+<h2>Foundations</h2>
 
 <p>Since I know nothing about physics, here are some well-known related facts. </p>
 
@@ -28,8 +28,12 @@ layout: default
 
 <p>Suppose we have a physical object, which can <b>absorbs</b> and <b>emits radiations</b>. We idealise a <b>blackbody</b> as a <b>perfect absorber</b> that absorbs all incoming light (EM waves) and reflect nothing from its surface, then the <b>radiant energy</b> we measured from the blackbody only come from itself. Turns out that for a blackbody, the <b>radiant energy desnity</b> over wavelengths only depends on the <b>temperature</b>.</p>
 
-<p>Classically, we would expect an <b>infrared catastrophe</b>, which the energy density grows uncontrollably as wavelength decreases, which doesn't match the experimental results. Max Planck proposes the idea which we should <b>quantise</b> the energy \( E = nhf \) where \( n \in \N \) and \( h \) is the Planck's constant, which derives the more-accurate Planck's formula for radiant energy density for blackbody as \[ u(f) \, df = 2 \times \frac{4 \pi f^2 \, df}{c^3} \times \frac{hf}{\exp\left(\frac{hf}{k_B T} \right) - 1}\] where the first two terms correspond to the number of <b>modes</b> with frequency within \( [f, f + df] \), and the last term correspond to the average energy per mode.</p>
+<p>Classically, we would expect an <b>infrared catastrophe</b>, which the energy density grows uncontrollably as wavelength decreases, which doesn't match the experimental results. Max Planck proposes the idea which we should <b>quantise</b> the energy \( E = nhf \) where \( n \in \N \) and \( h \) is the Planck's constant, which derives the more-accurate Planck's formula for radiant energy density for blackbody as \[ u(f) \, df = 2 \times \frac{4 \pi f^2 \, df}{c^3} \times \frac{hf}{e^{hf/(k_B T)} - 1}\] where the first two terms correspond to the number of <b>modes</b> with frequency within \( [f, f + df] \), and the last term correspond to the average energy per mode.</p>
 
 <h3>Photon and Matter Waves</h3>
 
-<p>Einstein proposes that light exists in <b>photons</b>, as particles.</p>
+<p>Einstein proposes that light exists in <b>photons</b>, as particles. For a photon of frequency \( f \) and wavevector \( k \), it carries the <b>quantised energy</b> \( E = hf = \hbar \omega \) and <b>momentum</b> \( p = \hbar k \). Compton use X-ray to scatter electrons, proving that light does have momentum. Boltzmann said that the probability of state with energy \( E_n = nhf \) is \( p_n \propto \exp -\frac{E_n}{k_B T} \) and we trust him, so the average number of photons with frequency \( f \) is, namely the <b>Bose-Einstein statistics</b>, \[ \langle n_f \rangle = \frac{1}{e^{hf/(k_B T)} - 1}\]</p>
+
+<p>Afterwards, de Brogile proposes that particles exists as <b>matter waves</b>. For a particle of (relativistic) energy \( E \) and momentum \( p \), its matter wave has \( f = E / h \) and \( \lambda = h / p \). The <b>phase velocity</b> \( v_{ph} = \frac{\omega}{k} = \frac{c^2}{v} \), where the <b>group velocity</b> \( v_{g} = \partial_k \omega = v \). It is really the group velocity that carries information.</p>
+
+<h3>Schrodinger's Equation</h3>

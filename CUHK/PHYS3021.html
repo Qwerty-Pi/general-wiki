@@ -1,5 +1,26 @@
 ---
 layout: default
 ---
+<span style="display: none">
+\[
+	\def\R{\mathbb{R}}
+	\def\C{\mathbb{C}}
+\]
+</span>
 <h1>PHYS3021 Quantum Mechnics I</h1>
 
+<h2>Preliminaries</h2>
+
+<p>Since I know nothing about physics, here are some well-known related facts. </p>
+
+<h3>Electromagnetic Waves</h3>
+
+<p>In a region without electric charges or currents, the electric or magnetic field ($E, B : \R^3 \times \R \to \C$) satisfies the <b>Maxwell equation</b> where \( \Psi = E \) or \( B \) as \[ \frac{1}{c^2} \dfrac{\partial^2 \Psi}{\partial t^2} - \nabla^2 \Psi = 0 \] Assuming \( F \) is <b>separable</b>, i.e., we can write \( \Psi(r, t) = \psi(r) \times f(t) \), then \[ \frac{1}{c^2} \dfrac{\partial_t^2 f}{f} = \frac{\nabla^2 \psi}{\psi} \] with each sides being constants. Naturally, we have \( f(t) = \exp i (\omega t) \) and \( \psi(r) = \exp i (k \cdot r) \) for some constants \( \omega \) and \( k \). Combine together, we have the <b>wave equation</b> \[ \Psi(r, t) = A e^{i (k \cdot r - \omega t)}\]</p>
+
+<p>In words, \( \Psi \) is a <b>sinusodial propagating wave</b> with <b>wave vector</b> \( k \), the change in phase due to <i>position</i>; and <b>angular frequency</b> \( \omega \), the change in phase due to <i>time</i>. For EM waves, the <b>dispersion relation</b> is \( \omega = c \cdot |k| \), since EM waves travel at light speed \( c \). In practice, we assume that wave of any (valid) shape can be written as a <b>superposition</b> (sum) of multiple seperable <b>plane waves</b>, which kinda solves the general case.</p>
+
+<p>We recall other concepts in waves. The <b>frequency</b> is \( f = \frac{\omega}{2 \pi} \), the number of complete phase revolutions per unit time. The <b>wavelength</b> is defined as \( \lambda = \frac{2 \pi}{|k|} \), the length of a complete phase. For EM waves, we have \( c = f \cdot \lambda \). Finally, the <b>wavenumber</b> (more in chemsitry) is defined as \( \tilde \nu = \frac{1}{\lambda} \), the reciprocal of wavelength.</p>
+
+<h3>Black-body Radiation</h3>
+
+<p>Suppose we have a physical object. </p>

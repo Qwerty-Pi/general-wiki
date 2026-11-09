@@ -104,9 +104,9 @@
 
 <p>Schrodinger initially interprets \( \Psi \) as the charge density (in e.g. hydrogen atom), but it rather should be interpreted as <b>probabilistic density</b>. As a PDF, the amplitude of quantum waves doesn't matter (unlike EM waves), and for quantum plane waves we implicitly assume an <b>infinitesimal decay</b>.</p>
 
-<h3>Solution to Schrodinger</h3>
+<h3>Time-Independent Schrodinger</h3>
 
-<p>Since Schodinger is a linear PDE, its solution forms a <b>vector space</b>, where linear combinations of solutions is still a solution. Once again, if we assume \( \Psi \) is <b>seperable</b> as \( \Psi(r, t) = \psi(r) \times f(t) \), then \[ i \hbar \frac{\partial_t f}{f} = - \frac{\hbar^2}{2m} \frac{\nabla^2 \psi}{\psi} + V \] since LHS only depends on time and RHS only depends on position, both sides equal to a constant(!) say \( E \) (energy), and \[ \partial_t f = \frac{E}{\hbar i} f \qquad\qquad \left( - \frac{\hbar^2\nabla^2}{2m} + V \right) \psi = E \psi \] The first equation implies \( f = \exp (-i\omega t) \), while solving the second equation requires knowing potential \( V \).</p>
+<p>Since Schodinger is a linear PDE, its solution forms a <b>vector space</b>, where linear combinations of solutions is still a solution. If we assume \( \Psi \) is <b>seperable</b> as \( \Psi(r, t) = \psi(r) \times f(t) \), then \[ i \hbar \frac{\partial_t f}{f} = - \frac{\hbar^2}{2m} \frac{\nabla^2 \psi}{\psi} + V \] since LHS only depends on time and RHS only depends on position, both sides equal to a constant(!) say \( E \) (energy), and \[ \partial_t f = \frac{E}{\hbar i} f \qquad\qquad \left( - \frac{\hbar^2\nabla^2}{2m} + V \right) \psi = E \psi \] The first equation simply implies \( f = \exp (-i\omega t) \), while the second equation is more interesting. By defining the <b>Hamiltonian operator</b> \[ \hat H = -\dfrac{\hbar^2 \nabla^2}{2m} + V \] we have \[ \hat H \psi = E \psi \] Analogous to the notation in linear algebra, we call \( \psi \) an <b>eigenstate</b> or an <b>eigenfunction</b>, where \( E \) is the corresponding <b>eigenvalue</b>.</p>
 
 <h3>Fourier Transform</h3>
 

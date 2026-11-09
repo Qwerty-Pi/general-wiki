@@ -115,7 +115,7 @@
 
 <p>Now, we want to write quantum wave \( \psi \) into the <b>superposition</b> of <b>plane waves</b>, namely <b>Fourier Transform</b> as \[ \psi(x) = \frac{1}{\sqrt{2\pi}} \int \tilde \psi (k) e^{ikx} \, dk \] Turns out its inverse is very simple: simply take \[ \tilde \psi(k) = \frac{1}{\sqrt{2 \pi}} \int \psi(x) e^{-ikx} \, dx \]</p>
 
-<p>Define the <b>Dirac delta</b> \( \delta \) be an infinitely sharp smooth function where \( \delta(x) = \infty \) when \( x = 0 \), \( \delta(x) = 0 \) when \( x \ne 0 \) and \( \int_{-\infty}^{\infty} \delta(x) \, dx = 1 \). Then, \( \int e^{ikx} \, dx = \int e^{ikx - \eta |x|} \, dx = 2 \pi \delta(k) \), which means \( \ip{e^{iq}}{e^{ik}} = 2 \pi \delta(k - q) \). With \( \delta \), we can show that the above inverse relation indeed holds.</p>
+<p>Define the <b>Dirac delta</b> \( \delta \) be an infinitely sharp smooth function where \( \delta(x) = \infty \) when \( x = 0 \), \( \delta(x) = 0 \) when \( x \ne 0 \) and \( \int_{-\infty}^{\infty} \delta(x) \, dx = 1 \). Then, \( \int e^{ikx} \, dx = \lim_{\eta \to 0} \int e^{ikx - \eta |x|} \, dx = 2 \pi \delta(k) \), which means \( \ip{e^{iq}}{e^{ik}} = 2 \pi \delta(k - q) \). With \( \delta \), we can show that the above inverse relation indeed holds. Also note that \( \left\langle \frac{e^{ikx}}{\sqrt{2\pi}} \right\rangle \) forms an <b>orthonormal basis</b> for the \( L^2 \) space.</p>
 
 <h3>Quantum Measurement</h3>
 

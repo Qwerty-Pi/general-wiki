@@ -66,7 +66,8 @@
 	\def\R{\mathbb{R}}
 	\def\C{\mathbb{C}}
 	\def\N{\mathbb{N}}
-	\newcommand\ip[2]{\left\langle #1 \middle| #2 \right\rangle}
+	\newcommand\ip[2]{\langle #1 | #2 \rangle}
+	\newcommand\ipx[2]{\left\langle #1 \middle| #2 \right\rangle}
 	\newcommand\tip[3]{\left\langle #1 \middle| #2 \middle| #3 \right\rangle}
 \]
 </span>
@@ -118,7 +119,7 @@
 
 <p>Define the <b>Dirac delta</b> \( \delta \) be an infinitely sharp smooth function where \( \delta(x) = \infty \) when \( x = 0 \), \( \delta(x) = 0 \) when \( x \ne 0 \) and \( \int_{-\infty}^{\infty} \delta(x) \, dx = 1 \). Then, \( \int e^{ikx} \, dx = \lim_{\eta \to 0} \int e^{ikx - \eta |x|} \, dx = 2 \pi \delta(k) \), which means \( \ip{e^{iq}}{e^{ik}} = 2 \pi \delta(k - q) \). With \( \delta \), we can show that the above inverse relation indeed holds.</p>
 
-<p>A more mystic way of stating the above is, \( \left\langle \frac{e^{ikx}}{\sqrt{2\pi}} \right\rangle \) forms an <b>orthonormal basis</b> for the \( L^2 \) space. Then \( \tilde \psi(k) = \ip{\frac{e^{ikx}}{\sqrt{2\pi}}}{\psi} \) is obviously true! We treat \( \tilde(x) \) as a wave function in the <b>position space</b>, and \( \tilde \psi(k) \) as a wave function in the \( k \)-space or the <b>momentum space</b> (since \( p = \hbar k \)).</p>
+<p>A more mystic way of stating the above is, \( \left\langle \frac{e^{ikx}}{\sqrt{2\pi}} \right\rangle \) forms an <b>orthonormal basis</b> for the \( L^2 \) space. Then \( \tilde \psi(k) = \ipx{\frac{e^{ikx}}{\sqrt{2\pi}}}{\psi} \) is obviously true! We treat \( \tilde \psi(x) \) as a wave function in the <b>position space</b>, and \( \tilde \psi(k) \) as a wave function in the \( k \)-space or the <b>momentum space</b> (since \( p = \hbar k \)).</p>
 
 <h3>Operators</h3>
 
@@ -128,17 +129,36 @@
 
 <p>We can define the (vector) <b>angular momentum</b> as \( \hat L = \hat r \times \hat p \). Interestingly, we have \( [\hat L, \hat L] = i \hbar \hat L \). The total (scalar) angular momentum is defined as \( \hat L^2 = \hat L_x^2 + \hat L_y^2 + \hat L_z^2 \). Under the cylindrical coordinates \( (\rho, \phi, z) \), we have the nice relation \( \hat L_z = \frac{\hbar}{i} \partial_\phi \).</p>
 
+<h3>Hermitian Operators</h3>
+
+<p>Here, we shall introduce an important concept: we say an operator \( \hat V \) is <b>Hermitian</b> or <b>self-adjoint</b> when \( \ip{\hat V \psi}{\varphi} = \ip{\psi}{\hat V \varphi} \) for all wave functions \( \psi \) and \( \varphi \). Easy to verify that \( \hat x \) and \( \hat p \) are both Hermitian. In fact, \( \hat H \) is Hermitian as well, since \( \ip{\hat H \psi}{\varphi} = -\frac{\hbar^2}{2m} \ip{\nabla^2 \psi}{\varphi} + \ip{V \psi}{\varphi} = -\frac{\hbar^2}{2m} \ip{\psi}{\nabla^2 \varphi} + \ip{\psi}{V \varphi} = \ip{\psi}{\hat H \varphi} \), where we used integration by-parts and assumed \( V \) is real.</p>
+
+<p>What so special about Hermitian operators? It is mostly concerning <b>eigenvectors</b>. First, eigenvalues \( E \) must be real since \( E^* \ip{\psi}{\psi} = \ip{\hat H \psi}{\psi} = \ip{\psi}{\hat H \psi} = E \ip{\psi}{\psi} \). Eigenvectors correspond to different eigenvalues are always <b>orthogonal</b> as well, since \( E_\psi \ip{\psi}{\varphi} = \ip{\hat H \psi}{\varphi} = \ip{\psi}{\hat H \varphi} = E_\varphi \ip{\psi}{\varphi} \), forcing \( \ip{\psi}{\varphi} = 0 \). According to some generalisation of the <b>spectral theorem</b> (which we won't and can't prove here), we can find a <b>complete orthogonal eigenbasis</b> for the underlying space.</p>
+
 <h3>Time-Dependent Schrodinger</h3>
 
-<p>Previously, we assume \( \Psi \) is separable and is time-independent. How to solve the general case for \( -i \hbar \partial_t \Psi = \hat H \Psi \)?</p>
+<p>Previously, we assume \( \Psi \) is separable and is time-independent. How to solve the general case for \( i \hbar \partial_t \Psi = \hat H \Psi \)? Since the Hamiltonian \( \hat H \) is Hermitian, \( \Psi \) is simply a <b>superposition</b> of the <b>eigenstates</b> \( \psi \) satisfying \( \hat H \psi = E \psi \)! Specifically, if \( \Psi(r, 0) = \sum c_n \psi_n \), then \( \Psi(r, t) = \sum c_n \psi_n e^{-iE_n t / \hbar} \). By playing with notations, we can write in a cool way: let \( \hat U(t) = e^{-i \hat H t / \hbar} \), then \( \Psi(t) = \hat U(t) \Psi(0) \).</p>
 
-<h2>Quantum Measurement</h2>
-                                                                                                                                     <p>Quantum waves are probabilistic in nature. What happens when we take a measurement on its position or its momentum? By preparing an <b>ensemble</b> (random samples) of a quantum wave and repeatedly take measurement, we can approximate the <b>statistics</b> of the measurement.</p>
+<p>We can classify the eigenstates depending on whether they can be normalised as either <b>bounded</b> or <b>continuum</b> (<b>scattering</b>), where bounded states are normalisable while scattering states are not. Also, bounded states have <b>discrete eigenenergies</b> while scattering states have <b>continuous eigenenergies</b>. We will discuss more below (probably).</p>
 
-<h3>Statistics</h3>
+<h3>Probability Current and Continuity Equation</h3>
 
-<p>We denote \( \langle X \rangle \) as the expectation of the "physical property" \( X \). For example, the <b>expectation of position</b> \( \langle x \rangle \) is \[ \langle x \rangle = \int \psi^*(x) \, x \, \psi(x) \, dx \] and the <b>expectation of momentum</b> \( \langle p \rangle \) is \[ \langle p \rangle = \int \tilde \psi^*(k) \, (\hbar k) \, \tilde \psi(k) \, dk \] To simply the notations a bit, we use \( \tip{\psi_1}{X}{\psi_2} \) to denote \( \int \psi_1^*(x) \, X \, \psi_2(x) \, dx \). Magically, \[ \tip{\tilde \psi}{p}{\tilde \psi} = \ip{\tilde \psi}{\ip{ \hbar i \partial_x e^{ikx}}{\psi}} = \ip{\tilde \psi}{\ip{e^{ikx}}{\frac{\hbar}{i} \partial_x \psi}} = \tip{\psi}{\frac{\hbar}{i} \partial_x}{\psi} \] Therefore, we can equivalently represent \( \langle p \rangle \) in the position space as well. More generally, we have \( \langle V(x, p) \rangle = \tip{\psi}{V\left(x, \frac{\hbar}{i} \partial_x \right)}{\psi} \).</p>
+<p>An important idea in physics is <b>conservation</b> and <b>continuity</b>: the total quantity is conserved, while the quantity can only move continuously. In general, the <b>continuity equation</b> is of the form \[ \partial_t \rho + \nabla \cdot j = 0 \] where \( \rho \) refers to the <b>density</b> and \( j \) refers to the <b>flux</b>. This basically means that the rate of change in density \( \partial_t \rho \) is the negation of the rate of outward flow \( \nabla \cdot j \).</p>
 
-<p>We can compute the <b>variance</b> and <b>standard variations</b> for position and momentum as \( (\Delta x)^2 = \langle x^2 \rangle - \langle x \rangle^2 \) and \( (\Delta p)^2 = \langle p^2 \rangle - \langle p \rangle^2 \). By absolutely abusing notations, we have \[ \ip{x}{x} \cdot \ip{p}{p} \ge |\ip{x}{p}|^2 \ge [x, p]^2 = \frac{\hbar^2}{4} \] and the <b>Heisenberg Uncertainty Principle</b> \[ \Delta x \cdot \Delta p \ge \frac{\hbar}{2} \]</p>
+<p>What if this quantity is probability? By Schrodinger, we have \( \partial_t P = \Psi^* \frac{\hat H}{i \hbar}\Psi + \text{c.c.} = \Psi^* [ -\frac{\hbar}{2mi} \nabla^2 + \frac{V}{i \hbar} ] \Psi + \text{c.c.} = -\frac{\hbar}{2mi} \nabla \cdot (\Psi^* \nabla \Psi - \Psi \nabla \Psi^*) \). Hence, by define the <b>probability current</b> \( j = \frac{\hbar}{2mi} (\Psi^* \nabla \Psi - \Psi \nabla \Psi^*) \), the continuity equation holds and the probability is always conserved.</p>
+
+<h2>Quantum Measurment</h2>
+
+<p>Quantum waves are probabilistic in nature. What happens when we take a measurement on its position or its momentum? By preparing an <b>ensemble</b> (random samples) of a quantum wave and repeatedly take measurement, we can approximate the <b>statistics</b> of the measurement.</p>
+
+<h3>Measurement Statistics</h3>
+
+<p>We denote \( \langle X \rangle \) as the expectation of the "physical property" \( X \). For example, the <b>expectation of position</b> \( \langle x \rangle \) is \[ \langle x \rangle = \int \psi^*(x) \, x \, \psi(x) \, dx \] and the <b>expectation of momentum</b> \( \langle p \rangle \) is \[ \langle p \rangle = \int \tilde \psi^*(k) \, (\hbar k) \, \tilde \psi(k) \, dk \] To simply the notations a bit, we use \( \tip{\psi_1}{X}{\psi_2} \) to denote \( \int \psi_1^*(x) \, X \, \psi_2(x) \, dx \). Magically, \[ \tip{\tilde \psi}{p}{\tilde \psi} = \ipx{\tilde \psi}{\ipx{ \hbar i \partial_x e^{ikx}}{\psi}} = \ipx{\tilde \psi}{\ipx{e^{ikx}}{\frac{\hbar}{i} \partial_x \psi}} = \tip{\psi}{\frac{\hbar}{i} \partial_x}{\psi} \] Therefore, we can equivalently represent \( \langle p \rangle \) in the position space as well. More generally, we have \( \langle V(x, p) \rangle = \tip{\psi}{V\left(x, \frac{\hbar}{i} \partial_x \right)}{\psi} \).</p>
+
+<p>We can compute the <b>variance</b> and <b>standard variations</b> for position and momentum as \( (\Delta x)^2 = \langle x^2 \rangle - \langle x \rangle^2 \) and \( (\Delta p)^2 = \langle p^2 \rangle - \langle p \rangle^2 \). By absolutely abusing notations, we have \[ \ip{x}{x} \cdot \ip{p}{p} \ge |\ip{x}{p}|^2 \ge [\hat x, \hat p]^2 = \frac{\hbar^2}{4} \] and the <b>Heisenberg Uncertainty Principle</b> \[ \Delta x \cdot \Delta p \ge \frac{\hbar}{2} \]</p>
+
+<h3>Ehrenfest Theorem</h3>
+
+<p>How does </p>
 
 </body>

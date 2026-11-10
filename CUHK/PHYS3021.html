@@ -48,7 +48,7 @@ layout: default
 
 <h3>Time-Independent Schrodinger</h3>
 
-<p>Since Schodinger is a linear PDE, its solution forms a <b>vector space</b>. If we assume \( \Psi \) is <b>seperable</b> where \( \Psi(r, t) = \psi(r) \times f(t) \), then \[ i \hbar \frac{\partial_t f}{f} = - \frac{\hbar^2}{2m} \frac{\nabla^2 \psi}{\psi} + V \] since LHS only depends on time and RHS only depends on position, both sides equal to a constant(!) say \( E \) (energy), and \[ \partial_t f = \frac{E}{\hbar i} f \qquad\qquad \left( - \frac{\hbar^2\nabla^2}{2m} + V \right) \psi = E \psi \] The first equation simply implies \( f = \exp (-i\omega t) \), while the second equation is more interesting. By defining the <b>Hamiltonian operator</b> \[ \hat H = -\dfrac{\hbar^2 \nabla^2}{2m} + V \] we have \[ \hat H \psi = E \psi \] Analogous to the notation in linear algebra, we call \( \psi \) an <b>eigenstate</b> or an <b>eigenfunction</b>, where \( E \) is the corresponding <b>eigenenergy</b>.</p>
+<p>Since Schodinger is a linear PDE, its solution forms a <b>vector space</b>. If we assume \( \Psi \) is <b>seperable</b> where \( \Psi(r, t) = \psi(r) \times f(t) \), then \[ i \hbar \frac{\partial_t f}{f} = - \frac{\hbar^2}{2m} \frac{\nabla^2 \psi}{\psi} + V \] since LHS only depends on time and RHS only depends on position, both sides equal to a constant(!) say \( E \) (energy), and \[ \partial_t f = \frac{E}{\hbar i} f \qquad\qquad \left( - \frac{\hbar^2\nabla^2}{2m} + V \right) \psi = E \psi \] The first equation simply implies \( f = \exp (-i\omega t) \). The second equation is more interesting, which requires knowing \( V \) and the <b>boundary conditions</b> to be solved.</p>
 
 <h3>\( L^2 \) Inner Product Space and Fourier Transform</h3>
 
@@ -60,18 +60,25 @@ layout: default
 
 <p>A more mystic way of stating the above is, \( \left\langle \frac{e^{ikx}}{\sqrt{2\pi}} \right\rangle \) forms an <b>orthonormal basis</b> for the \( L^2 \) space. Then \( \tilde \psi(k) = \ip{\frac{e^{ikx}}{\sqrt{2\pi}}}{\psi} \) is obviously true! We treat \( \tilde(x) \) as a wave function in the <b>position space</b>, and \( \tilde \psi(k) \) as a wave function in the \( k \)-space or the <b>momentum space</b> (since \( p = \hbar k \)).</p>
 
-<h3>Statistics of Quantum Measurement</h3>
-
-<p>Quantum waves are probabilistic in nature. What happens when we take a measurement on its position or its momentum? By preparing an <b>ensemble</b> (random samples) of a quantum wave and repeatedly take measurement, we can approximate the <b>statistics</b> of the measurement.</p>
-
-<p>We denote \( \langle X \rangle \) as the mean of the "physical property" \( X \). For example, the <b>expectation of position</b> \( \langle x \rangle \) is \[ \langle x \rangle = \int \psi^*(x) \, x \, \psi(x) \, dx \] and the <b>expectation of momentum</b> \( \langle p \rangle \) is \[ \langle p \rangle = \int \tilde \psi^*(k) \, (\hbar k) \, \tilde \psi(k) \, dk \] To simply the notations a bit, we use \( \tip{\psi_1}{X}{\psi_2} \) to denote \( \int \psi_1^*(x) \, X \, \psi_2(x) \, dx \). Magically, \[ \tip{\tilde \psi}{p}{\tilde \psi} = \ip{\tilde \psi}{\ip{ \hbar i \partial_x e^{ikx}}{\psi}} = \ip{\tilde \psi}{\ip{e^{ikx}}{\frac{\hbar}{i} \partial_x \psi}} = \tip{\psi}{\frac{\hbar}{i} \partial_x}{\psi} \] Therefore, we can equivalently represent \( \langle p \rangle \) in the position space as well. More generally, we have \( \langle V(x, p) \rangle = \tip{\psi}{V\left(x, \frac{\hbar}{i} \partial_x \right)}{\psi} \).</p>
-
-<p>We can compute the <b>variance</b> and <b>standard variations</b> for position and momentum as \( (\Delta x)^2 = \langle x^2 \rangle - \langle x \rangle^2 \) and \( (\Delta p)^2 = \langle p^2 \rangle - \langle p \rangle^2 \). By absolutely abusing notations, we have \[ \ip{x}{x} \cdot \ip{p}{p} \ge |\ip{x}{p}|^2 \ge [x, p]^2 = \frac{\hbar^2}{4} \] and the <b>Heisenberg Uncertainty Principle</b> \[ \Delta x \cdot \Delta p \ge \frac{\hbar}{2} \]</p>
-
 <h3>Operators</h3>
 
-<p><b>Operators</b> are transformation between functions. For example, we denote \( \hat x \) as the operator \( \psi \mapsto x \psi \), and \( \hat p_x \) as the operator \( \psi \mapsto -i \hbar \partial_x \psi \). Similarly, we can define \( \hat y = y, \hat z = z, \hat p_y = -i \hbar \partial_y, \hat p_z = -i \hbar \partial_z \) and \( \hat p = -i \hbar \nabla \). In operator form, we can write the Hamiltonian as \( \hat H = \frac{\hat p^2}{2m} + \hat V \).</p>
+<p><b>Operators</b> are transformation between functions. For example, we denote \( \hat x \) as the operator \( \psi \mapsto x \psi \), and \( \hat p_x \) as the operator \( \psi \mapsto -i \hbar \partial_x \psi \). Similarly, we can define \( \hat y = y, \hat z = z, \hat p_y = -i \hbar \partial_y, \hat p_z = -i \hbar \partial_z \) and \( \hat p = -i \hbar \nabla \). In operator form, we can write the <b>Hamiltonian operator</b> as \( \hat H = \frac{\hat p^2}{2m} + \hat V \), and Schrodinger's Equation as \( -i \hbar \partial_t \Psi = \hat H \Psi \).</p>
 
 <p>Define the <b>commutator</b> \( [\hat A, \hat B] = \hat A \hat B - \hat B \hat A \). Clearly the commutator is bilinear and skew-symmetric. A very important relation is \( [\hat x, \hat p] = i \hbar \). By abusing Taylor, we also have \( [\hat p, \hat V(x)] = -i \hbar V'(x) \).</p>
 
 <p>We can define the (vector) <b>angular momentum</b> as \( \hat L = \hat r \times \hat p \). Interestingly, we have \( [\hat L, \hat L] = i \hbar \hat L \). The total (scalar) angular momentum is defined as \( \hat L^2 = \hat L_x^2 + \hat L_y^2 + \hat L_z^2 \). Under the cylindrical coordinates \( (\rho, \phi, z) \), we have the nice relation \( \hat L_z = \frac{\hbar}{i} \partial_\phi \).</p>
+
+<h3>Time-Dependent Schrodinger</h3>
+
+<p>Previously, we assume \( \Psi \) is separable and is time-independent. How to solve the general case for \( -i \hbar \partial_t \Psi = \hat H \Psi \)?</p>
+
+<h3>Probability Current and Continuity Equation</h3>
+
+<h2>Quantum Measurement</h2>
+                                                                                                                        <p>Quantum waves are probabilistic in nature. What happens when we take a measurement on its position or its momentum? By preparing an <b>ensemble</b> (random samples) of a quantum wave and repeatedly take measurement, we can approximate the <b>statistics</b> of the measurement.</p>
+
+<h3>Statistics</h3>
+
+<p>We denote \( \langle X \rangle \) as the expectation of the "physical property" \( X \). For example, the <b>expectation of position</b> \( \langle x \rangle \) is \[ \langle x \rangle = \int \psi^*(x) \, x \, \psi(x) \, dx \] and the <b>expectation of momentum</b> \( \langle p \rangle \) is \[ \langle p \rangle = \int \tilde \psi^*(k) \, (\hbar k) \, \tilde \psi(k) \, dk \] To simply the notations a bit, we use \( \tip{\psi_1}{X}{\psi_2} \) to denote \( \int \psi_1^*(x) \, X \, \psi_2(x) \, dx \). Magically, \[ \tip{\tilde \psi}{p}{\tilde \psi} = \ip{\tilde \psi}{\ip{ \hbar i \partial_x e^{ikx}}{\psi}} = \ip{\tilde \psi}{\ip{e^{ikx}}{\frac{\hbar}{i} \partial_x \psi}} = \tip{\psi}{\frac{\hbar}{i} \partial_x}{\psi} \] Therefore, we can equivalently represent \( \langle p \rangle \) in the position space as well. More generally, we have \( \langle V(x, p) \rangle = \tip{\psi}{V\left(x, \frac{\hbar}{i} \partial_x \right)}{\psi} \).</p>
+
+<p>We can compute the <b>variance</b> and <b>standard variations</b> for position and momentum as \( (\Delta x)^2 = \langle x^2 \rangle - \langle x \rangle^2 \) and \( (\Delta p)^2 = \langle p^2 \rangle - \langle p \rangle^2 \). By absolutely abusing notations, we have \[ \ip{x}{x} \cdot \ip{p}{p} \ge |\ip{x}{p}|^2 \ge [x, p]^2 = \frac{\hbar^2}{4} \] and the <b>Heisenberg Uncertainty Principle</b> \[ \Delta x \cdot \Delta p \ge \frac{\hbar}{2} \]</p>

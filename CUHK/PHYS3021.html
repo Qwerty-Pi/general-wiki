@@ -91,12 +91,21 @@ layout: default
 
 <p>Quantum waves are probabilistic in nature. What happens when we take a measurement on its position or its momentum? By preparing an <b>ensemble</b> (random samples) of a quantum wave and repeatedly take measurement, we can approximate the <b>statistics</b> of the measurement.</p>
 
-<h3>Measurement Statistics</h3>
+<h3>Statistics</h3>
 
 <p>We denote \( \langle X \rangle \) as the expectation of the "physical property" \( X \). For example, the <b>expectation of position</b> \( \langle x \rangle \) is \[ \langle x \rangle = \int \psi^*(x) \, x \, \psi(x) \, dx \] and the <b>expectation of momentum</b> \( \langle p \rangle \) is \[ \langle p \rangle = \int \tilde \psi^*(k) \, (\hbar k) \, \tilde \psi(k) \, dk \] To simply the notations a bit, we use \( \tip{\psi_1}{X}{\psi_2} \) to denote \( \int \psi_1^*(x) \, X \, \psi_2(x) \, dx \). Magically, \[ \tip{\tilde \psi}{p}{\tilde \psi} = \ipx{\tilde \psi}{\ipx{ \hbar i \partial_x e^{ikx}}{\psi}} = \ipx{\tilde \psi}{\ipx{e^{ikx}}{\frac{\hbar}{i} \partial_x \psi}} = \tip{\psi}{\frac{\hbar}{i} \partial_x}{\psi} \] Therefore, we can equivalently represent \( \langle p \rangle \) in the position space as well. More generally, we have \( \langle V(x, p) \rangle = \tip{\psi}{V\left(x, \frac{\hbar}{i} \partial_x \right)}{\psi} \).</p>
 
-<p>We can compute the <b>variance</b> and <b>standard variations</b> for position and momentum as \( (\Delta x)^2 = \langle x^2 \rangle - \langle x \rangle^2 \) and \( (\Delta p)^2 = \langle p^2 \rangle - \langle p \rangle^2 \). By absolutely abusing notations, we have \[ \ip{x}{x} \cdot \ip{p}{p} \ge |\ip{x}{p}|^2 \ge [\hat x, \hat p]^2 = \frac{\hbar^2}{4} \] and the <b>Heisenberg Uncertainty Principle</b> \[ \Delta x \cdot \Delta p \ge \frac{\hbar}{2} \]</p>
+<p>We can compute the <b>variance</b> and <b>standard variations</b> for position and momentum as \( (\Delta x)^2 = \langle x^2 \rangle - \langle x \rangle^2 \) and \( (\Delta p)^2 = \langle p^2 \rangle - \langle p \rangle^2 \). By absolutely abusing notations, we have \[ \ip{x}{x} \cdot \ip{p}{p} \ge |\ip{x}{p}|^2 \ge \frac{1}{4}[\hat x, \hat p]^2 = \frac{\hbar^2}{4} \] and the <b>Heisenberg Uncertainty Principle</b> \[ \Delta x \cdot \Delta p \ge \frac{\hbar}{2} \]</p>
 
 <h3>Ehrenfest Theorem</h3>
 
-<p>How does </p>
+<p>A natural question is - how does the expectation of an operator \( \hat A \) evolves over time? We have \[ \frac{d}{dt} \langle \hat A \rangle = \frac{i}{\hbar} \langle [\hat H, \hat A]\rangle + \langle \partial_t \hat A \rangle\] and so \( \frac{d}{dt} \langle \hat x \rangle = \frac{1}{m} \langle \hat p \rangle \) and \( \frac{d}{dt} \langle \hat p \rangle = -\langle V'(x) \rangle \). This somewhat resembles the classical mechanics, but once \( V(x) \) is of higher order than quadratic, then the term of <b>quantum fluctuation</b> \( \langle V'(x) \rangle - V'(\langle x \rangle) \) appears.</p>
+
+<h3>Measurement Postulates</h3>
+
+<p>What actually happens when we measure a "physical property"? We actually require the operator \( \hat A \) to be measured, or <b>observable</b>, to be <b>linear</b> and <b>Hermitian</b>. If the quantum state is \( \Psi \), then we can measure the eigenvalue \( a_n \) with <b>probability</b> \( \ip{\Psi_n}{\Psi} \) given \( \hat A \Psi_n = a_n \Psi_n \), and the state \( \Psi \) <b>collapses</b> (changes) to \( \Psi_n \) (only theoretically, could be destroyed).</p>
+
+<p>Note that these are postulates, which cannot be dervied from other theorems, although no experiment rejects them.</p>
+
+<h2>Zoology of Schrodinger</h2>
+

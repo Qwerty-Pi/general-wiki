@@ -6,7 +6,8 @@ layout: default
 	\def\R{\mathbb{R}}
 	\def\C{\mathbb{C}}
 	\def\N{\mathbb{N}}
-	\newcommand\ip[2]{\langle #1 | #2 \rangle}
+	\newcommand\ip[2]{\left\langle #1 \middle| #2 \right\rangle}
+	\newcommand\tip[3]{\left\langle #1 \middle| #2 \middle| #3 \right\rangle}
 \]
 </span>
 <h1>PHYS3021 Quantum Mechnics I</h1>
@@ -55,8 +56,25 @@ layout: default
 
 <p>Now, we want to write quantum wave \( \psi \) into the <b>superposition</b> of <b>plane waves</b>, namely <b>Fourier Transform</b> as \[ \psi(x) = \frac{1}{\sqrt{2\pi}} \int \tilde \psi (k) e^{ikx} \, dk \] Turns out its inverse is very simple: simply take \[ \tilde \psi(k) = \frac{1}{\sqrt{2 \pi}} \int \psi(x) e^{-ikx} \, dx \]</p>
 
-<p>Define the <b>Dirac delta</b> \( \delta \) be an infinitely sharp smooth function where \( \delta(x) = \infty \) when \( x = 0 \), \( \delta(x) = 0 \) when \( x \ne 0 \) and \( \int_{-\infty}^{\infty} \delta(x) \, dx = 1 \). Then, \( \int e^{ikx} \, dx = \lim_{\eta \to 0} \int e^{ikx - \eta |x|} \, dx = 2 \pi \delta(k) \), which means \( \ip{e^{iq}}{e^{ik}} = 2 \pi \delta(k - q) \). With \( \delta \), we can show that the above inverse relation indeed holds. Also note that \( \left\langle \frac{e^{ikx}}{\sqrt{2\pi}} \right\rangle \) forms an <b>orthonormal basis</b> for the \( L^2 \) space.</p>
+<p>Define the <b>Dirac delta</b> \( \delta \) be an infinitely sharp smooth function where \( \delta(x) = \infty \) when \( x = 0 \), \( \delta(x) = 0 \) when \( x \ne 0 \) and \( \int_{-\infty}^{\infty} \delta(x) \, dx = 1 \). Then, \( \int e^{ikx} \, dx = \lim_{\eta \to 0} \int e^{ikx - \eta |x|} \, dx = 2 \pi \delta(k) \), which means \( \ip{e^{iq}}{e^{ik}} = 2 \pi \delta(k - q) \). With \( \delta \), we can show that the above inverse relation indeed holds.</p>
 
-<h3>Quantum Measurement</h3>
+<p>A more mystic way of stating the above is, \( \left\langle \frac{e^{ikx}}{\sqrt{2\pi}} \right\rangle \) forms an <b>orthonormal basis</b> for the \( L^2 \) space. Then \( \tilde \psi(k) = \ip{\frac{e^{ikx}}{\sqrt{2\pi}}}{\psi} \) is obviously true! We treat \( \tilde(x) \) as a wave function in the <b>position space</b>, and \( \tilde \psi(k) \) as a wave function in the \( k \)-space or the <b>momentum space</b> (since \( p = \hbar k \)).</p>
 
-<p></p>
+<h3>Statistics of Quantum Measurement</h3>
+
+<p>Quantum waves are probabilistic in nature. What happens when we take a measurement on its position or its momentum? By preparing an <b>ensemble</b> (random samples) of a quantum wave and repeatedly take measurement, we can approximate the <b>statistics</b> of the measurement.</p>
+
+<p>We denote \( \langle X \rangle \) as the mean of the "physical property" \( X \). For example, the <b>expectation of position</b> \( \langle x \rangle \) is \[ \langle x \rangle = \int \psi^*(x) \, x \, \psi(x) \, dx \] and the <b>expectation of momentum</b> \( \langle p \rangle \) is \[ \langle p \rangle = \int \tilde \psi^*(k) \, (\hbar k) \, \tilde \psi(k) \, dk \] To simply the notations a bit, we use \( \tip{\psi_1}{X}{\psi_2} \) to denote \( \int \psi_1^*(x) \, X \, \psi_2(x) \, dx \). Magically, \[ \tip{\tilde \psi}{p}{\tilde \psi} = \ip{\tilde \psi}{\ip{ \hbar i \partial_x e^{ikx}}{\psi}} = \ip{\tilde \psi}{\ip{e^{ikx}}{\frac{\hbar}{i} \partial_x \psi}} = \tip{\psi}{\frac{\hbar}{i} \partial_x}{\psi} \] Therefore, we can equivalently represent \( \langle p \rangle \) in the position space as well. More generally, we have \( \langle V(x, p) \rangle = \tip{\psi}{V\left(x, \frac{\hbar}{i} \partial_x \right)}{\psi} \).</p>
+
+<p>We can compute the <b>variance</b> and <b>standard variations</b> for position and momentum as \( (\Delta x)^2 = \langle x^2 \rangle - \langle x \rangle^2 \) and \( (\Delta p)^2 = \langle p^2 \rangle - \langle p \rangle^2 \). By absolutely abusing notations, we have \[ \ip{x}{x} \cdot \ip{p}{p} \ge |\ip{x}{p}|^2 \ge [x, p]^2 = \frac{\hbar^2}{4} \] and the <b>Heisenberg Uncertainty Principle</b> \[ \Delta x \cdot \Delta p \ge \frac{\hbar}{2} \]</p>
+
+<h3>Operators</h3>
+
+<p><b>Operators</b> are transformation between functions. For example, we denote \( \hat x \) as the operator \( \psi \mapsto x \psi \), and \( \hat p_x \) as the operator \( \psi \mapsto -i \hbar \partial_x \psi \). Similarly, we can define \( \hat y = y, \hat z = z, \hat p_y = -i \hbar \partial_y, \hat p_z = -i \hbar \partial_z \) and \( \hat p = -i \hbar \nabla \). In operator form, we can write the Hamiltonian as \( \hat H = \frac{\hat p^2}{2m} + \hat V \).</p>
+
+<p>Define the <b>commutator</b> \( [\hat A, \hat B] = \hat A \hat B - \hat B \hat A \). Clearly the commutator is bilinear and skew-symmetric. A very important relation is \( [\hat x, \hat p] = i \hbar \). By abusing Taylor, we also have \( [\hat p, \hat V(x)] = -i \hbar V'(x) \).</p>
+
+<p>We can define the (vector) <b>angular momentum</b> as \( \hat L = \hat r \times \hat p \). Interestingly, we have \( [\hat L, \hat L] = i \hbar \hat L \). The total (scalar) angular momentum is defined as \( \hat L^2 = \hat L_x^2 + \hat L_y^2 + \hat L_z^2 \). Under the cylindrical coordinates \( (\rho, \phi, z) \), we have the nice relation \( \hat L_z = \frac{\hbar}{i} \partial_\phi \).</p>
+
+<h3>General Case Schrodinger</h3>
+

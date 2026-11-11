@@ -1,3 +1,30 @@
+function cleanTeamName(name) {
+    // Member lists in brackets are metadata, rather than part of the name.
+    let previous;
+    do {
+        previous = name;
+        name = name.replace(/\([^()]*\)|\[[^\[\]]*\]|（[^（）]*）|【[^【】]*】/g, '');
+    } while (name !== previous);
+    return name.replace(/\s+/g, ' ').trim();
+}
+
+// Assign missing colours once when loading, so they stay stable during replay.
+function getTaskColours(tasks, balloons = {}) {
+    const entries = tasks.map(task => {
+        const colour = balloons?.[task];
+        const details = typeof colour === 'string' ? { background_color: colour } : (colour ?? {});
+        return [task, { ...details }];
+    });
+    const missing = entries.filter(([, details]) => !details.background_color);
+    const startHue = Math.random() * 360;
+    missing.forEach(([, details], index) => {
+        const hue = (startHue + index * 360 / missing.length) % 360;
+        // Separate hues evenly and alternate lightness for neighbouring tasks.
+        details.background_color = `hsl(${hue.toFixed(1)} 85% ${index % 2 === 0 ? 65 : 45}%)`;
+    });
+    return Object.fromEntries(entries);
+}
+
 // written by gemini
 function parseIcpcDat(datContent) {
     let contestName = "Contest";
@@ -56,7 +83,7 @@ function parseIcpcDat(datContent) {
                     univ = tId;
                     teamName = tId;
                 }
-                teams[tId] = { univ, teamName };
+                teams[tId] = { univ, teamName: cleanTeamName(teamName) };
             }
         } 
         else if (line.startsWith("@s ") || line.startsWith("@run")) {
@@ -89,6 +116,7 @@ function parseIcpcDat(datContent) {
     return {
         name: contestName,
         tasks: tasks,
+        balloons: getTaskColours(tasks),
         duration: duration,
         freeze: freeze,
         submissions: submissions
@@ -137,7 +165,7 @@ async function fetchXCPCData(contestId) {
             teamName = teamName.texts[teamName.fallback_lang];
         }
         
-        teamMap[tId] = { univ, teamName };
+        teamMap[tId] = { univ, teamName: cleanTeamName(teamName) };
     });
 
     // 4. Extract Config Metadata
@@ -149,8 +177,8 @@ async function fetchXCPCData(contestId) {
     tasks = configData.problems.map(p => typeof p === 'string' ? p : (p.label || p.id || p.name));
 
     let balloons = {};
-    configData.problems.forEach(function (data) {
-        balloons[data.label] = data.balloon_color;
+    configData.problems.forEach(function (data, index) {
+        balloons[tasks[index]] = data.balloon_color;
     })
 
     const duration = configData.duration || configData.contest_duration || 18000;
@@ -188,9 +216,82 @@ async function fetchXCPCData(contestId) {
     return {
         name: contestName,
         tasks: tasks,
-        balloons: balloons,
+        balloons: getTaskColours(tasks, balloons),
         duration: duration,
         freeze: freeze,
         submissions: submissions
     };
+}
+
+// Universal Cup external results contain per-problem totals, not a run log.
+function parseUniversalCupContestId(input) {
+    const match = String(input).trim().match(/^(?:https?:\/\/contest\.ucup\.ac\/(?:contest\/|results\/QOJ)|QOJ)?([1-9]\d*)(?:\/(?:standings|submissions))?\/?(?:\?[^#]*)?(?:#.*)?$/i);
+    if (!match) throw new Error('Enter a Universal Cup contest ID or contest.ucup.ac contest/results URL.');
+    return match[1];
+}
+
+function parseUniversalCupResults(html) {
+    const document = new DOMParser().parseFromString(html, 'text/html');
+    const table = document.querySelector('table.standings');
+    if (!table) throw new Error('No Universal Cup results table found. Check that the contest has published results.');
+    // BR does not contribute whitespace to textContent.
+    function text(cell) {
+        const copy = cell.cloneNode(true);
+        copy.querySelectorAll('br').forEach(br => br.replaceWith(' '));
+        return copy.textContent.replace(/\s+/g, ' ').trim();
+    }
+    const header = Array.from(table.querySelector('tr').querySelectorAll('th'));
+    const solvedColumn = header.findIndex(cell => /^Solved$/i.test(text(cell)));
+    if (solvedColumn < 3) throw new Error('Unsupported Universal Cup results table.');
+    const tasks = header.slice(2, solvedColumn).map(cell => text(cell).split(' ')[0]);
+    if (tasks.some(task => !/^[A-Z]+$/.test(task)) || new Set(tasks).size !== tasks.length) {
+        throw new Error('Could not read Universal Cup problem labels.');
+    }
+    const submissions = [], teams = [];
+    for (const row of table.querySelectorAll('tr')) {
+        const cells = Array.from(row.querySelectorAll('td'));
+        if (cells.length < solvedColumn + 2 || !/^\d+$/.test(text(cells[0]))) continue;
+        const university = cleanTeamName(text(cells[1]));
+        teams.push({ university, team: '' });
+        for (let index = 0; index < tasks.length; index++) {
+            const value = text(cells[index + 2]);
+            if (!value || value === '-') continue;
+            // Ignore optional result markers. +N counts failures before AC;
+            // -N counts all failures. The displayed timestamp is in h:mm.
+            const match = value.match(/^\*?([+-])(\d*)\s+(\d+):([0-5]\d)(?::([0-5]\d))?$/);
+            if (!match || (match[1] === '-' && !match[2])) {
+                throw new Error('Unsupported Universal Cup cell (pending or partial scores): ' + value);
+            }
+            const failures = Number(match[2] || 0);
+            const time = Number(match[3]) * 3600 + Number(match[4]) * 60 + Number(match[5] || 0);
+            if (time >= 18000 || failures > 1000) throw new Error('Unsupported Universal Cup time or attempt count.');
+            const run = { university, team: '', task: tasks[index], time,
+                firstSolve: cells[index + 2].classList.contains('opener') };
+            // All failures appear at the cell's displayed time. This preserves
+            // final penalties without inventing earlier submission timestamps.
+            for (let attempt = 0; attempt < failures; attempt++) {
+                submissions.push({ ...run, verdict: 'rejected' });
+            }
+            if (match[1] === '+') submissions.push({ ...run, verdict: 'accepted' });
+        }
+    }
+    if (!teams.length) throw new Error('No teams found in the Universal Cup results.');
+    return {
+        name: document.querySelector('h2')?.textContent.trim() || 'Universal Cup',
+        tasks, teams, duration: 18000, freeze: 3600,
+        balloons: getTaskColours(tasks),
+        // Results round times to minutes; use the opener marker to resolve
+        // first-solve ties, and count failures before an AC in the same minute.
+        submissions: submissions.sort((a, b) => a.time - b.time ||
+            Number(a.verdict === 'accepted') - Number(b.verdict === 'accepted') ||
+            Number(b.firstSolve) - Number(a.firstSolve))
+    };
+}
+
+async function fetchUniversalCupData(input) {
+    const contestId = parseUniversalCupContestId(input);
+    const url = `https://contest.ucup.ac/results/QOJ${contestId}`;
+    const response = await fetch('https://corsproxy.io/?key=eb06d979&url=' + encodeURIComponent(url));
+    if (!response.ok) throw new Error(`Could not fetch Universal Cup results (${response.status}).`);
+    return parseUniversalCupResults(await response.text());
 }

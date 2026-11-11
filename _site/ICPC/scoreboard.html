@@ -145,12 +145,15 @@
         <select id="contest-source">
             <option value="local">Local</option>
             <option value="xcpc" selected>XCPC</option>
+            <option value="ucup">UCUP</option>
         </select>
     </div>
     <div><input id="contest-id" value="icpc/51st/wuhan" placeholder="icpc/51st/wuhan"/></div>
     <div>Start: <input id="start-time" type="datetime-local"/></div>
     <button id="fetch-contest">Fetch</button>
 </div>
+
+<div id="fetch-error" role="alert"></div>
 
 <div id="contest-metadata" style="display: none">
     <span id="contest-name"></span>
@@ -165,19 +168,36 @@
 <script>
     const languageConverter = OpenCC.Converter({ from: 'cn', to: 'hk' });
 
-    function fetchContest(source, contestId) {
-        if (source === 'local') {
-            fetch(`/ICPC/scoreboard/${contestId}.json`)
-                .then((res) => res.json())
-                .then((json) => loadContest(json))
-                .then(() => { if ($("#contest-scoreboard").html().strip() !== "") $("#control-bar").css("display", "none") });
-        } else if (source === 'xcpc') {
-            fetchXCPCData(contestId)
-                .then((json) => loadContest(json))
-                .then(() => { if ($("#contest-scoreboard").html() !== "") $("#control-bar").css("display", "none") });
+    async function fetchContest(source, contestId) {
+        const button = $("#fetch-contest");
+        button.prop("disabled", true);
+        $("#fetch-error").text("");
+        try {
+            let contest;
+            if (source === 'local') {
+                const response = await fetch(`/ICPC/scoreboard/${contestId}.json`);
+                if (!response.ok) throw new Error(`Could not load contest (${response.status}).`);
+                contest = await response.json();
+            } else if (source === 'xcpc') {
+                contest = await fetchXCPCData(contestId);
+            } else if (source === 'ucup') {
+                contest = await fetchUniversalCupData(contestId);
+            } else {
+                throw new Error('Unknown contest source.');
+            }
+            loadContest(contest);
+            if ($("#contest-scoreboard").html().trim() !== "") $("#control-bar").hide();
+        } catch (error) {
+            $("#fetch-error").text(error.message);
+        } finally {
+            button.prop("disabled", false);
         }
-        // remove the control bar if success
     }
+
+    $("#contest-source").on('change', function() {
+        const defaultId = this.value === 'ucup' ? '3575' : 'icpc/51st/wuhan';
+        $("#contest-id").val(defaultId).attr("placeholder", defaultId);
+    });
 
     $("#fetch-contest").on('click', function() {
         const source = $("#contest-source").val();
@@ -220,7 +240,7 @@
         duration = contest.duration;
         freeze = contest.freeze;
         submissions = contest.submissions;
-        balloons = contest.balloons ?? {};
+        balloons = getTaskColours(tasks, contest.balloons);
         name = languageConverter(name);
         submissions.forEach((submission) => {
             submission.university = languageConverter(submission.university);
@@ -229,10 +249,15 @@
         // suppose to be sort in JSON, but just in case
         submissions.sort((a, b) => a.time - b.time);
         // compute teams dynamically from submissions
-        teams = submissions.map((e) => getTeamIdentifier(e))
+        const roster = contest.teams ?? submissions;
+        if (contest.teams) roster.forEach(team => {
+            team.university = languageConverter(team.university);
+            team.team = languageConverter(team.team);
+        });
+        teams = roster.map((e) => getTeamIdentifier(e))
             .filter((value, index, array) => array.indexOf(value) === index);
         teams.push("你");
-        $("#contest-name").html(name);
+        $("#contest-name").text(name);
         prevEffectiveTime = -1; // forced reload of the scoreboard
         loadScoreboard(0);
     }
@@ -360,7 +385,7 @@
             return status[a].penalty - status[b].penalty;
         })
         // only re-render if the scoreboard changes
-        if (prevEffectiveTime == effectiveTime) {
+        if (prevEffectiveTime == effectiveTime && time < duration) {
             clearTimeout(timeout); // clear any other existing timeout
             timeout = setTimeout(loadScoreboard, 1000);
             return;
@@ -416,7 +441,7 @@
             }
             prevSolveCount = solveCount; prevPenalty = penalty;
             scoreboard.append(`<div>${rank}</div>`);
-            scoreboard.append(`<div>${team}</div>`);
+            scoreboard.append($("<div>").text(team));
             scoreboard.append(`<div>${solveCount}</div>`);
             scoreboard.append(`<div>${penalty}</div>`);
             for (const task of tasks) {
@@ -452,4 +477,5 @@
         timeout = setTimeout(loadScoreboard, 1000);
     }
 </script>
+
 </body>

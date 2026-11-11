@@ -65,29 +65,6 @@ layout: default
 
 
 <p>One of the scenario where Fourier Transform naturally arises is the <b>single slit</b> experiment. We may approximate it as the Fourier Transform of a <b>square wave</b> in the position space, which we ends up getting a <b>sinc wave</b> in the momentum space.</p>
-<!-- kinda not match with the rest actually.
- colour too much?
-<div class="wavefunction-container">
-    <div id="wavefunction-square-x"></div>
-    <div id="wavefunction-square-k"></div>
-</div> -->
-
-<style>
-    .wavefunction-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-    }
-    @media (width < 768px) {
-        .wavefunction-container {
-            grid-template-columns: 1fr !important;
-        }
-    }
-</style>
-
-<script>
-    drawWavefunction("wavefunction-square-x", "rect(x / 4) / 2", xrange=[-5, 5], yrange=[-0.25, 1], { grid: false, axisLabels: false });
-    drawWavefunction("wavefunction-square-k", transform("rect(x / 4) / 2", xrange=[-5, 5]), xrange=[-5, 5], yrange=[-0.25, 1.0], { grid: false, axisLabels: false });
-</script>
 
 <p>Define the <b>Dirac delta</b> \( \delta \) be an infinitely sharp smooth function where \( \delta(x) = \infty \) when \( x = 0 \), \( \delta(x) = 0 \) when \( x \ne 0 \) and \( \int_{-\infty}^{\infty} \delta(x) \, dx = 1 \). Then, \( \int e^{ikx} \, dx = \lim_{\eta \to 0} \int e^{ikx - \eta |x|} \, dx = 2 \pi \delta(k) \), which means \( \ip{e^{iq}}{e^{ik}} = 2 \pi \delta(k - q) \). With \( \delta \), we can show that the above inverse relation indeed holds.</p>
 

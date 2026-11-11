@@ -11,6 +11,12 @@ layout: default
 	\newcommand\tip[3]{\left\langle #1 \middle| #2 \middle| #3 \right\rangle}
 \]
 </span>
+
+<!-- fourier transform pics -->
+<script src="{{ site.baseurl }}/assets/CUHK/PHYS3021/diagram.js"></script>
+<script src="{{ site.baseurl }}/assets/CUHK/PHYS3021/fourier.js"></script>
+<link rel="stylesheet" href="{{ site.baseurl }}/assets/CUHK/PHYS3021/fourier.css">
+
 <h1>PHYS3021 Quantum Mechanics I</h1>
 
 <h2>Foundations</h2>
@@ -56,6 +62,30 @@ layout: default
 <p>Consider the \( L^2 \) inner product space with inner product defined as \( \ip{\psi_1}{\psi_2} = \int_{-\infty}^{\infty} \psi_1^* \psi_2 \, dx \). Then quantum wave \( \psi \) is <b>normalised</b> iff \( \ip{\psi}{\psi} = 1 \), or \( \psi \) is with <b>unit norm</b>. A natural question is: how can plane waves \( e^{ikx} \) be \( L^2 \), when its integration clearly tends to infinity? In reality, we implicitly consider the plane waves to have infinitesimal decay, that is \( \lim_{\eta \to 0} e^{ikx - \eta |x|} \), making it normalisable.</p>
 
 <p>Now, we want to write quantum wave \( \psi \) into the <b>superposition</b> of <b>plane waves</b>, namely <b>Fourier Transform</b> as \[ \psi(x) = \frac{1}{\sqrt{2\pi}} \int \tilde \psi (k) e^{ikx} \, dk \] Turns out its inverse is very simple: simply take \[ \tilde \psi(k) = \frac{1}{\sqrt{2 \pi}} \int \psi(x) e^{-ikx} \, dx \]</p>
+
+
+<p>One of the scenario where Fourier Transform naturally arises is the <b>single slit</b> experiment. We may approximate it as the Fourier Transform of a <b>square wave</b> in the position space, which we ends up getting a <b>sinc wave</b> in the momentum space.</p>
+<div class="wavefunction-container">
+    <div id="wavefunction-square-x"></div>
+    <div id="wavefunction-square-k"></div>
+</div>
+
+<style>
+    .wavefunction-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    @media (width < 768px) {
+        .wavefunction-container {
+            grid-template-columns: 1fr !important;
+        }
+    }
+</style>
+
+<script>
+    drawWavefunction("wavefunction-square-x", "rect(x / 4) / 2", xrange=[-5, 5], yrange=[-0.25, 1], { grid: false, axisLabels: false });
+    drawWavefunction("wavefunction-square-k", transform("rect(x / 4) / 2", xrange=[-5, 5]), xrange=[-5, 5], yrange=[-0.25, 1.0], { grid: false, axisLabels: false });
+</script>
 
 <p>Define the <b>Dirac delta</b> \( \delta \) be an infinitely sharp smooth function where \( \delta(x) = \infty \) when \( x = 0 \), \( \delta(x) = 0 \) when \( x \ne 0 \) and \( \int_{-\infty}^{\infty} \delta(x) \, dx = 1 \). Then, \( \int e^{ikx} \, dx = \lim_{\eta \to 0} \int e^{ikx - \eta |x|} \, dx = 2 \pi \delta(k) \), which means \( \ip{e^{iq}}{e^{ik}} = 2 \pi \delta(k - q) \). With \( \delta \), we can show that the above inverse relation indeed holds.</p>
 

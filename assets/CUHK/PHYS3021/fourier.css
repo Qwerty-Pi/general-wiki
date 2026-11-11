@@ -1,0 +1,76 @@
+.fourier-graph,
+.fourier-diagram {
+    color-scheme: dark;
+    --grid: var(--text-color);
+    --real: var(--light-green);
+    --imag: var(--yellow);
+    --density: var(--purple)
+}
+
+.fourier-graph * {
+    box-sizing: border-box
+}
+
+.fourier-graph button {
+    cursor: pointer
+}
+
+.fourier-graph label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.fourier-graph label > span {
+    flex-shrink: 0;
+}
+
+.fourier-graph .row {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    align-items: end;
+    margin: 12px 0
+}
+
+.fourier-graph .x-range {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.fourier-graph .expression {
+    max-width: 100%;
+}
+
+.fourier-graph [data-role="expression"] {
+    width: 48ch;
+    min-width: 0;
+}
+
+.fourier-graph input[type=number] {
+    width: 10ch;
+}
+
+.fourier-graph .plots {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px
+}
+
+.fourier-graph svg,
+svg.fourier-diagram {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.fourier-graph [data-role="error"] {
+    color: var(--red)
+}
+
+@media(max-width:800px) {
+    .fourier-graph .plots {
+        grid-template-columns: 1fr
+    }
+}

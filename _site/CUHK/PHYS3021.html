@@ -71,7 +71,7 @@
 	\newcommand\tip[3]{\left\langle #1 \middle| #2 \middle| #3 \right\rangle}
 \]
 </span>
-<h1>PHYS3021 Quantum Mechnics I</h1>
+<h1>PHYS3021 Quantum Mechanics I</h1>
 
 <h2>Foundations</h2>
 
@@ -105,7 +105,7 @@
 
 <p>Classically, in Newtonian mechanics we have \( F = ma \), where the force governs the movement of a particle. In a similar manner, the <b>Schrodinger's Equation</b> governs the <b>evolution</b> of a <b>quantum wave</b> as \[ i \hbar \partial_t \Psi = -\frac{\hbar^2}{2m} \nabla^2 \Psi + V \Psi \] where \( V : \R^3 \to \R \) is the <b>potential</b> and \( \Psi : \R^3 \times \R \to \C \) is the <b>quantum wave</b>. Effectively, the evolution of \( \Psi \) depends on a "kinetic" component \( -\frac{\hbar^2}{2m} \nabla^2 \) and a "potential" component \( V \).</p>
 
-<p>Schrodinger initially interprets \( \Psi \) as the charge density (in e.g. hydrogen atom), but it rather should be interpreted as <b>probability density</b>, which the density is \( |\Psi^2| \) or \( \Psi^* \Psi \). As a PDF, the amplitude of quantum waves doesn't matter (unlike EM waves), and we expect \( \Psi \) to be <b>normalised</b> where \( \int |\Psi|^2 dV = 1 \). Formally, this means \( \Psi \) is a \( L^2 \) (<b>square-integrable</b>) function.</p>
+<p>Schrodinger initially interprets \( \Psi \) as the charge density (in e.g. hydrogen atom), but it rather should be interpreted as <b>probability density</b>, which the density is \( |\Psi|^2 \) or \( \Psi^* \Psi \). As a PDF, the amplitude of quantum waves doesn't matter (unlike EM waves), and we expect \( \Psi \) to be <b>normalised</b> where \( \int |\Psi|^2 dV = 1 \). Formally, this means \( \Psi \) is a \( L^2 \) (<b>square-integrable</b>) function.</p>
 
 <h3>Time-Independent Schrodinger</h3>
 
@@ -145,9 +145,11 @@
 
 <p>An important idea in physics is <b>conservation</b> and <b>continuity</b>: the total quantity is conserved, while the quantity can only move continuously. In general, the <b>continuity equation</b> is of the form \[ \partial_t \rho + \nabla \cdot j = 0 \] where \( \rho \) refers to the <b>density</b> and \( j \) refers to the <b>flux</b>. This basically means that the rate of change in density \( \partial_t \rho \) is the negation of the rate of outward flow \( \nabla \cdot j \).</p>
 
-<p>What if this quantity is probability? By Schrodinger, we have \( \partial_t P = \Psi^* \frac{\hat H}{i \hbar}\Psi + \text{c.c.} = \Psi^* [ -\frac{\hbar}{2mi} \nabla^2 + \frac{V}{i \hbar} ] \Psi + \text{c.c.} = -\frac{\hbar}{2mi} \nabla \cdot (\Psi^* \nabla \Psi - \Psi \nabla \Psi^*) \). Hence, by define the <b>probability current</b> \( j = \frac{\hbar}{2mi} (\Psi^* \nabla \Psi - \Psi \nabla \Psi^*) \), the continuity equation holds and the probability is always conserved.</p>
+<p>What if \( \rho \) refers to the <b>probability density</b> \( |\Psi|^2 \)? By Schrodinger, we have \( \partial_t \rho = \Psi^* \frac{\hat H}{i \hbar}\Psi + \text{c.c.} = \Psi^* [ -\frac{\hbar}{2mi} \nabla^2 + \frac{V}{i \hbar} ] \Psi + \text{c.c.} = -\frac{\hbar}{2mi} \nabla \cdot (\Psi^* \nabla \Psi - \Psi \nabla \Psi^*) \). Hence, by define the <b>probability current</b> \[ j = \frac{\hbar}{2mi} (\Psi^* \nabla \Psi - \Psi \nabla \Psi^*) \] the continuity equation holds and the probability is always conserved.</p>
 
-<h2>Quantum Measurment</h2>
+<p>If we write \( \Psi = f e^{i \phi} \) where amplitude \( f \) and phase \( \phi \) are real functions, then \( j = \frac{\hbar}{m} \Im(\Psi^* \nabla \Psi) = \frac{\hbar}{m} \rho \nabla \phi \). So, in a sense, the probability current can be interpreted as the probability density times velocity.</p>
+
+<h2>Quantum Measurement</h2>
 
 <p>Quantum waves are probabilistic in nature. What happens when we take a measurement on its position or its momentum? By preparing an <b>ensemble</b> (random samples) of a quantum wave and repeatedly take measurement, we can approximate the <b>statistics</b> of the measurement.</p>
 
@@ -167,8 +169,8 @@
 
 <p>Note that these are postulates, which cannot be dervied from other theorems, while no experiment rejects them yet.</p>
 
-<h2>Zoology of Schrodinger</h2>
+<h2>Zoology of Schrodinger in 1D</h2>
 
-<p>Okay, enough theory. How shall we solve actual scenarios for Schrodinger's Equation?</p>
+<p>Okay, enough theory. Now, we want to solve actual cases for Schrodinger's Equation.</p>
 
 </body>

@@ -86,9 +86,16 @@ layout: default
             <option value="local">Local</option>
             <option value="xcpc" selected>XCPC</option>
             <option value="ucup">UCUP</option>
+            <!--option value="qoj">QOJ</option-->
+            <option value="cf">CF</option>
         </select>
     </div>
     <div><input id="contest-id" value="icpc/51st/wuhan" placeholder="icpc/51st/wuhan"/></div>
+    <div id="cf-credentials" style="display: none">
+        <input id="cf-api-key" type="password" placeholder="CF API key" aria-label="CF API key" autocomplete="off"/>
+        <input id="cf-api-secret" type="password" placeholder="CF API secret" aria-label="CF API secret" autocomplete="off"/>
+        <a href="https://codeforces.com/settings/api" target="_blank" rel="noopener">CF API</a>
+    </div>
     <div>Start: <input id="start-time" type="datetime-local"/></div>
     <button id="fetch-contest">Fetch</button>
 </div>
@@ -122,6 +129,10 @@ layout: default
                 contest = await fetchXCPCData(contestId);
             } else if (source === 'ucup') {
                 contest = await fetchUniversalCupData(contestId);
+            } else if (source === 'qoj') {
+                contest = await fetchQOJData(contestId);
+            } else if (source === 'cf') {
+                contest = await fetchCFData(contestId, $('#cf-api-key').val(), $('#cf-api-secret').val());
             } else {
                 throw new Error('Unknown contest source.');
             }
@@ -135,7 +146,9 @@ layout: default
     }
 
     $("#contest-source").on('change', function() {
-        const defaultId = this.value === 'ucup' ? '3575' : 'icpc/51st/wuhan';
+        $('#cf-credentials').toggle(this.value === 'cf');
+        const defaultId = this.value === 'cf' ? '106799' : this.value === 'qoj' ? '4565' :
+            this.value === 'ucup' ? '3575' : 'icpc/51st/wuhan';
         $("#contest-id").val(defaultId).attr("placeholder", defaultId);
     });
 

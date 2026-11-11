@@ -295,3 +295,111 @@ async function fetchUniversalCupData(input) {
     if (!response.ok) throw new Error(`Could not fetch Universal Cup results (${response.status}).`);
     return parseUniversalCupResults(await response.text());
 }
+
+// QOJ publishes external results in the same standings format as UCUP.
+function parseQOJContestId(input) {
+    const match = String(input).trim().match(/^([1-9]\d*)$/);
+    if (!match) throw new Error('Enter a numeric QOJ contest ID, e.g. 4565.');
+    return match[1];
+}
+
+async function fetchQOJData(input) {
+    const contestId = parseQOJContestId(input);
+    const url = `https://qoj.ac/results/QOJ${contestId}`;
+    const response = await fetch('https://corsproxy.io/?key=eb06d979&url=' + encodeURIComponent(url));
+    if (!response.ok) throw new Error(`Could not fetch QOJ results (${response.status}).`);
+    try {
+        const contest = parseUniversalCupResults(await response.text());
+        if (contest.name === 'Universal Cup') contest.name = `QOJ${contestId}`;
+        return contest;
+    } catch (error) {
+        throw new Error(error.message.replaceAll('Universal Cup', 'QOJ'));
+    }
+}
+
+async function fetchCFData(input, apiKey = '', apiSecret = '') {
+    const contestId = String(input).trim();
+    if (!/^[1-9]\d*$/.test(contestId)) throw new Error('Enter a numeric CF Gym contest ID.');
+    apiKey = apiKey.trim();
+    apiSecret = apiSecret.trim();
+    if (!apiKey || !apiSecret) throw new Error('Enter your CF API key and secret to access Gym standings.');
+    let lastRequest = 0;
+    async function request(method, extra = {}) {
+        // CF allows one API request per two seconds.
+        const wait = 2100 - (Date.now() - lastRequest);
+        if (wait > 0) await new Promise(resolve => setTimeout(resolve, wait));
+        const params = new URLSearchParams({ apiKey, contestId, ...extra, time: String(Math.floor(Date.now() / 1000)) });
+        params.sort();
+        const random = Array.from(crypto.getRandomValues(new Uint8Array(3)), byte => byte.toString(16).padStart(2, '0')).join('');
+        const signatureInput = `${random}/${method}?${Array.from(params, ([key, value]) => `${key}=${value}`).join('&')}#${apiSecret}`;
+        const digest = await crypto.subtle.digest('SHA-512', new TextEncoder().encode(signatureInput));
+        params.set('apiSig', random + Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join(''));
+        // Send credentials only to CF; never through a proxy.
+        lastRequest = Date.now();
+        const response = await fetch(`https://codeforces.com/api/${method}?` + params);
+        const raw = await response.text();
+        console.log(`[CF API ${method}] HTTP ${response.status}`, raw);
+        const status = `CF API ${method} HTTP ${response.status}${response.statusText ? ' ' + response.statusText : ''}`;
+        if (!response.ok) throw new Error(`${status}: ${raw}`);
+        let data;
+        try {
+            data = JSON.parse(raw);
+        } catch {
+            throw new Error(`${status}: ${raw}`);
+        }
+        if (data.status !== 'OK') throw new Error(`${status}: ${raw}`);
+        return data.result;
+    }
+    const standings = await request('contest.standings');
+    // Always use the submission log for replay events, even when standings
+    // rows are available. Standings supply metadata and zero-submission teams.
+    const runs = [];
+    const pageSize = 10000;
+    for (let from = 1; ; from += pageSize) {
+        const page = await request('contest.status', { from: String(from), count: String(pageSize) });
+        runs.push(...page);
+        if (page.length < pageSize) break;
+    }
+    return parseCFSubmissions(standings, runs);
+}
+
+function parseCFSubmissions({ contest, problems, rows = [] }, runs) {
+    if (contest.type !== 'ICPC') throw new Error('CF requires a Gym contest with ICPC scoring.');
+    const tasks = problems.map(problem => problem.index);
+    const teams = new Map(), submissions = [], seen = new Set();
+    function identify(party) {
+        const handles = (party.members || []).map(member => member.handle).sort().join(', ');
+        const key = party.teamId != null ? `team:${party.teamId}` : (handles || party.teamName);
+        if (!teams.has(key)) teams.set(key, { university: cleanTeamName(party.teamName || handles), team: '' });
+        return teams.get(key);
+    }
+    for (const { party } of rows) {
+        if (!['PRACTICE', 'MANAGER'].includes(party.participantType)) identify(party);
+    }
+    const filtered = { duplicate: 0, participantType: 0, time: 0, problem: 0, verdict: 0 };
+    const participantTypes = {};
+    const ignored = new Set(['COMPILATION_ERROR', 'TESTING', 'SUBMITTED', 'SKIPPED']);
+    for (const run of [...runs].sort((a, b) => a.relativeTimeSeconds - b.relativeTimeSeconds || a.id - b.id)) {
+        if (seen.has(run.id)) { filtered.duplicate++; continue; }
+        seen.add(run.id);
+        const party = run.author;
+        participantTypes[party.participantType] = (participantTypes[party.participantType] || 0) + 1;
+        if (['PRACTICE', 'MANAGER'].includes(party.participantType)) { filtered.participantType++; continue; }
+        const time = run.relativeTimeSeconds;
+        if (!Number.isFinite(time) || time < 0 || time >= contest.durationSeconds) { filtered.time++; continue; }
+        if (!tasks.includes(run.problem.index)) { filtered.problem++; continue; }
+        const team = identify(party);
+        if (!run.verdict || ignored.has(run.verdict)) { filtered.verdict++; continue; }
+        submissions.push({ ...team, task: run.problem.index, time,
+            verdict: run.verdict === 'OK' ? 'accepted' : 'rejected' });
+    }
+    const debug = { returned: runs.length, standingsRows: rows.length, teams: teams.size,
+        submissions: submissions.length, participantTypes, filtered };
+    console.log('[CF conversion]', debug);
+    if (!teams.size) throw new Error(`CF API returned ${runs.length} submissions, but none could be used for replay. Participant types: ${JSON.stringify(participantTypes)}. Filtered: ${JSON.stringify(filtered)}.`);
+    return {
+        name: contest.name, tasks, teams: [...teams.values()],
+        duration: contest.durationSeconds, freeze: contest.freezeDurationSeconds ?? 3600,
+        balloons: getTaskColours(tasks), submissions
+    };
+}

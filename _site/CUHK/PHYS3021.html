@@ -66,6 +66,7 @@
 	\def\R{\mathbb{R}}
 	\def\C{\mathbb{C}}
 	\def\N{\mathbb{N}}
+	\def\Z{\mathbb{Z}}
 	\newcommand\ip[2]{\langle #1 | #2 \rangle}
 	\newcommand\ipx[2]{\left\langle #1 \middle| #2 \right\rangle}
 	\newcommand\tip[3]{\left\langle #1 \middle| #2 \middle| #3 \right\rangle}
@@ -107,6 +108,12 @@
 
 <p>Afterwards, de Brogile proposes that particles exists as <b>matter waves</b>. For a particle of (relativistic) energy \( E \) and momentum \( p \), its matter wave has \( f = E / h \) and \( \lambda = h / p \). The <b>phase velocity</b> \( v_{ph} = \frac{\omega}{k} = \frac{c^2}{v} \), where the <b>group velocity</b> \( v_{g} = \partial_k \omega = v \). It is really the group velocity that carries information.</p>
 
+<h3>Dimensional Analysis</h3>
+
+<p>In physics, we have <b>dimension</b> for every quantity. As the old saying goes, you cannot add apples to oranges, we can only add quantities in the same dimensions together. It is often useful for sanity check of whether the computation result make senses.</p>
+
+<p>For a physical quantity \( X \), we use \( [X] \) to represent its dimension. The basic units include <b>mass</b> \( [m] = M \), <b>length</b> \( [l] = L \), <b>time</b> \( [t] = T \) (and four more). We can derive the dimensions of other physical quantity base on them. For example, planck's quantised action \( [\hbar] = ML^2T^{-1} \), angular frequency \( [\omega] = T^{-1} \), momentum \( [p] = MLT^{-1} \) and energy \( [E] = ML^2T^{-2} \). Basically, the only binary operation we can do on non-<b>dimensionless</b> physical quantities is just multiply them together, for example \( [h \omega] = [h][\omega] = ML^2T^{-2} = [E] \).</p>
+
 <h2>Schrodinger's Equation</h2>
 
 <p>Classically, in Newtonian mechanics we have \( F = ma \), where the force governs the movement of a particle. In a similar manner, the (non-relativistic) <b>Schrodinger's Equation</b> governs the <b>evolution</b> of a <b>quantum wave</b> as \[ i \hbar \partial_t \Psi = -\frac{\hbar^2}{2m} \nabla^2 \Psi + V \Psi \] where \( V : \R^3 \to \R \) is the <b>potential</b> and \( \Psi : \R^3 \times \R \to \C \) is the <b>quantum wave</b>. Effectively, the evolution of \( \Psi \) depends on a "kinetic" component \( -\frac{\hbar^2}{2m} \nabla^2 \) and a "potential" component \( V \).</p>
@@ -121,9 +128,10 @@
 
 <p>Now, we want to write quantum wave \( \psi \) into the <b>superposition</b> of <b>plane waves</b>, namely <b>Fourier Transform</b> as \[ \psi(x) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} \tilde \psi (k) e^{ikx} \, dk \] Turns out its inverse is very simple: simply take \[ \tilde \psi(k) = \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{\infty} \psi(x) e^{-ikx} \, dx \] We treat \( \psi(x) \) as a wave function in the <b>position space</b>, and \( \tilde \psi(k) \) as a wave function in the \( k \)-space or the <b>momentum space</b> (since \( p = \hbar k \)).</p>
 
-<p>Define the <b>inner product</b> between wave functions as \[ \ip{\psi}{\varphi} = \int_{-\infty}^{\infty} \psi^*(x) \varphi(x) \, dx \] How to compute \( \ip{e^{ikx}}{e^{iqx}} \)? Mathematically it always diverge, but physically we can assume a <b>infinitesimal decay</b> of \( e^{-\eta|x|} \) where \( \eta \to 0 \). It is easy to see \[ \ip{e^{ikx}}{e^{iqx}} = \begin{cases} \infty & \text{ if } k = q \\ 0 & \text{ if } k \ne q \end{cases}\] which is a "generalised" function. We can say a bit more - note that \[ \iint e^{ikx - \eta |x|} \, dx \, dk = \int \frac{2 \eta}{\eta^2 + k^2} \, dk = 2 \pi \] the "magnitude of the infinity" is \( 2 \pi \). By introducing the <b>Dirac delta</b> \( \delta \) where \( \delta(x) = \infty \) when \( x = 0 \), \( \delta(x) = 0 \) when \( x \ne 0 \) and \( \int_{-\infty}^{\infty} \delta(x) \, dx = 1 \), then we can write \( \ip{e^{ikx}}{e^{iqx}} = 2 \pi \delta(q - k) \).</p>
+<p>Define the <b>inner product</b> between wave functions as \[ \ip{\psi}{\varphi} = \int_{-\infty}^{\infty} \psi^*(x) \varphi(x) \, dx \] How to compute \( \ip{e^{ikx}}{e^{iqx}} \)? Mathematically it always diverge, but physically we can assume a <b>infinitesimal decay</b> of \( e^{-\eta|x|} \) where \( \eta \to 0 \). It is easy to see \[ \ip{e^{ikx}}{e^{iqx}} = \begin{cases} \infty & \text{ if } k = q \\ 0 & \text{ if } k \ne q \end{cases}\] which is a "generalised" function. We can say a bit more - note that \[ \iint e^{ikx - \eta |x|} \, dx \, dk = \int \frac{2 \eta}{\eta^2 + k^2} \, dk = 2 \pi \] the "magnitude of the infinity" is \( 2 \pi \). By introducing the <b>Dirac delta</b> \( \delta \) where \( \delta(x) = \infty \) when \( x = 0 \), \( \delta(x) = 0 \) when \( x \ne 0 \) and \( \int_{-\infty}^{\infty} \delta(x) \, dx = 1 \), we can write \( \ip{e^{ikx}}{e^{iqx}} = 2 \pi \delta(q - k) \). Actually this is just a formulation for the concept of <b>point mass</b>.</p>
 
 <p>We may use \( \delta \) to prove the inverse relation of Fourier Transform: \[ \frac{1}{\sqrt{2\pi}} \int \tilde \psi(k) e^{ikx} \, dk = \int \psi(y) \delta(x - y) \, dy = \psi(x) \] </p>
+
 <h3>Operators</h3>
 
 <p><b>Operators</b> are transformation between functions. For example, we denote \( \hat x \) as the operator \( \psi \mapsto x \psi \), and \( \hat p_x \) as the operator \( \psi \mapsto -i \hbar \partial_x \psi \). Similarly, we can define \( \hat y = y, \hat z = z, \hat p_y = -i \hbar \partial_y, \hat p_z = -i \hbar \partial_z \) and \( \hat p = -i \hbar \nabla \). In operator form, we can write the <b>Hamiltonian operator</b> as \( \hat H = \frac{\hat p^2}{2m} + \hat V \), and Schrodinger's Equation as \( -i \hbar \partial_t \Psi = \hat H \Psi \).</p>
@@ -141,8 +149,6 @@
 <h3>Time-Dependent Schrodinger</h3>
 
 <p>Previously, we assume \( \Psi \) is separable and is time-independent. How to solve the general case for \( i \hbar \partial_t \Psi = \hat H \Psi \)? Since the Hamiltonian \( \hat H \) is Hermitian, \( \Psi \) is simply a <b>superposition</b> of the <b>eigenstates</b> \( \psi \) satisfying \( \hat H \psi = E \psi \)! Specifically, if \( \Psi(r, 0) = \sum c_n \psi_n \), then \( \Psi(r, t) = \sum c_n \psi_n e^{-iE_n t / \hbar} \). By playing with notations, we can write in a cool way: let \( \hat U(t) = e^{-i \hat H t / \hbar} \), then \( \Psi(t) = \hat U(t) \Psi(0) \).</p>
-
-<p>We can classify the eigenstates depending on whether they can be normalised as either <b>bounded</b> or <b>continuum</b> (<b>scattering</b>), where bounded states are normalisable while scattering states are not. Also, bounded states have <b>discrete eigenenergies</b> while scattering states have <b>continuous eigenenergies</b>. We will discuss more below (probably).</p>
 
 <h3>Probability Current and Continuity Equation</h3>
 
@@ -166,14 +172,30 @@
 
 <p>A natural question is - how does the expectation of an operator \( \hat A \) evolves over time? We have \[ \frac{d}{dt} \langle \hat A \rangle = \frac{i}{\hbar} \langle [\hat H, \hat A]\rangle + \langle \partial_t \hat A \rangle\] and so \( \frac{d}{dt} \langle \hat x \rangle = \frac{1}{m} \langle \hat p \rangle \) and \( \frac{d}{dt} \langle \hat p \rangle = -\langle V'(x) \rangle \). This somewhat resembles the classical mechanics, but once \( V(x) \) is of higher order than quadratic, then the term of <b>quantum fluctuation</b> \( \langle V'(x) \rangle - V'(\langle x \rangle) \) appears, and so quantum mechanics is not equivalent to the classical mechanics at all.</p>
 
-<h3>Measurement Postulates</h3>
+<h3>Postulates</h3>
 
-<p>What actually happens when we measure a "physical property"? We actually require the operator \( \hat A \) to be measured, or <b>observable</b>, to be <b>linear</b> and <b>Hermitian</b>. If the quantum state is \( \Psi \), then we can measure the eigenvalue \( a_n \) with <b>probability</b> \( \ip{\Psi_n}{\Psi} \) given \( \hat A \Psi_n = a_n \Psi_n \), and the state \( \Psi \) <b>collapses</b> (changes) to \( \Psi_n \) (only theoretically, could be destroyed).</p>
+<p>We claim that all classical "physical property" or <b>observable</b> can be derived from position and momentum. To measure an observable (operator) \( \hat A \), we require \( \hat A \) to be both <b>linear</b> and <b>Hermitian</b>. These two properties are important, since we implicitly assume them all the times.</p>
 
-<p>Note that these are postulates, which cannot be dervied from other theorems, while no experiment rejects them yet.</p>
+<p>If the quantum state is \( \Psi \), then we can measure the eigenvalue \( a_n \) with <b>probability</b> \( \ip{\Psi_n}{\Psi} \) given \( \hat A \Psi_n = a_n \Psi_n \), and the state \( \Psi \) <b>collapses</b> (changes) to \( \Psi_n \) theoretically. Practically, the quantum state could be destroyed, and the state would evolve again afterwards as well.</p>
 
 <h2>Zoology of Schrodinger in 1D</h2>
 
 <p>Okay, enough theory. Now, we want to solve actual cases for Schrodinger's Equation.</p>
+
+<h3>Free Particles</h3>
+
+<p>The simplest case is when \( V = 0 \), which means the particle is <b>free</b>, and we have hamiltonian \( \hat H = -\frac{\hbar^2}{2m} \nabla^2 \). Solving \( \hat H \psi = E \psi \), we have \( \psi = e^{i k \cdot r} \) where \( \Vert k \Vert = \frac{\sqrt{2mE}}{\hbar} \). In other words, \[ E_k = \frac{\hbar^2 |k|^2}{2m} \] Note that there is <u>two</u> solutions in 1D and infinitely many in higher dimensions.</p>
+
+<p>Mathematically we can allow \( E \le 0 \) or even complex \( E \), but for \( \psi \) to be normalisable, we cannot allow the amplitude of \( \psi \) to shoot up <b>exponentially</b> as \( |r| \to \infty \). This is one of the <b>boundary conditions</b> that we need to take into account.</p>
+
+<p>Note that the eigenstates \( \psi = e^{i k \cdot r} \) are not normalisable on their own as well! We call them <b>continuum states</b>. However, since they do not shoot up exponentially, a superposition of them can actually produce a valid quantum wave. Indeed, we can use Fourier Transform to write arbitrary quantum waves into a superposition of plane waves.</p>
+
+<h3>Infinite Well</h3>
+
+<p>A slightly more complicated example is the <b>infinite well</b>. Consider the potential well \[ V(x) = \begin{cases} 0 & \text{ if } x \in [0, a] \\ \infty & \text{ otherwise } \end{cases} \] Then for \( x \) outside of \( [0, a] \) we obviously have \( \psi(x) = 0 \). How about \( x \in [0, a] \)? Clearly, we have \( \psi(x) = Ae^{ikx} + Be^{-ikx} \) for complex \( A \) and \( B \). Note that we also have the <b>boundary conditions</b> that \( \psi(0) = \psi(a) = 0 \), since \( \psi \) is continuous so that \( \nabla^2 \psi \) exists. By writing \[ M_{BC} = \begin{pmatrix} 1 & 1 \\ e^{ikx} & e^{-ikx} \end{pmatrix} \] and require \( M_{BC} \) to be <b>singular</b>, we forces \( k = \frac{n \pi}{a} \) for some \( n \in \Z \). It is easy to see all the eigenstates \[ \psi_n(x) = \sqrt{\frac{2}{a}} \sin \frac{n\pi x}{a} \] with eigenenergy \[ E_n = \frac{\hbar^2}{2m} \cdot \frac{n^2 \pi^2}{a^2} \] are normalisable, and are called <b>bounded states</b>.</p>
+
+<p>How does \( \langle x \rangle \) evolves with time? For an eigenstate \( \psi_n \), we have \( \langle x \rangle = \frac{a}{2} \) being <b>stationary</b>. However, when \( \psi \) is a superposition say \( \frac{1}{\sqrt{2}} (\psi_n + \psi_m) \), then there is an additional <b>oscillating dipole</b> \[ \int_0^a \frac{2}{a} \sin \frac{n \pi x}{a} \sin \frac{m \pi x}{a} \cos \frac{E_n - E_m}{\hbar} \, dx \] whenever \( n \) and \( m \) has the <b>same parity</b>. We can express this oscillating component using the <b>Heisenberg matrix</b> as \( x_{n, m} \cos \omega_{n, m} \) where \( x_{n, m} = \tip{\psi_n}{\hat x}{\psi_m} \) and \( \omega_{n, m} = \frac{E_n - E_m}{\hbar} \).</p>
+
+<h2>Harmonic Oscillator</h2>
 
 </body>

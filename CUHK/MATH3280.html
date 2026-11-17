@@ -68,7 +68,7 @@ layout: default
 
 <p>In fact, we can identify \( X \) by its <b>moments</b> \( \E[X^k] \) where \( k \in \N \). The <b>Moment Generating Function</b> is naturally defined as \[ M(t) = \E[e^{tX}] = 1 + \E[X] \cdot t + \E[X^2] \cdot \frac{t^2}{2} + \cdots \] which contains all the moments of \( X \). Note that it is only well-defined when it is. We shall note that MGFs are bijections, kinda like Fourier or Taylor, although it would not be proven. One may introduce the <b>Cumulant Generating Function</b> \[ K(t) = \log M(t) = \log \E[e^{tX}] \] as well, which generates the mean and variance(!).</p>
 
-<p>Now, we can (somewhat) state the criteria of <b>independence</b> for random variables. That is, \( M_{X, Y}(s, t) = M_X(s) \cdot M_Y(t) \) iff \( X \) and \( Y \) are independent. We have \( \E[X^a Y^b] = \E[X^a] \cdot \E[Y^b] \), and again by Taylor that \[ \E[g(X) \cdot h(Y)] = \E[g(X)] \cdot \E[h(Y)] \] for functions \( g, h : \R \to \R \). Note that \( K_{X + Y}(t) = K_{X}(t) + K_{Y}(t) \), and so \[ \Var(X + Y) = \Var(X) + \Var(Y) \] if \( X \) and \( Y \) are independent. (Note: This definition is slightly sloppy, but it works for the <i>usual</i> case - we are not generalising the notion of random variables, anyways.)</p>
+<p>Now, we can (somewhat) state the criteria of <b>independence</b> for random variables. That is, \( M_{X, Y}(s, t) = M_X(s) \cdot M_Y(t) \) iff \( X \) and \( Y \) are independent. We have \( \E[X^a Y^b] = \E[X^a] \cdot \E[Y^b] \), and again by Taylor that \[ \E[g(X) \cdot h(Y)] = \E[g(X)] \cdot \E[h(Y)] \] for functions \( g, h : \R \to \R \). Note that \( K_{X + Y}(t) = K_{X}(t) + K_{Y}(t) \), and so \[ \Var(X + Y) = \Var(X) + \Var(Y) \] if \( X \) and \( Y \) are independent.</p>
 
 <h3>Covariance</h3>
 

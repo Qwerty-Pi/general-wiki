@@ -127,7 +127,7 @@ function parseIcpcDat(datContent) {
 async function fetchXCPCData(contestId) {
     // sus website, but temporarily use this first
     const corsproxyurl = "https://corsproxy.io/?key=eb06d979";
-    const contesturl = `https://board.xcpcio.com/data/${contestId}/`;
+    const contesturl = `https://board-data.xcpcio.com/data/${contestId}/`;
     const baseurl = corsproxyurl + "&url=" + contesturl.replaceAll("/", "%2F").replaceAll(":", "%3A");
     const urls = {
         team: `${baseurl}team.json`,

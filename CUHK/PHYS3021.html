@@ -89,8 +89,6 @@ layout: default
 
 <p>For example, we see trivially that \( \hat x^\dagger = \hat x \). How about \( \hat p^\dagger \)? Since \( \ip{\hat p \psi}{\varphi} = i \hbar \ip{\nabla \psi}{\varphi} = -i \hbar \ip{\psi}{\nabla \varphi} = \ip{\psi}{\hat p \varphi} \) (integration by-parts), so \( \hat p^\dagger = \hat p \)! We say an operator \( \hat A \) is <b>Hermitian</b> or <b>self-adjoint</b> \( \hat A^\dagger = \hat A \). We can also show \( \hat H \) is Hermitian easily.</p>
 
-<p>What so special about Hermitian operators? It is mostly concerning <b>eigenvectors</b>. First, eigenvalues \( E \) must be real since \( E^* \ip{\psi}{\psi} = \ip{\hat H \psi}{\psi} = \ip{\psi}{\hat H \psi} = E \ip{\psi}{\psi} \). Eigenvectors correspond to different eigenvalues are always <b>orthogonal</b> as well, since \( E_\psi \ip{\psi}{\varphi} = \ip{\hat H \psi}{\varphi} = \ip{\psi}{\hat H \varphi} = E_\varphi \ip{\psi}{\varphi} \), forcing \( \ip{\psi}{\varphi} = 0 \). According to some generalisation of the <b>spectral theorem</b> (which we won't and can't prove here), we can find a <b>complete orthogonal eigenbasis</b> for the underlying space.</p>
-
 <h3>Time-Dependent Schrodinger</h3>
 
 <p>Previously, we assume \( \Psi \) is separable and is time-independent. How to solve the general case for \( i \hbar \partial_t \Psi = \hat H \Psi \)? Since the Hamiltonian \( \hat H \) is Hermitian, \( \Psi \) is simply a <b>superposition</b> of the <b>eigenstates</b> \( \psi \) satisfying \( \hat H \psi = E \psi \)! Specifically, if \( \Psi(r, 0) = \sum c_n \psi_n \), then \( \Psi(r, t) = \sum c_n \psi_n e^{-iE_n t / \hbar} \). By playing with notations, we can write in a cool way: let \( \hat U(t) = e^{-i \hat H t / \hbar} \), then \( \Psi(t) = \hat U(t) \Psi(0) \).</p>

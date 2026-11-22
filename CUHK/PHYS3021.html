@@ -147,10 +147,30 @@ layout: default
 
 <h2>Harmonic Oscillator</h2>
 
-<h3>Removing Dimensions</h3>
+<h3>Dimensionless Representation</h3>
 
 <p>Previously, we consider potential \( V \) as piecewise constant functions. What if \( V \) is a <b>quadratic</b> well that traps the quantum wave? That is, \[ \hat V (x) = \frac{1}{2} K \hat x^2 = \frac{1}{2} m \omega^2 \hat x^2 \] We then have \[ \hat H = \frac{1}{2} m \omega^2 \hat x^2 + \frac{\hat p^2}{2m} \qquad \hat H \psi_n = E_n \psi_n \]</p>
 
-<p>With dimensional analysis, we compute \( \ell_c = \frac{\sqrt{\hbar}}{\sqrt{m \omega}} \), \( p_c = \sqrt{\hbar m \omega} \) and \( E_c = \hbar \omega \) as the base unit for <b>length</b>, <b>momentum</b> and <b>energy</b> respectively. Consequently, \[ \frac{\hat H}{E_c} = \frac{1}{2} \left( \frac{\hat x}{\ell_c} \right)^2 + \frac{1}{2} \left( \frac{\hat p}{p_c} \right)^2 \] Defining \( \hat X = \dfrac{\hat x}{\ell_c} \), \( \hat P = \dfrac{\hat p}{p_c} \) and \( \mathcal{E}_n = \dfrac{E_n}{E_c} \), then we have \[ \hat H = \frac{\hat X^2 + \hat P^2}{2} \qquad \hat H \psi_n = \mathcal{E}_n \psi_n \] As it turns out, this nice-looking TISE has analytical solutions - we will attempt to solve this <i>harmonically</i>.</p>
+<p>Using dimensional analysis, we compute \( \ell_c = \frac{\sqrt{\hbar}}{\sqrt{m \omega}} \), \( p_c = \sqrt{\hbar m \omega} \) and \( E_c = \hbar \omega \) as the base unit for <b>length</b>, <b>momentum</b> and <b>energy</b> respectively. Consequently, \[ \frac{\hat H}{E_c} = \frac{1}{2} \left( \frac{\hat x}{\ell_c} \right)^2 + \frac{1}{2} \left( \frac{\hat p}{p_c} \right)^2 \] Defining \( \hat X = \dfrac{\hat x}{\ell_c} \), \( \hat P = \dfrac{\hat p}{p_c} \) and \( \mathcal{E}_n = \dfrac{E_n}{E_c} \), then we have \[ \hat H = \frac{\hat X^2 + \hat P^2}{2} \qquad \hat H \psi_n = \mathcal{E}_n \psi_n \] As it turns out, this nice-looking TISE has analytical solutions - we will attempt to solve this <i>harmonically</i>.</p>
 
 <h3>Ladder Operators</h3>
+
+<p>It is very tempting for us to "factorise" \( \hat H \). We define the <b>annihilation operator</b> \( \hat a \) and <b>creation operator</b> \( \hat a^\dagger \) as \[ \hat a = \frac{\hat X + i \hat P}{\sqrt{2}} \qquad \hat a^\dagger = \frac{\hat X - i \hat P}{\sqrt{2}} \] Noting \( [\hat X, \hat P] = i \) and \( [ \hat a, \hat a^\dagger] = 1 \), we obtain the relation \( \hat H = \hat a^\dagger \hat a + \frac{1}{2} \). With some more computations, \( [\hat H, \hat a] = -\hat a \) and \( [\hat H, \hat a^\dagger] = \hat a^\dagger \). We may also define the <b>number operator</b> \( \hat N = \hat a^\dagger \hat a \).</p>
+
+<p>Now, suppose \( \psi_n \) is an eigenstate with eigenenergy \( \mathcal{E}_n \), then \( \hat a \psi_n \) has eigenenergy \( \mathcal{E}_n - 1 \) and \( \hat a^\dagger \psi_n \) has eigenenergy \( \mathcal{E}_n + 1 \) respectively. They are called the <b>ladder operators</b> collectively since they can be imagined as climbing up and down a ladder.</p>
+
+<p>By Heisenberg, \( \mathcal{E}_n \ge \frac{1}{2} \), and so \( \hat a \psi_0 = 0 \) for the <b>ground state</b> \( \psi_0 \). Solving the PDE \( (X - \partial_X) \psi_0 = \psi_0 \) gives us none other than the well-known <b>gaussian</b> \( e^{-X^2/2} \). Therefore, we obtain the eigenstates as simply \[ \psi_n \sim (\hat a^\dagger)^n e^{-X^2/2} \qquad \mathcal{E}_n = n + \frac{1}{2} \]</p>
+
+<h3>Hermite Generating Function</h3>
+
+<p>Inspecting the form of \( \psi_n \), it becomes apparent that \( \psi_n \sim H_n(X) e^{-X^2/2} \) for some polynomials \( H_n(X) \). We define \[ \mathcal{H}(X, s) = \sum_{n \ge 0} \frac{H_n(X)}{n!} s^n = e^{-s^2 + 2sX} \]</p>
+
+<p>Then \( \hat a \mathcal{H} \psi_0 = \sqrt{2} s \mathcal{H} \psi_0 \) and \( \hat a^\dagger \mathcal{H} \psi_0 = \sqrt{2} (X - s) \mathcal{H} \psi_0 = \frac{1}{\sqrt{2}} \partial_s \mathcal{H} \psi_0 \), which \( [s^n] \mathcal{H} \) is closed under \( \hat a \) and \( \hat a^\dagger \). What can we do with \( \mathcal{H} \)? One of the fabulous thing you can do is Fourier Transform on it, which you would get \( \mathcal{H}(-iP) e^{-P^2/2} \) magically.</p>
+
+<p>We can also compute the inner products among \( \psi_n \sim H_n e^{-X^2/2} \) cleanly with the GF. Consider \( \mathcal{H}(X, s) \mathcal{H}(X, t) e^{-X^2} = \exp (-s^2 + 2sX - t^2 + 2tX - X^2) = \exp(-(X - s - t)^2 + 2st) \). Integrate this over \( (-\infty, \infty) \), we get \[ \int \mathcal{H}(X, s) \mathcal{H}(X, t) e^{-X^2} \, dX = \sqrt{\pi} e^{2st} \] Which means the <b>orthonormal eigenstates</b> are \[ \psi_n(X) = \frac{1}{\sqrt{n! 2^n \sqrt{\pi}}} H_n(X) e^{-X^2/2} \] Now, we shall wrap up this section by noting \( \hat a \psi_n = \sqrt{n} \psi_{n - 1} \) and \( \hat a^\dagger \psi_n = \sqrt{n + 1} \psi_{n + 1} \) for all \( n \ge 0 \). Note that the identities is consistent with \( [\hat a, \hat a^\dagger] = 1 \).</p>
+
+<h3>Time Evolution</h3>
+
+<p>How to compute \( \tip{\psi_n}{\hat X}{\psi_m} \) or \( \tip{\psi_n}{\hat P}{\psi_m} \)? Note that \[ \hat X = \frac{\hat a + \hat a^\dagger}{\sqrt{2}} \qquad \hat P = \frac{\hat a - \hat a^\dagger}{\sqrt{2} i}\] As a result, we see that the transition only appears between <b>adjacent states</b>. </p>
+
+<p><b>Coherent states</b> refer to states of the form \[ e^{-|C|^2}\sum_{n \ge 0} \frac{C^n}{\sqrt{n!}} \psi_n \] which is eigenvector to the annihilation operator \( \hat a \).</p>

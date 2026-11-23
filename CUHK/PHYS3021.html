@@ -7,6 +7,7 @@ layout: default
 	\def\C{\mathbb{C}}
 	\def\N{\mathbb{N}}
 	\def\Z{\mathbb{Z}}
+	\def\H{\mathcal{H}}
 	\newcommand\ip[2]{\langle #1 | #2 \rangle}
 	\newcommand\ipx[2]{\left\langle #1 \middle| #2 \right\rangle}
 	\newcommand\tip[3]{\left\langle #1 \middle| #2 \middle| #3 \right\rangle}
@@ -101,23 +102,36 @@ layout: default
 
 <p>If we write \( \Psi = f e^{i \phi} \) where amplitude \( f \) and phase \( \phi \) are real functions, then \( j = \frac{\hbar}{m} \Im(\Psi^* \nabla \Psi) = \frac{\hbar}{m} \rho \nabla \phi \). So, in a sense, the probability current can be interpreted as the probability density times velocity.</p>
 
-<h2>Quantum Measurement</h2>
+<h2>Quantum Formalism</h2>
 
-<p>Quantum waves are probabilistic in nature. What happens when we take a measurement on its position or its momentum? By preparing an <b>ensemble</b> (random samples) of a quantum wave and repeatedly take measurement, we can approximate the <b>statistics</b> of the measurement.</p>
+<p>We want to formalise our notations once and for all. For example, we want to avoid writing integration symbols everytime, and also write down all the postulates we are assuming. How shall we do that?</p>
 
-<h3>Statistics</h3>
+<h3>Postulate I: Hilbert Space</h3>
 
-<p>We can compute the <b>variance</b> and <b>standard variations</b> for position and momentum as \( (\Delta x)^2 = \langle x^2 \rangle - \langle x \rangle^2 \) and \( (\Delta p)^2 = \langle p^2 \rangle - \langle p \rangle^2 \). By absolutely abusing notations, we have \[ \ip{x}{x} \cdot \ip{p}{p} \ge |\ip{x}{p}|^2 \ge \frac{1}{4}[\hat x, \hat p]^2 = \frac{\hbar^2}{4} \] and the <b>Heisenberg Uncertainty Principle</b> \[ \Delta x \cdot \Delta p \ge \frac{\hbar}{2} \]</p>
+<p>The <b>Hilbert Space</b> \( \H \) is a <b>complete</b> \( L_2 \) <b>inner-product space</b>. We implicitly assume that all wavevectors \( \psi \) can be represented as an element of \( \H \). By \( L_2 \), we means that elements of \( \H \) are all <b>square-integrable</b>; and by <b>complete</b>, that means the limit of a sequence of wavevectors in \( \H \) stays in \( \H \).</p>
 
+<p>Dirac introduces the <b>bra-ket notation</b> \[ \bra{\psi} = \psi^* \qquad \ket{\psi} = \psi \] So inner products between \( \psi \) and \( \varphi \) can be simply written as \[ \ip{\psi}{\varphi} = \int \psi^* \varphi \, dx \] Another example is the <b>projection operator</b> \( \ket{\psi}\bra{\psi} \) which projects a wavevector onto \( \ket{\psi} \). Since we have the bra-ket "decorations" \( \ket{\,\cdot\,} \) and \( \bra{\,\cdot\,} \), it doesn't really matter what we put inside. For example, writing \( \ket{1} \) or \( \bra{\heartsuit} \) are both perfectly fine.</p>
+
+<h3>Postulate II: Observables</h3>
+
+<p>What is <b>observable</b>? As it turns out, all physical quantities can be measured classically can be written in the form \( Q(\hat x, \hat p, t) \), that is, functions of positions, momentum and time. A simple example is the Hamiltonian \( \hat H = V(\hat x) + \frac{\hat p^2}{2m} \).</p>
+
+<p>As it turns out, all these observables are <b>linear</b> and <b>Hermitian</b>, since both \( \hat x \) and \( \hat p \) are linear and Hermitian. The cool thing about observables \( \hat T \) is its eigenstates - we can always find an <b>orthonormal eigenbasis</b> \( \{ \ket{\psi_n} \} \) or \( \{ \ket{n} \}\)!</p>
+
+<h3>Postulate III: Measurement</h3>
+
+<p>Quantum waves are probabilistic in nature. What happens when we take a measurement on its position or its momentum? By preparing an <b>ensemble</b> (random samples) of a quantum wave and repeatedly take measurement, we can approximate the <b>statistics</b> of the measurement. Given an observable \( \hat T \), the <b>expected value</b> of \( \hat T \) is given by \[ \langle \hat T \rangle = \langle \psi | \hat T | \psi \rangle = \int \psi^* \hat T \psi \, dx \] Clearly, we can compute the variance and standard deviations of \( \hat T \) as \( (\Delta T)^2 = \langle \hat T^2 \rangle - \langle T \rangle^2 \).</p>
+
+<p>The <b>Born Rule</b> states that the measurement of \( \hat T \) on \( \psi \) gives \( \lambda_n \) with probability \( \ip{\psi}{n} \) where \( \hat T \ket{n} = \lambda_n \ket{n} \), which the state \( \psi \) <b>collapses</b> to \( \ket{n} \) afterwards, although practically the quantum state could be destroyed, and continue to evolve.</p>
+
+<p>Now, we are really to state the <b>Heisenberg uncertainty principle</b>. Consider observables \( \hat A \) and \( \hat B \). By letting \( \hat f = \hat A - \langle \hat A \rangle \) and \( \hat g = \hat B - \langle \hat B \rangle \), we have \[ (\Delta A)^2 (\Delta B)^2 \ge |\ip{\hat f}{\hat g}|^2 \ge \left( \frac{1}{2i} [\hat f, \hat g] \right)^2 \] and so we have \[ \Delta A \cdot \Delta B \ge \frac{1}{2i}[\hat A, \hat B] \] and for the case of position and momentum, we have \[ \Delta x \cdot \Delta p \ge \frac{1}{2i} [\hat x, \hat p] = \frac{\hbar}{2} \]</p>
+
+<h3>Postulate IV: Evolution</h3>
+
+<p>blah blah blah</p>
 <h3>Ehrenfest Theorem</h3>
 
 <p>A natural question is - how does the expectation of an operator \( \hat A \) evolves over time? We have \[ \frac{d}{dt} \langle \hat A \rangle = \frac{i}{\hbar} \langle [\hat H, \hat A]\rangle + \langle \partial_t \hat A \rangle\] and so \( \frac{d}{dt} \langle \hat x \rangle = \frac{1}{m} \langle \hat p \rangle \) and \( \frac{d}{dt} \langle \hat p \rangle = -\langle V'(x) \rangle \). This somewhat resembles the classical mechanics, but once \( V(x) \) is of higher order than quadratic, then the term of <b>quantum fluctuation</b> \( \langle V'(x) \rangle - V'(\langle x \rangle) \) appears, and so quantum mechanics is not equivalent to the classical mechanics at all.</p>
-
-<h3>Postulates</h3>
-
-<p>We claim that all classical "physical property" or <b>observable</b> can be derived from position and momentum. To measure an observable (operator) \( \hat A \), we require \( \hat A \) to be both <b>linear</b> and <b>Hermitian</b>. These two properties are important, since we implicitly assume them all the times.</p>
-
-<p>If the quantum state is \( \Psi \), then we can measure the eigenvalue \( a_n \) with <b>probability</b> \( \ip{\Psi_n}{\Psi} \) given \( \hat A \Psi_n = a_n \Psi_n \), and the state \( \Psi \) <b>collapses</b> (changes) to \( \Psi_n \) theoretically. Practically, the quantum state could be destroyed, and the state would evolve again afterwards as well.</p>
 
 <h2>Zoology of Schrodinger in 1D</h2>
 

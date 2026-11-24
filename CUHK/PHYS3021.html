@@ -73,22 +73,18 @@ layout: default
 
 <p>We may use \( \delta \) to prove the inverse relation of Fourier Transform: \[ \frac{1}{\sqrt{2\pi}} \int \tilde \psi(k) e^{ikx} \, dk = \int \psi(y) \delta(x - y) \, dy = \psi(x) \] </p>
 
-<h3>Operators</h3>
+<h3>Position, Momentum and Energy</h3>
 
 <p><b>Operators</b> act on wave functions to produce new wave functions. Why do we need the concept of operators? The reason being is that we need operators to represent <b>physical quantities</b>. For example, for the expected value of <b>position</b>, we can write \[ \langle x \rangle = \int_{-\infty}^\infty \psi^*(x) \, x \, \psi(x) \, dx \] where we can treat \( x \) as an operator where \( \psi \mapsto x \psi \); but well, it is equally fine if we do not do so! But how about the expected value of <b>momentum</b>? Well, we can write it in the <b>momentum space</b> as \[ \langle p \rangle = \hbar \int_{-\infty}^\infty \tilde \psi^* (k) \, k \, \tilde \psi(k) \, dk \] Can we translate it back in the <b>position space</b>? If we consider a plane wave \( e^{ikx} \), then its momentum can be "measured" by \[ \left( \frac{\hbar}{i} \partial_x \right) \left( e^{ikx} \right) = \hbar k (e^{ikx}) \] Since we can write any waves \( \psi \) into a superposition of plane waves, we have \( \langle p \rangle = \langle -i \hbar \partial_x \rangle \)! As you can see, we are forced to use operators to represent momentum in the position space.</p>
 
 <p>To denote operators, we usually put a hat above the symbol. For example, \( \hat x \) is the <b>position operator</b> and \( \hat p = -i \hbar \nabla \) is the <b>momentum operator</b>. By letting the <b>Hamiltonian operator</b> \( \hat H \) (essentially measuring energy) as \[ \hat H = \frac{\hat p^2}{2m} + \hat V \] then the Schrodinger's Equation can be written nicely as \[ i \hbar \partial_t \Psi = \hat H \Psi \]</p>
 
+<h3>Commutators</h3>
 
-<p>Define the <b>commutator</b> \( [\hat A, \hat B] = \hat A \hat B - \hat B \hat A \). Clearly the commutator is bilinear and skew-symmetric. A very important relation is \( [\hat x, \hat p] = i \hbar \). By abusing Taylor, we also have \( [\hat p, \hat V(x)] = -i \hbar V'(x) \).</p>
+<p>One of the most fundamental notion is the <b>commutator</b> \[ [\hat A, \hat B] = \hat A \hat B - \hat B \hat A \] which is bilinear and skew-symmetric, where \( [\hat A, \hat B] = 0 \) iff \( \hat A \) and \( \hat B \) commutes with each other. We can show that \[ [\hat x, \hat p] = i \hbar \] With Taylor expansion, we also have the relation \[ [\hat p, \hat V(x)] = -i \hbar V'(x) \]</p>
 
-<p>We can define the (vector) <b>angular momentum</b> as \( \hat L = \hat r \times \hat p \). Interestingly, we have \( [\hat L, \hat L] = i \hbar \hat L \). The total (scalar) angular momentum is defined as \( \hat L^2 = \hat L_x^2 + \hat L_y^2 + \hat L_z^2 \). Under the cylindrical coordinates \( (\rho, \phi, z) \), we have the nice relation \( \hat L_z = \frac{\hbar}{i} \partial_\phi \).</p>
-
-<h3>Adjoint and Hermitian Operators</h3>
-
-<p>Recall inner products \( \ip{\psi}{\varphi} \). In a similar spirit, we write \[ \tip{\psi}{\hat A}{\varphi} = \int_{-\infty}^{\infty} \psi^*(x) \, \hat A \, \varphi(x) \, dx \] Clearly \( \langle \psi | \hat A | \varphi \rangle = \ip{\psi}{\hat A \varphi} \). How about we apply \( \hat A \) on the left as \( \ip{\hat A \psi}{\varphi} \)? It is evidently different from \( \ip{\psi}{\hat A \varphi} \), since \( \hat A \) is applied on different waves! In a magical sense, we define the <b>adjoint operator</b> \( \hat A^\dagger \) as the unique operator such that for all wave functions \( \psi \) and \( \varphi \), we have \[ \ip{\hat A \psi}{\varphi} = \ip{\psi}{\hat A^\dagger \varphi} \]</p>
-
-<p>For example, we see trivially that \( \hat x^\dagger = \hat x \). How about \( \hat p^\dagger \)? Since \( \ip{\hat p \psi}{\varphi} = i \hbar \ip{\nabla \psi}{\varphi} = -i \hbar \ip{\psi}{\nabla \varphi} = \ip{\psi}{\hat p \varphi} \) (integration by-parts), so \( \hat p^\dagger = \hat p \)! We say an operator \( \hat A \) is <b>Hermitian</b> or <b>self-adjoint</b> \( \hat A^\dagger = \hat A \). We can also show \( \hat H \) is Hermitian easily.</p>
+<!-- maybe have a section for curvillinear operators -->
+<!--p>We can define the (vector) <b>angular momentum</b> as \( \hat L = \hat r \times \hat p \). Interestingly, we have \( [\hat L, \hat L] = i \hbar \hat L \). The total (scalar) angular momentum is defined as \( \hat L^2 = \hat L_x^2 + \hat L_y^2 + \hat L_z^2 \). Under the cylindrical coordinates \( (\rho, \phi, z) \), we have the nice relation \( \hat L_z = \frac{\hbar}{i} \partial_\phi \).</p-->
 
 <h3>Time-Dependent Schrodinger</h3>
 
@@ -114,13 +110,18 @@ layout: default
 
 <h3>Postulate II: Observables</h3>
 
-<p>What is <b>observable</b>? As it turns out, all physical quantities can be measured classically can be written in the form \( Q(\hat x, \hat p, t) \), that is, functions of positions, momentum and time. A simple example is the Hamiltonian \( \hat H = V(\hat x) + \frac{\hat p^2}{2m} \).</p>
+<p>What is <b>observable</b>? As it turns out, all physical quantities can be measured classically can be written in the form \( \hat Q(\hat x, \hat p, t) \), that is, functions of positions, momentum and time. A simple example is the Hamiltonian \( \hat H = V(\hat x) + \frac{\hat p^2}{2m} \).</p>
 
-<p>As it turns out, all these observables are <b>linear</b> and <b>Hermitian</b>, since both \( \hat x \) and \( \hat p \) are linear and Hermitian. The cool thing about observables \( \hat T \) is its eigenstates - we can always find an <b>orthonormal eigenbasis</b> \( \{ \ket{\psi_n} \} \) or \( \{ \ket{n} \}\)!</p>
+<p>As operators, what must these observables satisfy? First, \( \hat Q \) must be <b>linear</b> (transformation), that is \[ \hat Q(\alpha \ket{\psi} + \beta \ket{\varphi}) = \alpha \hat Q \ket{\psi} + \beta \hat Q \ket{\varphi} \] since scaling the wavevector should lead to the same proportional change in the physical quantity. According to linear algebra, therefore, we can represent \( \hat Q \) in terms of matrices \( [\hat Q] \).</p>
+
+<p>The other interesting property comes from inner products. Clearly \( \ip{\hat Q \psi}{\varphi} \) and \( \ip{\psi}{\hat Q \varphi} \) are representing slightly different things, where we apply \( \hat Q \) onto different wavevectors. Out of the blue, we define the <b>adjoint operator</b> \( \hat A^\dagger \) for operator \( \hat A \) as the unique operator that for all wave functions \( \psi \) and \( \varphi \), \[ \ip{\hat A \psi}{\varphi} = \ip{\psi}{\hat A^\dagger \varphi} \] Very interestingly, we actually have \( \hat x^\dagger = \hat x \) and \( \hat p^\dagger = \hat p \), and so for all observable we have \( \hat Q^\dagger = \hat Q \). We say such \( \hat Q \) are <b>Hermitian</b> or <b>self-adjoint</b>.</p>
+
+<p>The cool thing about observables \( \hat T \) is its eigenstates - we can always find an <b>orthonormal eigenbasis</b> \( \{ \ket{\psi_n} \} \) or \( \{ \ket{n} \}\)!</p>
+
 
 <h3>Postulate III: Measurement</h3>
 
-<p>Quantum waves are probabilistic in nature. What happens when we take a measurement on its position or its momentum? By preparing an <b>ensemble</b> (random samples) of a quantum wave and repeatedly take measurement, we can approximate the <b>statistics</b> of the measurement. Given an observable \( \hat T \), the <b>expected value</b> of \( \hat T \) is given by \[ \langle \hat T \rangle = \langle \psi | \hat T | \psi \rangle = \int \psi^* \hat T \psi \, dx \] Clearly, we can compute the variance and standard deviations of \( \hat T \) as \( (\Delta T)^2 = \langle \hat T^2 \rangle - \langle T \rangle^2 \).</p>
+<p>What happens when we take a measurement some observables on a quantum wave, such as position or momentum? By nature of quantum mechanics, the result is always random, and we can never obtain the exact probabilistic distribution. However, by preparing an <b>ensemble</b> (random samples) of a quantum wave and repeatedly take measurement, we can approximate the <b>statistics</b> of the measurement. Given an observable \( \hat T \), the <b>expected value</b> of \( \hat T \) is given by \[ \langle \hat T \rangle = \langle \psi | \hat T | \psi \rangle = \int \psi^* \hat T \psi \, dx \] Clearly, we can compute the variance and standard deviations of \( \hat T \) as \( (\Delta T)^2 = \langle \hat T^2 \rangle - \langle T \rangle^2 \).</p>
 
 <p>The <b>Born Rule</b> states that the measurement of \( \hat T \) on \( \psi \) gives \( \lambda_n \) with probability \( \ip{\psi}{n} \) where \( \hat T \ket{n} = \lambda_n \ket{n} \), which the state \( \psi \) <b>collapses</b> to \( \ket{n} \) afterwards, although practically the quantum state could be destroyed, and continue to evolve.</p>
 
@@ -128,10 +129,9 @@ layout: default
 
 <h3>Postulate IV: Evolution</h3>
 
-<p>blah blah blah</p>
-<h3>Ehrenfest Theorem</h3>
+<p>How does the wavevector changes according to time? Recall the Schrodinger's Equation \[ i \hbar \partial_t \ket{\psi} = \hat H \ket{\psi} \] Hence, by defining the <b>propagator</b> \[ \hat U (t', t) = e^{-(t' - t) \hat H / t} \] We have \[ \ket{\psi(t')} = U(t', t) \ket{\psi(t)}\]</p>
 
-<p>A natural question is - how does the expectation of an operator \( \hat A \) evolves over time? We have \[ \frac{d}{dt} \langle \hat A \rangle = \frac{i}{\hbar} \langle [\hat H, \hat A]\rangle + \langle \partial_t \hat A \rangle\] and so \( \frac{d}{dt} \langle \hat x \rangle = \frac{1}{m} \langle \hat p \rangle \) and \( \frac{d}{dt} \langle \hat p \rangle = -\langle V'(x) \rangle \). This somewhat resembles the classical mechanics, but once \( V(x) \) is of higher order than quadratic, then the term of <b>quantum fluctuation</b> \( \langle V'(x) \rangle - V'(\langle x \rangle) \) appears, and so quantum mechanics is not equivalent to the classical mechanics at all.</p>
+<p>How does \( \langle \hat A \rangle \) evolves over time? We have the <b>Ehrenfest's Theorem</b> \[ \frac{d}{dt} \langle \hat A \rangle = \frac{i}{\hbar} \langle [\hat H, \hat A]\rangle + \langle \partial_t \hat A \rangle\] and so \( \frac{d}{dt} \langle \hat x \rangle = \frac{1}{m} \langle \hat p \rangle \) and \( \frac{d}{dt} \langle \hat p \rangle = -\langle V'(x) \rangle \). This somewhat resembles the classical mechanics, but once \( V(x) \) is of higher order than quadratic, then the term of <b>quantum fluctuation</b> \( \langle V'(x) \rangle - V'(\langle x \rangle) \) appears.</p>
 
 <h2>Zoology of Schrodinger in 1D</h2>
 
